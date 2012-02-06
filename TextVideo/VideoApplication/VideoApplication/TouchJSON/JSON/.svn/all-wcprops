@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/TouchJSON/JSON
+END
+CJSONScanner.m
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/TouchJSON/JSON/CJSONScanner.m
+END
+CJSONSerializer.m
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/TouchJSON/JSON/CJSONSerializer.m
+END
+CJSONDeserializer.h
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/TouchJSON/JSON/CJSONDeserializer.h
+END
+CJSONDataSerializer.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/TouchJSON/JSON/CJSONDataSerializer.h
+END
+CSerializedJSONData.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/TouchJSON/JSON/CSerializedJSONData.h
+END
+CJSONDeserializer.m
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/TouchJSON/JSON/CJSONDeserializer.m
+END
+CJSONDataSerializer.m
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/TouchJSON/JSON/CJSONDataSerializer.m
+END
+CJSONScanner.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/TouchJSON/JSON/CJSONScanner.h
+END
+CJSONSerializer.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/TouchJSON/JSON/CJSONSerializer.h
+END
+CSerializedJSONData.m
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/TouchJSON/JSON/CSerializedJSONData.m
+END

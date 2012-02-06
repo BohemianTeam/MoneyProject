@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/imusici/!svn/ver/963/MobionMusic_International/Classes/ASIRequest
+END
+ASIHTTPRequest.m
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/imusici/!svn/ver/112/MobionMusic_International/Classes/ASIRequest/ASIHTTPRequest.m
+END
+ASICacheDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/ASIRequest/ASICacheDelegate.h
+END
+ASINetworkQueue.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/ASIRequest/ASINetworkQueue.h
+END
+ASIAuthenticationDialog.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/ASIRequest/ASIAuthenticationDialog.h
+END
+ASIProgressDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/ASIRequest/ASIProgressDelegate.h
+END
+ASIDownloadCache.m
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/ASIRequest/ASIDownloadCache.m
+END
+ASINetworkQueue.m
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/ASIRequest/ASINetworkQueue.m
+END
+ASIAuthenticationDialog.m
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/ASIRequest/ASIAuthenticationDialog.m
+END
+ASIFormDataRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/ASIRequest/ASIFormDataRequest.h
+END
+ASIFormDataRequest.m
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/imusici/!svn/ver/963/MobionMusic_International/Classes/ASIRequest/ASIFormDataRequest.m
+END
+ASIInputStream.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/ASIRequest/ASIInputStream.h
+END
+ASIHTTPRequestConfig.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/ASIRequest/ASIHTTPRequestConfig.h
+END
+ASIInputStream.m
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/ASIRequest/ASIInputStream.m
+END
+ASIHTTPRequestDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/ASIRequest/ASIHTTPRequestDelegate.h
+END
+ASIHTTPRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/ASIRequest/ASIHTTPRequest.h
+END
+ASIDownloadCache.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/imusici/!svn/ver/15/MobionMusic_International/Classes/ASIRequest/ASIDownloadCache.h
+END

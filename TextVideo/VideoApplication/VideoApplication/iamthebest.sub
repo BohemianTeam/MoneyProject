@@ -1,0 +1,24 @@
+{
+"video_name" : "I am the best",
+"subtitle" : [
+     {
+    "index" : "1",
+    "time" : "3",
+    "text" : "Đâu phải có tiền mua được hạnh phúc"
+    },
+    {
+    "index" : "2",
+    "time" : "4",
+    "text" : "đâu phải tình yêu đổi lấy bằng tiền"
+    },
+    {
+    "index" : "3",
+    "time" : "5",
+    "text" : "mà người tôi yêu thuở nao, đã nguyện thề bên tôi trọn kiếp , để hôm nay tôi phải nhận ra."
+    },
+    {
+    "index" : "4",
+    "time" : "6",
+    "text" : "Tôi hiểu tim người có nào đâu muốn . nhưng hỡi người ơi tình yêu là gì ?"
+    }]
+}

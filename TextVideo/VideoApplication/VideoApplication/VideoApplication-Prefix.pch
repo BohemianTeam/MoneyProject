@@ -1,0 +1,19 @@
+//
+// Prefix header for all source files of the 'VideoApplication' target in the 'VideoApplication' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_5_0
+#warning "This project uses features only available in iOS SDK 5.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <QuartzCore/QuartzCore.h>
+    #import "logger.h"
+    #import "UIApplicationExt.h"
+    #import <Foundation/Foundation.h>
+#endif
+
+#define LocStr(key) [[NSBundle mainBundle] localizedStringForKey:(key) value:@"" table:nil]
