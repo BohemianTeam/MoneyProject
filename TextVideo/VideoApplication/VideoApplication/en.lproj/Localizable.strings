@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  VideoApplication
+
+  Created by Cuong Tran on 1/16/12.
+  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+*/
+"OK" = "OK";
+"AlertTitleNotConnect" = "Unable to connect";
+"AlertMsgNotConnect" = "Please check your WiFi status and try again.";
+"AlertTitleErrorNetwork" = "Error";
+"AlertMsgErrorNetwork" = "An error has occurred.\n Please try again later.";
+"Title" = "MainViewController";
+"TitleMainView" = "Mook Moving Book";
+"Cancel" = "Cancel";
+"MsgExistFile" = "File is exits.Do you want to download it?";
