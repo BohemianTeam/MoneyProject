@@ -19,7 +19,7 @@
 				  android:textStyle="bold"
 				  android:shadowColor="#000000"
 					android:layout_height="wrap_content" android:text="@string/main_title"
-					android:textSize="16dip" android:textColor="#ffffff" />
+					android:textSize="18dip" android:textColor="#ffffff" />
 			</LinearLayout>
 			<ImageView android:layout_width="50dip"
 				android:layout_gravity="center" android:layout_height="50dip"
