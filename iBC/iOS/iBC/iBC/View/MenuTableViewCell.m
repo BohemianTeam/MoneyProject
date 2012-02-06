@@ -25,6 +25,8 @@
         _label = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 220, 55)];
         _label.backgroundColor = [UIColor clearColor];
         _label.textAlignment = UITextAlignmentLeft;
+        _label.textColor = UIColorFromRGB(0x266A85);
+        _label.font = [UIFont boldSystemFontOfSize:16];
         [_bg addSubview:_label];
     }
     return self;

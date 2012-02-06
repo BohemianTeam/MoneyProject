@@ -1,0 +1,15 @@
+//
+// Prefix header for all source files of the 'iBC' target in the 'iBC' project
+//
+
+#import <Availability.h>
+#import "config.h"
+#ifndef __IPHONE_4_0
+#warning "This project uses features only available in iOS SDK 4.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+#endif
+#define LocStr(key) [[NSBundle mainBundle] localizedStringForKey:(key) value:@"" table:nil]
