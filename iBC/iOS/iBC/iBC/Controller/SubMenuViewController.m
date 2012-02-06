@@ -74,7 +74,11 @@
     MenuTableViewCell *cell = [[[MenuTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 
                                                         reuseIdentifier:nil] autorelease];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    UIImageView * accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"WhiteAccessory.png"]];
+    accessoryView.frame = CGRectMake(0, 0, 9, 15);
+    cell.accessoryView = accessoryView;
+    [accessoryView release];
     [cell setMenuData:[_arrMenuItems objectAtIndex:indexPath.row] isEvenRow:((indexPath.row % 2) == 0)];
     return cell;
 }

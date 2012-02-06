@@ -30,7 +30,7 @@ public class SubMenuActivity extends Activity {
         mListView = (ListView) findViewById(R.id.list);
         MenuListAdapter adapter = new MenuListAdapter(mMenuList, this);
         mListView.setAdapter(adapter);
-        mListView.setOnItemClickListener(adapter);
+//        mListView.setOnItemClickListener(adapter);
     }
     
     private void initMenu() {

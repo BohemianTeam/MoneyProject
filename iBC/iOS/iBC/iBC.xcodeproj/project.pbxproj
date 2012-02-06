@@ -44,6 +44,7 @@
 		66B293C114E063520006B641 /* CJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B293B614E063520006B641 /* CJSONSerializer.m */; };
 		66B293C414E0639C0006B641 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66B293C214E0639B0006B641 /* CFNetwork.framework */; };
 		66B293C514E0639C0006B641 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66B293C314E0639C0006B641 /* SystemConfiguration.framework */; };
+		66B293C714E066920006B641 /* WhiteAccessory.png in Resources */ = {isa = PBXBuildFile; fileRef = 66B293C614E066920006B641 /* WhiteAccessory.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -108,6 +109,7 @@
 		66B293B714E063520006B641 /* JSONRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONRepresentation.h; sourceTree = "<group>"; };
 		66B293C214E0639B0006B641 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		66B293C314E0639C0006B641 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		66B293C614E066920006B641 /* WhiteAccessory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WhiteAccessory.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +201,7 @@
 		66B2936514E022B60006B641 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				66B293C614E066920006B641 /* WhiteAccessory.png */,
 				66B2938114E034F50006B641 /* main */,
 			);
 			name = Images;
@@ -367,6 +370,7 @@
 				66B2938614E036E50006B641 /* v02_bt01.png in Resources */,
 				66B2938714E036E50006B641 /* v02_bt02.png in Resources */,
 				66B2938F14E03AD90006B641 /* v02_bt03.png in Resources */,
+				66B293C714E066920006B641 /* WhiteAccessory.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
