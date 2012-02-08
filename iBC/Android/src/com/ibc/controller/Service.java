@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
@@ -17,6 +18,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.ibc.util.Config;
 import com.ibc.util.Util;
 
 public class Service implements Runnable {
@@ -31,6 +33,7 @@ public class Service implements Runnable {
 	private boolean _connecting;
 	private String _actionUri;
 	private boolean _isBitMap;
+	private boolean _includeDid;
 
 	private final Handler _handler = new Handler() {
 
@@ -51,13 +54,28 @@ public class Service implements Runnable {
 		_service = this;
 		_connecting = false;
 		_isBitMap = false;
+		_includeDid = true;
+	}
+	//service method
+	public void getStatus() {
+		_action = ServiceAction.ActionGetStatus;
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("i", Config.KinectiaAppId);
+		params.put("d", "201202011004");
+		params.put("h", Util.hashStringParameter());
+		
+		request("/getStatus/", params);
+	}
+	//service processing
+	public boolean request(String url, Map<String, String> params) {
+		return request(url, params, true, true, false);
+	}
+	
+	public boolean request(String url, Map<String, String> params,boolean includeDid, boolean isGet) {
+		return request(url, params, includeDid, isGet, false);
 	}
 
-	public boolean request(String url, Map<String, String> params, boolean isGet) {
-		return request(url, params, isGet, false);
-	}
-
-	public boolean request(String url, Map<String, String> params,
+	public boolean request(String url, Map<String, String> params,boolean includeDid,
 			boolean isGet, boolean isBitmap) {
 		if (_connecting) {
 			return false;
@@ -79,6 +97,9 @@ public class Service implements Runnable {
 	@Override
 	public void run() {
 		String urlString = _actionUri;
+		if (_includeDid) {
+			urlString = Config.URL + urlString;
+		}
 		String data = getParamsString(_params);
 		if (_isGet) {
 			if (data != null || data != "") {
@@ -176,6 +197,15 @@ public class Service implements Runnable {
 				
 				default:
 					break;
+				}
+			} else {
+				boolean isSuccess = parser.parse(result, DataType.JSON);
+				if (isSuccess) {
+					switch (act) {
+					case ActionGetStatus:
+						resObj = "success";
+						break;
+					}
 				}
 			}
 		}

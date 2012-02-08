@@ -49,7 +49,6 @@ public class MenuListAdapter extends BaseAdapter implements OnItemClickListener{
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		ListMenuRowHolder rowHolder = new ListMenuRowHolder(mContext);
-		System.out.println(((position % 2) == 0));
 		rowHolder.setData(getItem(position), ((position % 2) == 0));
 		return rowHolder;
 	}

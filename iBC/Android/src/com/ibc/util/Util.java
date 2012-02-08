@@ -7,6 +7,18 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
+import biz.source_code.base64Coder.Base64Coder;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -29,7 +41,106 @@ public class Util {
 				matrix, true);
 		return resizeBitmap;
 	}
+	
+	public static String getCurrentTimeString() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
+		Date date = new Date();
+		return dateFormat.format(date);
+	}
+	
+	public static String getConcatenatedString() {
+		String string = com.ibc.util.Config.KinectiaAppId + getCurrentTimeString();
+		return string;
+	}
+	
+	public static String hashStringParameter() {
+		String rs = "rd4Gds201202011004";//getConcatenatedString();
+		rs = hashMac(rs);
+		return rs;
+	}
+	
+	/**
+	 * Encryption of a given text using the provided secretKey
+	 * 
+	 * @param text
+	 * @param secretKey
+	 * @return the encoded string
+	 * @throws SignatureException
+	 */
+	public static String hashMac(String text) {
 
+		try {
+			String secretKey = com.ibc.util.Config.SECRET_KEY;
+			
+			Key sk = new SecretKeySpec(secretKey.getBytes(), com.ibc.util.Config.HASH_ALGORITHM);
+			
+			Mac mac = Mac.getInstance(sk.getAlgorithm());
+			mac.init(sk);
+			final byte[] hmac = mac.doFinal(text.getBytes());
+			
+			String hashString = Base64.encodeBase64String(hmac);//Base64Coder.encodeLines(hmac);//new String(StringUtil.encodeHex(hmac, false));
+			return hashString;//StringUtil.getHexString(hmac);
+		} catch (NoSuchAlgorithmException e1) {
+			// throw an exception or pick a different encryption method
+			System.out.println(
+					"error building signature, no such algorithm in device "
+							+ com.ibc.util.Config.HASH_ALGORITHM);
+		} catch (InvalidKeyException e) {
+			System.out.println(
+					"error building signature, invalid key "
+							+ com.ibc.util.Config.HASH_ALGORITHM);
+		} catch (NoSuchMethodError e) {
+			System.out.println(e.getMessage());
+		}
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
+//		}
+		return null;
+	}
+	
+	/**
+     *  Convenience method to convert a byte array to a hex string.
+     *
+     * @param  data  the byte[] to convert
+     * @return String the converted byte[]
+     */
+    public static String bytesToHex(byte[] data) {
+        StringBuffer buf = new StringBuffer();
+        for (int i = 0; i < data.length; i++) {
+            buf.append(byteToHex(data[i]).toUpperCase());
+        }
+        return (buf.toString());
+    }
+ 
+ 
+    /**
+     *  method to convert a byte to a hex string.
+     *
+     * @param  data  the byte to convert
+     * @return String the converted byte
+     */
+    public static String byteToHex(byte data) {
+        StringBuffer buf = new StringBuffer();
+        buf.append(toHexChar((data >>> 4) & 0x0F));
+        buf.append(toHexChar(data & 0x0F));
+        return buf.toString();
+    }
+ 
+ 
+    /**
+     *  Convenience method to convert an int to a hex char.
+     *
+     * @param  i  the int to convert
+     * @return char the converted char
+     */
+    public static char toHexChar(int i) {
+        if ((0 <= i) && (i <= 9)) {
+            return (char) ('0' + i);
+        } else {
+            return (char) ('a' + (i - 10));
+        }
+    }
+	
 	public static Bitmap cropBitmap(Bitmap bitmap, int newWidth, int newHeight) {
 		Bitmap resizeBitmap = Bitmap.createScaledBitmap(bitmap, newWidth,
 				bitmap.getHeight() * newWidth / bitmap.getWidth(), true);
