@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.security.InvalidKeyException;
 import java.security.Key;
@@ -18,8 +19,6 @@ import java.util.Date;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import biz.source_code.base64Coder.Base64Coder;
-
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
@@ -28,6 +27,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Shader.TileMode;
+import android.util.Base64;
 
 public class Util {
 	public static Bitmap resizeBimap(Bitmap bitmap, int newWidth, int newHeight) {
@@ -54,7 +54,7 @@ public class Util {
 	}
 	
 	public static String hashStringParameter() {
-		String rs = "rd4Gds201202011004";//getConcatenatedString();
+		String rs = getConcatenatedString();
 		rs = hashMac(rs);
 		return rs;
 	}
@@ -72,13 +72,13 @@ public class Util {
 		try {
 			String secretKey = com.ibc.util.Config.SECRET_KEY;
 			
-			Key sk = new SecretKeySpec(secretKey.getBytes(), com.ibc.util.Config.HASH_ALGORITHM);
+			Key sk = new SecretKeySpec(secretKey.getBytes("UTF-8"), com.ibc.util.Config.HASH_ALGORITHM);
 			
 			Mac mac = Mac.getInstance(sk.getAlgorithm());
 			mac.init(sk);
-			final byte[] hmac = mac.doFinal(text.getBytes());
+			final byte[] hmac = mac.doFinal(text.getBytes("UTF-8"));
 			
-			String hashString = Base64.encodeBase64String(hmac);//Base64Coder.encodeLines(hmac);//new String(StringUtil.encodeHex(hmac, false));
+			String hashString = android.util.Base64.encodeToString(hmac, Base64.NO_WRAP);//Base64Coder.encodeLines(hmac);//new String(StringUtil.encodeHex(hmac, false));
 			return hashString;//StringUtil.getHexString(hmac);
 		} catch (NoSuchAlgorithmException e1) {
 			// throw an exception or pick a different encryption method
@@ -91,10 +91,9 @@ public class Util {
 							+ com.ibc.util.Config.HASH_ALGORITHM);
 		} catch (NoSuchMethodError e) {
 			System.out.println(e.getMessage());
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
 		}
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		}
 		return null;
 	}
 	

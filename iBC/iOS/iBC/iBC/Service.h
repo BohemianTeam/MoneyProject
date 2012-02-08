@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#define API_URL @"http://localhost/video"
 
 extern NSString *MBErrorDomain;
 static NSError *mb_err(int code) {
@@ -17,7 +16,8 @@ static NSError *mb_err(int code) {
 typedef enum {
     ActionTypeNone = 0,
     ActionTypeGetVideo,
-    ActionTypeGetAllVideo
+    ActionTypeGetAllVideo,
+    ActionTypeGetStatus,
 } ActionType;
 
 typedef enum {
@@ -55,5 +55,6 @@ typedef enum {
 
 - (void) getVideo:(NSString *) title;
 - (void) getAllVideo;
+- (void) getStatus;
 - (void) stop;
 @end

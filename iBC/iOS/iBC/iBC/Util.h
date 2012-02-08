@@ -35,4 +35,10 @@
 + (void) clearAllTimeLine;
 + (NSString *)calcMD5:(NSString*)text;
 + (BOOL) checkFileExits:(NSString *) path;
+
++ (NSString *) getCurrentTimeString;
++ (NSString *) getRequestParameterString;
++ (NSString *) generateHashedString:(NSString *) data;
++ (NSString *) base64StringFromData:(NSData *)data length:(int)length;
++ (NSData *) base64DataFromString:(NSString *)string;
 @end

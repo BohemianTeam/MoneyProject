@@ -61,7 +61,7 @@ public class Service implements Runnable {
 		_action = ServiceAction.ActionGetStatus;
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("i", Config.KinectiaAppId);
-		params.put("d", "201202011004");
+		params.put("d", Util.getCurrentTimeString());
 		params.put("h", Util.hashStringParameter());
 		
 		request("/getStatus/", params);

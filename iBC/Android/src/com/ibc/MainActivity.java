@@ -69,7 +69,7 @@ public class MainActivity extends Activity {
 				hide();
 				if (result.getResultCode() == ResultCode.Success) {
 					String status = (String) result.getData();
-					System.out.println(status);
+					System.out.println("status = " + status);
 				} else {
 					System.out.println(result.getResultCode());
 				}

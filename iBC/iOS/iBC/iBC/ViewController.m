@@ -10,7 +10,7 @@
 #import "MenuItemData.h"
 #import "MenuTableViewCell.h"
 #import "SubMenuViewController.h"
-
+#import "Service.h"
 @interface ViewController(private)
 - (void) initMenu;
 @end
@@ -42,6 +42,12 @@
     //add menu item
     _arrMenuItems = [[NSMutableArray alloc] init];
     [self initMenu];
+    
+    Service *sv = [[Service alloc] init];
+    sv.canShowAlert = YES;
+    sv.canShowLoading = YES;
+    sv.delegate = self;
+    [sv getStatus];
 }
 
 - (void) initMenu {

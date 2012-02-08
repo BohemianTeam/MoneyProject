@@ -45,6 +45,18 @@ NSString *MBErrorDomain = @"com.iBC";
     return self;
 }
 
+- (void) getStatus {
+    self.action = ActionTypeGetStatus;
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setObject:[Util getCurrentTimeString] forKey:@"d"];
+    [params setObject:KinectiaAppId forKey:@"i"];
+    [params setObject:[Util getRequestParameterString] forKey:@"h"];
+    
+    NSString *url = [NSString stringWithFormat:@"%@/getStatus", API_URL];
+    [self doRequestWithURL:url params:params];
+    [params release];
+}
+
 - (void) getVideo:(NSString *)title {
     self.action = ActionTypeGetVideo;
     
@@ -249,7 +261,7 @@ NSString *MBErrorDomain = @"com.iBC";
     int act = self.action;
     NSData *buff = [data retain];
     NSString *str = [NSString stringWithUTF8String:[buff bytes]];
-    NSLog(str);
+    NSLog(@"%@",str);
     @try {
         [self reset];
         switch (act) {
@@ -272,8 +284,18 @@ NSString *MBErrorDomain = @"com.iBC";
                 break;
             }
             case ActionTypeGetVideo :
-                
+            {
                 break;
+            }
+            case ActionTypeGetStatus:
+            {
+                SEL sel = @selector(mServiceGetStatusSuccess:responses:);
+                if ([_delegate respondsToSelector:sel]) {
+                    [_delegate performSelector:sel withObject:self withObject:nil];
+                }
+
+                break;
+            }
         }
     } @catch (NSException *ex) {
         NSLog(@"Exception:%@", [ex reason]);
