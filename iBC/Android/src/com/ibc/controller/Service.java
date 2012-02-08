@@ -191,20 +191,20 @@ public class Service implements Runnable {
 			resObj = result;
 		} else {
 			DataParser parser = new DataParser();
-			boolean isOK = parser.parse(result, DataType.XML);
+			boolean isOK = parser.parse(result, DataType.JSON);
 			if (isOK) {
 				switch (act) {
-				
+				case ActionGetStatus:
+					resObj = result;
+					break;
 				default:
 					break;
 				}
 			} else {
-				boolean isSuccess = parser.parse(result, DataType.JSON);
+				boolean isSuccess = parser.parse(result, DataType.XML);
 				if (isSuccess) {
 					switch (act) {
-					case ActionGetStatus:
-						resObj = "success";
-						break;
+					
 					}
 				}
 			}

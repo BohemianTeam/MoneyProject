@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/splash"
+  android:background="@android:color/black"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  >
+  
+    <ImageView
+      android:src="@drawable/splash"
+      android:id="@+id/image"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:layout_gravity="center"
+      />
+       <!-- 
+        <ProgressBar android:id="@+id/waiting"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:layout_centerInParent="true"/>
+		<TextView
+			android:text="Loading ..."
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="#ffffff"
+			android:textSize="20dp" 
+			android:layout_below="@id/waiting"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="5dp"
+		/>
+		-->
+</RelativeLayout>

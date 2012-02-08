@@ -28,7 +28,7 @@ public class DataParser {
 			} catch (Exception ex) {
 				return false;
 			}
-		} else {
+		} else if (type == DataType.JSON){
 			try {
 				_root = new JSONObject(xml);
 				return true;
@@ -36,6 +36,7 @@ public class DataParser {
 				return false;
 			}
 		}
+		return false;
 	}
 
 	public boolean parse(File file, DataType type) {
