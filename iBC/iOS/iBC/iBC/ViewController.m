@@ -119,6 +119,15 @@
     [_arrMenuItems release];
 }
 
+#pragma servide delegate
+- (void) mServiceGetStatusSuccess:(Service *) service responses:(id) response {
+    NSLog(@"API getStatus : success");
+}
+
+- (void) mService:(Service *) service didFailWithError:(NSError *) error {
+    
+}
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
