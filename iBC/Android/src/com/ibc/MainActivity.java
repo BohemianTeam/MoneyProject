@@ -1,6 +1,8 @@
 package com.ibc;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import com.ibc.adapter.MenuListAdapter;
 import com.ibc.controller.ResultCode;
@@ -9,6 +11,8 @@ import com.ibc.controller.ServiceAction;
 import com.ibc.controller.ServiceListener;
 import com.ibc.controller.ServiceRespone;
 import com.ibc.model.MenuItemData;
+import com.ibc.model.service.response.StatusResponse;
+import com.ibc.model.service.response.VenuesResponse;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -33,7 +37,7 @@ public class MainActivity extends Activity {
         mListView.setOnItemClickListener(adapter);
         
         mSVGetStatus = new Service(_listener);
-        mSVGetStatus.getStatus();
+        mSVGetStatus.getVenues("41.385756", "2.164129");
         show();
     }
     
@@ -65,11 +69,19 @@ public class MainActivity extends Activity {
 		
 		@Override
 		public void onComplete(Service service, ServiceRespone result) {
+			hide();
 			if (result.getAction() == ServiceAction.ActionGetStatus) {
-				hide();
 				if (result.getResultCode() == ResultCode.Success) {
-					String status = (String) result.getData();
-					System.out.println("status = " + status);
+					StatusResponse status = (StatusResponse) result.getData();
+					System.out.println("status = " + status.getMindt());
+				} else {
+					System.out.println(result.getResultCode());
+				}
+			} else if (result.getAction() == ServiceAction.ActionGetVenues) {
+				if (result.getResultCode() == ResultCode.Success) {
+					@SuppressWarnings("unchecked")
+					List<VenuesResponse> status = (List<VenuesResponse>) result.getData();
+					System.out.println("status = " + status.get(0).venuesName);
 				} else {
 					System.out.println(result.getResultCode());
 				}
