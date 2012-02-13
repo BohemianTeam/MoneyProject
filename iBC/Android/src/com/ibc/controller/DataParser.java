@@ -2,6 +2,7 @@ package com.ibc.controller;
 
 import java.io.File;
 import java.io.StringReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.xml.sax.InputSource;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
 import com.ibc.model.service.response.StatusResponse;
 import com.ibc.model.service.response.VenuesResponse;
 
@@ -106,6 +108,9 @@ public class DataParser {
 		}
 		Gson gson = new Gson();
 		List<VenuesResponse> response = new ArrayList<VenuesResponse>();
+		Type t = new TypeToken<List<VenuesResponse>>(){}.getType();
+		response = gson.fromJson(result, t);
+		/*
 		for (int i = 0;i < _array.length();i++) {
 			try {
 				JSONObject element = _array.getJSONObject(i);
@@ -115,6 +120,7 @@ public class DataParser {
 				e.printStackTrace();
 			}
 		}
+		*/
 		return response;
 	}
 }
