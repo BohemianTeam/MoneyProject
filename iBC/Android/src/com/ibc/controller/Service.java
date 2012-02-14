@@ -56,7 +56,10 @@ public class Service implements Runnable {
 		_isBitMap = false;
 		_includeDid = true;
 	}
-	//service method
+	/**
+	 * Service Method
+	 */
+	
 	
 	public void getStatus() {
 		_action = ServiceAction.ActionGetStatus;
@@ -74,7 +77,20 @@ public class Service implements Runnable {
 		request("/getVenues/", params);
 	}
 	
-	//service processing
+	public void getVenue(String venueCode) {
+		_action = ServiceAction.ActionGetVenue;
+		
+		Map<String, String> params = iBCApplication.sharedInstance().getServiceParams();
+		params.put("vc", venueCode);
+		
+		request("/getVenue/", params);
+	}
+	
+	/**
+	 * Service Processing
+	 * 
+	 */
+	
 	public boolean request(String url, Map<String, String> params) {
 		return request(url, params, true, true, false);
 	}
@@ -207,6 +223,9 @@ public class Service implements Runnable {
 					break;
 				case ActionGetVenues:
 					resObj = parser.getVenuesResponse(result);
+					break;
+				case ActionGetVenue:
+					resObj = parser.getVenueResponse(result);
 					break;
 				default:
 					break;

@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import com.ibc.model.service.response.StatusResponse;
+import com.ibc.model.service.response.VenueResponse;
 import com.ibc.model.service.response.VenuesResponse;
 
 public class DataParser {
@@ -121,6 +122,17 @@ public class DataParser {
 			}
 		}
 		*/
+		return response;
+	}
+	
+	public VenueResponse getVenueResponse(String result) {
+		if (_root == null && _array == null) {
+			return null;
+		}
+		
+		VenueResponse response = new VenueResponse();
+		Gson gson = new Gson();
+		gson.fromJson(result, VenueResponse.class);
 		return response;
 	}
 }
