@@ -7,6 +7,6 @@ import com.google.gson.annotations.SerializedName;
 public class VenueRoomResponse {
 	@SerializedName("n")
 	public String name;
-	@SerializedName("s")
+
 	List<EventResponse> events;
 }

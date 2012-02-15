@@ -1,7 +1,10 @@
 package com.ibc;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -10,21 +13,23 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 import com.ibc.adapter.MenuListAdapter;
-import com.ibc.controller.ResultCode;
-import com.ibc.controller.Service;
-import com.ibc.controller.ServiceAction;
-import com.ibc.controller.ServiceListener;
-import com.ibc.controller.ServiceRespone;
 import com.ibc.model.MenuItemData;
+import com.ibc.model.service.response.EventResponse;
+import com.ibc.model.service.response.EventsResponse;
 import com.ibc.model.service.response.StatusResponse;
 import com.ibc.model.service.response.VenueResponse;
 import com.ibc.model.service.response.VenuesResponse;
+import com.ibc.service.ResultCode;
+import com.ibc.service.Service;
+import com.ibc.service.ServiceAction;
+import com.ibc.service.ServiceListener;
+import com.ibc.service.ServiceRespone;
 
 public class MainActivity extends Activity {
 	
 	ArrayList<MenuItemData> mMenuList = new ArrayList<MenuItemData>();
 	ListView mListView;
-	Service mSVGetStatus;
+	Service _service;
 	ProgressDialog _dialog;
     /** Called when the activity is first created. */
     @Override
@@ -37,10 +42,17 @@ public class MainActivity extends Activity {
         mListView.setAdapter(adapter);
         mListView.setOnItemClickListener(adapter);
         
-        mSVGetStatus = new Service(_listener);
-        mSVGetStatus.getVenues("41.385756", "2.164129");
+        _service = new Service(_listener);
+//        _service.getEvents("1", getCurrentTimeString());
+        _service.getStarredList();
         show();
     }
+    
+    public String getCurrentTimeString() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		Date date = new Date();
+		return dateFormat.format(date);
+	}
     
     private void show() {
     	_dialog = ProgressDialog.show(this, "", "Loading...", true, true);
@@ -82,19 +94,24 @@ public class MainActivity extends Activity {
 				if (result.getResultCode() == ResultCode.Success) {
 					@SuppressWarnings("unchecked")
 					List<VenuesResponse> status = (List<VenuesResponse>) result.getData();
+					iBCApplication.sharedInstance().putData("venues", status);
+//					
 					System.out.println("status = " + status.get(0).venuesName);
 					
 					Service sv = new Service(_listener);
-					sv.getVenue(status.get(0).venuesCode);
-					show();
+					sv.getEvents("1", getCurrentTimeString());
 				} else {
 					System.out.println(result.getResultCode());
 				}
 			} else if (result.getAction() == ServiceAction.ActionGetVenue) {
 				hide();
 				if (result.getResultCode() == ResultCode.Success) {
-					@SuppressWarnings("unused")
 					VenueResponse response = (VenueResponse) result.getData();
+					if (null != response) {
+						System.out.println(response.address + response.imgs.size());
+					}
+					Service s = new Service(_listener);
+					s.getStarredList();
 					//Extension methods 
 					ExtensionList list = new ExtensionList();
 					list.add("b");
@@ -103,6 +120,38 @@ public class MainActivity extends Activity {
 					System.out.println(list.toString());
 					list.sort();
 					System.out.println(list.toString());
+				}
+			} else if (result.getAction() == ServiceAction.ActionGetEvents) {
+				hide();
+				if (result.getResultCode() == ResultCode.Success) {
+					@SuppressWarnings("unchecked")
+					List<EventsResponse> data = (List<EventsResponse>) result.getData();
+					iBCApplication.sharedInstance().putData("events", data);
+//					Service se = new Service(_listener);
+//					se.getEvent(data.get(0).eventCode);
+//					show();
+				}
+			} else if (result.getAction() == ServiceAction.ActionGetEvent) {
+				hide();
+				if (result.getResultCode() == ResultCode.Success) {
+					EventResponse ev = (EventResponse) result.getData();
+					System.out.println(ev.eventTitle);
+				}
+			} else if (result.getAction() == ServiceAction.ActionGetStarred) {
+				if (result.getResultCode() == ResultCode.Success) {
+					if (null == result.getData()) {
+						
+					}
+					Service svGetVenues = new Service(_listener);
+					svGetVenues.getVenues("41.385756", "2.164129");
+				}
+			} else if (result.getAction() == ServiceAction.ActionGetStarredList) {
+				if (result.getResultCode() == ResultCode.Success) {
+					if (null == result.getData()) {
+						
+					}
+					Service svGetVenues = new Service(_listener);
+					svGetVenues.getVenues("41.385756", "2.164129");
 				}
 			}
 		}

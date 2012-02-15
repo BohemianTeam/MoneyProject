@@ -1,4 +1,4 @@
-package com.ibc.controller;
+package com.ibc.service;
 
 public class ServiceRespone {
 	private ServiceAction _action;

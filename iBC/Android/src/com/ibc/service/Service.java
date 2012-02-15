@@ -1,4 +1,4 @@
-package com.ibc.controller;
+package com.ibc.service;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -84,6 +84,55 @@ public class Service implements Runnable {
 		params.put("vc", venueCode);
 		
 		request("/getVenue/", params);
+	}
+	
+	public void getEvents(String f,String dt) {
+		_action = ServiceAction.ActionGetEvents;
+		
+		Map<String, String> params = iBCApplication.sharedInstance().getServiceParams();
+		params.put("f", f);
+		params.put("dt", dt);
+		
+		request("/getEvents/", params);
+	}
+	
+	public void getEvent(String eventCode) {
+		_action = ServiceAction.ActionGetEvent;
+		
+		Map<String, String> params = iBCApplication.sharedInstance().getServiceParams();
+		params.put("ec", eventCode);
+		
+		request("/getEvent/", params);
+	}
+	
+	public void getInstID() {
+		_action = ServiceAction.ActionGetInstID;
+		
+		iBCApplication app = iBCApplication.sharedInstance();
+		
+		Map<String, String> params = app.getServiceParams();
+		params.put("a", app.appVersion());
+		params.put("r", app.screenResolution());
+		params.put("v", app.osVersion());
+		params.put("p", app.deviceType());
+		
+		request("/getInstID/", params);
+	}
+	
+	public void getStarredList() {
+		_action = ServiceAction.ActionGetStarredList;
+		
+		Map<String, String> params = iBCApplication.sharedInstance().getDiffServiceParams();
+		
+		request("/getStarredList/", params);
+	}
+	
+	public void getStarred() {
+		_action = ServiceAction.ActionGetStarred;
+		
+		Map<String, String> params = iBCApplication.sharedInstance().getDiffServiceParams();
+		
+		request("/getStarred/", params);
 	}
 	
 	/**
@@ -226,6 +275,21 @@ public class Service implements Runnable {
 					break;
 				case ActionGetVenue:
 					resObj = parser.getVenueResponse(result);
+					break;
+				case ActionGetEvents:
+					resObj = parser.getEventsReponse(result);
+					break;
+				case ActionGetEvent:
+					resObj = parser.getEventResponse(result);
+					break;
+				case ActionGetStarredList:
+					resObj = result;//parser.getStarredList(result);
+					break;
+				case ActionGetStarred:
+					resObj = result;
+					break;
+				case ActionGetInstID:
+					resObj = parser.getInstID(result);
 					break;
 				default:
 					break;

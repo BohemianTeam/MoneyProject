@@ -4,7 +4,16 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
-public class VenueResponse {
+public class VenueResponse implements Cloneable{
+	
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
+	}
+	
 	@SerializedName("vc")
 	public String venueCode;
 	
@@ -28,6 +37,9 @@ public class VenueResponse {
 	
 	@SerializedName("cd")
 	public String cordinates;
+	
+	@SerializedName("di")
+	public String di;
 	
 	@SerializedName("ic")
 	public String icon;

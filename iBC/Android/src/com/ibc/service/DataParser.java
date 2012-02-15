@@ -1,4 +1,4 @@
-package com.ibc.controller;
+package com.ibc.service;
 
 import java.io.File;
 import java.io.StringReader;
@@ -16,11 +16,17 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
+import com.ibc.model.service.response.EventResponse;
+import com.ibc.model.service.response.EventsResponse;
+import com.ibc.model.service.response.ImageResponse;
+import com.ibc.model.service.response.InfoBlocksResponse;
+import com.ibc.model.service.response.InstIDResponse;
 import com.ibc.model.service.response.StatusResponse;
 import com.ibc.model.service.response.VenueResponse;
+import com.ibc.model.service.response.VenueRoomResponse;
 import com.ibc.model.service.response.VenuesResponse;
+import com.ibc.model.service.response.VideoResponse;
 
 public class DataParser {
 
@@ -131,8 +137,82 @@ public class DataParser {
 		}
 		
 		VenueResponse response = new VenueResponse();
+		
 		Gson gson = new Gson();
-		gson.fromJson(result, VenueResponse.class);
+		
+		try {
+			response.venueCode = _root.getString("vc");
+			response.venueName = _root.getString("vn");
+			response.venueDescription = _root.getString("ds");
+			response.address = _root.getString("ad");
+			response.phoneNumber = _root.getString("ph");
+			response.email = _root.getString("em");
+			response.webAddress = _root.getString("url");
+			response.cordinates = _root.getString("cd");
+			response.di = _root.getString("di");
+			response.icon = _root.getString("ic");
+			response.shareContent = _root.getString("sh");
+			JSONArray array = _root.getJSONArray("imgs");
+			if (null != array) {
+				Type t = new TypeToken<List<ImageResponse>>(){}.getType();
+				response.imgs = gson.fromJson(array.toString(), t);
+			}
+			array = _root.getJSONArray("vids");
+			if (null != array) {
+				Type t = new TypeToken<List<VideoResponse>>(){}.getType();
+				response.vids = gson.fromJson(array.toString(), t);
+			}
+			array = _root.getJSONArray("ib");
+			if (null != array) {
+				Type t = new TypeToken<List<InfoBlocksResponse>>(){}.getType();
+				response.ib = gson.fromJson(array.toString(), t);
+			}
+			array = _root.getJSONArray("vr");
+			if (null != array) {
+				Type t = new TypeToken<List<VenueRoomResponse>>(){}.getType();
+				response.vr = gson.fromJson(array.toString(), t);
+			}
+		} catch (JSONException e) {
+		}
+		
+//		gson.fromJson(result, VenueResponse.class);
+		return response;
+	}
+	
+	public List<EventsResponse> getEventsReponse(String result) {
+		if (_root == null && _array == null) {
+			return null;
+		}
+		
+		Gson gson = new Gson();
+		List<EventsResponse> response = new ArrayList<EventsResponse>();
+		Type t = new TypeToken<List<EventsResponse>>(){}.getType();
+		response = gson.fromJson(result, t);
+		return response;
+	}
+
+	public List<String> getStarredList(String result) {
+		if (_root == null && _array == null) {
+			return null;
+		}
+		return null;
+	}
+
+	public InstIDResponse getInstID(String result) {
+		
+		Gson gson = new Gson();
+		InstIDResponse response = new InstIDResponse();
+		response = gson.fromJson(result, InstIDResponse.class);
+		return response;
+	}
+
+	public EventResponse getEventResponse(String result) {
+		if (_root == null && _array == null) {
+			return null;
+		}
+		Gson gson = new Gson();
+		EventResponse response = new EventResponse();
+		response = gson.fromJson(result, EventResponse.class);
 		return response;
 	}
 }

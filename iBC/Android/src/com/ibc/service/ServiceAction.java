@@ -1,4 +1,4 @@
-package com.ibc.controller;
+package com.ibc.service;
 
 public enum ServiceAction {
 	ActionNone,
@@ -8,5 +8,7 @@ public enum ServiceAction {
 	ActionGetEvents,
 	ActionGetEvent,
 	ActionGetEventSessions,
-	
+	ActionGetStarredList,
+	ActionGetStarred,
+	ActionGetInstID,
 }
