@@ -47,7 +47,7 @@
     sv.canShowAlert = YES;
     sv.canShowLoading = YES;
     sv.delegate = self;
-    [sv getStatus];
+    [sv getVenueList:@"41.385756~2.164129"];
 }
 
 - (void) initMenu {

@@ -8,6 +8,7 @@
 
 #import "Util.h"
 #import "CJSONDeserializer.h"
+#import "VenuesResponse.h"
 #import <CommonCrypto/CommonDigest.h>
 #import <CommonCrypto/CommonHMAC.h>
 @implementation Util
@@ -384,6 +385,21 @@
 + (BOOL) checkFileExits:(NSString *)path {
     NSFileManager *fm = [NSFileManager defaultManager];
     return [fm fileExistsAtPath:path];
+}
+
+#pragma reponse methods
++ (NSMutableArray *) postVenues:(NSData *)value {
+    NSMutableArray * list = [[NSMutableArray alloc] init];
+    NSError *error;
+    CJSONDeserializer *jsonDeserializer = [CJSONDeserializer deserializer];
+    NSDictionary *resultsDictionary = (NSDictionary*)[jsonDeserializer deserializeAsDictionary:value error:&error];
+    if(resultsDictionary == nil) {
+        
+    }
+	else {
+        
+    }
+    return list;
 }
 
 @end

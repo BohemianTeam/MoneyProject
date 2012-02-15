@@ -41,4 +41,7 @@
 + (NSString *) generateHashedString:(NSString *) data;
 + (NSString *) base64StringFromData:(NSData *)data length:(int)length;
 + (NSData *) base64DataFromString:(NSString *)string;
+#pragma response
++ (NSMutableArray *) postVenues:(NSData *) value;
+
 @end

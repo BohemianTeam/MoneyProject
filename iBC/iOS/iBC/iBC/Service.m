@@ -44,6 +44,8 @@ NSString *MBErrorDomain = @"com.iBC";
     }
     return self;
 }
+#pragma API method
+#pragma mark -
 
 - (void) getStatus {
     self.action = ActionTypeGetStatus;
@@ -67,7 +69,36 @@ NSString *MBErrorDomain = @"com.iBC";
     [params release];
 }
 
+- (void) getEventList {
+    self.action = ActionTypeGetEventList;
+    
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setObject:[Util getCurrentTimeString] forKey:@"d"];
+    [params setObject:KinectiaAppId forKey:@"i"];
+    [params setObject:[Util getRequestParameterString] forKey:@"h"];
+    
+    NSString *url = [NSString stringWithFormat:@"%@/getEvents", API_URL];
+    [self doRequestWithURL:url params:params];
+    [params release];
 
+}
+
+- (void) getVenueList:coordinates {
+    self.action = ActionTypeGetVenueList;
+    
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setObject:[Util getCurrentTimeString] forKey:@"d"];
+    [params setObject:KinectiaAppId forKey:@"i"];
+    [params setObject:[Util getRequestParameterString] forKey:@"h"];
+    [params setObject:coordinates forKey:@"c"];
+    
+    NSString *url = [NSString stringWithFormat:@"%@/getVenues", API_URL];
+    [self doRequestWithURL:url params:params];
+    [params release];
+
+}
+
+#pragma mark -
 - (void) getAllVideo {
     self.action = ActionTypeGetAllVideo;
     
@@ -294,6 +325,11 @@ NSString *MBErrorDomain = @"com.iBC";
                     [_delegate performSelector:sel withObject:self withObject:nil];
                 }
 
+                break;
+            }
+            case ActionTypeGetVenueList:
+            {
+                NSMutableArray *listVenuesResponse = [Util postVenues:buff];
                 break;
             }
         }
