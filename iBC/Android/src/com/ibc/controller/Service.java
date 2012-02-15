@@ -8,7 +8,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
@@ -18,6 +17,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.ibc.iBCApplication;
 import com.ibc.util.Config;
 import com.ibc.util.Util;
 
@@ -56,17 +56,41 @@ public class Service implements Runnable {
 		_isBitMap = false;
 		_includeDid = true;
 	}
-	//service method
+	/**
+	 * Service Method
+	 */
+	
+	
 	public void getStatus() {
 		_action = ServiceAction.ActionGetStatus;
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("i", Config.KinectiaAppId);
-		params.put("d", Util.getCurrentTimeString());
-		params.put("h", Util.hashStringParameter());
 		
-		request("/getStatus/", params);
+		request("/getStatus/", iBCApplication.sharedInstance().getServiceParams());
 	}
-	//service processing
+	
+	public void getVenues(String lat,String lon) {
+		_action = ServiceAction.ActionGetVenues;
+		
+		Map<String, String> params = iBCApplication.sharedInstance().getServiceParams();
+		String c = lat + "~" + lon;
+		params.put("c", c);
+		
+		request("/getVenues/", params);
+	}
+	
+	public void getVenue(String venueCode) {
+		_action = ServiceAction.ActionGetVenue;
+		
+		Map<String, String> params = iBCApplication.sharedInstance().getServiceParams();
+		params.put("vc", venueCode);
+		
+		request("/getVenue/", params);
+	}
+	
+	/**
+	 * Service Processing
+	 * 
+	 */
+	
 	public boolean request(String url, Map<String, String> params) {
 		return request(url, params, true, true, false);
 	}
@@ -195,7 +219,13 @@ public class Service implements Runnable {
 			if (isOK) {
 				switch (act) {
 				case ActionGetStatus:
-					resObj = result;
+					resObj = parser.getStatusResponse();
+					break;
+				case ActionGetVenues:
+					resObj = parser.getVenuesResponse(result);
+					break;
+				case ActionGetVenue:
+					resObj = parser.getVenueResponse(result);
 					break;
 				default:
 					break;

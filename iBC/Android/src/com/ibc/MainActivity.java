@@ -1,6 +1,13 @@
 package com.ibc;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.widget.ListView;
 
 import com.ibc.adapter.MenuListAdapter;
 import com.ibc.controller.ResultCode;
@@ -9,11 +16,9 @@ import com.ibc.controller.ServiceAction;
 import com.ibc.controller.ServiceListener;
 import com.ibc.controller.ServiceRespone;
 import com.ibc.model.MenuItemData;
-
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.widget.ListView;
+import com.ibc.model.service.response.StatusResponse;
+import com.ibc.model.service.response.VenueResponse;
+import com.ibc.model.service.response.VenuesResponse;
 
 public class MainActivity extends Activity {
 	
@@ -33,7 +38,7 @@ public class MainActivity extends Activity {
         mListView.setOnItemClickListener(adapter);
         
         mSVGetStatus = new Service(_listener);
-        mSVGetStatus.getStatus();
+        mSVGetStatus.getVenues("41.385756", "2.164129");
         show();
     }
     
@@ -65,15 +70,63 @@ public class MainActivity extends Activity {
 		
 		@Override
 		public void onComplete(Service service, ServiceRespone result) {
+			hide();
 			if (result.getAction() == ServiceAction.ActionGetStatus) {
-				hide();
 				if (result.getResultCode() == ResultCode.Success) {
-					String status = (String) result.getData();
-					System.out.println("status = " + status);
+					StatusResponse status = (StatusResponse) result.getData();
+					System.out.println("status = " + status.getMindt());
 				} else {
 					System.out.println(result.getResultCode());
+				}
+			} else if (result.getAction() == ServiceAction.ActionGetVenues) {
+				if (result.getResultCode() == ResultCode.Success) {
+					@SuppressWarnings("unchecked")
+					List<VenuesResponse> status = (List<VenuesResponse>) result.getData();
+					System.out.println("status = " + status.get(0).venuesName);
+					
+					Service sv = new Service(_listener);
+					sv.getVenue(status.get(0).venuesCode);
+					show();
+				} else {
+					System.out.println(result.getResultCode());
+				}
+			} else if (result.getAction() == ServiceAction.ActionGetVenue) {
+				hide();
+				if (result.getResultCode() == ResultCode.Success) {
+					@SuppressWarnings("unused")
+					VenueResponse response = (VenueResponse) result.getData();
+					//Extension methods 
+					ExtensionList list = new ExtensionList();
+					list.add("b");
+					list.add("c");
+					list.add("a");
+					System.out.println(list.toString());
+					list.sort();
+					System.out.println(list.toString());
 				}
 			}
 		}
 	};
+	
+	@SuppressWarnings("serial")
+	public class ExtensionList extends ArrayList<String> {
+
+		public void sort() { //or import static java.util.Collections.sort;
+			Collections.sort(this);
+		}
+		
+		public String first() {
+			return this.get(0);
+		}
+		
+		public String last() {
+			return this.get(this.size() - 1);
+		}
+		/*
+		public void toPolar(double x, double y, {double, double => void } rThetaReceiver) {
+			
+		}
+		*/
+		//void a() default {System.out.println("a")};
+	}
 }
