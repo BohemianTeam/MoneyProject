@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
@@ -80,7 +81,7 @@ public class Service implements Runnable {
 	public void getVenue(String venueCode) {
 		_action = ServiceAction.ActionGetVenue;
 		
-		Map<String, String> params = iBCApplication.sharedInstance().getServiceParams();
+		Map<String, String> params = new HashMap<String, String>(iBCApplication.sharedInstance().getServiceParams());
 		params.put("vc", venueCode);
 		
 		request("/getVenue/", params);
@@ -90,6 +91,7 @@ public class Service implements Runnable {
 		_action = ServiceAction.ActionGetEvents;
 		
 		Map<String, String> params = iBCApplication.sharedInstance().getServiceParams();
+		
 		params.put("f", f);
 		params.put("dt", dt);
 		
@@ -99,7 +101,7 @@ public class Service implements Runnable {
 	public void getEvent(String eventCode) {
 		_action = ServiceAction.ActionGetEvent;
 		
-		Map<String, String> params = iBCApplication.sharedInstance().getServiceParams();
+		Map<String, String> params = new HashMap<String, String>(iBCApplication.sharedInstance().getServiceParams());
 		params.put("ec", eventCode);
 		
 		request("/getEvent/", params);
@@ -283,7 +285,7 @@ public class Service implements Runnable {
 					resObj = parser.getEventResponse(result);
 					break;
 				case ActionGetStarredList:
-					resObj = result;//parser.getStarredList(result);
+					resObj = parser.getStarredList(result);
 					break;
 				case ActionGetStarred:
 					resObj = result;

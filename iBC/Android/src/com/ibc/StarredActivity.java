@@ -33,6 +33,10 @@ public class StarredActivity extends Activity{
 	
 	Map<String, Service> _queue;
 	Service _currentlyRunning;
+	
+	int increase = 0;
+	int total = 0;
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,26 +50,53 @@ public class StarredActivity extends Activity{
         _queue = new LinkedHashMap<String, Service>();
 		_listView = (ListView) findViewById(R.id.list);
 		
+		List<String> venueCodes =  (List<String>) iBCApplication.sharedInstance().getData("venue_codes");
+		List<String> eventCodes =  (List<String>) iBCApplication.sharedInstance().getData("event_codes");
+		
+		if (venueCodes !=null && eventCodes != null) {
+			total = venueCodes.size() + eventCodes.size();
+			for (String code : venueCodes) {
+				add(code, true);
+			}
+			for (String code : eventCodes) {
+				add(code, false);
+			}
+		} else {
+			buildByCorrectInstID();
+		}
+		show();
+	}
+
+	@SuppressWarnings("unchecked")
+	private void buildByCorrectInstID() {
 		List<VenuesResponse> venues = (List<VenuesResponse>) iBCApplication.sharedInstance().getData("venues");
 		List<EventsResponse> events = (List<EventsResponse>) iBCApplication.sharedInstance().getData("events");
-		show();
+		total = 0;
+		if (venues != null && 4 > venues.size()) {
+			
+			total += venues.size();
+		} else {
+			total += 4;
+		}
+		if (4 > events.size()) {
+			total += events.size();
+		} else {
+			total += 4;
+		}
 		if (venues != null) { 
-			for (VenuesResponse venuesResponse : venues) {
+			for (int i = 0;i < total / 2;i++) {
+			VenuesResponse venuesResponse = venues.get(i);
 				String venueCode = venuesResponse.venuesCode;
-//				System.out.println(venueCode);
 				add(venueCode, true);
 			}
 		}
 		if (events != null) {
-			for (EventsResponse eventsResponse : events) {
+			for (int i = 0; i < total / 2; i++) {
+				EventsResponse eventsResponse = events.get(i);
 				String eventCode = eventsResponse.eventCode;
-//				System.out.println(eventsResponse.eventCode);
 				add(eventCode, false);
 			}
 		}
-//		buildVenuesList();
-//		buildEventsList();
-		buildStarredList();
 	}
 	
 	private synchronized void runnext(boolean isVenue) {
@@ -75,13 +106,14 @@ public class StarredActivity extends Activity{
 		} else {
 			String code = _queue.keySet().iterator().next();
 			_currentlyRunning = _queue.remove(code);
-			System.out.println(code);
+			
 			if (isVenue) {
 				_currentlyRunning.getVenue(code);
 			} else {
 				_currentlyRunning.getEvent(code);
 			}
 			
+			System.out.println("running : " +code);
 		}
 	}
 	
@@ -89,7 +121,7 @@ public class StarredActivity extends Activity{
 		System.out.println("code put : " + venueCode);
 		_queue.put(venueCode, new Service(_listener));
 //		if (_currentlyRunning != null) {
-			System.out.println("running :" + venueCode);
+			System.out.println("add :" + venueCode);
 			runnext(isVenue);
 			
 //		}
@@ -99,7 +131,8 @@ public class StarredActivity extends Activity{
 		
 		@Override
 		public void onComplete(Service service, ServiceRespone result) {
-
+			increase++;
+			
 			if (result.getAction() == ServiceAction.ActionGetVenue) {
 				if (result.getResultCode() == ResultCode.Success) {
 					VenueResponse data = (VenueResponse) result.getData();
@@ -110,6 +143,10 @@ public class StarredActivity extends Activity{
 					EventResponse data = (EventResponse) result.getData();
 					events.add(data);
 				}
+			}
+			if (increase == total) {
+				buildStarredList();
+				hide();
 			}
 		}
 	};
@@ -123,7 +160,7 @@ public class StarredActivity extends Activity{
     		_dialog.dismiss();
     	}
     }
-	
+	/*
 	private void buildVenuesList() {
 		
 		VenueResponse venue = new VenueResponse();
@@ -155,7 +192,7 @@ public class StarredActivity extends Activity{
 		ev.price = "De 22 a 26 Û";
 		events.add(ev);
 	}
-	
+	*/
 	private void buildStarredList() {
 		StarredListAdapter adapter = new StarredListAdapter(events, venues, this);
 		_listView.setAdapter(adapter);

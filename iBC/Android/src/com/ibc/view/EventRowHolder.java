@@ -10,6 +10,8 @@ import java.net.URL;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ImageView;
@@ -53,12 +55,14 @@ public class EventRowHolder  {
 	}
 	
 	public void display() {
-		_title.setText(_data.eventTitle);
-		_venueName.setText(_data.venueName);
-		_price.setText(_data.price);
-		_dates.setText(_data.dates);
-		
-		getImage();
+		if (null != _data) {
+			_title.setText(_data.eventTitle);
+			_venueName.setText(_data.venueName == null ? "La Villarroel" : _data.venueName);
+			_price.setText(_data.price);
+			_dates.setText(_data.dates);
+
+			getImage();
+		}
 	}
 	
 	private void getImage() {
@@ -148,7 +152,8 @@ public class EventRowHolder  {
 					buff.compress(Bitmap.CompressFormat.PNG, 100, out);
 					out.flush();
 					out.close();
-					_img.setImageBitmap(buff);
+					Drawable drawable = new BitmapDrawable(buff);
+					_img.setBackgroundDrawable(drawable);
 					
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -44,7 +44,7 @@
 			android:layout_height="wrap_content"
 			android:textStyle="bold"
 			android:textColor="#53A8CC"
-			android:textSize="20dp"
+			android:textSize="18dp"
 			android:text="BABEL(WORDS)"
 			android:layout_marginLeft="5dp"
 		/>
@@ -60,9 +60,10 @@
 					android:layout_marginLeft="5dp"
 			>
 				<ImageView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
+					android:layout_width="78dip"
+					android:layout_height="106dip"
 					android:background="@drawable/xx"
+					android:scaleType="fitXY"
 					android:id="@+id/img"
 				/>
 				<ProgressBar
@@ -85,7 +86,7 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:textColor="#666666"
-					android:textSize="14dip"
+					android:textSize="13dip"
 					android:text="Morcat de les Flors" 
 				/>
 				
@@ -100,7 +101,7 @@
 						android:text="15.04.11 - 17.04.11"
 						android:textColor="#666666"
 						android:textStyle="bold"
-						android:textSize="15dip"
+						android:textSize="14dip"
 						android:layout_weight="1.0"
 						android:id="@+id/dates"
 					/>
@@ -111,7 +112,7 @@
 						android:text="16 $"
 						android:textColor="#CC3366"
 						android:textStyle="bold"
-						android:textSize="16dip"
+						android:textSize="14dip"
 						android:layout_gravity="right"
 						android:id="@+id/price"
 					/>

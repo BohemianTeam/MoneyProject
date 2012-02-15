@@ -22,6 +22,7 @@ import com.ibc.model.service.response.EventsResponse;
 import com.ibc.model.service.response.ImageResponse;
 import com.ibc.model.service.response.InfoBlocksResponse;
 import com.ibc.model.service.response.InstIDResponse;
+import com.ibc.model.service.response.StarredResponse;
 import com.ibc.model.service.response.StatusResponse;
 import com.ibc.model.service.response.VenueResponse;
 import com.ibc.model.service.response.VenueRoomResponse;
@@ -191,11 +192,16 @@ public class DataParser {
 		return response;
 	}
 
-	public List<String> getStarredList(String result) {
+	public List<StarredResponse> getStarredList(String result) {
 		if (_root == null && _array == null) {
 			return null;
 		}
-		return null;
+		List<StarredResponse> list = new ArrayList<StarredResponse>();
+		Type t = new TypeToken<List<StarredResponse>>(){}.getType();
+		Gson gson = new Gson();
+		list = gson.fromJson(result, t);
+		
+		return list;
 	}
 
 	public InstIDResponse getInstID(String result) {

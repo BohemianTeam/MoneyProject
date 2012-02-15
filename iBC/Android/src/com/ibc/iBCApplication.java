@@ -32,6 +32,7 @@ public class iBCApplication extends Application {
 		_diffParamsWithSecurityParams.put("i", Config.KinectiaAppId);
 		_sharedManager = new SharedPreferencesManager(getApplicationContext());
 		String d = _sharedManager.loadInstID();
+		d = "823ab7fc7820d402";
 		if (null != d) {
 			_diffParamsWithSecurityParams.put("d", d);
 			String h = Util.hashMac(d + Config.KinectiaAppId);
@@ -49,7 +50,7 @@ public class iBCApplication extends Application {
 		return _instance;
 	}
 	
-	public Map<String, String> getServiceParams() {
+	public synchronized Map<String, String> getServiceParams() {
 		return _paramsWithSecurityParams;
 	}
 	

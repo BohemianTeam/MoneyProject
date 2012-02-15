@@ -56,17 +56,37 @@ public class StarredListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		convertView = getViewForType(position);
+		System.out.println(position);
 		Object object = getItem(position);
-		if (object instanceof VenueResponse) {
-			VenueResponse data = (VenueResponse) object;
-			VenueRowHolder rowHolder = new VenueRowHolder(convertView, data, _context);
-			rowHolder.display();
-		} else {
-			EventResponse data = (EventResponse) object;
-			EventRowHolder rowHolder = new EventRowHolder(_context, convertView, data);
-			rowHolder.display();
-		}
+		VenueRowHolder vnRowHolder;
+		EventRowHolder evRowHolder;
+//		if (convertView == null) {
+			convertView = getViewForType(getItemViewType(position));
+			if (object instanceof VenueResponse) {
+				VenueResponse data = (VenueResponse) object;
+				vnRowHolder = new VenueRowHolder(convertView,
+						data, _context);
+				vnRowHolder.display();
+				convertView.setTag(vnRowHolder);
+			} else {
+				EventResponse data = (EventResponse) object;
+				evRowHolder = new EventRowHolder(_context,
+						convertView, data);
+				evRowHolder.display();
+				convertView.setTag(evRowHolder);
+			}
+//		} else {
+			/*
+			if (object instanceof VenueResponse) {
+				vnRowHolder = (VenueRowHolder) convertView.getTag();
+				vnRowHolder.display();
+			} else {
+				evRowHolder = (EventRowHolder) convertView.getTag();
+				evRowHolder.display();
+			}
+			*/
+//		}
+		
 		return convertView;
 	}
 

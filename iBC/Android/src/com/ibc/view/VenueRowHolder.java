@@ -10,7 +10,10 @@ import java.net.URL;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -50,9 +53,9 @@ public class VenueRowHolder {
 		_title.setText(_data.venueName);
 		if (_city != null) {
 			if (null != _data && _data.address != null) {
-				_city.setText(_data.address);
+				_city.setText(Html.fromHtml(_data.address));
 			} else {
-				_city.setText("Barcelona");
+				_city.setText("Ciutat Villa,Barcelona");
 			}
 		}
 		getImage();
@@ -145,7 +148,8 @@ public class VenueRowHolder {
 					buff.compress(Bitmap.CompressFormat.PNG, 100, out);
 					out.flush();
 					out.close();
-					_img.setImageBitmap(buff);
+					Drawable drawable = new BitmapDrawable(buff);
+					_img.setBackgroundDrawable(drawable);
 					
 				} catch (Exception e) {
 					e.printStackTrace();
