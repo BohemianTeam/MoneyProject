@@ -1,5 +1,6 @@
 package com.ibc;
 
+import java.util.Date;
 import java.util.Map;
 
 import com.ibc.library.CalendarProvider;
@@ -82,6 +83,10 @@ public class SplashActivity extends Activity {
         backgroundTask.execute();
 
         Log.d(TAG, "onCreate ending");
+      //processing
+        CalendarProvider provider = CalendarProvider.sharedInstance();
+        provider.hasCalendar();
+        CalendarProvider.addToCalendar(app, "demon hunter", Date.UTC(2012, 2, 16, 15, 0, 0), Date.UTC(2012, 2, 16, 16, 0, 0));
     }
    
    ServiceListener _listener = new ServiceListener() {
@@ -153,10 +158,6 @@ public class SplashActivity extends Activity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            
-            //processing
-            CalendarProvider provider = CalendarProvider.sharedInstance();
-            provider.hasCalendar();
             
             return null;
         }
