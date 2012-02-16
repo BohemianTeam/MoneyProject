@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content"
+			android:background="@android:color/white"
+			android:orientation="vertical"
+>
+<LinearLayout
+	android:id="@+id/venue_header"
+	 android:layout_width="fill_parent"
+	 android:layout_height="wrap_content"
+	 android:background="@drawable/venue_title"
+/>
+
+<LinearLayout 
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content"
+	android:layout_marginTop="5dp"
+	android:layout_marginBottom="5dp"
+>
+	<RelativeLayout
+		 android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:layout_margin="10dp"
+	>
+		<ImageView
+			android:id="@+id/img"
+			android:layout_width="120dip" 
+			android:layout_height="70dip"
+			android:scaleType="fitXY"
+			android:background="@drawable/x"
+		/>
+		<ProgressBar
+			android:id="@+id/progress"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true" 
+		>
+		</ProgressBar>
+	</RelativeLayout>
+	
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:layout_weight="1.0"
+		android:layout_gravity="center"
+	>
+		<TextView
+			android:id="@+id/title"
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content"
+			android:textStyle="bold"
+			android:textColor="#53A8CC"
+			android:textSize="18dp"
+			android:text="ESPAL 1"
+		/>
+		<TextView
+			android:id="@+id/city"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textColor="#666666"
+					android:textSize="12dip"
+					android:text="Ciutat Villa, Barcelona" 
+				/>
+	</LinearLayout>
+	<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:background="@drawable/black_accessory"
+				android:layout_marginLeft="2dp" 
+				android:layout_marginRight="2dp"
+			/>
+</LinearLayout>
+</LinearLayout>

@@ -1,16 +1,15 @@
 package com.ibc.view;
 
-import com.ibc.R;
-import com.ibc.model.MenuItemData;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.ibc.R;
+import com.ibc.model.MenuItemData;
 
 public class ListMenuRowHolder extends RelativeLayout{
 

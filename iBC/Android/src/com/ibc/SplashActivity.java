@@ -1,5 +1,17 @@
 package com.ibc;
 
+import java.util.Map;
+
+import com.ibc.library.CalendarProvider;
+import com.ibc.model.service.response.InstIDResponse;
+import com.ibc.service.ResultCode;
+import com.ibc.service.Service;
+import com.ibc.service.ServiceAction;
+import com.ibc.service.ServiceListener;
+import com.ibc.service.ServiceRespone;
+import com.ibc.util.Config;
+import com.ibc.util.Util;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -58,14 +70,41 @@ public class SplashActivity extends Activity {
                 targetActivity = extras.getString("targetActivity");
             }
         }
-
+        //get inst id
+        iBCApplication app = iBCApplication.sharedInstance();
+        String id = app.getSharedPreferencesManager().loadInstID();
+        if (null == id) {
+        	Service service = new Service(_listener);
+        	service.getInstID();
+        }
         //start loading the application data
         backgroundTask = new ApplicationDataLoadingTask();
         backgroundTask.execute();
 
         Log.d(TAG, "onCreate ending");
     }
+   
+   ServiceListener _listener = new ServiceListener() {
 
+		@Override
+		public void onComplete(Service service, ServiceRespone result) {
+			if (result.getAction() == ServiceAction.ActionGetInstID) {
+				if (result.getResultCode() == ResultCode.Success) {
+					InstIDResponse response = (InstIDResponse) result.getData();
+					String d = response.instID;
+					iBCApplication app = iBCApplication.sharedInstance();
+					app.getSharedPreferencesManager().saveInstID(d);
+					Map<String, String> map = app.getDiffServiceParams();
+					map.put("d", d);
+					String h = Util.hashMac(d + Config.KinectiaAppId);
+					map.put("h", h);
+					app.setDiffParams(map);
+				}
+			}
+		}
+		
+	};
+	
     @Override
     public void onResume() {
         Log.d(TAG, "onResume called");
@@ -101,20 +140,24 @@ public class SplashActivity extends Activity {
     }
 
     public class ApplicationDataLoadingTask extends AsyncTask<Void, Void, Void> {
+    	
         protected void onPreExecute() {
             Log.d(TAG, "ApplicationDataLoadingTask::onPreExecute");
         }
     
         protected Void doInBackground(Void... params) {
             Log.d(TAG, "ApplicationDataLoadingTask::doInBackground");
-
+            
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            //proccessing
-
+            
+            //processing
+            CalendarProvider provider = CalendarProvider.sharedInstance();
+            provider.hasCalendar();
+            
             return null;
         }
     
