@@ -18,8 +18,10 @@ typedef enum {
     ActionTypeGetVideo,
     ActionTypeGetAllVideo,
     ActionTypeGetStatus,
+    ActionTypeGetInstlID,
     ActionTypeGetVenueList,
     ActionTypeGetEventList,
+    ActionTypeGetStarred,
 } ActionType;
 
 typedef enum {
@@ -58,7 +60,9 @@ typedef enum {
 - (void) getVideo:(NSString *) title;
 - (void) getAllVideo;
 - (void) getStatus;
+- (void) getInstID;
 - (void) getVenueList:(NSString *) coordinates;
 - (void) getEventList;
+- (void) getStarred;
 - (void) stop;
 @end

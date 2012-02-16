@@ -10,6 +10,7 @@
 #import "CJSONDeserializer.h"
 #import "CJSONSerializer.h"
 #import "VideoData.h"
+#import "VideoSubView.h"
 @interface VideoSubViewController()
 - (void) mockupSubtitle;
 @end
@@ -40,7 +41,7 @@
     self.title = @"Video View Controller";
 //    _playButton.enabled = FALSE;
 //    _doneButton.enabled = FALSE;
-//    _nextButton.enabled = FALSE;
+//    _nextButton.enabled = FALSE;`
     _currentIndex = 0;
     NSURL *localPath = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"LARVA_Electronic Shock" ofType:@"mp4"]];
     NSURL *videoUrl = localPath;//[NSURL URLWithString:videoPath];
@@ -62,6 +63,33 @@
     _subtitle = [[Subtitle alloc] init];
 
     [self loadSubtitle];
+    UIView *tempView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 240, 300)] autorelease];
+    [tempView setBackgroundColor:[UIColor blueColor]];
+    
+    UIScrollView *videoSubScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 240, 300)];
+    videoSubScroll.contentSize = CGSizeMake(240*3, 300);
+    videoSubScroll.delegate = self;
+    [tempView addSubview:videoSubScroll];
+    
+    UITextView *tvTest1 = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 240, 300)];
+    tvTest1.text = @"He hated the women of the City. That's why he could get off to watching them taking shits and pissing and splattering thick blood everywhere during 'that time of the month'. He loved to be able to see them in their most private, their most guarded moments. Without all their expensive clothes, and most importantly, without them even knowing. He gained privilege to how dirty and disgusting they really were when the bathroom door was shut tight behind them and they thought that no one was looking in. He came when it was a skinny petite chick taking a massive shit, that seemed to go on and on forever. Or the long thick stream of piss and the shit coming out together in unison at that the same time. Or a particularly clean- looking, brand-wearing heiress dribbling out or her ass a relentless stream of dirty diarrhea. Those times he would come so hard it would end up catapulting a few feet across and onto the coffee table.";
+    tvTest1.bounces = YES;
+    tvTest1.editable = NO;
+    [videoSubScroll addSubview:tvTest1];
+    
+    UITextView *tvTest2 = [[UITextView alloc] initWithFrame:CGRectMake(241, 0, 240, 300)];
+    tvTest2.text = @"I was told by my doctor that it was a scientific fact that people who talk to themselves during their waking day, they will have more of a tendency to hear voices in their sleep and will suffer from more listlessness and restlessness during their sleep.All the poor of the city. I watched him hastily collecting cardboard like kindling. Sunset comes closing in on him.The more I spent ringing people through it began dawning on me that life is a cash register. Or: Cash Register-Karma. One person pays with the bills and change that will then become the next persons change and with out even knowing it what was once yours has now become theirs. They have been connected quickly for that one transaction in time and space. Money their only tangible connection. And i am the only one to know it. I once wrote this poem or song about it. It goes:She came up crying, looked like she had been dying She still had to pay in cash, I was afraid to ask.He came up next, next to no clue Her tears his change been through";
+    tvTest2.bounces = YES;
+    tvTest2.editable = NO;
+    [videoSubScroll addSubview:tvTest2];
+    
+    UITextView *tvTest3 = [[UITextView alloc] initWithFrame:CGRectMake(240*2+2, 0, 240, 300)];
+    tvTest3.text = @"asdjfhjasd f";
+    tvTest3.bounces = YES;
+    tvTest3.editable = NO;
+    [videoSubScroll addSubview:tvTest3];
+    
+    [self.view addSubview:tempView];
 }
 
 - (void)viewDidUnload
@@ -305,7 +333,6 @@
 }
 
 #pragma mark - UITableViewDatasource
-
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
         return _data.title;
@@ -357,5 +384,36 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 30;
+}
+
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    NSLog(@"scrollViewDidEndDecelerating");
+    
+    CGPoint currentloca = scrollView.contentOffset;
+    int temp = (int)currentloca.x % 240;
+    int indexSub = (int)currentloca.x / 240;
+    if(temp >= 240/2){
+        [scrollView setContentOffset:CGPointMake((indexSub+1)*240, 0)];
+    }else{
+        [scrollView setContentOffset:CGPointMake(indexSub*240, 0)];
+    }
+}
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    CGPoint currentloca = scrollView.contentOffset;
+    int temp = (int)currentloca.x % 240;
+    int indexSub = (int)currentloca.x / 240;
+    if(temp >= 240/2){
+        [scrollView setContentOffset:CGPointMake((indexSub+1)*240, 0)];
+    }else{
+        [scrollView setContentOffset:CGPointMake(indexSub*240, 0)];
+    }
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    NSLog(@"scrollViewDidScroll");
+    
 }
 @end

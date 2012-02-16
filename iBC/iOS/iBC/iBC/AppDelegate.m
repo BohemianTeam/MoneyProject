@@ -9,6 +9,10 @@
 #import "AppDelegate.h"
 
 #import "ViewController.h"
+#import "config.h"
+#import "Service.h"
+#import "ResponseObj.h"
+#import "Util.h"
 
 @implementation AppDelegate
 
@@ -21,9 +25,22 @@
     [_viewController release];
     [super dealloc];
 }
-
+- (void)checkUniqueInsKey
+{
+    NSString *instID = [Util getInstID];
+    if(instID == nil){
+        Service *service = [[Service alloc] init];
+        service.canShowAlert = YES;
+        service.canShowLoading = YES;
+        service.delegate = self;
+        [service getInstID];
+    }
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //check existed of unique key
+    [self checkUniqueInsKey];
+        
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -74,6 +91,24 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
+}
+#pragma mark - servide delegate
+- (void) mServiceGetInstIDSucces:(Service *) service responses:(id) response {
+    NSLog(@"API getInstID : success");
+    
+    ResponseObj *resObj = [[ResponseObj alloc] initWithDataResponse:(NSData*)response];
+    NSString *instID = [resObj getObjectForKey:InstID];
+    NSLog(@"instID: %@", [resObj getObjectForKey:InstID]);
+    
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    if(standardUserDefaults)
+    {
+        [standardUserDefaults setObject:instID forKey:kAppInstall];
+    }
+}
+
+- (void) mService:(Service *) service didFailWithError:(NSError *) error {
+    
 }
 
 @end

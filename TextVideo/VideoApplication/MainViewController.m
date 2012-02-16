@@ -124,17 +124,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     VideoData *data = [_data.videos objectAtIndex:indexPath.row];
-    if (_download) {
-        [_download stop];
-        _download = nil;
-    }
-    _download = [[DownloadService alloc] initWithVideoData:data andSuperView:self.view];
-    [_download downloadWithASIRequest];
-    /*
+//    if (_download) {
+//        [_download stop];
+//        _download = nil;
+//    }
+//    _download = [[DownloadService alloc] initWithVideoData:data andSuperView:self.view];
+//    [_download downloadWithASIRequest];
+    
     VideoSubViewController *vc = [[VideoSubViewController alloc] initWithNibName:@"ViewController" bundle:nil video:data];
     [self.navigationController pushViewController:vc animated:YES];
     [vc release];
-    */
+    
 }
 
 

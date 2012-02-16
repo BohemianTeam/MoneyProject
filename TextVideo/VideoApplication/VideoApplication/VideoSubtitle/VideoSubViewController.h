@@ -12,7 +12,7 @@
 #import "SidaViewController.h"
 
 @class VideoData;
-@interface VideoSubViewController : SidaViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface VideoSubViewController : SidaViewController <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate> {
     IBOutlet    UIView                  *_movieView;
     IBOutlet    UITableView             *_tableView;
 //    IBOutlet    UIBarButtonItem         *_playButton;

@@ -51,6 +51,7 @@
 		664E1D2114D650C1002C0861 /* LoadingDialogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 664E1D2014D650C1002C0861 /* LoadingDialogView.m */; };
 		665ABA7214C7D41A00564A51 /* DownloadService.m in Sources */ = {isa = PBXBuildFile; fileRef = 665ABA7114C7D41A00564A51 /* DownloadService.m */; };
 		665ABA7514C7F05C00564A51 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 665ABA7414C7F05C00564A51 /* Security.framework */; };
+		6664A0B414E0522D00C7A352 /* VideoSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6664A0B314E0522D00C7A352 /* VideoSubView.m */; };
 		6675277A14C65A9500ED0500 /* VideoData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6675277914C65A9500ED0500 /* VideoData.m */; };
 		6675277E14C65F6500ED0500 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6675277C14C65F6500ED0500 /* libsqlite3.dylib */; };
 		6675277F14C65F6500ED0500 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6675277D14C65F6500ED0500 /* libz.dylib */; };
@@ -150,6 +151,8 @@
 		665ABA7014C7D41A00564A51 /* DownloadService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadService.h; sourceTree = "<group>"; };
 		665ABA7114C7D41A00564A51 /* DownloadService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadService.m; sourceTree = "<group>"; };
 		665ABA7414C7F05C00564A51 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		6664A0B214E0522D00C7A352 /* VideoSubView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoSubView.h; sourceTree = "<group>"; };
+		6664A0B314E0522D00C7A352 /* VideoSubView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoSubView.m; sourceTree = "<group>"; };
 		6675277814C65A9500ED0500 /* VideoData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoData.h; sourceTree = "<group>"; };
 		6675277914C65A9500ED0500 /* VideoData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoData.m; sourceTree = "<group>"; };
 		6675277C14C65F6500ED0500 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -439,6 +442,8 @@
 				6675280514C6CAEF00ED0500 /* VideoSubViewController.h */,
 				6675280614C6CAEF00ED0500 /* VideoSubViewController.m */,
 				6675280714C6CAEF00ED0500 /* ViewController.xib */,
+				6664A0B214E0522D00C7A352 /* VideoSubView.h */,
+				6664A0B314E0522D00C7A352 /* VideoSubView.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -549,6 +554,7 @@
 				6649CB3F14D7D13F00972263 /* ASINetworkQueue.m in Sources */,
 				6649CB4714D7DA5F00972263 /* MBProgressHUD.m in Sources */,
 				6649CB5014D7E16F00972263 /* Reachability.m in Sources */,
+				6664A0B414E0522D00C7A352 /* VideoSubView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
