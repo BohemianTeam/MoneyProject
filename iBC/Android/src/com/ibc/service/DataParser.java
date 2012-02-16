@@ -22,6 +22,7 @@ import com.ibc.model.service.response.EventsResponse;
 import com.ibc.model.service.response.ImageResponse;
 import com.ibc.model.service.response.InfoBlocksResponse;
 import com.ibc.model.service.response.InstIDResponse;
+import com.ibc.model.service.response.StarredListResponse;
 import com.ibc.model.service.response.StarredResponse;
 import com.ibc.model.service.response.StatusResponse;
 import com.ibc.model.service.response.VenueResponse;
@@ -192,12 +193,12 @@ public class DataParser {
 		return response;
 	}
 
-	public List<StarredResponse> getStarredList(String result) {
+	public List<StarredListResponse> getStarredList(String result) {
 		if (_root == null && _array == null) {
 			return null;
 		}
-		List<StarredResponse> list = new ArrayList<StarredResponse>();
-		Type t = new TypeToken<List<StarredResponse>>(){}.getType();
+		List<StarredListResponse> list = new ArrayList<StarredListResponse>();
+		Type t = new TypeToken<List<StarredListResponse>>(){}.getType();
 		Gson gson = new Gson();
 		list = gson.fromJson(result, t);
 		
@@ -219,6 +220,32 @@ public class DataParser {
 		Gson gson = new Gson();
 		EventResponse response = new EventResponse();
 		response = gson.fromJson(result, EventResponse.class);
+		return response;
+	}
+
+	public StarredResponse getStarred(String result) {
+		if (_root == null && _array == null) {
+			return null;
+		}
+		StarredResponse response = new StarredResponse();
+		Gson gson = new Gson();
+		try {
+			JSONArray venues = _root.getJSONArray("v");
+			if (null != venues) {
+				List<VenuesResponse> lv = new ArrayList<VenuesResponse>();
+				Type t = new TypeToken<List<VenuesResponse>>() {}.getType();
+				lv = gson.fromJson(venues.toString(), t);
+				response.venues = lv;
+			}
+			JSONArray events = _root.getJSONArray("e");
+			if (null != events) {
+				List<EventsResponse> le = new ArrayList<EventsResponse>();
+				Type t = new TypeToken<List<EventsResponse>>(){}.getType();
+				le = gson.fromJson(events.toString(), t);
+				response.events = le;
+			}
+		} catch (JSONException e) {
+		}
 		return response;
 	}
 }

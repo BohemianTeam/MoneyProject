@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.ibc.adapter.StarredListAdapter;
 import com.ibc.model.service.response.EventResponse;
 import com.ibc.model.service.response.EventsResponse;
+import com.ibc.model.service.response.StarredResponse;
 import com.ibc.model.service.response.VenueResponse;
 import com.ibc.model.service.response.VenuesResponse;
 import com.ibc.service.ResultCode;
@@ -37,7 +38,6 @@ public class StarredActivity extends Activity{
 	int increase = 0;
 	int total = 0;
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,6 +50,23 @@ public class StarredActivity extends Activity{
         _queue = new LinkedHashMap<String, Service>();
 		_listView = (ListView) findViewById(R.id.list);
 		
+		StarredResponse response = (StarredResponse) iBCApplication.sharedInstance().getData("starred");
+		if (response != null) {
+			List<VenuesResponse> venues = response.venues;
+			List<EventsResponse> events = response.events;
+			
+			if (venues.size() == 0 && events.size() == 0) {
+				Service service = new Service(_listener);
+				service.getStarred();
+				show();
+			} else {
+				Service service = new Service(_listener);
+				service.getEventSessions(events.get(1).eventCode);
+				StarredListAdapter adapter = new StarredListAdapter(events, venues, this);
+				_listView.setAdapter(adapter);
+			}
+		}
+		/*
 		List<String> venueCodes =  (List<String>) iBCApplication.sharedInstance().getData("venue_codes");
 		List<String> eventCodes =  (List<String>) iBCApplication.sharedInstance().getData("event_codes");
 		
@@ -64,10 +81,11 @@ public class StarredActivity extends Activity{
 		} else {
 			buildByCorrectInstID();
 		}
-		show();
+		*/
+//		show();
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	private void buildByCorrectInstID() {
 		List<VenuesResponse> venues = (List<VenuesResponse>) iBCApplication.sharedInstance().getData("venues");
 		List<EventsResponse> events = (List<EventsResponse>) iBCApplication.sharedInstance().getData("events");
@@ -120,18 +138,14 @@ public class StarredActivity extends Activity{
 	private synchronized void add(String venueCode, boolean isVenue) {
 		System.out.println("code put : " + venueCode);
 		_queue.put(venueCode, new Service(_listener));
-//		if (_currentlyRunning != null) {
-			System.out.println("add :" + venueCode);
-			runnext(isVenue);
-			
-//		}
+		System.out.println("add :" + venueCode);
+		runnext(isVenue);
 	}
-	
+
 	ServiceListener _listener = new ServiceListener() {
 		
 		@Override
 		public void onComplete(Service service, ServiceRespone result) {
-			increase++;
 			
 			if (result.getAction() == ServiceAction.ActionGetVenue) {
 				if (result.getResultCode() == ResultCode.Success) {
@@ -143,11 +157,26 @@ public class StarredActivity extends Activity{
 					EventResponse data = (EventResponse) result.getData();
 					events.add(data);
 				}
-			}
-			if (increase == total) {
-				buildStarredList();
+			} else if (result.getAction() == ServiceAction.ActionGetStarred) {
 				hide();
+				if (result.getResultCode() == ResultCode.Success) {
+					StarredResponse response = (StarredResponse) result.getData();
+					if (response != null) {
+						List<VenuesResponse> venues = response.venues;
+						List<EventsResponse> events = response.events;
+						StarredListAdapter adapter = new StarredListAdapter(events, venues, StarredActivity.this);
+						_listView.setAdapter(adapter);
+					}
+				}
 			}
+			if (result.getAction() == ServiceAction.ActionGetEvent || result.getAction() == ServiceAction.ActionGetVenue) {
+				increase++;
+				if (increase == total) {
+					buildStarredList();
+					hide();
+				}
+			}
+			
 		}
 	};
 	
@@ -160,42 +189,10 @@ public class StarredActivity extends Activity{
     		_dialog.dismiss();
     	}
     }
-	/*
-	private void buildVenuesList() {
-		
-		VenueResponse venue = new VenueResponse();
-		venue.venueName = "ESPAL 1";
-		venue.venueCode = "1234";
-		venue.icon = "/icon";
-		venue.address = "Ciutat Villa,Barcelona";
-		venues.add(venue);
-		VenueResponse vn = (VenueResponse) venue.clone();
-		venue.venueName = "ESPAL 2";
-		venue.address = "Ciutat Villa,Barcelona";
-		venues.add(vn);
-	}
-	
-	private void buildEventsList() {
-		
-		EventResponse event = new EventResponse();
-		event.eventCode = "111";
-		event.eventTitle = "BABEL(WORDS)";
-		event.icon = "/icon";
-		event.venueName = "Mercat de ies Flors";
-		event.dates = "15.04.11 - 17.04.11";
-		event.price = "16 Û";
-		events.add(event);
-		EventResponse ev = (EventResponse) event.clone();
-		ev.eventTitle = "DESCLASSIFICATS";
-		ev.venueName = "La Villarroel";
-		ev.dates = "12.03.11 - 08.05.11";
-		ev.price = "De 22 a 26 Û";
-		events.add(ev);
-	}
-	*/
+
 	private void buildStarredList() {
-		StarredListAdapter adapter = new StarredListAdapter(events, venues, this);
-		_listView.setAdapter(adapter);
+//		StarredListAdapter adapter = new StarredListAdapter(events, venues, this);
+//		_listView.setAdapter(adapter);
 	}
 	
 }

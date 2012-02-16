@@ -10,22 +10,22 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.ibc.R;
-import com.ibc.model.service.response.EventResponse;
-import com.ibc.model.service.response.VenueResponse;
+import com.ibc.model.service.response.EventsResponse;
+import com.ibc.model.service.response.VenuesResponse;
 import com.ibc.view.EventRowHolder;
 import com.ibc.view.VenueRowHolder;
 
 public class StarredListAdapter extends BaseAdapter {
 
-	private List<EventResponse> _events = new ArrayList<EventResponse>();
-	private List<VenueResponse> _venues = new ArrayList<VenueResponse>();
+	private List<EventsResponse> _events = new ArrayList<EventsResponse>();
+	private List<VenuesResponse> _venues = new ArrayList<VenuesResponse>();
 	private Context _context;
 	public static final int ITEM_TYPE_VENUES_HAS_HEADER = 0;
 	public static final int ITEM_TYPE_VENUES_CONTENT = ITEM_TYPE_VENUES_HAS_HEADER + 1;
 	public static final int ITEM_TYPE_EVENTS_HAS_HEADER = ITEM_TYPE_VENUES_CONTENT + 1;
 	public static final int ITEM_TYPE_EVENTS_CONTENT = ITEM_TYPE_EVENTS_HAS_HEADER + 1;
 	
-	public  StarredListAdapter(List<EventResponse> events, List<VenueResponse> venues, Context context) {
+	public  StarredListAdapter(List<EventsResponse> events, List<VenuesResponse> venues, Context context) {
 		_events = events;
 		_venues = venues;
 		_context = context;
@@ -56,37 +56,22 @@ public class StarredListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		System.out.println(position);
 		Object object = getItem(position);
 		VenueRowHolder vnRowHolder;
 		EventRowHolder evRowHolder;
-//		if (convertView == null) {
-			convertView = getViewForType(getItemViewType(position));
-			if (object instanceof VenueResponse) {
-				VenueResponse data = (VenueResponse) object;
-				vnRowHolder = new VenueRowHolder(convertView,
-						data, _context);
-				vnRowHolder.display();
-				convertView.setTag(vnRowHolder);
-			} else {
-				EventResponse data = (EventResponse) object;
-				evRowHolder = new EventRowHolder(_context,
-						convertView, data);
-				evRowHolder.display();
-				convertView.setTag(evRowHolder);
-			}
-//		} else {
-			/*
-			if (object instanceof VenueResponse) {
-				vnRowHolder = (VenueRowHolder) convertView.getTag();
-				vnRowHolder.display();
-			} else {
-				evRowHolder = (EventRowHolder) convertView.getTag();
-				evRowHolder.display();
-			}
-			*/
-//		}
-		
+		convertView = getViewForType(getItemViewType(position));
+		if (object instanceof VenuesResponse) {
+			VenuesResponse data = (VenuesResponse) object;
+			vnRowHolder = new VenueRowHolder(convertView, data, _context);
+			vnRowHolder.display();
+			convertView.setTag(vnRowHolder);
+		} else if (object instanceof EventsResponse){
+			EventsResponse data = (EventsResponse) object;
+			evRowHolder = new EventRowHolder(_context, convertView, data);
+			evRowHolder.display();
+			convertView.setTag(evRowHolder);
+		}
+
 		return convertView;
 	}
 
@@ -119,7 +104,7 @@ public class StarredListAdapter extends BaseAdapter {
 	
 	private boolean isVenue(int position) {
 		Object object = getItem(position);
-		if (object instanceof VenueResponse) {
+		if (object instanceof VenuesResponse) {
 			return true;
 		}
 		return false;

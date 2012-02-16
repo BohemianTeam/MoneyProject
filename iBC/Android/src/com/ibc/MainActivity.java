@@ -18,6 +18,7 @@ import android.widget.ListView;
 import com.ibc.adapter.MenuListAdapter;
 import com.ibc.model.MenuItemData;
 import com.ibc.model.service.response.EventsResponse;
+import com.ibc.model.service.response.StarredListResponse;
 import com.ibc.model.service.response.StarredResponse;
 import com.ibc.model.service.response.VenuesResponse;
 import com.ibc.service.ResultCode;
@@ -45,7 +46,7 @@ public class MainActivity extends Activity {
 		mListView.setOnItemClickListener(adapter);
 
 		_service = new Service(_listener);
-		_service.getStarredList();
+		_service.getStarred();
 		show();
 	}
 
@@ -110,11 +111,10 @@ public class MainActivity extends Activity {
 				}
 			} else if (result.getAction() == ServiceAction.ActionGetStarred) {
 				if (result.getResultCode() == ResultCode.Success) {
-					if (null == result.getData()) {
-
-					}
-					Service svGetVenues = new Service(_listener);
-					svGetVenues.getVenues("41.385756", "2.164129");
+					StarredResponse response = (StarredResponse) result
+							.getData();
+					iBCApplication.sharedInstance()
+							.putData("starred", response);
 				}
 			} else if (result.getAction() == ServiceAction.ActionGetStarredList) {
 				if (result.getResultCode() == ResultCode.Success) {
@@ -122,11 +122,11 @@ public class MainActivity extends Activity {
 						Service svGetVenues = new Service(_listener);
 						svGetVenues.getVenues("41.385756", "2.164129");
 					} else {
-						List<StarredResponse> list = (List<StarredResponse>) result
+						List<StarredListResponse> list = (List<StarredListResponse>) result
 								.getData();
 						List<String> venueCodes = new ArrayList<String>();
 						List<String> eventCodes = new ArrayList<String>();
-						for (StarredResponse starredResponse : list) {
+						for (StarredListResponse starredResponse : list) {
 							String code = starredResponse.code;
 							if (code.charAt(0) == 'V') {
 								venueCodes.add(code);
@@ -179,9 +179,8 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		// TODO Auto-generated method stub
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			//create builder for alert dialog
+			// create builder for alert dialog
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage("Do you want to exit?")
 					.setCancelable(false)
@@ -191,25 +190,25 @@ public class MainActivity extends Activity {
 								@Override
 								public void onClick(DialogInterface dialog,
 										int which) {
-									MainActivity.this.moveTaskToBack(true);
+									// MainActivity.this.moveTaskToBack(true);
+									MainActivity.this.finish();
 								}
 							});
-			//set No button click 
-			builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
-					dialog.cancel();
-				}
-			});
-			//create alet dialog
+			// set No button click
+			builder.setNegativeButton("No",
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.cancel();
+						}
+					});
+			// create alet dialog
 			AlertDialog alert = builder.create();
 			alert.show();
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-	
-	
+
 }

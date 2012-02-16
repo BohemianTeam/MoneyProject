@@ -65,13 +65,13 @@ public class Service implements Runnable {
 	public void getStatus() {
 		_action = ServiceAction.ActionGetStatus;
 		
-		request("/getStatus/", iBCApplication.sharedInstance().getServiceParams());
+		request("/getStatus/", new HashMap<String, String>(iBCApplication.sharedInstance().getServiceParams()));
 	}
 	
 	public void getVenues(String lat,String lon) {
 		_action = ServiceAction.ActionGetVenues;
 		
-		Map<String, String> params = iBCApplication.sharedInstance().getServiceParams();
+		Map<String, String> params = new HashMap<String, String>(iBCApplication.sharedInstance().getServiceParams());
 		String c = lat + "~" + lon;
 		params.put("c", c);
 		
@@ -90,7 +90,7 @@ public class Service implements Runnable {
 	public void getEvents(String f,String dt) {
 		_action = ServiceAction.ActionGetEvents;
 		
-		Map<String, String> params = iBCApplication.sharedInstance().getServiceParams();
+		Map<String, String> params = new HashMap<String, String>(iBCApplication.sharedInstance().getServiceParams());
 		
 		params.put("f", f);
 		params.put("dt", dt);
@@ -105,6 +105,15 @@ public class Service implements Runnable {
 		params.put("ec", eventCode);
 		
 		request("/getEvent/", params);
+	}
+	
+	public void getEventSessions(String eventCode) {
+		_action = ServiceAction.ActionGetEventSessions;
+		
+		Map<String, String> params = new HashMap<String, String>(iBCApplication.sharedInstance().getServiceParams());
+		params.put("ec", eventCode);
+		
+		request("/getEventSessions/", params);
 	}
 	
 	public void getInstID() {
@@ -284,11 +293,14 @@ public class Service implements Runnable {
 				case ActionGetEvent:
 					resObj = parser.getEventResponse(result);
 					break;
+				case ActionGetEventSessions:
+					resObj = result;
+					break;
 				case ActionGetStarredList:
 					resObj = parser.getStarredList(result);
 					break;
 				case ActionGetStarred:
-					resObj = result;
+					resObj = parser.getStarred(result);
 					break;
 				case ActionGetInstID:
 					resObj = parser.getInstID(result);

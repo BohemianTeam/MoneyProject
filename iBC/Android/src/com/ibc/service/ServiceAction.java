@@ -11,4 +11,5 @@ public enum ServiceAction {
 	ActionGetStarredList,
 	ActionGetStarred,
 	ActionGetInstID,
+	
 }

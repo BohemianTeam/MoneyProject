@@ -20,13 +20,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ibc.R;
-import com.ibc.model.service.response.VenueResponse;
+import com.ibc.model.service.response.VenuesResponse;
 import com.ibc.util.Config;
 
 public class VenueRowHolder {
 	
 	private View _root;
-	private VenueResponse _data;
+	private VenuesResponse _data;
 	private ImageView _img;
 	private TextView _title;
 	private TextView _city;
@@ -39,7 +39,7 @@ public class VenueRowHolder {
 	Bitmap _bitmap;
 	private String _id;
 	
-	public VenueRowHolder(View root , VenueResponse data, Context context) {
+	public VenueRowHolder(View root , VenuesResponse data, Context context) {
 		_root = root;
 		_data = data;
 		_context = context;
@@ -50,19 +50,19 @@ public class VenueRowHolder {
 	}
 	
 	public void display() {
-		_title.setText(_data.venueName);
+		_title.setText(_data.venuesName);
 		if (_city != null) {
-			if (null != _data && _data.address != null) {
-				_city.setText(Html.fromHtml(_data.address));
+			if (null != _data && _data.city != null) {
+				_city.setText(Html.fromHtml(_data.city));
 			} else {
-				_city.setText("Ciutat Villa,Barcelona");
+				_city.setText("");
 			}
 		}
 		getImage();
 	}
 	
 	private void getImage() {
-		_id = _data.venueCode;
+		_id = _data.venuesCode;
 		String dir = _context.getCacheDir() + "/" + _id + "_vn.png";
 		File file = new File(dir);
 		if (file.exists()) {

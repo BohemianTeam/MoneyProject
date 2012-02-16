@@ -1,8 +1,8 @@
 package com.ibc.model.service.response;
 
-import com.google.gson.annotations.SerializedName;
+import java.util.List;
 
 public class StarredResponse {
-	@SerializedName("c")
-	public String code;
+	public List<VenuesResponse> venues;
+	public List<EventsResponse> events;
 }

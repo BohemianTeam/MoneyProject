@@ -19,7 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ibc.R;
-import com.ibc.model.service.response.EventResponse;
+import com.ibc.model.service.response.EventsResponse;
 import com.ibc.util.Config;
 
 
@@ -27,7 +27,7 @@ public class EventRowHolder  {
 	
 	private Context _context;
 	private View _root;
-	private EventResponse _data;
+	private EventsResponse _data;
 	
 	private ImageView _img;
 	private ProgressBar _progress;
@@ -41,7 +41,7 @@ public class EventRowHolder  {
 	Bitmap _bitmap;
 	private String _id;
 	
-	public EventRowHolder(Context context,View root, EventResponse data) {
+	public EventRowHolder(Context context,View root, EventsResponse data) {
 		_root = root;
 		_data = data;
 		_context = context;
@@ -57,16 +57,16 @@ public class EventRowHolder  {
 	public void display() {
 		if (null != _data) {
 			_title.setText(_data.eventTitle);
-			_venueName.setText(_data.venueName == null ? "La Villarroel" : _data.venueName);
+			_venueName.setText(_data.venueName == null ? "" : _data.venueName);
 			_price.setText(_data.price);
-			_dates.setText(_data.dates);
+			_dates.setText(_data.date);
 
 			getImage();
 		}
 	}
 	
 	private void getImage() {
-		_id = _data.venueCode;
+		_id = _data.eventCode;
 		String dir = _context.getCacheDir() + "/" + _id + "_ev.png";
 		File file = new File(dir);
 		if (file.exists()) {
