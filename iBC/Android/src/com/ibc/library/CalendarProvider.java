@@ -120,7 +120,42 @@ public class CalendarProvider {
 					calNames[i] = cursor.getString(1);
 					cursor.moveToNext();
 				}
+				//
+				ContentValues cv = new ContentValues();
+				cv.put("calendar_id", calIds[0]);
+				cv.put("title", title);
+				cv.put("dtstart", dtstart);
+				cv.put("hasAlarm", 1);
+				cv.put("dtend", dtend);
 
+				Uri newEvent;
+				if (Integer.parseInt(Build.VERSION.SDK) == 8)
+					newEvent = cr.insert(
+							Uri.parse("content://com.android.calendar/events"),
+							cv);
+				else
+					newEvent = cr.insert(
+							Uri.parse("content://com.android.calendar/events"),
+							cv);
+
+				if (newEvent != null) {
+					long id = Long.parseLong(newEvent
+							.getLastPathSegment());
+					ContentValues values = new ContentValues();
+					values.put("event_id", id);
+					values.put("method", 1);
+					values.put("minutes", 15); // 15 minuti
+					if (Integer.parseInt(Build.VERSION.SDK) == 8)
+						cr.insert(
+								Uri.parse("content://com.android.calendar/reminders"),
+								values);
+					else
+						cr.insert(
+								Uri.parse("content://com.android.calendar/reminders"),
+								values);
+
+				}
+				/*
 				AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
 				builder.setSingleChoiceItems(calNames, -1,
 						new DialogInterface.OnClickListener() {
@@ -158,7 +193,7 @@ public class CalendarProvider {
 												values);
 									else
 										cr.insert(
-												Uri.parse("content://calendar/reminders"),
+												Uri.parse("content://com.android.calendar/reminders"),
 												values);
 
 								}
@@ -168,6 +203,7 @@ public class CalendarProvider {
 						});
 
 				builder.create().show();
+				*/
 			}
 			cursor.close();
 		}

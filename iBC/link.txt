@@ -15,3 +15,5 @@ http://www.developer.com/ws/article.php/3850276/Working-with-the-Android-Calenda
 http://android.arnodenhond.com/tutorials/calendar
 
 http://javanotebook.com/2007/12/15/aop_vs_java_7s_closures_extension_methods_type_inference.html
+
+http://code.google.com/p/android-calendar-provider-tests/source/browse/trunk/src/com/androidbook/androidcalendar/CalendarActivity.java
