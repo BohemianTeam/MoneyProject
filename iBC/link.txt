@@ -1,6 +1,15 @@
 http://stackoverflow.com/questions/3721963/how-to-add-calendar-events-in-android
 http://stackoverflow.com/questions/5368769/open-and-display-calendar-event-in-android
+
+
+
 http://thinkandroid.wordpress.com/2010/06/20/sync-ing-with-androids-calendar/
+http://thinkandroid.wordpress.com/2010/01/13/writing-your-own-contentprovider/
+http://thinkandroid.wordpress.com/category/android-tutorials/cursoradapter-tutorials/
+http://thinkandroid.wordpress.com/category/android-tutorials/receiver-tutorial/
+http://thinkandroid.wordpress.com/category/google-app-engine-series/
+
+http://www.andreabaccega.com/blog/2010/08/09/add-events-on-google-calendar-on-android-froyo/
 http://www.andreabaccega.com/blog/2010/08/09/add-events-on-google-calendar-on-android-froyo/
 http://www.developer.com/ws/article.php/3850276/Working-with-the-Android-Calendar.htm
 http://android.arnodenhond.com/tutorials/calendar

@@ -2,6 +2,7 @@ package com.ibc;
 
 import java.util.Map;
 
+import com.ibc.library.CalendarProvider;
 import com.ibc.model.service.response.InstIDResponse;
 import com.ibc.service.ResultCode;
 import com.ibc.service.Service;
@@ -146,13 +147,16 @@ public class SplashActivity extends Activity {
     
         protected Void doInBackground(Void... params) {
             Log.d(TAG, "ApplicationDataLoadingTask::doInBackground");
-          //proccessing
             
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            
+            //processing
+            CalendarProvider provider = CalendarProvider.sharedInstance();
+            provider.hasCalendar();
             
             return null;
         }
