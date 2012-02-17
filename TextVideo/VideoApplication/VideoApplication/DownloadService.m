@@ -54,16 +54,28 @@
     NSString *hashStr = [Util calcMD5:_videoData.title];
     if (type == DownloadTypeVideo) {
         self.path = _videoData.url;
+        
+        NSURL *url = [NSURL URLWithString:self.path];
+        NSString *extension = [url pathExtension];
         NSString *videoDir = [Util getVideoDir];
-        _localPath = [videoDir stringByAppendingString:[NSString stringWithFormat:@"/%@", hashStr]];
+        
+        _localPath = [videoDir stringByAppendingString:[NSString stringWithFormat:@"/%@", [hashStr stringByAppendingPathExtension:extension]]];
     } else if (type == DownloadTypeSub) {
         self.path = _videoData.subUrl;
+        
+        NSURL *url = [NSURL URLWithString:self.path];
+        NSString *extension = [url pathExtension];
         NSString *subDir = [Util getSubDir];
-        _localPath = [subDir stringByAppendingString:[NSString stringWithFormat:@"/%@", hashStr]];
+        
+        _localPath = [subDir stringByAppendingString:[NSString stringWithFormat:@"/%@", [hashStr stringByAppendingPathExtension:extension]]];
     } else if (type == DownloadTypeTimeLine) {
         self.path = _videoData.timelineUrl;
+        
+        NSURL *url = [NSURL URLWithString:self.path];
+        NSString *extension = [url pathExtension];
         NSString *timelineDir = [Util getTimeLineDir];
-        _localPath = [timelineDir stringByAppendingString:[NSString stringWithFormat:@"/%@", hashStr]];
+        
+        _localPath = [timelineDir stringByAppendingString:[NSString stringWithFormat:@"/%@", [hashStr stringByAppendingPathExtension:extension]]];
     }
 }
 
