@@ -45,9 +45,9 @@ public class MainActivity extends Activity {
 		mListView.setAdapter(adapter);
 		mListView.setOnItemClickListener(adapter);
 
-		_service = new Service(_listener);
-		_service.getStarred();
-		show();
+//		_service = new Service(_listener);
+//		_service.getStarred();
+//		show();
 	}
 
 	public String getCurrentTimeString() {
