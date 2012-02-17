@@ -30,6 +30,12 @@
 + (NSString *) getVideoDir;
 + (NSString *) getSubDir;
 + (NSString *) getTimeLineDir;
++ (NSString *) getPlatform;
++ (NSString *) getPlatformVer;
++ (NSString *) getScreenResolution;
++ (NSString *) getAppVer;
++ (NSString *) getInstID;
+
 + (void) clearAllVideo;
 + (void) clearAllSub;
 + (void) clearAllTimeLine;
@@ -38,10 +44,13 @@
 
 + (NSString *) getCurrentTimeString;
 + (NSString *) getRequestParameterString;
++ (NSString *) getRequestParameterString:(NSString*)str;
 + (NSString *) generateHashedString:(NSString *) data;
 + (NSString *) base64StringFromData:(NSData *)data length:(int)length;
 + (NSData *) base64DataFromString:(NSString *)string;
 #pragma response
 + (NSMutableArray *) postVenues:(NSData *) value;
 
++ (void)showLoading:(UIView*)view;
++ (void)hideLoading;
 @end

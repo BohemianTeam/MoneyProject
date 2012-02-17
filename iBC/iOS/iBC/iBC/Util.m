@@ -11,6 +11,10 @@
 #import "VenuesResponse.h"
 #import <CommonCrypto/CommonDigest.h>
 #import <CommonCrypto/CommonHMAC.h>
+#import "MBProgressHUD.h"
+
+static MBProgressHUD    *loadingView;
+
 @implementation Util
 
 + (NSString *) getCurrentTimeString {
@@ -26,6 +30,9 @@
 
 + (NSString *) getRequestParameterString {
     NSString* str = [NSString stringWithFormat:@"%@%@", KinectiaAppId,[self getCurrentTimeString]];
+    return [self generateHashedString:str];
+}
++ (NSString *) getRequestParameterString:(NSString*)str {
     return [self generateHashedString:str];
 }
 
@@ -387,7 +394,7 @@
     return [fm fileExistsAtPath:path];
 }
 
-#pragma reponse methods
+#pragma - reponse methods
 + (NSMutableArray *) postVenues:(NSData *)value {
     NSMutableArray * list = [[NSMutableArray alloc] init];
     NSError *error;
@@ -401,5 +408,53 @@
     }
     return list;
 }
-
+#pragma mark - Get Device Information
++ (NSString *)getPlatform
+{
+    return [[UIDevice currentDevice] model];
+}
++ (NSString *)getPlatformVer
+{
+    NSString *ver = [NSString stringWithFormat:@"%f", [[UIDevice currentDevice] systemVersion]];
+    return ver;
+}
++ (NSString *)getScreenResolution
+{
+    CGRect screen = [[UIScreen mainScreen] bounds];
+    NSString *screenRes = [NSString stringWithFormat:@"%f:%f", screen.size.width, screen.size.height];
+    return  screenRes;
+}
++ (NSString *)getAppVer
+{
+    NSString *appVer = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+    
+    return appVer;
+}
++ (NSString *) getInstID
+{
+//    //check existed of unique key
+//    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+//    NSString *appID = nil;
+//    if(standardUserDefaults){
+//        appID = [standardUserDefaults objectForKey:kAppInstall];
+//    }
+//    
+//    return appID;
+    //using test
+    return @"823ab7fc7820d402";
+}
++ (void)showLoading:(UIView*)view
+{
+    loadingView = [[MBProgressHUD alloc] initWithView:view];
+    loadingView.labelText = @"loading..!";
+    [view addSubview:loadingView];
+    
+    [loadingView show:YES];
+}
++ (void)hideLoading
+{
+    [loadingView removeFromSuperview];
+    [loadingView show:NO];
+    [loadingView release];
+}
 @end

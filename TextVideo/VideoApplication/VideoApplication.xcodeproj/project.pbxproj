@@ -51,6 +51,7 @@
 		664E1D2114D650C1002C0861 /* LoadingDialogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 664E1D2014D650C1002C0861 /* LoadingDialogView.m */; };
 		665ABA7214C7D41A00564A51 /* DownloadService.m in Sources */ = {isa = PBXBuildFile; fileRef = 665ABA7114C7D41A00564A51 /* DownloadService.m */; };
 		665ABA7514C7F05C00564A51 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 665ABA7414C7F05C00564A51 /* Security.framework */; };
+		6664A0B414E0522D00C7A352 /* VideoSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6664A0B314E0522D00C7A352 /* VideoSubView.m */; };
 		6675277A14C65A9500ED0500 /* VideoData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6675277914C65A9500ED0500 /* VideoData.m */; };
 		6675277E14C65F6500ED0500 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6675277C14C65F6500ED0500 /* libsqlite3.dylib */; };
 		6675277F14C65F6500ED0500 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6675277D14C65F6500ED0500 /* libz.dylib */; };
@@ -150,6 +151,8 @@
 		665ABA7014C7D41A00564A51 /* DownloadService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadService.h; sourceTree = "<group>"; };
 		665ABA7114C7D41A00564A51 /* DownloadService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadService.m; sourceTree = "<group>"; };
 		665ABA7414C7F05C00564A51 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		6664A0B214E0522D00C7A352 /* VideoSubView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoSubView.h; sourceTree = "<group>"; };
+		6664A0B314E0522D00C7A352 /* VideoSubView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoSubView.m; sourceTree = "<group>"; };
 		6675277814C65A9500ED0500 /* VideoData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoData.h; sourceTree = "<group>"; };
 		6675277914C65A9500ED0500 /* VideoData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoData.m; sourceTree = "<group>"; };
 		6675277C14C65F6500ED0500 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -439,6 +442,8 @@
 				6675280514C6CAEF00ED0500 /* VideoSubViewController.h */,
 				6675280614C6CAEF00ED0500 /* VideoSubViewController.m */,
 				6675280714C6CAEF00ED0500 /* ViewController.xib */,
+				6664A0B214E0522D00C7A352 /* VideoSubView.h */,
+				6664A0B314E0522D00C7A352 /* VideoSubView.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -549,6 +554,7 @@
 				6649CB3F14D7D13F00972263 /* ASINetworkQueue.m in Sources */,
 				6649CB4714D7DA5F00972263 /* MBProgressHUD.m in Sources */,
 				6649CB5014D7E16F00972263 /* Reachability.m in Sources */,
+				6664A0B414E0522D00C7A352 /* VideoSubView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,8 +578,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Trinh Hung (N2P55ZSV7A)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Trinh Hung (N2P55ZSV7A)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tien Doan (25FKU2MUR7)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -588,8 +594,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PROVISIONING_PROFILE = "AC086193-3A78-4C4E-9CE8-433C94D39C57";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AC086193-3A78-4C4E-9CE8-433C94D39C57";
+				PROVISIONING_PROFILE = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -600,8 +606,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Trinh Hung (N2P55ZSV7A)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Trinh Hung (N2P55ZSV7A)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tien Doan (25FKU2MUR7)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -610,8 +616,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "AC086193-3A78-4C4E-9CE8-433C94D39C57";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AC086193-3A78-4C4E-9CE8-433C94D39C57";
+				PROVISIONING_PROFILE = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -621,14 +627,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Trinh Hung (N2P55ZSV7A)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Trinh Hung (N2P55ZSV7A)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tien Doan (25FKU2MUR7)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VideoApplication/VideoApplication-Prefix.pch";
 				INFOPLIST_FILE = "VideoApplication/VideoApplication-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "AC086193-3A78-4C4E-9CE8-433C94D39C57";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AC086193-3A78-4C4E-9CE8-433C94D39C57";
+				PROVISIONING_PROFILE = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -637,14 +643,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Trinh Hung (N2P55ZSV7A)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Trinh Hung (N2P55ZSV7A)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tien Doan (25FKU2MUR7)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VideoApplication/VideoApplication-Prefix.pch";
 				INFOPLIST_FILE = "VideoApplication/VideoApplication-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "AC086193-3A78-4C4E-9CE8-433C94D39C57";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AC086193-3A78-4C4E-9CE8-433C94D39C57";
+				PROVISIONING_PROFILE = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

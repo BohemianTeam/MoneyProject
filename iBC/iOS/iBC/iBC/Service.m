@@ -8,6 +8,7 @@
 
 #import "Service.h"
 #import "Util.h"
+#import "config.h"
 
 NSString *MBErrorDomain = @"com.iBC";
 @interface Service ()
@@ -58,7 +59,22 @@ NSString *MBErrorDomain = @"com.iBC";
     [self doRequestWithURL:url params:params];
     [params release];
 }
-
+- (void)getInstID
+{
+    self.action = ActionTypeGetInstlID;
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setObject:[Util getPlatform] forKey:Platform];
+    [params setObject:[Util getPlatformVer] forKey:PlatformVersion];
+    [params setObject:[Util getScreenResolution] forKey:ScreenResolution];
+    [params setObject:[Util getAppVer] forKey:AppVersion];
+    [params setObject:[Util getCurrentTimeString] forKey:UTCTime];
+    [params setObject:KinectiaAppId forKey:Kinectia];
+    [params setObject:[Util getRequestParameterString] forKey:Hash];
+    
+    NSString *url = [NSString stringWithFormat:@"%@/getInstID", API_URL];
+    [self doRequestWithURL:url params:params];
+    [params release];
+}
 - (void) getVideo:(NSString *)title {
     self.action = ActionTypeGetVideo;
     
@@ -82,7 +98,20 @@ NSString *MBErrorDomain = @"com.iBC";
     [params release];
 
 }
-
+- (void)getStarred{
+    self.action = ActionTypeGetStarred;
+    
+    NSString *instlID = [Util getInstID];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setObject:instlID forKey:@"d"];
+    [params setObject:KinectiaAppId forKey:Kinectia];
+    [params setObject:[Util getRequestParameterString:[NSString stringWithFormat:@"%@%@", instlID, KinectiaAppId]] 
+               forKey:@"h"];
+    
+    NSString *url = [NSString stringWithFormat:@"%@/getStarred", API_URL];
+    [self doRequestWithURL:url params:params];
+    [params release];
+}
 - (void) getVenueList:coordinates {
     self.action = ActionTypeGetVenueList;
     
@@ -292,7 +321,7 @@ NSString *MBErrorDomain = @"com.iBC";
     int act = self.action;
     NSData *buff = [data retain];
     NSString *str = [NSString stringWithUTF8String:[buff bytes]];
-    NSLog(@"%@",str);
+    NSLog(@"response: -----> %@",str);
     @try {
         [self reset];
         switch (act) {
@@ -327,10 +356,24 @@ NSString *MBErrorDomain = @"com.iBC";
 
                 break;
             }
+            case ActionTypeGetInstlID:
+            {
+                SEL sel = @selector(mServiceGetInstIDSucces:responses:);
+                if([_delegate respondsToSelector:sel]){
+                    [_delegate performSelector:sel withObject:self withObject:data];
+                }
+            }
             case ActionTypeGetVenueList:
             {
                 NSMutableArray *listVenuesResponse = [Util postVenues:buff];
                 break;
+            }
+            case ActionTypeGetStarred:
+            {
+                SEL sel = @selector(mServiceGetStarredSucces:responses:);
+                if([_delegate respondsToSelector:sel]){
+                    [_delegate performSelector:sel withObject:self withObject:data];
+                }
             }
         }
     } @catch (NSException *ex) {

@@ -53,6 +53,51 @@ static FileHelper * __sharedHelper = nil;
     saveFolderPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, 
                                                           NSUserDomainMask, YES) lastObject] retain];
 }
++(NSString *)bundlePath:(NSString *)fileName {
+	return [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:fileName];
+}
+
++(NSString *)documentsPath:(NSString *)fileName {
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory = [paths objectAtIndex:0];
+	return [documentsDirectory stringByAppendingPathComponent:fileName];
+}
++ (NSString*)documentsPath
+{
+    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+}
++ (void)deleteAllFileAtDirectoryPath:(NSString*)path
+{
+    //remove all file in temp directory (documents)
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSError *error = nil;
+    for (NSString *file in [fileManager contentsOfDirectoryAtPath:path error:&error]) {
+        BOOL success = [fileManager removeItemAtPath:[NSString stringWithFormat:@"%@/%@", path, file] error:&error];
+        if (!success || error) {
+            // it failed.
+            NSLog(@"Fail");
+        }
+    }
+}
++(BOOL)createFolder:(NSString*)folderName withPath:(NSString*)path
+{
+    NSString *folderFullPath = [path stringByAppendingFormat:@"/%@", folderName];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    return [fileManager createDirectoryAtPath:folderFullPath withIntermediateDirectories:YES attributes:nil error:nil ];
+}
++(BOOL)checkFile:(NSString*)file isType:(NSString*)type
+{
+    NSArray *splits = [file componentsSeparatedByString:@"."];
+    NSString *fileType = [splits lastObject];
+    
+    if([splits count] < 2)
+        return FALSE;
+    if([fileType isEqual:type])
+        return TRUE;
+    
+    return FALSE;
+}
 - (NSArray*)getFilesInFolder
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];

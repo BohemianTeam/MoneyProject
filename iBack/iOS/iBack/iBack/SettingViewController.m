@@ -59,20 +59,24 @@
     [self.view addSubview:btn480P];
     
     btnEcho = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btnEcho setFrame:CGRectMake(207, 208, 72, 37)];
+    [btnEcho setFrame:CGRectMake(207, 252, 72, 37)];
     [btnEcho setImage:[UIImage imageNamed:@"unselected"] forState:UIControlStateNormal];
     [btnEcho setImage:[UIImage imageNamed:@"selected3"] forState:UIControlStateSelected];
     [btnEcho setSelected:NO];
+    [btnEcho setHidden:YES];
+    [btnEcho setEnabled:NO];
     [btnEcho addTarget:self action:@selector(btnAudioQualityClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btnEcho];
+    //[self.view addSubview:btnEcho];
     
     btnNormal = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btnNormal setFrame:CGRectMake(207, 244, 72, 37)];
+    [btnNormal setFrame:CGRectMake(207, 288, 72, 37)];
     [btnNormal setImage:[UIImage imageNamed:@"unselected"] forState:UIControlStateNormal];
     [btnNormal setImage:[UIImage imageNamed:@"selected3"] forState:UIControlStateSelected];
     [btnNormal addTarget:self action:@selector(btnAudioQualityClick) forControlEvents:UIControlEventTouchUpInside];
     [btnNormal setSelected:YES];
-    [self.view addSubview:btnNormal];
+    [btnNormal setHidden:YES];
+    [btnNormal setEnabled:NO];
+    //[self.view addSubview:btnNormal];
     
 }
 

@@ -7,6 +7,9 @@
 //
 
 #import "RecordAudioViewController.h"
+#import "AlertManager.h"
+#import "FileHelper.h"
+#import "PCMMixer.h"
 
 @implementation RecordAudioViewController
 @synthesize btnSave;
@@ -58,7 +61,7 @@
     [btnSave setTitle:@"Save" forState:UIControlStateNormal];
     [btnSave setImage:[UIImage imageNamed:@"Save"] forState:UIControlStateNormal];
     [btnSave addTarget:self action:@selector(btnSavePressed) forControlEvents:UIControlEventTouchUpInside];
-    [btnSave setHidden:YES];
+    [btnSave setEnabled:NO];
     [self.view addSubview:btnSave];
     
     lbTimer.text = @"00:00:00";
@@ -80,10 +83,13 @@
 {
     if(filePath != nil)
     {
-        [filePath release];
-        filePath = nil;
+        AlertManager *alert = [AlertManager sharedManager]; 
+        alert.fileSelectionDelegate = self;
+        alert.type = aPickName;
+        [alert showAlert];
+    }else{
+        [self dismissModalViewControllerAnimated:YES];
     }
-    [self dismissModalViewControllerAnimated:YES];
 }
 - (void)btnCancelPressed
 {
@@ -117,7 +123,7 @@
         lbStatus.text = @"Stopped";
         [timer invalidate];
         secRecord = 0;
-        [btnSave setHidden:NO];
+        [btnSave setEnabled:YES];
     }else{
          NSLog(@"Start Recording");
         if(audioRecorder!=nil)
@@ -132,14 +138,15 @@
         
         NSMutableDictionary *recordSettings = [[[NSMutableDictionary alloc] initWithCapacity:10] autorelease];
         
+        
         // We can use kAudioFormatAppleIMA4 (4:1 compression) or kAudioFormatLinearPCM for nocompression
-        [recordSettings setValue :[NSNumber numberWithInt:kAudioFormatAppleIMA4] forKey:AVFormatIDKey];
+        [recordSettings setValue :[NSNumber numberWithInt:kAudioFormatLinearPCM] forKey:AVFormatIDKey];
         
         // We can use 44100, 32000, 24000, 16000 or 12000 depending on sound quality
-        [recordSettings setValue:[NSNumber numberWithFloat:16000.0] forKey:AVSampleRateKey];
+        [recordSettings setValue:[NSNumber numberWithFloat:44100.0] forKey:AVSampleRateKey];
         
         // We can use 2(if using additional h/w) or 1 (iPhone only has one microphone)
-        [recordSettings setValue:[NSNumber numberWithInt: 1] forKey:AVNumberOfChannelsKey];
+        [recordSettings setValue:[NSNumber numberWithInt: 2] forKey:AVNumberOfChannelsKey];
         
         //create file record
         NSError *err = nil;
@@ -222,5 +229,48 @@
     [lbStatus release];
     [audioRecorder release];
     [filePath release];
+}
+#pragma mark - FileSelectionAlert Delegate
+- (void)revertDone
+{
+    [loadingView removeFromSuperview];
+    [loadingView release];
+    loadingView = nil;
+    
+    NSFileManager *fm = [NSFileManager defaultManager];
+    [fm removeItemAtPath:filePath error:nil];
+    [self dismissModalViewControllerAnimated:YES];
+    
+    [filePath release];
+    filePath = nil;
+}
+- (void)revertAudio:(NSString*)name
+{
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    NSString *newpath = [FileHelper documentsPath:[name stringByAppendingString:@".caf"]];
+    CFURLRef desPath = (CFURLRef)[NSURL fileURLWithPath:newpath];       
+    CFURLRef srcPath = (CFURLRef)[NSURL fileURLWithPath:filePath];
+    
+    [PCMMixer reverseAudioFrom:srcPath To:desPath];
+    
+    [self performSelectorOnMainThread:@selector(revertDone) withObject:nil waitUntilDone:YES];
+    [pool release];
+}
+- (void)pickName:(NSString*)name
+{
+    if(filePath != nil)
+    {
+        loadingView = [[MBProgressHUD alloc] initWithView:self.view];
+        [self.view addSubview:loadingView];
+        loadingView.labelText = @"Processing...";
+        [loadingView show:YES];
+        
+        
+        
+        [NSThread detachNewThreadSelector:@selector(revertAudio:) toTarget:self withObject:name];
+
+        
+    }else
+        [self dismissModalViewControllerAnimated:YES];
 }
 @end

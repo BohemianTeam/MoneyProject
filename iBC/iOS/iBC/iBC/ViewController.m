@@ -10,19 +10,14 @@
 #import "MenuItemData.h"
 #import "MenuTableViewCell.h"
 #import "SubMenuViewController.h"
+#import "StarredListViewController.h"
 #import "Service.h"
 @interface ViewController(private)
 - (void) initMenu;
 @end
 @implementation ViewController
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Release any cached data, images, etc that aren't in use.
-}
-
-#pragma mark - View lifecycle
+#pragma mark - Base method
 
 - (void)viewDidLoad
 {
@@ -37,6 +32,7 @@
     _tableView.delegate = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
     _tableView.separatorColor = [UIColor whiteColor];
+    _tableView.scrollEnabled = NO;
     
     [self.view addSubview:_tableView];
     //add menu item
@@ -49,7 +45,11 @@
     sv.delegate = self;
     [sv getVenueList:@"41.385756~2.164129"];
 }
-
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Release any cached data, images, etc that aren't in use.
+}
 - (void) initMenu {
     MenuItemData *item = [[MenuItemData alloc] initWithTitle:@"ESPECTACLES" andButtonImage:@"v01_bt01.png"];
     [_arrMenuItems addObject:item];
@@ -70,62 +70,6 @@
     MenuItemData *item4 = [[MenuItemData alloc] initWithTitle:@"FAVORITS" andButtonImage:@"v01_bt05.png"];
     [_arrMenuItems addObject:item4];
     [item4 release];
-}
-#pragma tableview delegate
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_arrMenuItems count];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return ROW_HEIGHT;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MenuTableViewCell *cell = [[[MenuTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 
-                                                          reuseIdentifier:nil] autorelease];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    UIImageView * accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"WhiteAccessory.png"]];
-    accessoryView.frame = CGRectMake(0, 0, 9, 15);
-    cell.accessoryView = accessoryView;
-    [accessoryView release];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell setMenuData:[_arrMenuItems objectAtIndex:indexPath.row] isEvenRow:((indexPath.row % 2) == 0)];
-    return cell;
-}
-
-- (NSString *) CapitalizedString:(NSString *) str {
-    str = [str lowercaseString];
-    NSString *firstCapChar = [[str substringToIndex:1] capitalizedString];
-    NSString *cappedString = [str stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:firstCapChar];
-    return cappedString;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    MenuItemData *data = [_arrMenuItems objectAtIndex:indexPath.row];
-    NSString *title = [self CapitalizedString:data.title];
-    SubMenuViewController *vc = [[SubMenuViewController alloc] initWithTitle:title];
-    [self.navigationController pushViewController:vc animated:YES];
-    [vc release];
-}
-
-- (void) dealloc {
-    [super dealloc];
-    [_tableView release];
-    [_arrMenuItems release];
-}
-
-#pragma servide delegate
-- (void) mServiceGetStatusSuccess:(Service *) service responses:(id) response {
-    NSLog(@"API getStatus : success");
-}
-
-- (void) mService:(Service *) service didFailWithError:(NSError *) error {
-    
 }
 
 - (void)viewDidUnload
@@ -164,5 +108,69 @@
         return YES;
     }
 }
+- (void) dealloc {
+    [super dealloc];
+    [_tableView release];
+    [_arrMenuItems release];
+}
+
+#pragma mark - TableView Delegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [_arrMenuItems count];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return ROW_HEIGHT;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    MenuTableViewCell *cell = [[[MenuTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 
+                                                          reuseIdentifier:nil] autorelease];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    UIImageView * accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"WhiteAccessory.png"]];
+    accessoryView.frame = CGRectMake(0, 0, 9, 15);
+    cell.accessoryView = accessoryView;
+    [accessoryView release];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell setMenuData:[_arrMenuItems objectAtIndex:indexPath.row] isEvenRow:((indexPath.row % 2) == 0)];
+    return cell;
+}
+
+- (NSString *) CapitalizedString:(NSString *) str {
+    str = [str lowercaseString];
+    NSString *firstCapChar = [[str substringToIndex:1] capitalizedString];
+    NSString *cappedString = [str stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:firstCapChar];
+    return cappedString;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    MenuItemData *data = [_arrMenuItems objectAtIndex:indexPath.row];
+//    NSString *title = [self CapitalizedString:data.title];
+//    SubMenuViewController *vc = [[SubMenuViewController alloc] initWithTitle:title];
+//    [self.navigationController pushViewController:vc animated:YES];
+//    [vc release];
+    
+    MenuItemData *data = [_arrMenuItems objectAtIndex:indexPath.row];
+    NSString *title = [self CapitalizedString:data.title];
+    StarredListViewController *starredVC = [[StarredListViewController alloc] initWithTitle:title];
+    [self.navigationController pushViewController:starredVC animated:YES];
+    [starredVC release];
+}
+
+
+#pragma servide delegate
+- (void) mServiceGetStatusSuccess:(Service *) service responses:(id) response {
+    NSLog(@"API getStatus : success");
+}
+
+- (void) mService:(Service *) service didFailWithError:(NSError *) error {
+    
+}
+
 
 @end

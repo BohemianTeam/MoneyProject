@@ -12,6 +12,8 @@ enum alertType {
     aError = 0,
     aRename = 1,
     aFileSelection = 2,
+    aPickName = 3,
+    aSignIn = 4,
 };
 
 @interface AlertManager : NSObject <UIAlertViewDelegate>{
@@ -26,6 +28,10 @@ enum alertType {
 @end
 
 @protocol FileSelectionAlertDelegate
+@optional
+- (void)pickName:(NSString*)name;
 - (void)renameFileSelectionWithName:(NSString*)newName;
 - (void)playFileSelection;
+- (void)uploadToYoutube;
+- (void)signinYoutube: (NSString*)user pass:(NSString*)pass;
 @end

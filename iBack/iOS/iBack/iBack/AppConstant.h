@@ -10,7 +10,7 @@
 #define iBack_AppConstant_h
 
 #define MOV_FILE @".MOV"
-#define MOV @"MOV"
+#define MOV @"mov"
 #define CAF_FILE @".caf"
 #define CAF @"caf"
 #define RENAME_FIELD 999

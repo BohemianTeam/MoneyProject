@@ -7,15 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "RevertMedia.h"
+#import "AlertManager.h"
 @class iBackDetailViewController;
+
 
 @interface iBackMasterViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
-    IBOutlet UITableView        *menuTable;
-    UIImagePickerController     *cameraView;
+    IBOutlet UITableView        *menuTable;  
+    IBOutlet UIView             *overlayView;
 }
 @property (nonatomic, retain) UITableView     *menuTable;
+@property (nonatomic, retain) UIView             *overlayView;
 @property (strong, nonatomic) iBackDetailViewController *detailViewController;
-@property (nonatomic, retain) UIImagePickerController     *cameraView;
+
 @end
