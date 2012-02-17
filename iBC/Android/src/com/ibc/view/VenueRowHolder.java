@@ -55,7 +55,7 @@ public class VenueRowHolder {
 			if (null != _data && _data.city != null) {
 				_city.setText(Html.fromHtml(_data.city));
 			} else {
-				_city.setText("Barcelona");
+				_city.setText("");
 			}
 		}
 		getImage();
