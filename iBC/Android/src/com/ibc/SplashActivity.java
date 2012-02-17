@@ -154,10 +154,6 @@ public class SplashActivity extends Activity {
                 e.printStackTrace();
             }
             
-            //processing
-            CalendarProvider provider = CalendarProvider.sharedInstance();
-            provider.hasCalendar();
-            
             return null;
         }
     

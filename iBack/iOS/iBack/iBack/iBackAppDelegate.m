@@ -9,7 +9,7 @@
 #import "iBackAppDelegate.h"
 
 #import "iBackMasterViewController.h"
-
+#import "FileHelper.h"
 @implementation iBackAppDelegate
 
 @synthesize window = _window;
@@ -17,6 +17,7 @@
 @synthesize menuArray;
 - (void)dealloc
 {
+    
     [_window release];
     [_navigationController release];
     [menuArray release];
@@ -25,6 +26,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [FileHelper createFolder:IMG_FOLDER_TEMP withPath:[FileHelper documentsPath]];
+    [FileHelper createFolder:VIDEO_FOLDER_TEMP withPath:[FileHelper documentsPath]];
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
 

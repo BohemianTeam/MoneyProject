@@ -9,6 +9,7 @@
 #import "EventsObj.h"
 
 @implementation EventsObj
+@synthesize imgLogo;
 - (id)iniWithDictionary:(NSDictionary*)dict
 {
     self = [super iniWithDictionary:dict];
@@ -60,8 +61,10 @@
     [imgLogo release];
     [super dealloc];
 }
-- (void)setImageLogo:(UIImage*)img
+
+#pragma - SetImageDownload delegate
+- (void)setImage:(UIImage*)img
 {
-    imgLogo = img;
+    imgLogo = [img retain];
 }
 @end

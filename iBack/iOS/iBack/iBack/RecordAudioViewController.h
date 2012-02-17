@@ -8,14 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import "AlertManager.h"
+#import "MBProgressHUD.h"
 
-@interface RecordAudioViewController : UIViewController<AVAudioRecorderDelegate>
+@interface RecordAudioViewController : UIViewController<AVAudioRecorderDelegate, FileSelectionAlertDelegate>
 {
     UIButton    *btnCancel;
     UIButton    *btnRecord;
     UIButton    *btnSave;
     UILabel     *lbStatus;
     UILabel     *lbTimer;
+    MBProgressHUD   *loadingView;
     
     AVAudioRecorder *audioRecorder;
     NSTimer         *timer;

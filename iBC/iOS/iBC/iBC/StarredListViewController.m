@@ -20,7 +20,7 @@
 #define VENUES_SECTION 0
 #define EVENTS_SECTION 1
 @implementation StarredListViewController
-
+@synthesize imageDownloadsInProgress;
 #pragma mark - View Init
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,20 +39,25 @@
         starredTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 480) style:UITableViewStylePlain];
         starredTable.dataSource = self;
         starredTable.delegate = self;
-        
+        starredTable.autoresizesSubviews = YES;
+        starredTable.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
         [self.view addSubview:starredTable];
         
         //get data
         haveData = NO;
-        [self getDataFromServer];    
+        [self getDataFromServer];
+        self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
     }
     return self;
 }
+
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-    
+    // terminate all pending download connections
+    NSArray *allDownloads = [self.imageDownloadsInProgress allValues];
+    [allDownloads makeObjectsPerformSelector:@selector(cancelDownload)];
     // Release any cached data, images, etc that aren't in use.
 }
 
@@ -73,6 +78,7 @@
 
 - (void)dealloc
 {
+    [imageDownloadsInProgress release];
     [starredTable release];
     [eventsList release];
     [venuesList release];
@@ -138,7 +144,7 @@
         return nil;
     static NSString *VenuesCell = @"VenuesCell";
     static NSString *EventsCell = @"EventsCell";
-    NSLog(@"-->%d", indexPath.row);
+
     if(indexPath.section == VENUES_SECTION){
         VenueViewCell *cell = [tableView dequeueReusableCellWithIdentifier:VenuesCell];
         if (cell == nil) {
@@ -146,7 +152,18 @@
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        [cell setupData:[venuesList objectAtIndex:indexPath.row]];
+        VenuesObj *obj = [venuesList objectAtIndex:indexPath.row];
+        [cell setupData:obj];
+        if(!obj.imgLogo){
+            if (starredTable.dragging == NO && starredTable.decelerating == NO)
+            {
+                [self startIconDownload:obj forIndexPath:indexPath];
+            }
+            // if a download is deferred or in progress, return a placeholder image
+            cell.imgViewLogo.image = [UIImage imageNamed:@"venueTest.jpg"];
+        }else{
+            cell.imgViewLogo.image = obj.imgLogo;
+        }
         
         return cell;
     }else{
@@ -156,8 +173,20 @@
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        [cell setupData:[eventsList objectAtIndex:indexPath.row]];
         
+        EventsObj *obj = [eventsList objectAtIndex:indexPath.row];
+        [cell setupData:obj];
+        
+        if(!obj.imgLogo){
+            if (starredTable.dragging == NO && starredTable.decelerating == NO)
+            {
+                [self startIconDownload:obj forIndexPath:indexPath];
+            }
+            // if a download is deferred or in progress, return a placeholder image
+            cell.imgViewLogo.image = [UIImage imageNamed:@"eventTest.jpg"];
+        }else{
+            cell.imgViewLogo.image = obj.imgLogo;
+        }
         return cell;
     }
     
@@ -180,20 +209,20 @@
         {
             VenuesObj *obj = [[VenuesObj alloc] iniWithDictionary:dict];
             [venuesList addObject:obj];
-            [venuesList addObject:obj];
+
             [obj release];
         }
     }
     
     //get events
-    NSArray *events = (NSArray*)[resObj getObjectForKey:@"e"];
+    NSArray *events = (NSArray*)[resObj getObjectForKey:EventsArray];
     if(events != nil){
         eventsList = [[NSMutableArray alloc] init];
         for(NSDictionary *dict in events)
         {
             EventsObj *obj = [[EventsObj alloc] iniWithDictionary:dict];
             [eventsList addObject:obj];
-            [eventsList addObject:obj];
+
             [obj release];
         }
     }
@@ -210,17 +239,18 @@
 }
 #pragma mark - Table cell image support
 
-- (void)startIconDownload:(ResponseObj *)otherObj forIndexImg:(NSString*)indexImg
+- (void)startIconDownload:(id)otherObj forIndexPath:(NSIndexPath*)indexPath
 {
-    ImageDownloader *imgDownloader = [imageDownloadsInProgress objectForKey:indexImg];
+    ImageDownloader *imgDownloader = [imageDownloadsInProgress objectForKey:indexPath];
     if (imgDownloader == nil) 
     {
         imgDownloader = [[ImageDownloader alloc] init];
-        imgDownloader.otherObj = otherObj;
-        imgDownloader.indexImageOnRowTable = indexImg;
         imgDownloader.delegate = self;
-        [imageDownloadsInProgress setObject:imgDownloader forKey:indexImg];
-        [imgDownloader startDownload];
+        imgDownloader.setImgDelegate = otherObj;
+        [imageDownloadsInProgress setObject:imgDownloader forKey:indexPath];
+        
+        NSString *url = [((ResponseObj*)otherObj) getObjectForKey:Logo];
+        [imgDownloader startDownloadWithUrl:[NSString stringWithFormat:@"%@%@", API_IMG_URL, url]];
         [imgDownloader release];
     }
 }
@@ -228,35 +258,43 @@
 // this method is used in case the user scrolled into a set of cells that don't have their app icons yet
 - (void)loadImagesForOnscreenRows
 {
-    if ([self.otherArray count] > 0)
+    if ([venuesList count] > 0 || [eventsList count] > 0)
     {
-        NSArray *visiblePaths = [self.responseTable indexPathsForVisibleRows];
+        NSLog(@"loadImagesForOnscreenRows");
+        NSArray *visiblePaths = [starredTable indexPathsForVisibleRows];
         for (NSIndexPath *indexPath in visiblePaths)
         {
-            NSInteger index = indexPath.row;
-            
-            OtherResponseObj *obj = [self.otherArray objectAtIndex:index];
-            
-            if (!obj.imgKeyFrame) // avoid the app icon download if the app already has an icon
-            {
-                [self startIconDownload:obj forIndexImg:[NSString stringWithFormat:@"%d",index]];
+            if(indexPath.section == VENUES_SECTION){
+                VenuesObj *venueObj = [venuesList objectAtIndex:indexPath.row];
+                if(!venueObj.imgLogo)
+                    [self startIconDownload:venueObj forIndexPath:indexPath];
+            }else{
+                EventsObj *eventObj = [eventsList objectAtIndex:indexPath.row];
+                if(!eventObj.imgLogo)
+                    [self startIconDownload:eventObj forIndexPath:indexPath];
             }
         }
     }
 }
 
 // called by our ImageDownloader when an icon is ready to be displayed
-- (void)appImageDidLoad:(NSString *)indexImg
+- (void)appImageDidLoad:(NSIndexPath *)indexPath
 {
-    NSInteger row = [indexImg integerValue];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-    ImageDownloader *imgDownloader = [imageDownloadsInProgress objectForKey:indexImg];
+    NSLog(@"appImageDidLoad");
+    ImageDownloader *imgDownloader = [imageDownloadsInProgress objectForKey:indexPath];
     if (imgDownloader != nil)
     {
-        OtherResponseViewCell *cell = (OtherResponseViewCell*)[self.responseTable cellForRowAtIndexPath:indexPath];
-        // Display the newly loaded image
-        cell.imgVideo.image = imgDownloader.otherObj.imgKeyFrame;
+        if(indexPath.section == VENUES_SECTION){
+            VenueViewCell *cell = (VenueViewCell*)[starredTable cellForRowAtIndexPath:indexPath];
+            cell.imgViewLogo.image = ((VenuesObj*)[venuesList objectAtIndex:indexPath.row]).imgLogo;
+        }
+        else{
+            EventViewCell *cell = (EventViewCell*)[starredTable cellForRowAtIndexPath:indexPath];
+            cell.imgViewLogo.image = ((EventsObj*)[eventsList objectAtIndex:indexPath.row]).imgLogo;
+        }
     }
+    
+    [starredTable reloadData];
 }
 
 #pragma mark - Deferred image loading (UIScrollViewDelegate)

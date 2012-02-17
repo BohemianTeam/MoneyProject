@@ -14,8 +14,12 @@
 #import "AppConstant.h"
 #import "iBackAppDelegate.h"
 #import "AlertManager.h"
+#import "iBackSettings.h"
+#import "Utils.h"
+#import "GDataServiceGoogleYouTube.h"
+#import "GDataEntryYouTubeUpload.h"
+#import "KeychainItemWrapper.h"
 
-#define HEIGHT_OF_CELL 50
 
 @implementation SaveFilesViewController
 @synthesize movFiles;
@@ -23,6 +27,7 @@
 @synthesize isEditTable;
 @synthesize needDeleteFiles;
 @synthesize fileSelectedIndex;
+@synthesize passLogin, userLogin;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -75,6 +80,8 @@
 
     [self loadFilesIntoArray];
     
+    //keychain save data
+    keychain = [[KeychainItemWrapper alloc] initWithIdentifier:APP_KEYCHAIN accessGroup:nil];
 }
 
 - (void)viewDidUnload
@@ -112,6 +119,9 @@
 
 - (void)dealloc
 {
+    [passLogin release];
+    [userLogin release];
+    [keychain release];
     [movFiles release];
     [super dealloc];
 }
@@ -127,7 +137,7 @@
     NSArray *files = [[[FileHelper sharedFileHelper] getFilesInFolder] retain];
     
     for(NSString* file in files){
-        if([file rangeOfString:@".MOV"].location > 0 || [file rangeOfString:@".caf"].location > 0)
+        if([FileHelper checkFile:file isType:@"mov"] || [FileHelper checkFile:file isType:@"caf"])
         {
             [movFiles addObject:[[FileHelper sharedFileHelper] createFullFilePath:file]];
         }    
@@ -218,6 +228,14 @@
     cell.lbFileDuration.text = [NSString stringWithFormat:@"%.2d:%.2d:%.2d", hours, minutes, seconds];
     cell.lbFileNumber.text = [NSString stringWithFormat:@"%d.", indexPath.row + 1];
     
+    if([needDeleteFiles objectForKey:[NSString stringWithFormat:@"%d",indexPath.row]] != nil)
+    {
+        cell.isSelected = TRUE;
+        [cell.btnSelectedBox setSelected:YES];
+    }else{
+        cell.isSelected = FALSE;
+        [cell.btnSelectedBox setSelected:NO];
+    }
     return cell;
 }
 // Override to support editing the table view.
@@ -311,6 +329,226 @@
     [self.navigationController pushViewController:playerVC animated:YES];  
     [playerVC release];
 }
+
+
+#pragma mark upload video to youtube
+-(void)uploadVideoToYutube: (NSString*)user pass:(NSString*)pass
+{
+    //NSString *devKey = [mDeveloperKeyField text];
+    
+    GDataServiceGoogleYouTube *service = [self youTubeService:user pass:pass];
+    [service setYouTubeDeveloperKey:DEVELOPER_KEY];
+    NSLog(@"%@", pass);
+    
+    NSURL *url = [GDataServiceGoogleYouTube youTubeUploadURLForUserID:user
+                                                             clientID:CLIENT_ID];
+    
+    // load the file data
+    NSString *path = [movFiles objectAtIndex:fileSelectedIndex];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    NSString *filename = [path lastPathComponent];
+    
+    // gather all the metadata needed for the mediaGroup
+    NSString *titleStr = @"Test video";
+    GDataMediaTitle *title = [GDataMediaTitle textConstructWithString:titleStr];
+    
+    NSString *categoryStr = @"Entertainment";
+    GDataMediaCategory *category = [GDataMediaCategory mediaCategoryWithString:categoryStr];
+    [category setScheme:kGDataSchemeYouTubeCategory];
+    
+    NSString *descStr = @"This is test upload video";
+    GDataMediaDescription *desc = [GDataMediaDescription textConstructWithString:descStr];
+    
+    NSString *keywordsStr = @"key world for this app";
+    GDataMediaKeywords *keywords = [GDataMediaKeywords keywordsWithString:keywordsStr];
+    
+    
+    
+    GDataYouTubeMediaGroup *mediaGroup = [GDataYouTubeMediaGroup mediaGroup];
+    [mediaGroup setMediaTitle:title];
+    [mediaGroup setMediaDescription:desc];
+    [mediaGroup addMediaCategory:category];
+    [mediaGroup setMediaKeywords:keywords];
+    [mediaGroup setIsPrivate:NO];
+    
+    NSString *mimeType = [GDataUtilities MIMETypeForFileAtPath:path
+                                               defaultMIMEType:@"video/mov"];
+    
+    // create the upload entry with the mediaGroup and the file data
+    GDataEntryYouTubeUpload *entry;
+    entry = [GDataEntryYouTubeUpload uploadEntryWithMediaGroup:mediaGroup
+                                                          data:data
+                                                      MIMEType:mimeType
+                                                          slug:filename];
+    
+    SEL progressSel = @selector(ticket:hasDeliveredByteCount:ofTotalByteCount:);
+    [service setServiceUploadProgressSelector:progressSel];
+    
+    GDataServiceTicket *ticket;
+    ticket = [service fetchEntryByInsertingEntry:entry
+                                      forFeedURL:url
+                                        delegate:self
+                               didFinishSelector:@selector(uploadTicket:finishedWithEntry:error:)];
+    if(ticket != nil)
+        NSLog(@"yes");
+    else
+        NSLog(@"NO");
+    [self setUploadTicket:ticket]; 
+}
+// get a YouTube service object with the current username/password
+//
+// A "service" object handles networking tasks.  Service objects
+// contain user authentication information as well as networking
+// state information (such as cookies and the "last modified" date for
+// fetched data.)
+
+- (GDataServiceGoogleYouTube *)youTubeService: (NSString*)user pass:(NSString*)pass {
+    
+    static GDataServiceGoogleYouTube* service = nil;
+    
+    if (!service) {
+        service = [[GDataServiceGoogleYouTube alloc] init];
+        
+        [service setShouldCacheDatedData:YES];
+        [service setServiceShouldFollowNextLinks:YES];
+        [service setIsServiceRetryEnabled:YES];
+    }
+    
+    // update the username/password each time the service is requested
+    /*
+     NSString *username = [mUsernameField text];
+     NSString *password = [mPasswordField text];
+     
+     if ([username length] > 0 && [password length] > 0) {
+     [service setUserCredentialsWithUsername:@"vancucit@gmail.com"
+     password:@"caotronganh_1"];
+     } else {
+     */
+    // fetch unauthenticated
+    [service setUserCredentialsWithUsername:user
+                                   password:pass];
+    
+    [service setYouTubeDeveloperKey:DEVELOPER_KEY];
+    
+    return service;
+}
+
+// progress callback
+- (void)ticket:(GDataServiceTicket *)ticket
+hasDeliveredByteCount:(unsigned long long)numberOfBytesRead 
+ofTotalByteCount:(unsigned long long)dataLength {
+    
+    int curr = ((double)numberOfBytesRead / (double)dataLength)*100;
+    NSLog(@"callback  %d", curr);
+    //[mProgressView setProgress:(double)numberOfBytesRead / (double)dataLength];
+    
+    uploading.labelText = [NSString stringWithFormat:@"Uploading... %02d%%", curr];
+}
+
+// upload callback
+- (void)uploadTicket:(GDataServiceTicket *)ticket
+   finishedWithEntry:(GDataEntryYouTubeVideo *)videoEntry
+               error:(NSError *)error {
+    if (error == nil) {
+        // tell the user that the add worked
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Uploaded!"
+                                                        message:[NSString stringWithFormat:@"%@ succesfully uploaded", 
+                                                                 [[videoEntry title] stringValue]]                    
+                                                       delegate:nil 
+                                              cancelButtonTitle:@"Ok" 
+                                              otherButtonTitles:nil];
+        
+        [alert show];
+        [alert release];
+
+        //using keychain
+//        // Store username to keychain 	
+//        [keychain setObject:userLogin forKey:kUserYoutube];
+//        
+//        // Store password to keychain
+//        [keychain setObject:passLogin forKey:kPassYoutube];
+        
+        //using USerDefault
+        NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+        
+        if (standardUserDefaults) {
+            [standardUserDefaults setObject:userLogin forKey:kUserYoutube];
+            [standardUserDefaults setObject:passLogin forKey:kPassYoutube];
+            [standardUserDefaults synchronize];
+        }
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error!"
+                                                        message:[NSString stringWithFormat:@"Error: %@", 
+                                                                 [error description]] 
+                                                       delegate:nil 
+                                              cancelButtonTitle:@"Ok" 
+                                              otherButtonTitles:nil];
+        
+        [alert show];
+        [alert release];  
+    }
+    //[mProgressView setProgress: 0.0];
+    
+    [self setUploadTicket:nil];
+    [self endLoading];
+}
+
+- (void)uploadToYoutube
+{
+    //using keychain
+//    NSString *user = [keychain objectForKey:kUserYoutube];
+//    NSString *pass = [keychain objectForKey:kPassYoutube];
+    
+    //using UserDefault
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    
+    NSString *user = nil;
+    NSString *pass = nil;
+    if (standardUserDefaults) 
+    {
+        user = [standardUserDefaults objectForKey:kUserYoutube];
+        pass = [standardUserDefaults objectForKey:kPassYoutube];
+    }
+    if (user != nil && pass != nil) 
+    {
+        [self uploadVideoToYutube:user pass:pass];
+        [self showLoading];
+    }else{
+        AlertManager *alert = [AlertManager sharedManager];
+        alert.fileSelectionDelegate = self;
+        alert.type = aSignIn;
+        
+        [alert showAlert];
+    }
+    
+    //[self uploadVideoToYutube];
+}
+- (void)signinYoutube: (NSString*)user pass:(NSString*)pass
+{
+    if(userLogin)
+        [userLogin release];
+    if(passLogin)
+        [passLogin release];
+    
+    //using to save keychain when login success
+    userLogin = [user retain];
+    passLogin = [pass retain];
+    [self uploadVideoToYutube:user pass:pass];
+    [self showLoading];
+    //[[Utils sharedUtils] uploadYoutube:[movFiles objectAtIndex:fileSelectedIndex] withUser:user withPass:pass];
+}
+#pragma mark -
+#pragma mark Setters
+
+- (GDataServiceTicket *)uploadTicket {
+    return mUploadTicket;
+}
+
+- (void)setUploadTicket:(GDataServiceTicket *)ticket {
+    if(mUploadTicket != nil)
+        [mUploadTicket release];
+    mUploadTicket = [ticket retain];
+}
 #pragma mark - FileViewCellDelegate
 - (void)selectedDeleteCell:(NSString*)indexRow;
 {
@@ -325,5 +563,20 @@
     NSLog(@"unDeleteCell: %@", indexRow);
     NSInteger row = [indexRow integerValue] - 1;
     [needDeleteFiles removeObjectForKey:[NSString stringWithFormat:@"%d", row]];
+}
+
+#pragma mark - Show loading
+- (void)showLoading
+{
+    uploading = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:uploading];
+    uploading.labelText = @"uploading...!";
+    [uploading show:YES];
+}
+- (void)endLoading
+{
+    [uploading removeFromSuperview];
+    [uploading release];
+    uploading = nil;
 }
 @end

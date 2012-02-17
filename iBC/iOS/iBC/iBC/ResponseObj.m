@@ -47,6 +47,8 @@
     id result = nil;
     result = [responseDict objectForKey:key];
     
+    if(result == [NSNull null])
+        return nil;
     return result;
 }
 @end

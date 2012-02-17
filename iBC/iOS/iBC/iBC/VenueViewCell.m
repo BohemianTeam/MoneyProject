@@ -12,7 +12,7 @@
 
 
 @implementation VenueViewCell
-
+@synthesize imgViewLogo;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -38,9 +38,8 @@
 }
 - (void)setupData: (VenuesObj*)data
 {
-    imgViewLogo.image = [UIImage imageNamed:@"venueTest.jpg"];// data.imgLogo;
     lbName.text = [data getName];
-    lbAddress.text = @"test";//[data getAddress];
+    lbAddress.text = [data getAddress];
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {

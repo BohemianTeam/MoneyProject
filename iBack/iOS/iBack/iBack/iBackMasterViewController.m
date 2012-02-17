@@ -17,7 +17,9 @@
 #import "HowToViewController.h"
 #import "SaveFilesViewController.h"
 #import "RecordAudioViewController.h"
-
+#import "RevertMedia.h"
+#import "FileHelper.h"
+#import "RecordVideoViewController.h"
 #define MENU_SECTION_NUMBER 2
 #define MENU_ROW_NUMBER 3
 
@@ -25,8 +27,7 @@
 
 @synthesize detailViewController = _detailViewController;
 @synthesize menuTable;
-@synthesize cameraView;
-
+@synthesize overlayView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -38,6 +39,7 @@
 							
 - (void)dealloc
 {
+
     [_detailViewController release];
     [super dealloc];
 }
@@ -59,6 +61,7 @@
     //menuTable.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.0];
     menuTable.scrollEnabled = NO;
     menuTable.backgroundColor = [UIColor clearColor];
+
 }
 
 
@@ -97,8 +100,8 @@
 {
     // Return YES for supported orientations
     //return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-    return NO;
-    //return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+    //return NO;
+    return UIInterfaceOrientationIsPortrait(interfaceOrientation);
 }
 #pragma mark - custome navigation bar
 - (void)setBackButtonFor: (UIViewController*)vc
@@ -133,28 +136,39 @@
 	[self.navigationController popViewControllerAnimated:YES];	
 }
 
+
 #pragma mark - Camera Audio methods
 - (void)showCameraViewController
 {
-    cameraView = [[UIImagePickerController alloc] init];
-    NSString *mediaType = nil;
-    NSArray *types  = nil;
-    types = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
-    if([types containsObject:(NSString*)kUTTypeMovie]){
-        mediaType = (NSString*)kUTTypeMovie;
-    }else{
-        mediaType = (NSString*)kUTTypeVideo;
-    }
+//    if(cameraView != nil)
+//    {
+//        [cameraView release];
+//        cameraView = nil;
+//    }
+//    cameraView = [[UIImagePickerController alloc] init];
+//    NSString *mediaType = nil;
+//    NSArray *types  = nil;
+//    types = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
+//    if([types containsObject:(NSString*)kUTTypeMovie]){
+//        mediaType = (NSString*)kUTTypeMovie;
+//    }else{
+//        mediaType = (NSString*)kUTTypeVideo;
+//    }
+//    
+//    cameraView.mediaTypes = [NSArray arrayWithObjects:mediaType, nil];
+//    cameraView.delegate = self;
+//    cameraView.sourceType = UIImagePickerControllerSourceTypeCamera;
+//    cameraView.allowsEditing = NO;
+//    cameraView.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+//    
+//    [self presentModalViewController:cameraView animated:YES];
+//    cameraView.cameraOverlayView = overlayView;
+    //[cameraView release];
     
-    cameraView.mediaTypes = [NSArray arrayWithObjects:mediaType, nil];
-    cameraView.delegate = self;
-    cameraView.sourceType = UIImagePickerControllerSourceTypeCamera;
-    cameraView.allowsEditing = NO;
-    cameraView.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+    RecordVideoViewController *recordVideoVC = [[RecordVideoViewController alloc] initWithNibName:@"RecordVideoViewController" bundle:nil];
+    [self presentModalViewController:recordVideoVC animated:YES];
     
-    [self presentModalViewController:cameraView animated:YES];
-    
-    [cameraView release];
+    [recordVideoVC release];
 }
 - (void)showAudioViewController
 {

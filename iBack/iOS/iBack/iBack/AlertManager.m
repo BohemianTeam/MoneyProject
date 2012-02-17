@@ -112,11 +112,56 @@ static AlertManager *sharedAlertManager = nil;
             alertView.title = @"File Selection";
             alertView.delegate = self;
             [alertView addButtonWithTitle:@"Play"];            
-            [alertView addButtonWithTitle:@"Upload Youtube"];
+            [alertView addButtonWithTitle:@"Upload to Youtube"];
             [alertView addButtonWithTitle:@"Cancel"];
             [alertView setFrame:CGRectMake(20, 45, 245, 100)];
             
             [alertView show];
+            [alertView release];
+            break;
+        case aPickName:
+            alertView = [[UIAlertView alloc] initWithTitle:@"Enter file name" message:@"\n\n" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Done", nil];
+            
+            //create name field
+            UITextField *nameF = [[UITextField alloc] initWithFrame:CGRectMake(16, 60, 252, 30)];
+            nameF.font = [UIFont systemFontOfSize:18];
+            nameF.backgroundColor = [UIColor whiteColor];
+            nameF.keyboardAppearance = UIKeyboardAppearanceAlert;
+            [nameF becomeFirstResponder];
+            nameF.tag = 999;
+            
+            [alertView addSubview:nameF];
+            [alertView show];
+            
+            [nameF release];
+            [alertView release];
+            break;
+        case aSignIn:
+            alertView = [[UIAlertView alloc] initWithTitle:@"Login Youtube" message:@"\n\n\n\n" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Done", nil];
+            
+            //create name field
+            UITextField *txfUser = [[UITextField alloc] initWithFrame:CGRectMake(16, 60, 252, 30)];
+            txfUser.font = [UIFont systemFontOfSize:18];
+            txfUser.backgroundColor = [UIColor whiteColor];
+            txfUser.keyboardAppearance = UIKeyboardAppearanceAlert;
+            txfUser.tag = 999;
+            txfUser.placeholder = @"Username";
+            [txfUser becomeFirstResponder];
+            
+            UITextField *txfPass = [[UITextField alloc] initWithFrame:CGRectMake(16, 100, 252, 30)];
+            txfPass.font = [UIFont systemFontOfSize:18];
+            txfPass.backgroundColor = [UIColor whiteColor];
+            txfPass.keyboardAppearance = UIKeyboardAppearanceAlert;
+            txfPass.tag = 998;
+            txfPass.placeholder = @"Password";
+            txfPass.secureTextEntry = YES;
+            
+            [alertView addSubview:txfUser];
+            [alertView addSubview:txfPass];
+            [alertView show];
+            
+            [txfUser release];
+            [txfPass release];
             [alertView release];
             break;
         default:
@@ -127,6 +172,7 @@ static AlertManager *sharedAlertManager = nil;
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     UITextField *nameField = (UITextField*)[alertView viewWithTag:999];
+    UITextField *passField = (UITextField*)[alertView viewWithTag:998];
     switch (type) {
         case aError:
             break;
@@ -134,15 +180,43 @@ static AlertManager *sharedAlertManager = nil;
             if(buttonIndex == 0)
                 NSLog(@"Cancel rename file");
             else{
-                [fileSelectionDelegate renameFileSelectionWithName:nameField.text];
+                if([nameField.text isEqual:@""])
+                {
+                    type = aRename;
+                    [self showAlert];
+                }else
+                    [fileSelectionDelegate renameFileSelectionWithName:nameField.text];
             }
             break;
         case aFileSelection:
             if(buttonIndex == 0)
                 [fileSelectionDelegate playFileSelection];
             else if(buttonIndex == 1)
-                [fileSelectionDelegate playFileSelection];
-                
+                [fileSelectionDelegate uploadToYoutube];     
+            break;
+        case aPickName:
+            if(buttonIndex == 0)
+                NSLog(@"Cancel");
+            else{
+                if([nameField.text isEqual:@""])
+                {
+                    type = aPickName;
+                    [self showAlert];
+                }else
+                    [fileSelectionDelegate pickName:nameField.text];
+            }
+            break;
+        case aSignIn:
+            if(buttonIndex == 0)
+                NSLog(@"Cancel");
+            else{
+                if([nameField.text isEqual:@""] || [passField.text isEqual:@""])
+                {
+                    type = aSignIn;
+                    [self showAlert];
+                }else
+                    [fileSelectionDelegate signinYoutube:nameField.text pass:passField.text];
+            }
             break;
         default:
             break;

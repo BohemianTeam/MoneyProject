@@ -67,8 +67,9 @@
     [tempView setBackgroundColor:[UIColor blueColor]];
     
     UIScrollView *videoSubScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 240, 300)];
-    videoSubScroll.contentSize = CGSizeMake(240*3, 300);
+    videoSubScroll.contentSize = CGSizeMake(240*3 + 20, 300);
     videoSubScroll.delegate = self;
+    
     [tempView addSubview:videoSubScroll];
     
     UITextView *tvTest1 = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 240, 300)];
@@ -387,33 +388,52 @@
 }
 
 #pragma mark - UIScrollViewDelegate
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
+{
+    NSLog(@"scrollViewWillBeginDecelerating");
+    
+    [self scrollViewDidEndDecelerating:scrollView];
+}
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     NSLog(@"scrollViewDidEndDecelerating");
     
     CGPoint currentloca = scrollView.contentOffset;
+    if(currentloca.x < 0)
+        [scrollView scrollRectToVisible:CGRectMake(0, 0, 240, 300) animated:YES];
     int temp = (int)currentloca.x % 240;
     int indexSub = (int)currentloca.x / 240;
+    NSLog(@"%d----%d", temp, indexSub);
     if(temp >= 240/2){
-        [scrollView setContentOffset:CGPointMake((indexSub+1)*240, 0)];
+        //[scrollView setContentOffset:CGPointMake((indexSub+1)*240, 0)];
+        [scrollView scrollRectToVisible:CGRectMake((indexSub+1)*240, 0, 240, 300) animated:YES];
     }else{
-        [scrollView setContentOffset:CGPointMake(indexSub*240, 0)];
+        //[scrollView setContentOffset:CGPointMake(indexSub*240, 0)];
+        [scrollView scrollRectToVisible:CGRectMake(indexSub*240, 0, 240, 300) animated:YES];
     }
 }
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
+    NSLog(@"scrollViewDidEndDragging");
     CGPoint currentloca = scrollView.contentOffset;
+    if(currentloca.x < 0)
+        [scrollView scrollRectToVisible:CGRectMake(0, 0, 240, 300) animated:YES];
     int temp = (int)currentloca.x % 240;
     int indexSub = (int)currentloca.x / 240;
+    NSLog(@"%d----%d", temp, indexSub);
     if(temp >= 240/2){
-        [scrollView setContentOffset:CGPointMake((indexSub+1)*240, 0)];
+        //[scrollView setContentOffset:CGPointMake((indexSub+1)*240, 0)];
+        [scrollView scrollRectToVisible:CGRectMake((indexSub+1)*240, 0, 240, 300) animated:YES];
     }else{
-        [scrollView setContentOffset:CGPointMake(indexSub*240, 0)];
+        //[scrollView setContentOffset:CGPointMake(indexSub*240, 0)];
+        [scrollView scrollRectToVisible:CGRectMake(indexSub*240, 0, 240, 300) animated:YES];
     }
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     NSLog(@"scrollViewDidScroll");
-    
+    CGPoint currentloca = scrollView.contentOffset;
+    if(currentloca.x < 0)
+        [scrollView scrollRectToVisible:CGRectMake(0, 0, 240, 300) animated:YES];
 }
 @end

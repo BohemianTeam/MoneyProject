@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "ResponseObj.h"
-
-@interface EventsObj : ResponseObj
+#import "ImageDownloader.h"
+@interface EventsObj : ResponseObj<SetImageDelegate>
 {
     UIImage     *imgLogo;
 }
@@ -21,5 +21,5 @@
 - (NSString*)getPrice;
 - (NSString*)getLogoUrl;
 
-- (void)setImageLogo:(UIImage*)img;
+
 @end

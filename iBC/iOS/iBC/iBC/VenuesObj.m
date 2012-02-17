@@ -31,12 +31,13 @@
 - (NSString*)getAddress
 {
     NSString *add = (NSString*)[super getObjectForKey:Distance];
-    if(add != NULL)
+    if(add){
         return add;
-    
+    }
+  
     add = (NSString*)[super getObjectForKey:City];
     
-    if(add != NULL)
+    if(add)
         return add;
     
     return @""; 
@@ -50,8 +51,9 @@
     [imgLogo release];
     [super dealloc];
 }
-- (void)setImageLogo:(UIImage*)img
+#pragma - SetImageDownload delegate
+- (void)setImage:(UIImage*)img
 {
-    imgLogo = img;
+    imgLogo = [img retain];
 }
 @end

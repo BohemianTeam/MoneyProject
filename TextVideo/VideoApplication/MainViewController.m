@@ -27,17 +27,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.title = LocStr(@"Title");
-        int h = 28;
-        UILabel * lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, h)];
-        lblTitle.backgroundColor = [UIColor clearColor];
-        lblTitle.font = [UIFont boldSystemFontOfSize:22];
-        lblTitle.text = LocStr(@"TitleMainView");
-        lblTitle.textAlignment = UITextAlignmentCenter;
-        [self.view addSubview:lblTitle];
-        [lblTitle release];
-        
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0 + h, 320, 416 - h) 
+        self.title = LocStr(@"TitleMainView");
+                
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 416) 
                                                   style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
@@ -48,7 +40,9 @@
         [button addTarget:self action:@selector(didButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         button.backgroundColor = [UIColor blueColor];
         button.frame = CGRectMake(0, 100, 50, 30);
-        [button setTitle:@"Go to video" forState:UIControlStateNormal];
+        [button setTitle:LocStr(@"New Mook") forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+
         _tableView.tableFooterView = button;
         [button release];
         

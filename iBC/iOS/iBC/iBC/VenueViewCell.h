@@ -16,6 +16,6 @@
     UILabel             *lbName;
     UILabel             *lbAddress;
 }
-
+@property(retain, nonatomic) UIImageView         *imgViewLogo;
 - (void)setupData: (VenuesObj*)data;
 @end

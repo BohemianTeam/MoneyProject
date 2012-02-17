@@ -16,14 +16,15 @@
     
     NSMutableData *activeDownload;
     NSURLConnection *imageConnection;
+    NSIndexPath *indexPathInTableView;
 }
 @property (nonatomic, assign) id<ImageDownloaderDelegate> delegate;
 @property (nonatomic, assign) id<SetImageDelegate> setImgDelegate;
-
+@property (nonatomic, retain) NSIndexPath *indexPathInTableView;
 @property (nonatomic, retain) NSMutableData *activeDownload;
 @property (nonatomic, retain) NSURLConnection *imageConnection;
 
-- (void)startDownload;
+- (void)startDownloadWithUrl:(NSString*)url;
 - (void)cancelDownload;
 
 @end
@@ -33,5 +34,5 @@
 @end
 
 @protocol ImageDownloaderDelegate
-- (void)appImageDidLoad:(NSString*)indexImageOnRowTable;
+- (void)appImageDidLoad:(NSIndexPath*)indexPathInTableView;
 @end

@@ -13,7 +13,7 @@
 #define IMAGE_HEIGHT 160
 
 @implementation ImageDownloader
-
+@synthesize indexPathInTableView;
 @synthesize setImgDelegate, delegate;
 @synthesize activeDownload;
 @synthesize imageConnection;
@@ -23,7 +23,7 @@
 - (void)dealloc
 {
     [activeDownload release];
-    
+    [indexPathInTableView release];
     [imageConnection cancel];
     [imageConnection release];
     
@@ -94,6 +94,6 @@
     self.imageConnection = nil;
     
     // call our delegate and tell it that our icon is ready for display
-    //[delegate appImageDidLoad:self.indexImageOnRowTable];
+    [delegate appImageDidLoad:self.indexPathInTableView];
 }
 @end

@@ -32,6 +32,7 @@
     _tableView.delegate = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
     _tableView.separatorColor = [UIColor whiteColor];
+    _tableView.scrollEnabled = NO;
     
     [self.view addSubview:_tableView];
     //add menu item

@@ -9,7 +9,7 @@
 #import "EventViewCell.h"
 
 @implementation EventViewCell
-
+@synthesize imgViewLogo;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -33,13 +33,13 @@
         [self addSubview:lbName];
         
         //dates view
-        lbDates = [[UILabel alloc] initWithFrame:CGRectMake(60, 65, 200, 20)];
+        lbDates = [[UILabel alloc] initWithFrame:CGRectMake(60, 65, 150, 20)];
         lbDates.textColor = UIColorFromRGB(0x666666);
         lbDates.font = [UIFont fontWithName:@"Arial" size:16];
         [self addSubview:lbDates];
         
         //address view
-        lbPrice = [[UILabel alloc] initWithFrame:CGRectMake(200, 65, 80, 20)];
+        lbPrice = [[UILabel alloc] initWithFrame:CGRectMake(150, 65, 130, 20)];
         lbPrice.textAlignment = UITextAlignmentRight;
         lbPrice.textColor = UIColorFromRGB(0xCC3366);
         lbPrice.font = [UIFont fontWithName:@"Arial" size:16];
@@ -50,11 +50,9 @@
 
 - (void)setupData: (EventsObj*)data
 {
-
-    imgViewLogo.image = [UIImage imageNamed:@"eventTest.jpg"];// data.imgLogo;
     lbTitle.text = [data getTitle];
     lbName.text = [data getName];
-    lbPrice.text = @"test";//[data getPrice];
+    lbPrice.text = [data getPrice];
     lbDates.text = [data getDates];
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

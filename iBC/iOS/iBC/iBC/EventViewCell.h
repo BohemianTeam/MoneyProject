@@ -17,6 +17,6 @@
     UILabel             *lbDates;
     UILabel             *lbPrice;
 }
-
+@property(nonatomic, retain)UIImageView         *imgViewLogo;
 - (void)setupData: (EventsObj*)data;
 @end
