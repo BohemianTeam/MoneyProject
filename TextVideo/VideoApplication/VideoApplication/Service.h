@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#define API_URL @"http://192.168.1.107/video"
+#define API_URL @"http://lone-ghost.com/video"
 
 extern NSString *MBErrorDomain;
 static NSError *mb_err(int code) {
