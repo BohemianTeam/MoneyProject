@@ -45,15 +45,6 @@ public class MainActivity extends Activity {
 		mListView.setAdapter(adapter);
 		mListView.setOnItemClickListener(adapter);
 
-//		_service = new Service(_listener);
-//		_service.getStarred();
-//		show();
-	}
-
-	public String getCurrentTimeString() {
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
-		Date date = new Date();
-		return dateFormat.format(date);
 	}
 
 	private void show() {
@@ -98,7 +89,7 @@ public class MainActivity extends Activity {
 					iBCApplication.sharedInstance().putData("venues", status);
 					//
 					Service sv = new Service(_listener);
-					sv.getEvents("1", getCurrentTimeString());
+//					sv.getEvents("1", getCurrentTimeString());
 				} else {
 					System.out.println(result.getResultCode());
 				}

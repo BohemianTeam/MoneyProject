@@ -2,8 +2,10 @@ package com.ibc.adapter;
 
 import java.util.ArrayList;
 
+import com.ibc.EventsListViewActivity;
 import com.ibc.StarredActivity;
 import com.ibc.SubMenuActivity;
+import com.ibc.VenusListViewActivity;
 import com.ibc.model.MenuItemData;
 import com.ibc.view.ListMenuRowHolder;
 
@@ -57,13 +59,20 @@ public class MenuListAdapter extends BaseAdapter implements OnItemClickListener{
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 		// TODO Auto-generated method stub
+		MenuItemData data = mDatas.get(position);
 		if (position == mDatas.size() - 1) {
-			MenuItemData data = mDatas.get(position);
 			Intent intent = new Intent(mContext, StarredActivity.class);
 			intent.putExtra("title", data.mTitle);
 			mContext.startActivity(intent);
+		} else if (position == 0) {
+			Intent intent = new Intent(mContext, EventsListViewActivity.class);
+			intent.putExtra("title", data.mTitle);
+			mContext.startActivity(intent);
+		} else if (position == 1 ) {
+			Intent intent = new Intent(mContext, VenusListViewActivity.class);
+			intent.putExtra("title", data.mTitle);
+			mContext.startActivity(intent);
 		} else {
-			MenuItemData data = mDatas.get(position);
 			Intent intent = new Intent(mContext, SubMenuActivity.class);
 			intent.putExtra("title", data.mTitle);
 			mContext.startActivity(intent);
