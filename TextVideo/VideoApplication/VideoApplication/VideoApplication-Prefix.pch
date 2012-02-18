@@ -14,6 +14,7 @@
     #import "logger.h"
     #import "UIApplicationExt.h"
     #import <Foundation/Foundation.h>
+#import "Config.h"
 #endif
 
 #define LocStr(key) [[NSBundle mainBundle] localizedStringForKey:(key) value:@"" table:nil]

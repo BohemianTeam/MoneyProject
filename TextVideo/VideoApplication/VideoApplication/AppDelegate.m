@@ -9,12 +9,50 @@
 #import "AppDelegate.h"
 #import "MainViewController.h"
 #import "Util.h"
+#import "VideoDatabase.h"
+
 @implementation AppDelegate
 
 @synthesize window = _window;
 @synthesize rootViewController = _rootViewController;
+#pragma mark create database file
+////////////////////////////////////////////////////////////////////////////////////////////
+///////						create database file									///////
+///////////////////////////////////////////////////////////////////////////////////////////
+- (NSString *)applicationDocumentsDirectory
+{ 
+	return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, 
+												NSUserDomainMask, YES) lastObject]; 
+} 
+- (NSString*)createEditableCopyOfDatabaseIfNeeded: (NSString*)nameDB
+{ 
+    // First, test for existence - we don’t want to wipe out a user’s DB 
+    NSFileManager *fileManager = [NSFileManager defaultManager]; 
+    NSString *documentsDirectory = [self applicationDocumentsDirectory]; 
+    NSString *writableDBPath = [documentsDirectory stringByAppendingPathComponent:nameDB]; 
+	
+    BOOL dbexists = [fileManager fileExistsAtPath:writableDBPath]; 
+    if (!dbexists) {  
+		// The writable database does not exist, so copy the default to the 
+		NSString *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:nameDB]; 
+		
+		NSError *error; 
+		BOOL success = [fileManager copyItemAtPath:defaultDBPath 
+											toPath:writableDBPath error:&error]; 
+		if (!success) { 
+			NSAssert1(0, @"Failed to create writable database file with message'%@'.", [error localizedDescription]); 
+		} 
+    }
+    
+    return writableDBPath;
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    //create database
+    NSString *dbPath = [self createEditableCopyOfDatabaseIfNeeded: DBNAME];
+	[[VideoDatabase sharedDatabase] openDB:dbPath];
+    
     // Override point for customization after application launch.
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     MainViewController *rootViewController = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];

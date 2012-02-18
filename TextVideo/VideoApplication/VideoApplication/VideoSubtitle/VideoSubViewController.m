@@ -11,11 +11,17 @@
 #import "CJSONSerializer.h"
 #import "VideoData.h"
 #import "VideoSubView.h"
+
+#define WIDTH_SUBTITLE_VIEW 240
+#define HEIGHT_SUBTITLE_VIEW 300
 @interface VideoSubViewController()
 - (void) mockupSubtitle;
 @end
 @implementation VideoSubViewController
 @synthesize subtitle = _subtitle;
+@synthesize currentPage = _currentPage;
+@synthesize currentPageHeight = _currentPageHeight;
+@synthesize movieFileName  = _movieFileName;
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -41,9 +47,9 @@
     self.title = @"Video View Controller";
 //    _playButton.enabled = FALSE;
 //    _doneButton.enabled = FALSE;
-//    _nextButton.enabled = FALSE;`
+//    _nextButton.enabled = FALSE;
     _currentIndex = 0;
-    NSURL *localPath = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"LARVA_Electronic Shock" ofType:@"mp4"]];
+    NSURL *localPath = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"LARVA_Airform" ofType:@"mp4"]];
     NSURL *videoUrl = localPath;//[NSURL URLWithString:videoPath];
     if (_movieController == nil) {
         _movieController = [[MPMoviePlayerController alloc] initWithContentURL:videoUrl];
@@ -63,34 +69,8 @@
     _subtitle = [[Subtitle alloc] init];
 
     [self loadSubtitle];
-    UIView *tempView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 240, 300)] autorelease];
-    [tempView setBackgroundColor:[UIColor blueColor]];
+    [self ceateSubtitleView];
     
-    UIScrollView *videoSubScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 240, 300)];
-    videoSubScroll.contentSize = CGSizeMake(240*3 + 20, 300);
-    videoSubScroll.delegate = self;
-    
-    [tempView addSubview:videoSubScroll];
-    
-    UITextView *tvTest1 = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 240, 300)];
-    tvTest1.text = @"He hated the women of the City. That's why he could get off to watching them taking shits and pissing and splattering thick blood everywhere during 'that time of the month'. He loved to be able to see them in their most private, their most guarded moments. Without all their expensive clothes, and most importantly, without them even knowing. He gained privilege to how dirty and disgusting they really were when the bathroom door was shut tight behind them and they thought that no one was looking in. He came when it was a skinny petite chick taking a massive shit, that seemed to go on and on forever. Or the long thick stream of piss and the shit coming out together in unison at that the same time. Or a particularly clean- looking, brand-wearing heiress dribbling out or her ass a relentless stream of dirty diarrhea. Those times he would come so hard it would end up catapulting a few feet across and onto the coffee table.";
-    tvTest1.bounces = YES;
-    tvTest1.editable = NO;
-    [videoSubScroll addSubview:tvTest1];
-    
-    UITextView *tvTest2 = [[UITextView alloc] initWithFrame:CGRectMake(241, 0, 240, 300)];
-    tvTest2.text = @"I was told by my doctor that it was a scientific fact that people who talk to themselves during their waking day, they will have more of a tendency to hear voices in their sleep and will suffer from more listlessness and restlessness during their sleep.All the poor of the city. I watched him hastily collecting cardboard like kindling. Sunset comes closing in on him.The more I spent ringing people through it began dawning on me that life is a cash register. Or: Cash Register-Karma. One person pays with the bills and change that will then become the next persons change and with out even knowing it what was once yours has now become theirs. They have been connected quickly for that one transaction in time and space. Money their only tangible connection. And i am the only one to know it. I once wrote this poem or song about it. It goes:She came up crying, looked like she had been dying She still had to pay in cash, I was afraid to ask.He came up next, next to no clue Her tears his change been through";
-    tvTest2.bounces = YES;
-    tvTest2.editable = NO;
-    [videoSubScroll addSubview:tvTest2];
-    
-    UITextView *tvTest3 = [[UITextView alloc] initWithFrame:CGRectMake(240*2+2, 0, 240, 300)];
-    tvTest3.text = @"asdjfhjasd f";
-    tvTest3.bounces = YES;
-    tvTest3.editable = NO;
-    [videoSubScroll addSubview:tvTest3];
-    
-    [self.view addSubview:tempView];
 }
 
 - (void)viewDidUnload
@@ -136,7 +116,7 @@
 - (void)loadSubtitle {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *fileDirectory = [paths objectAtIndex:0];
-    NSString *filePath = [fileDirectory stringByAppendingPathComponent:@"iamthebest.sub"];
+    NSString *filePath = [fileDirectory stringByAppendingPathComponent:@"video_sub.sub"];
     NSLog(@"%@", filePath);
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:filePath]) {
@@ -222,7 +202,108 @@
     [_tableView reloadData];
     
 }
+- (void)ceateSubtitleView
+{
+    self.currentPage = 0;
+    UIView *subtitleView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SUBTITLE_VIEW, HEIGHT_SUBTITLE_VIEW)] autorelease];
+    [subtitleView setBackgroundColor:[UIColor grayColor]];
+    
+    UIScrollView *videoSubScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SUBTITLE_VIEW, HEIGHT_SUBTITLE_VIEW)];
+    videoSubScroll.delegate = self;
+    
+    [subtitleView addSubview:videoSubScroll];
+    
+    //create page view for subtitle view
+    UIView *pageView = [[UIView alloc] initWithFrame:CGRectMake(WIDTH_SUBTITLE_VIEW*self.currentPage, 0, WIDTH_SUBTITLE_VIEW - 5, HEIGHT_SUBTITLE_VIEW)];
+    self.currentPageHeight = 0;
+    self.currentPage++;
+    videoSubScroll.contentSize = CGSizeMake(WIDTH_SUBTITLE_VIEW*self.currentPage, HEIGHT_SUBTITLE_VIEW);
+    
+    
+    //[videoSubScroll addSubview:pageView];
+    
+    NSLog(@"-----------");
+    CGSize maximumLabelSize = CGSizeMake(235,9999);
+    
 
+    for (Timeline *timeLine in self.subtitle.listTimes) {        
+        UILabel *lvSub = [[UILabel alloc] init];
+        lvSub.numberOfLines = 0;
+        lvSub.lineBreakMode = UILineBreakModeWordWrap;
+        CGSize size = [timeLine sizeOfTextWithFont:lvSub.font 
+                                 constrainedToSize:maximumLabelSize 
+                                     lineBreakMode:lvSub.lineBreakMode];
+        
+        if(size.height + self.currentPageHeight > HEIGHT_SUBTITLE_VIEW)
+        {
+            [videoSubScroll addSubview:pageView];
+            [pageView release];
+            pageView = nil;
+            
+            pageView = [[UIView alloc] initWithFrame:CGRectMake(WIDTH_SUBTITLE_VIEW*self.currentPage, 0, WIDTH_SUBTITLE_VIEW - 5, HEIGHT_SUBTITLE_VIEW)];
+            self.currentPageHeight = 0;
+            self.currentPage++;
+            videoSubScroll.contentSize = CGSizeMake(WIDTH_SUBTITLE_VIEW*self.currentPage, HEIGHT_SUBTITLE_VIEW);
+        }else{
+            [lvSub setFrame:CGRectMake(0, self.currentPageHeight, size.width, size.height)];
+            lvSub.text = timeLine.text;
+            [pageView addSubview:lvSub];
+            self.currentPageHeight += size.height;
+        }
+        
+        [lvSub release];
+    }
+    [videoSubScroll addSubview:pageView];
+    [pageView release];
+    pageView = nil;
+    [self.view addSubview:subtitleView];
+    
+//    UILabel *lvTest = [[UILabel alloc] init];
+//    lvTest.numberOfLines = 0;
+//    lvTest.lineBreakMode = UILineBreakModeWordWrap;
+//    lvTest.text = @"He hated the women of the City. That's why he could get off to watching them taking shits and pissing and splattering thick blood everywhere during 'that time of the month'.";
+//    CGSize lvTestSize = [lvTest.text sizeWithFont:lvTest.font
+//                                constrainedToSize:maximumLabelSize
+//                                    lineBreakMode:lvTest.lineBreakMode];
+//    
+//    [lvTest setFrame:CGRectMake(0, 0, 240, lvTestSize.height)];
+//    NSLog(@"%f----%f", lvTestSize.width, lvTestSize.height);
+//    
+//    UILabel *lvTest1 = [[UILabel alloc] init];
+//    lvTest1.numberOfLines = 0;
+//    lvTest1.text = @" He loved to be able to see them in their most private, their most guarded moments. Without all their expensive clothes, and most importantly, without them even knowing.";
+//    CGSize lvTest1Size = [lvTest1.text sizeWithFont:lvTest1.font
+//                                  constrainedToSize:maximumLabelSize
+//                                      lineBreakMode:lvTest1.lineBreakMode];
+//    [lvTest1 setFrame:CGRectMake(0, lvTestSize.height + 10, 240, lvTest1Size.height)];
+//    
+//    UILabel *lvTest2 = [[UILabel alloc] init];
+//    lvTest2.numberOfLines = 0;
+//    lvTest2.text = @"He gained privilege to how dirty and disgusting they really were when the bathroom door was shut tight behind them and they thought that no one was looking in. He came when it was a skinny petite chick taking a massive shit, that seemed to go on and on forever";
+//    CGSize lvTest2Size = [lvTest2.text sizeWithFont:lvTest2.font
+//                                  constrainedToSize:maximumLabelSize
+//                                      lineBreakMode:lvTest2.lineBreakMode];
+//    [lvTest2 setFrame:CGRectMake(0, lvTestSize.height + 10, 240, lvTest2Size.height)];
+//    
+//    UIView *view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 240, 300)];
+//    view1.backgroundColor = [UIColor grayColor];
+//    [view1 addSubview:lvTest];
+//    [view1 addSubview:lvTest1];
+//    [lvTest release];
+//    [lvTest1 release];
+//    [videoSubScroll addSubview:view1];
+//    
+//    UIView *view2 = [[UIView alloc] initWithFrame:CGRectMake(241, 0, 240, 300)];
+//    view2.backgroundColor = [UIColor whiteColor];
+//    [videoSubScroll addSubview:view2];
+//    
+//    UIView *view3 = [[UIView alloc] initWithFrame:CGRectMake(482, 0, 240, 300)];
+//    view3.backgroundColor = [UIColor redColor];
+//    //[view3 addSubview:lvTest];
+//    [videoSubScroll addSubview:view3];
+
+    
+}
 #pragma mark - UIEvent
 - (IBAction)playButton_clicked:(id)sender {
     if (!_movieController.playbackState == MPMoviePlaybackStatePlaying) {
