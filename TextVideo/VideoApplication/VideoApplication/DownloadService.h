@@ -21,7 +21,7 @@ typedef enum {
 @class MBProgressHUD;
 @protocol DownloadServiceDelegate
 @optional
-- (void) downloadService:(DownloadService *) service didReceiveStatus:(NSString *) status filePath:(NSString *) path;
+- (void) downloadService:(DownloadService *) service didSuccessWithVideoData:(VideoData *) videoData;
 - (void) downloadServiceFailed:(DownloadService *)service;
 @end
 @interface DownloadService : NSObject {
@@ -42,6 +42,9 @@ typedef enum {
     LoadingMaskView                 *_alert;
     MBProgressHUD                   *_loadingHUD;
     UIView                          *_superView;
+    
+    long long                       _totalBytes;
+    long long                       _receiveBytes;
 }
 @property (nonatomic, assign) id <DownloadServiceDelegate> delegate;
 @property (nonatomic, retain) NSString *localPath;

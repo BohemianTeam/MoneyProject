@@ -24,6 +24,7 @@
 - (void) hideLoading;
 - (void) showHUD;
 - (void) hideHUD;
+- (void) mixesTask;
 @end
 
 @implementation DownloadService
@@ -41,6 +42,8 @@
         _currentType = type;
         [self setPathWithCurrentType:_currentType];
         self.timeout = 60;
+        _totalBytes = 0;
+        _receiveBytes = 0;
     }
     return self;
 }
@@ -60,6 +63,7 @@
         NSString *videoDir = [Util getVideoDir];
         
         _localPath = [videoDir stringByAppendingString:[NSString stringWithFormat:@"/%@", [hashStr stringByAppendingPathExtension:extension]]];
+        _videoData.localPathVideo = [NSString stringWithFormat:@"/%@", [hashStr stringByAppendingPathExtension:extension]];
     } else if (type == DownloadTypeSub) {
         self.path = _videoData.subUrl;
         
@@ -84,34 +88,34 @@
 - (void) showHUD {
     if (_loadingHUD == nil) {
         _loadingHUD = [[MBProgressHUD alloc] initWithView:_superView];
-        
         [_superView addSubview:_loadingHUD];
-        
-        //_loadingHUD.dimBackground = YES;
-        
+        _loadingHUD.dimBackground = YES;
         _loadingHUD.labelText = @"Downloading ..";
         [_loadingHUD show:YES];
     }
-    
-    
 }
 
 
 - (void) hideHUD {
     if (_loadingHUD) {
-        //[_loadingHUD hide:YES];
+        [_loadingHUD hide:YES afterDelay:2];
         [_loadingHUD removeFromSuperview];
         [_loadingHUD release];
         _loadingHUD = nil;
     }
 }
 
+- (void) mixesTask {
+}
 
 - (void) downloadWithASIRequest {
     _asiRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:self.path]];
     _asiRequest.timeOutSeconds = self.timeout;
     [_asiRequest setDownloadDestinationPath:self.localPath];
     [_asiRequest setDelegate:self];
+    [_asiRequest setNumberOfTimesToRetryOnTimeout:2];
+    [_asiRequest setAllowResumeForFileDownloads:YES];
+    [_asiRequest setDownloadProgressDelegate:self];
     [_asiRequest setDidFinishSelector:@selector(asiDidFailWithError:)];
     [_asiRequest setDidFinishSelector:@selector(asiDidFinished:)];
     
@@ -121,19 +125,37 @@
 
 - (void) asiDidFailWithError:(ASIHTTPRequest *) request {
     [self processError:[request error]];
+    _loadingHUD.labelText = @"Error";
+    [self hideHUD];
+    [self.delegate downloadServiceFailed:self];
 }
 
 - (void) asiDidFinished:(ASIHTTPRequest *) request {
+    _receiveBytes = 0;
     NSLog(@"finish one");
     [self continueDownload];
     if (_currentType == DownloadTypeNone) {
         _loadingHUD.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]] autorelease];
         _loadingHUD.mode = MBProgressHUDModeCustomView;
         _loadingHUD.labelText = @"Completed";
-        sleep(2);
         [self hideHUD];
+        [self.delegate downloadService:self didSuccessWithVideoData:_videoData];
     }
     
+}
+
+-(void) request:(ASIHTTPRequest *)request incrementDownloadSizeBy: (long long)newLength {
+    _totalBytes = newLength;
+    _loadingHUD.mode = MBProgressHUDModeDeterminate;
+    NSLog(@"%lld", newLength);
+}
+
+-(void) request:(ASIHTTPRequest *)request didReceiveBytes:(long long)bytes {
+    _receiveBytes = _receiveBytes + bytes;
+    _loadingHUD.mode = MBProgressHUDModeDeterminate;
+    int rouded = 100 * _loadingHUD.progress;
+    _loadingHUD.labelText = [NSString stringWithFormat:@"%i/100", rouded];
+    _loadingHUD.progress = _receiveBytes / (float) _totalBytes;
 }
 
 - (void) continueDownload {

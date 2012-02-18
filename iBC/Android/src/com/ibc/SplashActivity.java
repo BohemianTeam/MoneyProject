@@ -84,9 +84,9 @@ public class SplashActivity extends Activity {
 
         Log.d(TAG, "onCreate ending");
       //processing
-        CalendarProvider provider = CalendarProvider.sharedInstance();
-        provider.hasCalendar();
-        CalendarProvider.addToCalendar(app, "demon hunter", Date.UTC(2012, 2, 16, 15, 0, 0), Date.UTC(2012, 2, 16, 16, 0, 0));
+//        CalendarProvider provider = CalendarProvider.sharedInstance();
+//        provider.hasCalendar();
+//        CalendarProvider.addToCalendar(app, "demon hunter", Date.UTC(2012, 2, 16, 15, 0, 0), Date.UTC(2012, 2, 16, 16, 0, 0));
     }
    
    ServiceListener _listener = new ServiceListener() {

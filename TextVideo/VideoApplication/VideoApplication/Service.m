@@ -250,7 +250,7 @@ NSString *MBErrorDomain = @"com.video";
     int act = self.action;
     NSData *buff = [data retain];
     NSString *str = [NSString stringWithUTF8String:[buff bytes]];
-    NSLog(str);
+    NSLog(@"%@",str);
     @try {
         [self reset];
         switch (act) {
