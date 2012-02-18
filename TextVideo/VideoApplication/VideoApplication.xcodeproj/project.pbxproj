@@ -21,6 +21,8 @@
 		66089B6A14C4088B0074F948 /* PopupBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66089B6714C4088B0074F948 /* PopupBg@2x.png */; };
 		66089B6D14C412D40074F948 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 66089B6F14C412D40074F948 /* Localizable.strings */; };
 		66089B7C14C4142E0074F948 /* UIApplicationExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 66089B7B14C4142E0074F948 /* UIApplicationExt.m */; };
+		6615E39F14EFB8A6003038D5 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6615E39D14EFB8A6003038D5 /* MainViewController.m */; };
+		6615E3A014EFB8A6003038D5 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6615E39E14EFB8A6003038D5 /* MainViewController.xib */; };
 		663A8C4714C7BF2000881453 /* CDataScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 663A8C3314C7BF2000881453 /* CDataScanner.m */; };
 		663A8C4814C7BF2000881453 /* CFilteringJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 663A8C3514C7BF2000881453 /* CFilteringJSONSerializer.m */; };
 		663A8C4914C7BF2000881453 /* CJSONDeserializer_BlocksExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 663A8C3714C7BF2000881453 /* CJSONDeserializer_BlocksExtensions.m */; };
@@ -65,8 +67,8 @@
 		6675280414C6C98700ED0500 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6675280214C6C98700ED0500 /* MediaPlayer.framework */; };
 		6675280814C6CAEF00ED0500 /* VideoSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6675280614C6CAEF00ED0500 /* VideoSubViewController.m */; };
 		6675280914C6CAEF00ED0500 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6675280714C6CAEF00ED0500 /* ViewController.xib */; };
-		6675280F14C6D3F000ED0500 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6675280D14C6D3F000ED0500 /* MainViewController.m */; };
-		6675281014C6D3F000ED0500 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6675280E14C6D3F000ED0500 /* MainViewController.xib */; };
+		6675280F14C6D3F000ED0500 /* NewMookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6675280D14C6D3F000ED0500 /* NewMookViewController.m */; };
+		6675281014C6D3F000ED0500 /* NewMookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6675280E14C6D3F000ED0500 /* NewMookViewController.xib */; };
 		6680AA3814DBD92C004B8606 /* LARVA_Airform.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 6680AA3714DBD92C004B8606 /* LARVA_Airform.mp4 */; };
 		668CB1D814EE4C1A00524AE3 /* LARVA_Airform.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 668CB1D714EE4C1A00524AE3 /* LARVA_Airform.mp4 */; };
 		66F27C2914C57C5C00AF3A03 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 66F27C2814C57C5C00AF3A03 /* InfoPlist.strings */; };
@@ -97,6 +99,9 @@
 		66089B6E14C412D40074F948 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		66089B7A14C4142E0074F948 /* UIApplicationExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIApplicationExt.h; sourceTree = "<group>"; };
 		66089B7B14C4142E0074F948 /* UIApplicationExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIApplicationExt.m; sourceTree = "<group>"; };
+		6615E39C14EFB8A6003038D5 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		6615E39D14EFB8A6003038D5 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		6615E39E14EFB8A6003038D5 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		663A8C3214C7BF2000881453 /* CDataScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner.h; sourceTree = "<group>"; };
 		663A8C3314C7BF2000881453 /* CDataScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDataScanner.m; sourceTree = "<group>"; };
 		663A8C3414C7BF2000881453 /* CFilteringJSONSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFilteringJSONSerializer.h; sourceTree = "<group>"; };
@@ -176,9 +181,9 @@
 		6675280514C6CAEF00ED0500 /* VideoSubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoSubViewController.h; path = VideoSubtitle/VideoSubViewController.h; sourceTree = "<group>"; };
 		6675280614C6CAEF00ED0500 /* VideoSubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VideoSubViewController.m; path = VideoSubtitle/VideoSubViewController.m; sourceTree = "<group>"; };
 		6675280714C6CAEF00ED0500 /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ViewController.xib; path = VideoSubtitle/ViewController.xib; sourceTree = "<group>"; };
-		6675280C14C6D3F000ED0500 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
-		6675280D14C6D3F000ED0500 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
-		6675280E14C6D3F000ED0500 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		6675280C14C6D3F000ED0500 /* NewMookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewMookViewController.h; path = ../NewMookViewController.h; sourceTree = "<group>"; };
+		6675280D14C6D3F000ED0500 /* NewMookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewMookViewController.m; path = ../NewMookViewController.m; sourceTree = "<group>"; };
+		6675280E14C6D3F000ED0500 /* NewMookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NewMookViewController.xib; path = ../NewMookViewController.xib; sourceTree = "<group>"; };
 		6680AA3714DBD92C004B8606 /* LARVA_Airform.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = LARVA_Airform.mp4; sourceTree = "<group>"; };
 		668CB1D714EE4C1A00524AE3 /* LARVA_Airform.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = LARVA_Airform.mp4; sourceTree = "<group>"; };
 		66F27C2614C57C4D00AF3A03 /* VideoApplication-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VideoApplication-Prefix.pch"; sourceTree = "<group>"; };
@@ -222,9 +227,6 @@
 				6649CB5514D7E3D800972263 /* CoreData.framework */,
 				6649CB5314D7E37000972263 /* MobileCoreServices.framework */,
 				66402A8F14C7C1B300BFF59A /* iamthebest.sub */,
-				6675280C14C6D3F000ED0500 /* MainViewController.h */,
-				6675280D14C6D3F000ED0500 /* MainViewController.m */,
-				6675280E14C6D3F000ED0500 /* MainViewController.xib */,
 				6680AA3714DBD92C004B8606 /* LARVA_Airform.mp4 */,
 				66089B3214C3E63A0074F948 /* VideoApplication */,
 				66089B2B14C3E63A0074F948 /* Frameworks */,
@@ -452,11 +454,17 @@
 		667527F714C6C61C00ED0500 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				6675280C14C6D3F000ED0500 /* NewMookViewController.h */,
+				6675280D14C6D3F000ED0500 /* NewMookViewController.m */,
+				6675280E14C6D3F000ED0500 /* NewMookViewController.xib */,
 				6675280514C6CAEF00ED0500 /* VideoSubViewController.h */,
 				6675280614C6CAEF00ED0500 /* VideoSubViewController.m */,
 				6675280714C6CAEF00ED0500 /* ViewController.xib */,
 				6664A0B214E0522D00C7A352 /* VideoSubView.h */,
 				6664A0B314E0522D00C7A352 /* VideoSubView.m */,
+				6615E39C14EFB8A6003038D5 /* MainViewController.h */,
+				6615E39D14EFB8A6003038D5 /* MainViewController.m */,
+				6615E39E14EFB8A6003038D5 /* MainViewController.xib */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -517,12 +525,13 @@
 				66089B6D14C412D40074F948 /* Localizable.strings in Resources */,
 				66F27C2914C57C5C00AF3A03 /* InfoPlist.strings in Resources */,
 				6675280914C6CAEF00ED0500 /* ViewController.xib in Resources */,
-				6675281014C6D3F000ED0500 /* MainViewController.xib in Resources */,
+				6675281014C6D3F000ED0500 /* NewMookViewController.xib in Resources */,
 				66402A9014C7C1B300BFF59A /* iamthebest.sub in Resources */,
 				6649CB4914D7DBA700972263 /* 37x-Checkmark.png in Resources */,
 				6680AA3814DBD92C004B8606 /* LARVA_Airform.mp4 in Resources */,
 				668CB1D814EE4C1A00524AE3 /* LARVA_Airform.mp4 in Resources */,
 				665733B314EFAF7000F3EEAD /* VideoAppDatabase.sqlite in Resources */,
+				6615E3A014EFB8A6003038D5 /* MainViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,7 +554,7 @@
 				667527F614C6C5BB00ED0500 /* Timeline.m in Sources */,
 				667527FE14C6C7BE00ED0500 /* Service.m in Sources */,
 				6675280814C6CAEF00ED0500 /* VideoSubViewController.m in Sources */,
-				6675280F14C6D3F000ED0500 /* MainViewController.m in Sources */,
+				6675280F14C6D3F000ED0500 /* NewMookViewController.m in Sources */,
 				663A8C4714C7BF2000881453 /* CDataScanner.m in Sources */,
 				663A8C4814C7BF2000881453 /* CFilteringJSONSerializer.m in Sources */,
 				663A8C4914C7BF2000881453 /* CJSONDeserializer_BlocksExtensions.m in Sources */,
@@ -571,6 +580,7 @@
 				6649CB5014D7E16F00972263 /* Reachability.m in Sources */,
 				6664A0B414E0522D00C7A352 /* VideoSubView.m in Sources */,
 				665733AC14EFA59500F3EEAD /* VideoDatabase.m in Sources */,
+				6615E39F14EFB8A6003038D5 /* MainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

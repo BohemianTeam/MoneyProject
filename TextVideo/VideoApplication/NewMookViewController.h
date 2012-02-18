@@ -1,5 +1,5 @@
 //
-//  MainViewController.h
+//  NewMookViewController.h
 //  VideoApplication
 //
 //  Created by Cuong Tran on 1/18/12.
@@ -12,9 +12,9 @@
 @class ListVideoData;
 @class LoadingView;
 
-@interface MainViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, DownloadServiceDelegate>{
+@interface NewMookViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, DownloadServiceDelegate>{
     UITableView             *_tableView;
-    LoadingView         *_loadingView;
+    LoadingView             *_loadingView;
     Service                 *_service;
     ListVideoData           *_data;
     DownloadService         *_download;

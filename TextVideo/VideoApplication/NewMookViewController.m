@@ -1,12 +1,12 @@
 //
-//  MainViewController.m
+//  NewMookViewController.m
 //  VideoApplication
 //
 //  Created by Cuong Tran on 1/18/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "MainViewController.h"
+#import "NewMookViewController.h"
 #import "Service.h"
 #import "LoadingView.h"
 #import "ListVideoData.h"
@@ -16,12 +16,12 @@
 #import "DownloadService.h"
 #import "VideoDatabase.h"
 
-@interface MainViewController()
+@interface NewMookViewController()
 - (void) showLoading;
 - (void) hideLoading;
 @end
 
-@implementation MainViewController
+@implementation NewMookViewController
 @synthesize tableView = _tableView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
