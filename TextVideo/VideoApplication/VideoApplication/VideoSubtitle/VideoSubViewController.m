@@ -116,7 +116,7 @@
 - (void)loadSubtitle {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *fileDirectory = [paths objectAtIndex:0];
-    NSString *filePath = [fileDirectory stringByAppendingPathComponent:@"video_sub.sub"];
+    NSString *filePath = [fileDirectory stringByAppendingPathComponent:@"/timelines/Train Lights.sub"];
     NSLog(@"%@", filePath);
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:filePath]) {

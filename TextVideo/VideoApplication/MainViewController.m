@@ -14,6 +14,7 @@
 #import "TitleTableViewCell.h"
 #import "VideoData.h"
 #import "DownloadService.h"
+#import "VideoDatabase.h"
 
 @interface MainViewController()
 - (void) showLoading;
@@ -133,6 +134,11 @@
 - (void) downloadService:(DownloadService *)service didSuccessWithVideoData:(VideoData *)videoData {
     VideoData *data = [videoData retain];
     NSLog(@"%@",data.localPathVideo);
+    
+    //save database
+    [[VideoDatabase sharedDatabase] addNewVideo:data.title videoID:[data.mid integerValue] duration:data.desc];
+    
+    NSLog(@"numOf Row: %d", [[VideoDatabase sharedDatabase] sumOfRow]);
     VideoSubViewController *vc = [[VideoSubViewController alloc] initWithNibName:@"ViewController" bundle:nil video:data];
     [self.navigationController pushViewController:vc animated:YES];
     [vc release];

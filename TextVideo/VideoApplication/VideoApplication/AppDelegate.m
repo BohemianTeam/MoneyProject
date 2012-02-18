@@ -50,7 +50,7 @@
 {
     
     //create database
-    NSString *dbPath = [self createEditableCopyOfDatabaseIfNeeded: DBNAME];
+    NSString *dbPath = [self createEditableCopyOfDatabaseIfNeeded: DBFILE];
 	[[VideoDatabase sharedDatabase] openDB:dbPath];
     
     // Override point for customization after application launch.

@@ -54,7 +54,7 @@
 }
 
 - (void) setPathWithCurrentType:(DownloadType)type {
-    NSString *hashStr = [Util calcMD5:_videoData.title];
+    NSString *hashStr = _videoData.title;//[Util calcMD5:_videoData.title];
     if (type == DownloadTypeVideo) {
         self.path = _videoData.url;
         
@@ -154,7 +154,7 @@
     _receiveBytes = _receiveBytes + bytes;
     _loadingHUD.mode = MBProgressHUDModeDeterminate;
     int rouded = 100 * _loadingHUD.progress;
-    _loadingHUD.labelText = [NSString stringWithFormat:@"%i/100", rouded];
+    _loadingHUD.labelText = [NSString stringWithFormat:@"%i%%", rouded];
     _loadingHUD.progress = _receiveBytes / (float) _totalBytes;
 }
 

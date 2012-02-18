@@ -10,5 +10,5 @@
 #define VideoApplication_Config_h
 
 #define DBNAME @"VideoDatabase"
-
+#define DBFILE @"VideoAppDatabase.sqlite"
 #endif

@@ -162,7 +162,7 @@ static VideoDatabase *__sharedDatabase = nil;
 	//checking exist of newWord
 	if ([self checkExistVideoID:videoID] == NO)
 	{
-		NSString *query = [[NSString alloc] initWithString:@"Insert Into %@(ID, FileName, Duration) values(?,?,?)"];
+		NSString *query = [[NSString alloc] initWithFormat:@"Insert Into %@(ID, FileName, Duration) values(?,?,?)", DBNAME];
 		sqlite3_stmt *statement;		
 		if ((statement = [self setupAndCompileStatement: query]))
 		{
