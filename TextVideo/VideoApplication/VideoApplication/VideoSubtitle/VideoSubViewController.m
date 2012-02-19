@@ -116,7 +116,7 @@
 //    NSString *fileDirectory = [paths objectAtIndex:0];
 //    NSString *filePath = [fileDirectory stringByAppendingPathComponent:@"/timelines/Train Lights.sub"];
     NSString *subFile = [[self.movieFileName stringByDeletingPathExtension] stringByAppendingPathExtension:@"sub"];
-    NSString *filePath = [FileHelper documentsPath:[NSString stringWithFormat:@"/@/@", SUB_FOLDER, subFile]];
+    NSString *filePath = [FileHelper documentsPath:[NSString stringWithFormat:@"/%@/%@", TIMELINE_FOLDER, subFile]];
     NSLog(@"%@", filePath);
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:filePath]) {

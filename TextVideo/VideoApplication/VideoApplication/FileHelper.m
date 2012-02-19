@@ -15,6 +15,11 @@
 {
     return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 }
++(NSString *)documentsPath:(NSString *)fileName {
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsDirectory = [paths objectAtIndex:0];
+	return [documentsDirectory stringByAppendingPathComponent:fileName];
+}
 + (void)deleteAllFileAtDirectoryPath:(NSString*)path
 {
     //remove all file in temp directory (documents)

@@ -10,14 +10,14 @@
 #import "DownloadService.h"
 @class Service;
 @class ListVideoData;
-@class LoadingView;
+@class MBProgressHUD;
 
 @interface NewMookViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, DownloadServiceDelegate>{
     UITableView             *_tableView;
-    LoadingView             *_loadingView;
     Service                 *_service;
     ListVideoData           *_data;
     DownloadService         *_download;
+    MBProgressHUD           *_loadingHUD;
 }
 @property (nonatomic, retain) UITableView *tableView;
 

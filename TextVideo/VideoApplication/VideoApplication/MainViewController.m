@@ -51,6 +51,12 @@
 
 #pragma mark - View lifecycle
 
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [movieTable reloadData];
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

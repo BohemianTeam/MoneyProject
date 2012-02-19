@@ -19,11 +19,12 @@
         // Initialization code
         _title = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, 44)];
         _title.backgroundColor = [UIColor clearColor];
-        _title.font = [UIFont systemFontOfSize:16];
+        _title.font = [UIFont boldSystemFontOfSize:16];
         _title.textAlignment = UITextAlignmentLeft;
         [self addSubview:_title];
         
-        _details = [[UILabel alloc] initWithFrame:CGRectMake(200, 0, 100, 44)];
+        _details = [[UILabel alloc] initWithFrame:CGRectMake(240, 0, 80, 44)];
+
         _details.backgroundColor = [UIColor clearColor];
         _details.font = [UIFont systemFontOfSize:14];
         _details.textAlignment = UITextAlignmentRight;
@@ -34,13 +35,13 @@
 }
 
 - (void) setData:(VideoData *)data {
-//    _data = [data retain];
-////    AVURLAsset *videoAsset = [AVURLAsset URLAssetWithURL:[NSURL fileURLWithPath:data.url] options:nil];
-////    CMTime duration = videoAsset.duration;
-////    float secDuration = CMTimeGetSeconds(duration);
-//    
-//    _title.text = _data.title;
-//    _details.text = _data.desc;
+    _data = [data retain];
+    ////    AVURLAsset *videoAsset = [AVURLAsset URLAssetWithURL:[NSURL fileURLWithPath:data.url] options:nil];
+    ////    CMTime duration = videoAsset.duration;
+    ////    float secDuration = CMTimeGetSeconds(duration);
+    //    
+    _title.text = _data.title;
+    _details.text = _data.desc;
 }
 
 - (void) dealloc {

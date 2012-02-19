@@ -44,6 +44,7 @@
         self.timeout = 60;
         _totalBytes = 0;
         _receiveBytes = 0;
+        _connecting = NO;
     }
     return self;
 }
@@ -57,13 +58,13 @@
     NSString *hashStr = _videoData.title;//[Util calcMD5:_videoData.title];
     if (type == DownloadTypeVideo) {
         self.path = _videoData.url;
-        
+
         NSURL *url = [NSURL URLWithString:self.path];
         NSString *extension = [url pathExtension];
         NSString *videoDir = [Util getVideoDir];
         
         _localPath = [videoDir stringByAppendingString:[NSString stringWithFormat:@"/%@", [hashStr stringByAppendingPathExtension:extension]]];
-        _videoData.localPathVideo = [NSString stringWithFormat:@"/%@", [hashStr stringByAppendingPathExtension:extension]];
+        _videoData.localPathVideo = [NSString stringWithFormat:@"%@", [hashStr stringByAppendingPathExtension:extension]];
     } else if (type == DownloadTypeSub) {
         self.path = _videoData.subUrl;
         
@@ -109,6 +110,7 @@
 }
 
 - (void) downloadWithASIRequest {
+    _connecting = YES;
     _asiRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:self.path]];
     _asiRequest.timeOutSeconds = self.timeout;
     [_asiRequest setDownloadDestinationPath:self.localPath];
@@ -116,7 +118,7 @@
     [_asiRequest setNumberOfTimesToRetryOnTimeout:2];
     [_asiRequest setAllowResumeForFileDownloads:YES];
     [_asiRequest setDownloadProgressDelegate:self];
-    [_asiRequest setDidFinishSelector:@selector(asiDidFailWithError:)];
+    [_asiRequest setDidFailSelector:@selector(asiDidFailWithError:)];
     [_asiRequest setDidFinishSelector:@selector(asiDidFinished:)];
     
     [_asiRequest startAsynchronous];
@@ -124,7 +126,7 @@
 }
 
 - (void) asiDidFailWithError:(ASIHTTPRequest *) request {
-    [self processError:[request error]];
+//    [self processError:[request error]];
     _loadingHUD.labelText = @"Error";
     [self hideHUD];
     [self.delegate downloadServiceFailed:self];
@@ -140,6 +142,8 @@
         _loadingHUD.labelText = @"Completed";
         [self hideHUD];
         [self.delegate downloadService:self didSuccessWithVideoData:_videoData];
+        [_asiRequest release];
+        _asiRequest = nil;
     }
     
 }
@@ -290,7 +294,7 @@
         [Util createDirectoryAtPath:_localPath];
         NSURL *url = [NSURL URLWithString:_localPath];
         [_buffer writeToURL:url atomically:YES];
-        [delegate downloadService:self didReceiveStatus:@"success" filePath:_localPath];
+//        [delegate downloadService:self didReceiveStatus:@"success" filePath:_localPath];
     }
     [self stop];
 }
@@ -307,17 +311,8 @@
         [_buffer release];
         _buffer = nil;
     }
-    if (_connection) {
-        [_connection cancel];
-        [_connection release];
-        _connection = nil;
-    }    
     _currentType = DownloadTypeNone;
-    if (_asiRequest) {
-        [_asiRequest cancel];
-        [_asiRequest release];
-        _asiRequest = nil;
-    }
+    [_asiRequest cancel];
 }
 
 - (void) dealloc {
