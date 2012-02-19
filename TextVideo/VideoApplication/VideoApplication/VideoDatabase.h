@@ -27,6 +27,9 @@
 - (NSString*) lookingVideoByIndexPath: (NSInteger)index;
 - (NSString*) lookingVideoByVideoID: (NSInteger) videoID;
 
+- (NSArray*) lookingDataByIndexPath: (NSInteger) index;
+- (NSArray*) lookingDataByVideoID: (NSInteger) videoID;
+
 //insert database
 - (BOOL) checkExistVideoID: (NSInteger)videoID;
 - (void) addNewVideo:(NSString*)fileName videoID: (NSInteger)videoID duration: (NSString*)duration;

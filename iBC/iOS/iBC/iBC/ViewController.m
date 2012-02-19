@@ -156,6 +156,7 @@
 //    [vc release];
     
     MenuItemData *data = [_arrMenuItems objectAtIndex:indexPath.row];
+    if([data.title isEqual:@""])
     NSString *title = [self CapitalizedString:data.title];
     StarredListViewController *starredVC = [[StarredListViewController alloc] initWithTitle:title];
     [self.navigationController pushViewController:starredVC animated:YES];

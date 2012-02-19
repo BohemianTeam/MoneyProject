@@ -9,6 +9,10 @@
 #ifndef VideoApplication_Config_h
 #define VideoApplication_Config_h
 
-#define DBNAME @"VideoDatabase"
-#define DBFILE @"VideoAppDatabase.sqlite"
+#define DBNAME              @"VideoDatabase"
+#define DBFILE              @"VideoAppDatabase.sqlite"
+
+#define SUB_FOLDER          @"subs"
+#define TIMELINE_FOLDER     @"timelines"
+#define VIDEO_FOLDER        @"videos"
 #endif

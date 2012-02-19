@@ -362,10 +362,14 @@ NSString *MBErrorDomain = @"com.iBC";
                 if([_delegate respondsToSelector:sel]){
                     [_delegate performSelector:sel withObject:self withObject:data];
                 }
+                break;
             }
             case ActionTypeGetVenueList:
             {
-                NSMutableArray *listVenuesResponse = [Util postVenues:buff];
+                SEL sel = @selector(mServiceGetVenueSucces:responses:);
+                if([_delegate respondsToSelector:sel]){
+                    [_delegate performSelector:sel withObject:self withObject:data];
+                }
                 break;
             }
             case ActionTypeGetStarred:
@@ -374,6 +378,7 @@ NSString *MBErrorDomain = @"com.iBC";
                 if([_delegate respondsToSelector:sel]){
                     [_delegate performSelector:sel withObject:self withObject:data];
                 }
+                break;
             }
         }
     } @catch (NSException *ex) {

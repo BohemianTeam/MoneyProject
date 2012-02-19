@@ -144,6 +144,31 @@ static VideoDatabase *__sharedDatabase = nil;
 	
 	return [fileName autorelease];
 }
+- (NSArray*) lookingDataByIndexPath: (NSInteger) index
+{
+    NSInteger videoID = [[videoIDArray objectAtIndex:index] integerValue];
+	return [self lookingDataByVideoID: videoID];
+}
+- (NSArray*) lookingDataByVideoID: (NSInteger) videoID
+{
+    NSString *query = [NSString stringWithFormat:@"Select * From %@ Where ID = %i", DBNAME, videoID];
+	sqlite3_stmt *statement;
+	NSMutableArray *datas = [[[NSMutableArray alloc] init] autorelease];
+	
+	if (statement = [self setupAndCompileStatement: query])
+		if (sqlite3_step(statement) == SQLITE_ROW)
+		{
+            //video ID
+            [datas addObject:[NSNumber numberWithInt:videoID]];
+            //filename
+			[datas addObject:[NSString stringWithUTF8String:(char*) sqlite3_column_text(statement, 1)]];
+            //duration
+            [datas addObject:[NSString stringWithUTF8String:(char*) sqlite3_column_text(statement, 2)]];
+		}
+	sqlite3_finalize(statement);
+	
+	return datas;
+}
 #pragma - Insert database method
 - (BOOL) checkExistVideoID: (NSInteger)videoID
 {

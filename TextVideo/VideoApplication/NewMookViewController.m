@@ -136,7 +136,7 @@
     NSLog(@"%@",data.localPathVideo);
     
     //save database
-    [[VideoDatabase sharedDatabase] addNewVideo:data.title videoID:[data.mid integerValue] duration:data.desc];
+    [[VideoDatabase sharedDatabase] addNewVideo:data.localPathVideo videoID:[data.mid integerValue] duration:data.desc];
     
     NSLog(@"numOf Row: %d", [[VideoDatabase sharedDatabase] sumOfRow]);
     VideoSubViewController *vc = [[VideoSubViewController alloc] initWithNibName:@"ViewController" bundle:nil video:data];

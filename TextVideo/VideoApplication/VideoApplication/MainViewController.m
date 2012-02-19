@@ -10,6 +10,7 @@
 #import "NewMookViewController.h"
 #import "VideoDatabase.h"
 #import "TitleTableViewCell.h"
+#import "VideoSubViewController.h"
 @implementation MainViewController
 @synthesize movieTable;
 
@@ -102,13 +103,18 @@
 
     
     // Configure the cell.
-    cell.title.text = [[VideoDatabase sharedDatabase] lookingVideoByIndexPath:indexPath.row];
-    cell.details.text = @"test";
+    NSArray *data = [[VideoDatabase sharedDatabase] lookingDataByIndexPath:indexPath.row];
+    cell.title.text = [[data objectAtIndex:1] stringByDeletingPathExtension];
+    cell.details.text = [data objectAtIndex:2];
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    VideoSubViewController *vc = [[VideoSubViewController alloc] initWithNibName:@"ViewController" bundle:nil video:nil];
+    vc.movieFileName = [[VideoDatabase sharedDatabase] lookingVideoByIndexPath:indexPath.row];
+    [self.navigationController pushViewController:vc animated:YES];
+    [vc release];
 }
 @end

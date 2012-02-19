@@ -11,6 +11,7 @@
 #import "CJSONSerializer.h"
 #import "VideoData.h"
 #import "VideoSubView.h"
+#import "FileHelper.h"
 
 #define WIDTH_SUBTITLE_VIEW 240
 #define HEIGHT_SUBTITLE_VIEW 300
@@ -42,15 +43,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    [UIApplication sharedApplication].statusBarOrientation = UIInterfaceOrientationLandscapeRight;
-	// Do any additional setup after loading the view, typically from a nib.
     self.title = @"Video View Controller";
-//    _playButton.enabled = FALSE;
-//    _doneButton.enabled = FALSE;
-//    _nextButton.enabled = FALSE;
+
     _currentIndex = 0;
-    NSURL *localPath = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"LARVA_Airform" ofType:@"mp4"]];
-    NSURL *videoUrl = localPath;//[NSURL URLWithString:videoPath];
+    NSString *videoPath = [FileHelper documentsPath:[NSString stringWithFormat:@"%@/%@", VIDEO_FOLDER, self.movieFileName]];
+//    NSURL *localPath = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"LARVA_Airform" ofType:@"mp4"]];
+    NSURL *videoUrl = [NSURL URLWithString:videoPath];
     if (_movieController == nil) {
         _movieController = [[MPMoviePlayerController alloc] initWithContentURL:videoUrl];
         _movieController.fullscreen = FALSE;
@@ -114,9 +112,11 @@
 
 #pragma mark - LoadData
 - (void)loadSubtitle {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *fileDirectory = [paths objectAtIndex:0];
-    NSString *filePath = [fileDirectory stringByAppendingPathComponent:@"/timelines/Train Lights.sub"];
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *fileDirectory = [paths objectAtIndex:0];
+//    NSString *filePath = [fileDirectory stringByAppendingPathComponent:@"/timelines/Train Lights.sub"];
+    NSString *subFile = [[self.movieFileName stringByDeletingPathExtension] stringByAppendingPathExtension:@"sub"];
+    NSString *filePath = [FileHelper documentsPath:[NSString stringWithFormat:@"/@/@", SUB_FOLDER, subFile]];
     NSLog(@"%@", filePath);
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:filePath]) {

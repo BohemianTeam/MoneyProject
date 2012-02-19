@@ -12,6 +12,8 @@
 		6688ABF214EBB221008D6AEC /* StarredListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6688ABF014EBB221008D6AEC /* StarredListViewController.xib */; };
 		6688ABF514EBB71F008D6AEC /* EventsTitle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6688ABF314EBB71F008D6AEC /* EventsTitle.png */; };
 		6688ABF614EBB71F008D6AEC /* VenueTitle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6688ABF414EBB71F008D6AEC /* VenueTitle.png */; };
+		668C242E14F0932500997FBB /* VenueListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 668C242C14F0932500997FBB /* VenueListViewController.m */; };
+		668C242F14F0932500997FBB /* VenueListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 668C242D14F0932500997FBB /* VenueListViewController.xib */; };
 		66B2934114E021160006B641 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66B2934014E021160006B641 /* UIKit.framework */; };
 		66B2934314E021160006B641 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66B2934214E021160006B641 /* Foundation.framework */; };
 		66B2934514E021160006B641 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66B2934414E021160006B641 /* CoreGraphics.framework */; };
@@ -69,6 +71,9 @@
 		6688ABF014EBB221008D6AEC /* StarredListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StarredListViewController.xib; sourceTree = "<group>"; };
 		6688ABF314EBB71F008D6AEC /* EventsTitle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EventsTitle.png; sourceTree = "<group>"; };
 		6688ABF414EBB71F008D6AEC /* VenueTitle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VenueTitle.png; sourceTree = "<group>"; };
+		668C242B14F0932500997FBB /* VenueListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenueListViewController.h; sourceTree = "<group>"; };
+		668C242C14F0932500997FBB /* VenueListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenueListViewController.m; sourceTree = "<group>"; };
+		668C242D14F0932500997FBB /* VenueListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VenueListViewController.xib; sourceTree = "<group>"; };
 		66B2933C14E021160006B641 /* iBC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iBC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66B2934014E021160006B641 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		66B2934214E021160006B641 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -301,6 +306,9 @@
 				6688ABEE14EBB221008D6AEC /* StarredListViewController.h */,
 				6688ABEF14EBB221008D6AEC /* StarredListViewController.m */,
 				6688ABF014EBB221008D6AEC /* StarredListViewController.xib */,
+				668C242B14F0932500997FBB /* VenueListViewController.h */,
+				668C242C14F0932500997FBB /* VenueListViewController.m */,
+				668C242D14F0932500997FBB /* VenueListViewController.xib */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -460,6 +468,7 @@
 				6688ABF614EBB71F008D6AEC /* VenueTitle.png in Resources */,
 				66D5EE1514ECC5D4005005CC /* eventTest.jpg in Resources */,
 				66D5EE1614ECC5D4005005CC /* venueTest.jpg in Resources */,
+				668C242F14F0932500997FBB /* VenueListViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -499,6 +508,7 @@
 				66D5EE0F14ECBA4B005005CC /* EventsObj.m in Sources */,
 				66D5EE1214ECBC3B005005CC /* EventViewCell.m in Sources */,
 				66D5EE1E14ECD6B0005005CC /* ImageDownloader.m in Sources */,
+				668C242E14F0932500997FBB /* VenueListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

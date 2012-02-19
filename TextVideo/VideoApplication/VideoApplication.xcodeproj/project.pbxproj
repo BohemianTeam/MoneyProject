@@ -70,6 +70,7 @@
 		6675280F14C6D3F000ED0500 /* NewMookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6675280D14C6D3F000ED0500 /* NewMookViewController.m */; };
 		6675281014C6D3F000ED0500 /* NewMookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6675280E14C6D3F000ED0500 /* NewMookViewController.xib */; };
 		6680AA3814DBD92C004B8606 /* LARVA_Airform.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 6680AA3714DBD92C004B8606 /* LARVA_Airform.mp4 */; };
+		668C242114F090AF00997FBB /* FileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 668C242014F090AF00997FBB /* FileHelper.m */; };
 		668CB1D814EE4C1A00524AE3 /* LARVA_Airform.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 668CB1D714EE4C1A00524AE3 /* LARVA_Airform.mp4 */; };
 		66F27C2914C57C5C00AF3A03 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 66F27C2814C57C5C00AF3A03 /* InfoPlist.strings */; };
 		66F27C2E14C57C7200AF3A03 /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F27C2D14C57C7200AF3A03 /* Util.m */; };
@@ -185,6 +186,8 @@
 		6675280D14C6D3F000ED0500 /* NewMookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewMookViewController.m; path = ../NewMookViewController.m; sourceTree = "<group>"; };
 		6675280E14C6D3F000ED0500 /* NewMookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NewMookViewController.xib; path = ../NewMookViewController.xib; sourceTree = "<group>"; };
 		6680AA3714DBD92C004B8606 /* LARVA_Airform.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = LARVA_Airform.mp4; sourceTree = "<group>"; };
+		668C241F14F090AF00997FBB /* FileHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileHelper.h; sourceTree = "<group>"; };
+		668C242014F090AF00997FBB /* FileHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileHelper.m; sourceTree = "<group>"; };
 		668CB1D714EE4C1A00524AE3 /* LARVA_Airform.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = LARVA_Airform.mp4; sourceTree = "<group>"; };
 		66F27C2614C57C4D00AF3A03 /* VideoApplication-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VideoApplication-Prefix.pch"; sourceTree = "<group>"; };
 		66F27C2814C57C5C00AF3A03 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
@@ -315,6 +318,8 @@
 				66089B7A14C4142E0074F948 /* UIApplicationExt.h */,
 				66089B7B14C4142E0074F948 /* UIApplicationExt.m */,
 				665733B814EFB03200F3EEAD /* Config.h */,
+				668C241F14F090AF00997FBB /* FileHelper.h */,
+				668C242014F090AF00997FBB /* FileHelper.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -581,6 +586,7 @@
 				6664A0B414E0522D00C7A352 /* VideoSubView.m in Sources */,
 				665733AC14EFA59500F3EEAD /* VideoDatabase.m in Sources */,
 				6615E39F14EFB8A6003038D5 /* MainViewController.m in Sources */,
+				668C242114F090AF00997FBB /* FileHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

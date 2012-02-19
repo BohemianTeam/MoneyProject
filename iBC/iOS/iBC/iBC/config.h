@@ -32,6 +32,8 @@
 #define Dates                   @"dt"
 #define Title                   @"et"
 
+//Main Menu
+#define EventMenu               @"ESPECTACLES"
 
 #define kAppInstall @"InstallationID"
 #define API_URL @"http://ws.kinectia.com/public/api/v1"
