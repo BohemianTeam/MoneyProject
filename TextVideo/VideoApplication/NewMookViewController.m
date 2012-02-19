@@ -8,13 +8,14 @@
 
 #import "NewMookViewController.h"
 #import "Service.h"
-#import "LoadingView.h"
 #import "ListVideoData.h"
 #import "VideoSubViewController.h"
 #import "TitleTableViewCell.h"
 #import "VideoData.h"
 #import "DownloadService.h"
 #import "VideoDatabase.h"
+#import "MainViewController.h"
+#import "MBProgressHUD.h"
 
 @interface NewMookViewController()
 - (void) showLoading;
@@ -37,16 +38,6 @@
         _tableView.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:_tableView];
         
-        UIButton * button = [[UIButton alloc] init];
-        [button addTarget:self action:@selector(didButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        button.backgroundColor = [UIColor blueColor];
-        button.frame = CGRectMake(0, 100, 50, 30);
-        [button setTitle:LocStr(@"New Mook") forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont boldSystemFontOfSize:16];
-
-        _tableView.tableFooterView = button;
-        [button release];
-        
         _service = [[Service alloc] init];
         _service.delegate = self;
         _service.canShowAlert = NO;
@@ -59,26 +50,38 @@
     return self;
 }
 
-- (void) didButtonClicked {
-    VideoSubViewController *vc = [[VideoSubViewController alloc] initWithNibName:@"ViewController" bundle:nil video:nil];
-    [self.navigationController pushViewController:vc animated:YES];
-    [vc release];
-}
 
 - (void) showLoading {
-    if(_loadingView == nil) {
-        _loadingView = [LoadingView loadingViewInView:_tableView];
+    if (_loadingHUD == nil) {
+        _loadingHUD = [[MBProgressHUD alloc] initWithView:self.view];
+        [self.view addSubview:_loadingHUD];
+        _loadingHUD.dimBackground = YES;
+        _loadingHUD.labelText = @"Loading ..";
+        [_loadingHUD show:YES];
     }
+
 }
 
 - (void) hideLoading {
-    [_loadingView removeView];
+    if (_loadingHUD) {
+        [_loadingHUD hide:YES afterDelay:2];
+        [_loadingHUD removeFromSuperview];
+        [_loadingHUD release];
+        _loadingHUD = nil;
+    }
 }
 
 #pragma service delegate
 - (void) mServiceGetVideoSuccess:(Service *)service responses:(ListVideoData *) response{
     [self hideLoading];
-    _data = [response retain];
+    ListVideoData * dataResponse = [response retain];
+
+    [dataResponse.videos enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if (![[VideoDatabase sharedDatabase] checkExistVideoID:idx + 1]) {
+            [_data.videos addObject:[dataResponse.videos objectAtIndex:idx]];
+        }
+    }];
+    
     [_tableView reloadData];
 }
 
@@ -136,10 +139,10 @@
     NSLog(@"%@",data.localPathVideo);
     
     //save database
-    [[VideoDatabase sharedDatabase] addNewVideo:data.title videoID:[data.mid integerValue] duration:data.desc];
+    [[VideoDatabase sharedDatabase] addNewVideo:data.localPathVideo videoID:[data.mid integerValue] duration:data.desc];
     
     NSLog(@"numOf Row: %d", [[VideoDatabase sharedDatabase] sumOfRow]);
-    VideoSubViewController *vc = [[VideoSubViewController alloc] initWithNibName:@"ViewController" bundle:nil video:data];
+    MainViewController *vc = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
     [self.navigationController pushViewController:vc animated:YES];
     [vc release];
 }
@@ -150,10 +153,16 @@
 
 - (void) dealloc {
     [_tableView release];
-    [_service release];
-    if (_loadingView) {
-        [_loadingView release];
+    if (_service) {
+        [_service stop];
+        [_service release];
     }
+    
+    if (_download) {
+        [_download stop];
+        [_download release];
+    }
+    
     [super dealloc];
 }
 
@@ -166,6 +175,12 @@
 }
 
 #pragma mark - View lifecycle
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [_tableView reloadData];
+}
+
 
 - (void)viewDidLoad
 {
@@ -183,6 +198,9 @@
 - (void) viewWillDisappear:(BOOL)animated {
     if (_service && _service.connecting) {
         [_service stop];
+    }
+    if (_download && _download.connecting) {
+        [_download stop];
     }
 }
 

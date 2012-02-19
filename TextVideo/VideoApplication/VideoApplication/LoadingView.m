@@ -185,7 +185,7 @@ CGPathRef NewPathWithRoundRect(CGRect rect, CGFloat cornerRadius)
 	
 	CGContextRef context = UIGraphicsGetCurrentContext();
 
-	const CGFloat BACKGROUND_OPACITY = 0.85;
+	const CGFloat BACKGROUND_OPACITY = 0.90;
 	CGContextSetRGBFillColor(context, 0, 0, 0, BACKGROUND_OPACITY);
 	CGContextAddPath(context, roundRectPath);
 	CGContextFillPath(context);
