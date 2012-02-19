@@ -7,6 +7,7 @@
 //
 
 #import "MainViewController.h"
+#import "NewMookViewController.h"
 #import "VideoDatabase.h"
 #import "TitleTableViewCell.h"
 @implementation MainViewController
@@ -71,6 +72,10 @@
 #pragma - Events button
 - (void) btnNewMookPressed {
     NSLog(@"btnNewMookPressed");
+    
+    NewMookViewController *newMookVC = [[NewMookViewController alloc] initWithNibName:@"NewMookViewController" bundle:nil];
+    
+    [self.navigationController pushViewController:newMookVC animated:YES];
 }
 
 #pragma - tableview delegate and datasource

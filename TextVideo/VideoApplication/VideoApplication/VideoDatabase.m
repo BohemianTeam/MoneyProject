@@ -126,7 +126,7 @@ static VideoDatabase *__sharedDatabase = nil;
 - (NSString*) lookingVideoByIndexPath: (NSInteger)index
 {
 	NSInteger videoID = [[videoIDArray objectAtIndex:index] integerValue];
-	return [self lookingWordStringByWordID: videoID];
+	return [self lookingVideoByVideoID: videoID];
 }
 //
 - (NSString*) lookingVideoByVideoID: (NSInteger) videoID
