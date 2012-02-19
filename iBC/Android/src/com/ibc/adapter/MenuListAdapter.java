@@ -55,25 +55,43 @@ public class MenuListAdapter extends BaseAdapter implements OnItemClickListener{
 		rowHolder.setData(getItem(position), ((position % 2) == 0));
 		return rowHolder;
 	}
+	
+	/**
+	 * 	Goto view «Events Menu»
 
+		Goto view «Venue List»
+
+		Goto view «Main Calendar»
+
+		Goto view «Venue List w.Distances»
+
+		Goto view «Starred»
+	 */
+	
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 		// TODO Auto-generated method stub
 		MenuItemData data = mDatas.get(position);
-		if (position == mDatas.size() - 1) {
-			Intent intent = new Intent(mContext, StarredActivity.class);
-			intent.putExtra("title", data.mTitle);
-			mContext.startActivity(intent);
-		} else if (position == 0) {
+		if (position == 0) {
 			Intent intent = new Intent(mContext, EventsListViewActivity.class);
 			intent.putExtra("title", data.mTitle);
 			mContext.startActivity(intent);
 		} else if (position == 1 ) {
 			Intent intent = new Intent(mContext, VenusListViewActivity.class);
 			intent.putExtra("title", data.mTitle);
+			intent.putExtra("lat", 41.385756);
+			intent.putExtra("lon", 2.164129);
 			mContext.startActivity(intent);
-		} else {
+		} else if (position == 2) {
 			Intent intent = new Intent(mContext, SubMenuActivity.class);
+			intent.putExtra("title", data.mTitle);
+			mContext.startActivity(intent);
+		} else if (position == 3) {
+			Intent intent = new Intent(mContext, VenusListViewActivity.class);
+			intent.putExtra("title", data.mTitle);
+			mContext.startActivity(intent);
+		} else if (position == 4) {
+			Intent intent = new Intent(mContext, StarredActivity.class);
 			intent.putExtra("title", data.mTitle);
 			mContext.startActivity(intent);
 		}
