@@ -20,8 +20,10 @@
 //    IBOutlet    UIBarButtonItem         *_doneButton;
     
     MPMoviePlayerController             *_movieController;
-    
+    NSString                            *_movieFileName;
     int                                  _currentIndex;
+    int                                  _currentView;
+    int                                  _currentViewHeight;
     NSTimeInterval                       _currentTime;
     Subtitle                            *_subtitle;
     NSTimer                             *_timer;
@@ -29,8 +31,12 @@
     VideoData                           *_data;
 }
 @property (nonatomic, retain) Subtitle  *subtitle;
+@property (nonatomic, retain) NSString  *movieFileName;
+@property (nonatomic, assign) int       currentPage;
+@property (nonatomic, assign) int       currentPageHeight;
 - (id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil video:(VideoData *) data;
 - (void)loadSubtitle;
+- (void)ceateSubtitleView;
 - (void)startTimer;
 - (void)stopTimer;
 //- (IBAction)playButton_clicked:(id)sender;

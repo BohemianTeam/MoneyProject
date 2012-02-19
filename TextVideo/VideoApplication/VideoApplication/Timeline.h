@@ -18,5 +18,6 @@
 @property (nonatomic, retain) NSString          *text;
 
 + (Timeline *)initWithDictionary:(NSDictionary *)dic;
+- (CGSize)sizeOfTextWithFont:(UIFont*)font constrainedToSize:(CGSize)constrainedSize lineBreakMode:(UILineBreakMode)mode;
 - (NSMutableDictionary *)toDictionary;
 @end

@@ -41,7 +41,17 @@
     return  dic;
 }
 
-
+- (CGSize)sizeOfTextWithFont:(UIFont*)font constrainedToSize:(CGSize)constrainedSize lineBreakMode:(UILineBreakMode)mode
+{
+    
+    CGSize sizeText = CGSizeMake(0, 0);
+    if(self.text != nil && ![self.text isEqual:@""]){
+        sizeText = [self.text sizeWithFont:font constrainedToSize:constrainedSize lineBreakMode:mode];
+        
+        return sizeText;
+    }
+    return sizeText;
+}
 - (void)dealloc {
     [_text release];
     [super dealloc];

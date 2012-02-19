@@ -10,7 +10,7 @@
 "AlertMsgNotConnect" = "Please check your WiFi status and try again.";
 "AlertTitleErrorNetwork" = "Error";
 "AlertMsgErrorNetwork" = "An error has occurred.\n Please try again later.";
-"Title" = "MainViewController";
+"Title" = "NewMookViewController";
 "TitleMainView" = "Mook Moving Book";
 "Cancel" = "Cancel";
 "MsgExistFile" = "File is exits.Do you want to download it?";

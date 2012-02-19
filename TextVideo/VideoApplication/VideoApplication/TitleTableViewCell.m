@@ -10,7 +10,8 @@
 #import <AVFoundation/AVAsset.h>
 #import "VideoData.h"
 @implementation TitleTableViewCell
-@synthesize data = _data;
+@synthesize title = _title;
+@synthesize details = _details;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -33,13 +34,13 @@
 }
 
 - (void) setData:(VideoData *)data {
-    _data = [data retain];
-//    AVURLAsset *videoAsset = [AVURLAsset URLAssetWithURL:[NSURL fileURLWithPath:data.url] options:nil];
-//    CMTime duration = videoAsset.duration;
-//    float secDuration = CMTimeGetSeconds(duration);
-    
-    _title.text = _data.title;
-    _details.text = _data.desc;
+//    _data = [data retain];
+////    AVURLAsset *videoAsset = [AVURLAsset URLAssetWithURL:[NSURL fileURLWithPath:data.url] options:nil];
+////    CMTime duration = videoAsset.duration;
+////    float secDuration = CMTimeGetSeconds(duration);
+//    
+//    _title.text = _data.title;
+//    _details.text = _data.desc;
 }
 
 - (void) dealloc {

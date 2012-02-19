@@ -11,8 +11,10 @@
 @interface TitleTableViewCell : UITableViewCell {
     UILabel                     *_title;
     UILabel                     *_details;
-    VideoData                   *_data;
+    //VideoData                   *_data;
 }
-@property (nonatomic, retain) VideoData * data;
+//@property (nonatomic, retain) VideoData * data;
+@property (nonatomic, retain)UILabel         *title;
+@property (nonatomic, retain)UILabel         *details;
 - (void) setData:(VideoData *)data;
 @end
