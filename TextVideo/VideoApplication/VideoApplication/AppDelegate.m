@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "NewMookViewController.h"
+#import "MainViewController.h"
 #import "Util.h"
 #import "VideoDatabase.h"
 
@@ -55,7 +56,7 @@
     
     // Override point for customization after application launch.
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    NewMookViewController *rootViewController = [[NewMookViewController alloc] initWithNibName:@"NewMookViewController" bundle:nil];
+    MainViewController *rootViewController = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
     [_window addSubview:navigationController.view];
     [_window makeKeyAndVisible]; 
