@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface Timeline : NSObject {
-   int               _index;
-    NSTimeInterval   _time;
-    NSString        *_text;
+    int               _index;
+    NSTimeInterval    _time;
+    NSString         *_text;
 }
 @property (nonatomic, assign) int                index;
 @property (nonatomic, assign) NSTimeInterval     time;
