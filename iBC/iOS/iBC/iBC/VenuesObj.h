@@ -18,5 +18,6 @@
 
 - (NSString*)getName;
 - (NSString*)getAddress;
+- (NSString*)getVenueCode;
 
 @end

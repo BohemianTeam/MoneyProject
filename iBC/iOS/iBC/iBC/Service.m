@@ -126,7 +126,20 @@ NSString *MBErrorDomain = @"com.iBC";
     [params release];
 
 }
-
+- (void) getVenueDetail:(NSString*) venueCode
+{
+    self.action = ActionTypeGetVenueDetail;
+    
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setObject:[Util getCurrentTimeString] forKey:Dates];
+    [params setObject:KinectiaAppId forKey:Kinectia];
+    [params setObject:[Util getRequestParameterString] forKey:Hash];
+    [params setObject:venueCode forKey:VenueCode];
+    
+    NSString *url = [NSString stringWithFormat:@"%@/getVenue", API_URL];
+    [self doRequestWithURL:url params:params];
+    [params release];
+}
 #pragma mark -
 - (void) getAllVideo {
     self.action = ActionTypeGetAllVideo;
@@ -367,6 +380,22 @@ NSString *MBErrorDomain = @"com.iBC";
             case ActionTypeGetVenueList:
             {
                 SEL sel = @selector(mServiceGetVenueSucces:responses:);
+                if([_delegate respondsToSelector:sel]){
+                    [_delegate performSelector:sel withObject:self withObject:data];
+                }
+                break;
+            }
+            case ActionTypeGetVenueDetail:
+            {
+                SEL sel = @selector(mServiceGetVenueDetailSucces:responses:);
+                if([_delegate respondsToSelector:sel]){
+                    [_delegate performSelector:sel withObject:self withObject:data];
+                }
+                break;
+            }
+            case ActionTypeGetEventList:
+            {
+                SEL sel = @selector(mServiceGetEventListSucces:responses:);
                 if([_delegate respondsToSelector:sel]){
                     [_delegate performSelector:sel withObject:self withObject:data];
                 }
