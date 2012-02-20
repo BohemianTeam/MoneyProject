@@ -8,6 +8,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -41,11 +44,25 @@ public class VenusListViewActivity extends Activity {
 					list = (List<VenuesResponse>) result.getData();
 					_adapter = new EventListAdapter(VenusListViewActivity.this, null, list, true);
 					_listView.setAdapter(_adapter);
+					_listView.setOnItemClickListener(_onItemClickListener);
 					hide();
 				} else {
 					hide();
 				}
 			}
+		}
+	};
+	
+	OnItemClickListener _onItemClickListener = new OnItemClickListener() {
+
+		@Override
+		public void onItemClick(AdapterView<?> adapter, View view, int position,
+				long id) {
+			// TODO Auto-generated method stub
+			VenuesResponse item = list.get(position);
+			Intent intent = new Intent(VenusListViewActivity.this, VenueDetailActivity.class);
+			intent.putExtra("v_code", item.venuesCode);
+			VenusListViewActivity.this.startActivity(intent);
 		}
 	};
 	@Override
