@@ -142,8 +142,10 @@
         _loadingHUD.labelText = @"Completed";
         [self hideHUD];
         [self.delegate downloadService:self didSuccessWithVideoData:_videoData];
-        [_asiRequest release];
-        _asiRequest = nil;
+//        if (_asiRequest) {
+//            [_asiRequest release];
+//            _asiRequest = nil;
+//        }
     }
     
 }
