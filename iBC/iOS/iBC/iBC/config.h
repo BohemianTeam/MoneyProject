@@ -35,7 +35,9 @@
 //Main Menu
 #define EventMenu               @"ESPECTACLES"
 #define VenueMenu               @"ESPAIS"
-#define CalendarMenu            
+#define CalendarMenu            @"AGENDA"
+#define VenueDictance           @"A PROP"
+#define Starr
 
 #define kAppInstall @"InstallationID"
 #define API_URL @"http://ws.kinectia.com/public/api/v1"

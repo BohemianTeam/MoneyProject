@@ -15,6 +15,7 @@
 
 #define WIDTH_SUBTITLE_VIEW 240
 #define HEIGHT_SUBTITLE_VIEW 300
+#define WIDTH_DIVIDER 3
 @interface VideoSubViewController()
 - (void) mockupSubtitle;
 @end
@@ -23,6 +24,7 @@
 @synthesize currentPage = _currentPage;
 @synthesize currentPageHeight = _currentPageHeight;
 @synthesize movieFileName  = _movieFileName;
+@synthesize indexPageMapToSub;
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -45,10 +47,11 @@
     [super viewDidLoad];
     self.title = @"Video View Controller";
 
-    _currentIndex = 0;
-    NSString *videoPath = [FileHelper documentsPath:[NSString stringWithFormat:@"%@/%@", VIDEO_FOLDER, self.movieFileName]];
-//    NSURL *localPath = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"LARVA_Airform" ofType:@"mp4"]];
-    NSURL *videoUrl = [NSURL URLWithString:videoPath];
+    _currentIndex = 1;
+    NSString *videoPath = [FileHelper documentsPath:[NSString stringWithFormat:@"/%@/%@", VIDEO_FOLDER, self.movieFileName]];
+
+    NSLog(@"video path: %@", videoPath);
+    NSURL *videoUrl = [NSURL fileURLWithPath:videoPath];
     if (_movieController == nil) {
         _movieController = [[MPMoviePlayerController alloc] initWithContentURL:videoUrl];
         _movieController.fullscreen = FALSE;
@@ -68,7 +71,7 @@
 
     [self loadSubtitle];
     [self ceateSubtitleView];
-    
+
 }
 
 - (void)viewDidUnload
@@ -108,7 +111,12 @@
     //}
     //return FALSE;
 }
-
+- (void)dealloc
+{
+    [videoSubScroll release];
+    [indexPageMapToSub release];
+    [super dealloc];
+}
 
 #pragma mark - LoadData
 - (void)loadSubtitle {
@@ -130,6 +138,7 @@
         } else {
             Subtitle *sub = [Subtitle initWithDictionary:dic];
             self.subtitle = sub;
+            
             [sub release];
         }
     } else {
@@ -202,22 +211,47 @@
     [_tableView reloadData];
     
 }
+- (void)gotoSubIndex:(NSInteger)index
+{
+    NSLog(@"index-- %d", index);
+    UILabel *lvSub = (UILabel*)[self.view viewWithTag:_currentIndex];
+    lvSub.backgroundColor = [UIColor whiteColor];
+    
+    _currentIndex = index;
+    Timeline *timeline = [_subtitle.listTimes objectAtIndex:_currentIndex-1];
+    
+    UILabel *lvNextSub = (UILabel*)[self.view viewWithTag:_currentIndex];
+    lvNextSub.backgroundColor = [UIColor yellowColor];
+    _currentTime = timeline.time;
+    
+    _movieController.currentPlaybackTime = _currentTime;
+    [self startTimer];
+}
+- (void)labelTap:(UIGestureRecognizer*)gestureRecognizer{
+    
+    int tag = gestureRecognizer.view.tag;    
+    NSLog(@"ta-- %d", tag);
+    
+    [self gotoSubIndex:tag];
+}
 - (void)ceateSubtitleView
 {
     self.currentPage = 0;
+    indexPageMapToSub = [[NSMutableArray alloc] init];
     UIView *subtitleView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SUBTITLE_VIEW, HEIGHT_SUBTITLE_VIEW)] autorelease];
     [subtitleView setBackgroundColor:[UIColor grayColor]];
     
-    UIScrollView *videoSubScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SUBTITLE_VIEW, HEIGHT_SUBTITLE_VIEW)];
+    videoSubScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_SUBTITLE_VIEW, HEIGHT_SUBTITLE_VIEW)];
     videoSubScroll.delegate = self;
     
     [subtitleView addSubview:videoSubScroll];
     
     //create page view for subtitle view
-    UIView *pageView = [[UIView alloc] initWithFrame:CGRectMake(WIDTH_SUBTITLE_VIEW*self.currentPage, 0, WIDTH_SUBTITLE_VIEW - 5, HEIGHT_SUBTITLE_VIEW)];
+    UIView *pageView = [[UIView alloc] initWithFrame:CGRectMake(WIDTH_SUBTITLE_VIEW*self.currentPage, 0, WIDTH_SUBTITLE_VIEW - WIDTH_DIVIDER, HEIGHT_SUBTITLE_VIEW)];
+    [indexPageMapToSub addObject:[NSNumber numberWithInt:1]];
     self.currentPageHeight = 0;
     self.currentPage++;
-    videoSubScroll.contentSize = CGSizeMake(WIDTH_SUBTITLE_VIEW*self.currentPage, HEIGHT_SUBTITLE_VIEW);
+    videoSubScroll.contentSize = CGSizeMake(WIDTH_SUBTITLE_VIEW*self.currentPage + 20, HEIGHT_SUBTITLE_VIEW);
     
     
     //[videoSubScroll addSubview:pageView];
@@ -225,31 +259,37 @@
     NSLog(@"-----------");
     CGSize maximumLabelSize = CGSizeMake(235,9999);
     
-
     for (Timeline *timeLine in self.subtitle.listTimes) {        
         UILabel *lvSub = [[UILabel alloc] init];
         lvSub.numberOfLines = 0;
         lvSub.lineBreakMode = UILineBreakModeWordWrap;
+        NSLog(@"tag: %d", timeLine.index);
+        lvSub.tag = timeLine.index;
+        lvSub.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tapGesture =
+        [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(labelTap:)] autorelease];
+        [lvSub addGestureRecognizer:tapGesture];
         CGSize size = [timeLine sizeOfTextWithFont:lvSub.font 
                                  constrainedToSize:maximumLabelSize 
                                      lineBreakMode:lvSub.lineBreakMode];
         
-        if(size.height + self.currentPageHeight > HEIGHT_SUBTITLE_VIEW)
+        if(size.height < HEIGHT_SUBTITLE_VIEW && size.height + self.currentPageHeight > HEIGHT_SUBTITLE_VIEW - 20)
         {
             [videoSubScroll addSubview:pageView];
             [pageView release];
             pageView = nil;
             
             pageView = [[UIView alloc] initWithFrame:CGRectMake(WIDTH_SUBTITLE_VIEW*self.currentPage, 0, WIDTH_SUBTITLE_VIEW - 5, HEIGHT_SUBTITLE_VIEW)];
+            [indexPageMapToSub addObject:[NSNumber numberWithInt:timeLine.index]];
             self.currentPageHeight = 0;
             self.currentPage++;
-            videoSubScroll.contentSize = CGSizeMake(WIDTH_SUBTITLE_VIEW*self.currentPage, HEIGHT_SUBTITLE_VIEW);
-        }else{
-            [lvSub setFrame:CGRectMake(0, self.currentPageHeight, size.width, size.height)];
-            lvSub.text = timeLine.text;
-            [pageView addSubview:lvSub];
-            self.currentPageHeight += size.height;
+            videoSubScroll.contentSize = CGSizeMake(WIDTH_SUBTITLE_VIEW*self.currentPage + 20, HEIGHT_SUBTITLE_VIEW);
         }
+
+        [lvSub setFrame:CGRectMake(0, self.currentPageHeight, WIDTH_SUBTITLE_VIEW - WIDTH_DIVIDER, size.height)];
+        lvSub.text = timeLine.text;
+        [pageView addSubview:lvSub];
+        self.currentPageHeight += size.height + WIDTH_DIVIDER;
         
         [lvSub release];
     }
@@ -257,50 +297,8 @@
     [pageView release];
     pageView = nil;
     [self.view addSubview:subtitleView];
-    
-//    UILabel *lvTest = [[UILabel alloc] init];
-//    lvTest.numberOfLines = 0;
-//    lvTest.lineBreakMode = UILineBreakModeWordWrap;
-//    lvTest.text = @"He hated the women of the City. That's why he could get off to watching them taking shits and pissing and splattering thick blood everywhere during 'that time of the month'.";
-//    CGSize lvTestSize = [lvTest.text sizeWithFont:lvTest.font
-//                                constrainedToSize:maximumLabelSize
-//                                    lineBreakMode:lvTest.lineBreakMode];
-//    
-//    [lvTest setFrame:CGRectMake(0, 0, 240, lvTestSize.height)];
-//    NSLog(@"%f----%f", lvTestSize.width, lvTestSize.height);
-//    
-//    UILabel *lvTest1 = [[UILabel alloc] init];
-//    lvTest1.numberOfLines = 0;
-//    lvTest1.text = @" He loved to be able to see them in their most private, their most guarded moments. Without all their expensive clothes, and most importantly, without them even knowing.";
-//    CGSize lvTest1Size = [lvTest1.text sizeWithFont:lvTest1.font
-//                                  constrainedToSize:maximumLabelSize
-//                                      lineBreakMode:lvTest1.lineBreakMode];
-//    [lvTest1 setFrame:CGRectMake(0, lvTestSize.height + 10, 240, lvTest1Size.height)];
-//    
-//    UILabel *lvTest2 = [[UILabel alloc] init];
-//    lvTest2.numberOfLines = 0;
-//    lvTest2.text = @"He gained privilege to how dirty and disgusting they really were when the bathroom door was shut tight behind them and they thought that no one was looking in. He came when it was a skinny petite chick taking a massive shit, that seemed to go on and on forever";
-//    CGSize lvTest2Size = [lvTest2.text sizeWithFont:lvTest2.font
-//                                  constrainedToSize:maximumLabelSize
-//                                      lineBreakMode:lvTest2.lineBreakMode];
-//    [lvTest2 setFrame:CGRectMake(0, lvTestSize.height + 10, 240, lvTest2Size.height)];
-//    
-//    UIView *view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 240, 300)];
-//    view1.backgroundColor = [UIColor grayColor];
-//    [view1 addSubview:lvTest];
-//    [view1 addSubview:lvTest1];
-//    [lvTest release];
-//    [lvTest1 release];
-//    [videoSubScroll addSubview:view1];
-//    
-//    UIView *view2 = [[UIView alloc] initWithFrame:CGRectMake(241, 0, 240, 300)];
-//    view2.backgroundColor = [UIColor whiteColor];
-//    [videoSubScroll addSubview:view2];
-//    
-//    UIView *view3 = [[UIView alloc] initWithFrame:CGRectMake(482, 0, 240, 300)];
-//    view3.backgroundColor = [UIColor redColor];
-//    //[view3 addSubview:lvTest];
-//    [videoSubScroll addSubview:view3];
+
+    ///
 
     
 }
@@ -350,8 +348,8 @@
             [jsonData writeToFile:filePath atomically:YES];
         }
         //End
-        _currentIndex = 0;
-        _currentTime = 0;
+        _currentIndex = 1;
+        _currentTime = 1;
         [_tableView reloadData];
         if (_movieController.playbackState == MPMoviePlaybackStatePlaying) {
             [_movieController setCurrentPlaybackTime:[_movieController endPlaybackTime]];
@@ -380,6 +378,7 @@
 #pragma mark - Timer
 - (void)startTimer {
     [self stopTimer];
+
     _timer = [NSTimer scheduledTimerWithTimeInterval: 1.0
                                                   target: self
                                                 selector:@selector(changeTime)
@@ -392,129 +391,107 @@
     }
 }
 
+- (int)isNewPage
+{
+    for(int i = 0; i < [indexPageMapToSub count]; i++)
+    {
+        int idxSub = [[indexPageMapToSub objectAtIndex:i] integerValue];
+        if(idxSub == _currentIndex)
+            return i;
+    }
+    
+    return -1;
+}
 
 - (void)changeTime {
     _currentTime += 1.0;
     Timeline *timeline;
     if (_currentIndex + 1 >= [_subtitle.listTimes count]) {
-        timeline = [_subtitle.listTimes objectAtIndex:_currentIndex];
+        timeline = [_subtitle.listTimes objectAtIndex:_currentIndex-1];
     } else {
-        timeline = [_subtitle.listTimes objectAtIndex:_currentIndex + 1];
+        timeline = [_subtitle.listTimes objectAtIndex:_currentIndex];
     }
     NSLog(@"Time:%f", _currentTime);
     NSLog(@"%f", floor(timeline.time));
     NSLog(@"curr index = %d",_currentIndex);
     if (floor(timeline.time) == _currentTime) {
-        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-        [_tableView reloadData];
+        NSLog(@"----------------");
+        UILabel *lvSub = (UILabel*)[self.view viewWithTag:_currentIndex];
+        lvSub.backgroundColor = [UIColor whiteColor];
+        
         _currentIndex ++;
+        int idxPage = [self isNewPage];
+        if(idxPage > -1)
+        {
+            [videoSubScroll scrollRectToVisible:CGRectMake(idxPage*240, 0, 240, 300) animated:YES];
+        }
+        UILabel *lvNextSub = (UILabel*)[self.view viewWithTag:_currentIndex];
+        lvNextSub.backgroundColor = [UIColor yellowColor];
         if (_currentIndex >= [_subtitle.listTimes count]) {
             [self stopTimer];
         }
     }
 }
 
-#pragma mark - UITableViewDatasource
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if (section == 0) {
-        return _data.title;
-    } else {
-        return @"";
-    }
-}
-
-
-- (int)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-
-- (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_subtitle.listTimes count];
-}
-
-
-- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self stopTimer];
-    _currentIndex = indexPath.row;
-    Timeline *timeline = [_subtitle.listTimes objectAtIndex:_currentIndex];
-    [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-    [_tableView reloadData];
-    _currentTime = timeline.time;
-    _movieController.currentPlaybackTime = _currentTime;
-    [self startTimer];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *cellIndentifier = @"subtitleCell";
-    UITableViewCell *cell = [_tableView dequeueReusableCellWithIdentifier:cellIndentifier];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndentifier];
-    }
-    cell.backgroundColor = [UIColor clearColor];
-    cell.accessoryType = UITableViewCellAccessoryNone;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    Timeline *timeline = [_subtitle.listTimes objectAtIndex:indexPath.row];
-    cell.textLabel.text = timeline.text;
-    cell.textLabel.textColor = [UIColor whiteColor];
-    if (indexPath.row == _currentIndex) {
-        cell.textLabel.textColor = [UIColor blueColor];
-    }
-    return cell;
-}
-
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 30;
-}
-
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
 {
-    NSLog(@"scrollViewWillBeginDecelerating");
+    //NSLog(@"scrollViewWillBeginDecelerating");
     
     [self scrollViewDidEndDecelerating:scrollView];
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    NSLog(@"scrollViewDidEndDecelerating");
+    //NSLog(@"scrollViewDidEndDecelerating");
     
     CGPoint currentloca = scrollView.contentOffset;
     if(currentloca.x < 0)
         [scrollView scrollRectToVisible:CGRectMake(0, 0, 240, 300) animated:YES];
     int temp = (int)currentloca.x % 240;
     int indexSub = (int)currentloca.x / 240;
-    NSLog(@"%d----%d", temp, indexSub);
+    NSLog(@"%f----%d----%d",currentloca.x, temp, indexSub);
+    
+    NSInteger index = [[indexPageMapToSub objectAtIndex:indexSub] integerValue];
     if(temp >= 240/2){
         //[scrollView setContentOffset:CGPointMake((indexSub+1)*240, 0)];
         [scrollView scrollRectToVisible:CGRectMake((indexSub+1)*240, 0, 240, 300) animated:YES];
+        index = [[indexPageMapToSub objectAtIndex:indexSub+1] integerValue];
+        
     }else{
         //[scrollView setContentOffset:CGPointMake(indexSub*240, 0)];
         [scrollView scrollRectToVisible:CGRectMake(indexSub*240, 0, 240, 300) animated:YES];
     }
+    
+    [self gotoSubIndex: index];
 }
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    NSLog(@"scrollViewDidEndDragging");
+    //NSLog(@"scrollViewDidEndDragging");
     CGPoint currentloca = scrollView.contentOffset;
     if(currentloca.x < 0)
         [scrollView scrollRectToVisible:CGRectMake(0, 0, 240, 300) animated:YES];
     int temp = (int)currentloca.x % 240;
     int indexSub = (int)currentloca.x / 240;
     NSLog(@"%d----%d", temp, indexSub);
+    NSInteger index = [[indexPageMapToSub objectAtIndex:indexSub] integerValue];
     if(temp >= 240/2){
         //[scrollView setContentOffset:CGPointMake((indexSub+1)*240, 0)];
         [scrollView scrollRectToVisible:CGRectMake((indexSub+1)*240, 0, 240, 300) animated:YES];
+        index = [[indexPageMapToSub objectAtIndex:indexSub+1] integerValue];
+        
     }else{
         //[scrollView setContentOffset:CGPointMake(indexSub*240, 0)];
         [scrollView scrollRectToVisible:CGRectMake(indexSub*240, 0, 240, 300) animated:YES];
     }
+    
+    [self gotoSubIndex: index];
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    NSLog(@"scrollViewDidScroll");
-    CGPoint currentloca = scrollView.contentOffset;
-    if(currentloca.x < 0)
-        [scrollView scrollRectToVisible:CGRectMake(0, 0, 240, 300) animated:YES];
+//    NSLog(@"scrollViewDidScroll");
+//    CGPoint currentloca = scrollView.contentOffset;
+//    NSLog(@"---%f", currentloca.x);
+//    if(currentloca.x < 0)
+//        [scrollView scrollRectToVisible:CGRectMake(0, 0, 240, 300) animated:YES];
 }
 @end

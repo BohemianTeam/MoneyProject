@@ -15,6 +15,7 @@
 @interface VideoSubViewController : SidaViewController <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate> {
     IBOutlet    UIView                  *_movieView;
     IBOutlet    UITableView             *_tableView;
+    UIScrollView                        *videoSubScroll;
 //    IBOutlet    UIBarButtonItem         *_playButton;
 //    IBOutlet    UIBarButtonItem         *_nextButton;
 //    IBOutlet    UIBarButtonItem         *_doneButton;
@@ -29,9 +30,13 @@
     NSTimer                             *_timer;
     
     VideoData                           *_data;
+    
+    NSMutableArray                      *indexPageMapToSub;
 }
+
 @property (nonatomic, retain) Subtitle  *subtitle;
 @property (nonatomic, retain) NSString  *movieFileName;
+@property (nonatomic, retain) NSMutableArray                      *indexPageMapToSub;
 @property (nonatomic, assign) int       currentPage;
 @property (nonatomic, assign) int       currentPageHeight;
 - (id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil video:(VideoData *) data;
