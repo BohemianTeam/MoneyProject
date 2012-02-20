@@ -2,9 +2,12 @@
 			android:id="@+id/header" android:orientation="horizontal"
 			android:layout_width="fill_parent" android:layout_height="60dip"
 			android:background="@drawable/alpha_header_bg">
-			<ImageView android:layout_width="50dip"
+			<ImageView android:layout_width="wrap_content"
 				android:layout_height="50dip" android:layout_margin="5dip"
-				android:visibility="invisible" />
+				android:background="@drawable/backbtn"
+				android:id="@+id/btnBack"
+				android:visibility="invisible"
+				/>
 			<LinearLayout android:orientation="vertical"
 				android:layout_width="wrap_content" android:layout_height="wrap_content"
 				android:layout_weight="1.0" android:gravity="center"
@@ -12,19 +15,19 @@
 				<TextView
 				  android:id="@+id/title"
 				  android:singleLine="true"
-				  android:ellipsize="marquee"
-				  android:marqueeRepeatLimit="marquee_forever"
-				  android:layout_width="160dip"
-				  android:gravity="center"
+				  android:layout_width="fill_parent"
 				  android:textStyle="bold"
 				  android:shadowColor="#000000"
 					android:layout_height="wrap_content" android:text="@string/main_title"
 					android:textSize="18dip" android:textColor="#ffffff" />
 			</LinearLayout>
 			<ImageView android:layout_width="50dip"
-				android:layout_gravity="center" android:layout_height="50dip"
-				android:layout_margin="5dip" android:id="@+id/button_library"
-				android:textColor="#FFFFFFFF" android:onClick="onLibraryClicked"
-				android:visibility="invisible" 
+				android:layout_gravity="center" 
+				android:layout_height="50dip"
+				android:layout_margin="5dip" 
+				android:id="@+id/button_starred"
+				android:textColor="#FFFFFFFF" 
+				android:background="@drawable/starred"
+				android:visibility="invisible"
 				/>
 		</LinearLayout>

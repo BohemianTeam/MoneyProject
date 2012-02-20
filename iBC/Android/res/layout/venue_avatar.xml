@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    	xmlns:android="http://schemas.android.com/apk/res/android"
+		 android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:layout_margin="10dp"
+	>
+		<ImageView
+			android:id="@+id/venue_img"
+			android:layout_width="120dip" 
+			android:layout_height="70dip"
+			android:scaleType="fitXY"
+			android:background="@drawable/x"
+		/>
+		<ProgressBar
+			android:id="@+id/progress"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true" 
+		>
+		</ProgressBar>
+	</RelativeLayout>

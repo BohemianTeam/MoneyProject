@@ -8,5 +8,5 @@ public class VenueRoomResponse {
 	@SerializedName("n")
 	public String name;
 
-	List<EventResponse> events;
+	public List<EventResponse> events;
 }
