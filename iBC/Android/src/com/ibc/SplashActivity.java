@@ -77,10 +77,12 @@ public class SplashActivity extends Activity {
         if (null == id) {
         	Service service = new Service(_listener);
         	service.getInstID();
+        } else {
+        	//start loading the application data
+            backgroundTask = new ApplicationDataLoadingTask();
+            backgroundTask.execute();
         }
-        //start loading the application data
-        backgroundTask = new ApplicationDataLoadingTask();
-        backgroundTask.execute();
+        
 
         Log.d(TAG, "onCreate ending");
       //processing
@@ -94,6 +96,7 @@ public class SplashActivity extends Activity {
 		@Override
 		public void onComplete(Service service, ServiceRespone result) {
 			if (result.getAction() == ServiceAction.ActionGetInstID) {
+				
 				if (result.getResultCode() == ResultCode.Success) {
 					InstIDResponse response = (InstIDResponse) result.getData();
 					String d = response.instID;
@@ -105,6 +108,10 @@ public class SplashActivity extends Activity {
 					map.put("h", h);
 					app.setDiffParams(map);
 				}
+				
+				//start loading the application data
+		        backgroundTask = new ApplicationDataLoadingTask();
+		        backgroundTask.execute();
 			}
 		}
 		

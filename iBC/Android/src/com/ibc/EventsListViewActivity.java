@@ -69,7 +69,7 @@ public class EventsListViewActivity extends Activity{
 	}
 	
 	private void show() {
-		_dialog = ProgressDialog.show(this, "", "Loading ...",true , true);
+		_dialog = ProgressDialog.show(this, "", "Loading events...",true , true);
 	}
 	
 	private void hide() {

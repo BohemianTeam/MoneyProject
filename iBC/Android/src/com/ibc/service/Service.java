@@ -141,7 +141,7 @@ public class Service implements Runnable {
 	public void getStarred() {
 		_action = ServiceAction.ActionGetStarred;
 		
-		Map<String, String> params = iBCApplication.sharedInstance().getDiffServiceParams();
+		Map<String, String> params = new HashMap<String, String>(iBCApplication.sharedInstance().getDiffServiceParams());
 		
 		request("/getStarred/", params);
 	}
