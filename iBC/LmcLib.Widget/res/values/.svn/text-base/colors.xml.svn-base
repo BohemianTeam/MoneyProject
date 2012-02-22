@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="bg_light">#ffffffff</color>
+	<color name="transparent">#00000000</color>
+	<color name="cal_activity_bg">#ffffffff</color>
+	<color name="cal_cell_bg">#ffeeeeee</color>
+	<color name="cal_cell_text_color">#ff000000</color>
+</resources>

@@ -10,6 +10,9 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,11 +41,24 @@ public class EventsListViewActivity extends Activity{
 					list = (List<EventsResponse>) result.getData();
 					_adapter = new EventListAdapter(EventsListViewActivity.this, list,null, false);
 					_listView.setAdapter(_adapter);
+					_listView.setOnItemClickListener(_onItemClickListener);
 					hide();
 				} else {
 					hide();
 				}
 			}
+		}
+	};
+	
+	OnItemClickListener _onItemClickListener = new OnItemClickListener() {
+
+		@Override
+		public void onItemClick(AdapterView<?> adapter, View view, int position,
+				long id) {
+			EventsResponse item = list.get(position);
+			Intent intent = new Intent(EventsListViewActivity.this, EventDetailActivity.class);
+			intent.putExtra("e_code", item.eventCode);
+			startActivity(intent);
 		}
 	};
 	

@@ -3,13 +3,13 @@ package com.ibc;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.ibc.controller.SharedPreferencesManager;
-import com.ibc.util.Config;
-import com.ibc.util.Util;
-
 import android.app.Application;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.provider.Settings;
+
+import com.ibc.controller.SharedPreferencesManager;
+import com.ibc.util.Config;
+import com.ibc.util.Util;
 
 public class iBCApplication extends Application {
 
@@ -32,7 +32,6 @@ public class iBCApplication extends Application {
 		_diffParamsWithSecurityParams.put("i", Config.KinectiaAppId);
 		_sharedManager = new SharedPreferencesManager(getApplicationContext());
 		String d = _sharedManager.loadInstID();
-		d = "823ab7fc7820d402";
 		if (null != d) {
 			_diffParamsWithSecurityParams.put("d", d);
 			String h = Util.hashMac(d + Config.KinectiaAppId);

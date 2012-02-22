@@ -2,17 +2,17 @@ package com.ibc.adapter;
 
 import java.util.List;
 
-import com.ibc.R;
-import com.ibc.model.service.response.EventsResponse;
-import com.ibc.model.service.response.VenuesResponse;
-import com.ibc.view.EventRowHolder;
-import com.ibc.view.VenueRowHolder;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
+import com.ibc.R;
+import com.ibc.model.service.response.EventsResponse;
+import com.ibc.model.service.response.VenuesResponse;
+import com.ibc.view.EventRowHolder;
+import com.ibc.view.VenueRowHolder;
 
 public class EventListAdapter extends BaseAdapter {
 	

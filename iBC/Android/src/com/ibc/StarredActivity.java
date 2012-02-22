@@ -50,9 +50,19 @@ public class StarredActivity extends Activity{
         _queue = new LinkedHashMap<String, Service>();
 		_listView = (ListView) findViewById(R.id.list);
 		
-		Service service = new Service(_listener);
-		service.getStarred();
-		show();
+		iBCApplication app = iBCApplication.sharedInstance();
+		if (app.getData("starred") != null) {
+			StarredResponse response = (StarredResponse) app.getData("starred");
+			List<VenuesResponse> venues = response.venues;
+			List<EventsResponse> events = response.events;
+			StarredListAdapter adapter = new StarredListAdapter(events, venues, StarredActivity.this);
+			_listView.setAdapter(adapter);
+			_listView.setOnItemClickListener(adapter);
+		} else {
+			Service service = new Service(_listener);
+			service.getStarred();
+			show();
+		}
 		/*
 		StarredResponse response = (StarredResponse) iBCApplication.sharedInstance().getData("starred");
 		if (response != null) {
@@ -166,14 +176,17 @@ public class StarredActivity extends Activity{
 				if (result.getResultCode() == ResultCode.Success) {
 					StarredResponse response = (StarredResponse) result.getData();
 					if (response != null) {
+						iBCApplication.sharedInstance()
+						.putData("starred", response);
 						List<VenuesResponse> venues = response.venues;
 						List<EventsResponse> events = response.events;
 						StarredListAdapter adapter = new StarredListAdapter(events, venues, StarredActivity.this);
 						_listView.setAdapter(adapter);
+						_listView.setOnItemClickListener(adapter);
 					}
 				}
 				hide();
-			}
+			} 
 			if (result.getAction() == ServiceAction.ActionGetEvent || result.getAction() == ServiceAction.ActionGetVenue) {
 				increase++;
 				if (increase == total) {

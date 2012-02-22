@@ -1,17 +1,6 @@
 package com.ibc;
 
-import java.util.Date;
 import java.util.Map;
-
-import com.ibc.library.CalendarProvider;
-import com.ibc.model.service.response.InstIDResponse;
-import com.ibc.service.ResultCode;
-import com.ibc.service.Service;
-import com.ibc.service.ServiceAction;
-import com.ibc.service.ServiceListener;
-import com.ibc.service.ServiceRespone;
-import com.ibc.util.Config;
-import com.ibc.util.Util;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,6 +10,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.ibc.model.service.response.InstIDResponse;
+import com.ibc.model.service.response.StarredResponse;
+import com.ibc.service.ResultCode;
+import com.ibc.service.Service;
+import com.ibc.service.ServiceAction;
+import com.ibc.service.ServiceListener;
+import com.ibc.service.ServiceRespone;
+import com.ibc.util.Config;
+import com.ibc.util.Util;
 
 public class SplashActivity extends Activity {
     //for logging
@@ -72,16 +71,16 @@ public class SplashActivity extends Activity {
             }
         }
         //get inst id
-        iBCApplication app = iBCApplication.sharedInstance();
-        String id = app.getSharedPreferencesManager().loadInstID();
-        if (null == id) {
-        	Service service = new Service(_listener);
-        	service.getInstID();
-        } else {
+//        iBCApplication app = iBCApplication.sharedInstance();
+//        String id = app.getSharedPreferencesManager().loadInstID();
+//        if (null == id) {
+    	Service service = new Service(_listener);
+    	service.getInstID();
+//        } else {
         	//start loading the application data
-            backgroundTask = new ApplicationDataLoadingTask();
-            backgroundTask.execute();
-        }
+//            backgroundTask = new ApplicationDataLoadingTask();
+//            backgroundTask.execute();
+//        }
         
 
         Log.d(TAG, "onCreate ending");
@@ -100,6 +99,7 @@ public class SplashActivity extends Activity {
 				if (result.getResultCode() == ResultCode.Success) {
 					InstIDResponse response = (InstIDResponse) result.getData();
 					String d = response.instID;
+					d = "823ab7fc7820d402";//for test
 					iBCApplication app = iBCApplication.sharedInstance();
 					app.getSharedPreferencesManager().saveInstID(d);
 					Map<String, String> map = app.getDiffServiceParams();
@@ -107,6 +107,19 @@ public class SplashActivity extends Activity {
 					String h = Util.hashMac(d + Config.KinectiaAppId);
 					map.put("h", h);
 					app.setDiffParams(map);
+					
+					//get starred
+					Service sv = new Service(_listener);
+					sv.getStarred();
+				}
+				
+				
+			} else if (result.getAction() == ServiceAction.ActionGetStarred) {
+				if (result.getResultCode() == ResultCode.Success) {
+					StarredResponse response = (StarredResponse) result
+							.getData();
+					iBCApplication.sharedInstance()
+							.putData("starred", response);
 				}
 				
 				//start loading the application data
@@ -161,7 +174,7 @@ public class SplashActivity extends Activity {
             Log.d(TAG, "ApplicationDataLoadingTask::doInBackground");
             
             try {
-                Thread.sleep(3000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

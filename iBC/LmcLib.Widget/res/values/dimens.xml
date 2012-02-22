@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<dimen name="actionbar_height">45dp</dimen>
+	<dimen name="actionbar_button_default_width">45dp</dimen>
+
+	<dimen name="cal_cell_text_size">12dp</dimen>
+	<dimen name="cal_day_header_height">32dp</dimen>
+
+</resources>

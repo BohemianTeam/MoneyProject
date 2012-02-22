@@ -10,17 +10,16 @@
 	<LinearLayout 
 	android:layout_width="fill_parent" 
 	android:layout_height="wrap_content"
-	android:layout_marginTop="5dp"
-	android:layout_marginBottom="5dp"
+	android:layout_margin="10dp"
 >
 	<com.ibc.view.VenueAvatar
 	    android:id="@+id/venue_avatar"
-		 android:layout_width="120dip" 
-			android:layout_height="70dip"
-			android:layout_margin="10dp"
-	>
-		
-	</com.ibc.view.VenueAvatar>
+		android:layout_width="120dip" 
+		android:layout_height="60dip"
+		android:layout_gravity="center"
+		android:layout_marginRight="5dip"
+	/>
+	
 	
 	<LinearLayout
 		android:layout_width="wrap_content"
@@ -36,7 +35,6 @@
 			android:textStyle="bold"
 			android:textColor="#53A8CC"
 			android:textSize="18dp"
-			android:text="ESPAL 1"
 		/>
 		<TextView
 			android:id="@+id/description"
@@ -44,7 +42,6 @@
 					android:layout_height="wrap_content"
 					android:textColor="#53A8CC"
 					android:textSize="12dip"
-					android:text="Ciutat Villa, Barcelona" 
 				/>
 	</LinearLayout>
 </LinearLayout>
@@ -68,7 +65,6 @@
 						android:layout_height="wrap_content"
 						android:textColor="#FFFFFF"
 						android:textSize="12dip"
-						android:text="C /Villaroel, 87 08011 Barcelona"
 	    	    	/>
 	    	    	<ImageView
 	    	    	     android:layout_width="wrap_content"
@@ -97,7 +93,6 @@
 						android:layout_height="wrap_content"
 						android:textColor="#FFFFFF"
 						android:textSize="12dip"
-						android:text="Tel. 93 451 12 34"
 						android:layout_marginLeft="5dip"
 						android:layout_marginTop="5dip"
 	    	    	    />
@@ -107,7 +102,6 @@
 						android:layout_height="wrap_content"
 						android:textColor="#FFFFFF"
 						android:textSize="12dip"
-						android:text="info@favillaroel.cat"
 						android:layout_marginLeft="5dip"
 	    	    	    />
 	    	    	<TextView
@@ -117,31 +111,40 @@
 						android:textColor="#FFFFFF"
 						android:textSize="12dip"
 						android:layout_marginLeft="5dip"
-						android:text="www.lavillaroel.cat"
 	    	    	    />
 	    	   </LinearLayout>
 	    	
 	</LinearLayout>
-	
+
+	<HorizontalScrollView android:layout_width="wrap_content"
+		android:layout_height="50dip" 
+		android:scrollbars="none"
+		android:layout_marginTop="5dip"
+		android:layout_marginBottom="5dip"
+		>
+		
 	<LinearLayout
-	     android:layout_width="fill_parent"
-		android:layout_height="60dip"
+	     android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
 		android:id="@+id/layout_img"
+		android:gravity="center_vertical"
 	    >
 	    
 	</LinearLayout>
 	
-	
+	</HorizontalScrollView>
+	 
 	<LinearLayout
 	     android:layout_width="fill_parent"
 		android:layout_height="40dip"
 		android:background="#53A8CC"
 		android:onClick="onGoToInfoBlocksClicked"
+		android:layout_marginBottom="10dip"
 	    >
 		<TextView 
 		    android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textColor="#9ACDE2"
+			android:textColor="#266A85"
 			android:textSize="14dip"
 			android:textStyle="bold"
 			android:text="XARXES SOCIALS"
@@ -159,11 +162,22 @@
 		    />
 	</LinearLayout>
 	
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    android:background="@drawable/event_title"
+    android:id="@+id/header_list"
+    android:visibility="gone"
+    >
+    
+
+	</LinearLayout>
 	<ListView android:id="@+id/event_list" android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:background="#FFFFFF"
-			android:divider="@drawable/list_divider" android:dividerHeight="1dip"
-			android:layout_marginTop="10dip"
+			android:background="#FFFFFFFF"
+			android:divider="@drawable/list_divider" 
+			android:dividerHeight="1dip"
 			android:padding="0dip">
 		</ListView>
 	

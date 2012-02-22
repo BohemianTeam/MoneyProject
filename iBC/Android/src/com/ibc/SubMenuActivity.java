@@ -2,14 +2,14 @@ package com.ibc;
 
 import java.util.ArrayList;
 
-import com.ibc.adapter.MenuListAdapter;
-import com.ibc.model.MenuItemData;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.ibc.adapter.MenuListAdapter;
+import com.ibc.model.MenuItemData;
 
 public class SubMenuActivity extends Activity {
 	ArrayList<MenuItemData> mMenuList = new ArrayList<MenuItemData>();

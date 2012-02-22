@@ -26,9 +26,9 @@
 		<ImageView
 			android:id="@+id/img"
 			android:layout_width="120dip" 
-			android:layout_height="70dip"
+			android:layout_height="60dip"
 			android:scaleType="fitXY"
-			android:background="@drawable/x"
+			android:layout_centerInParent="true"
 		/>
 		<ProgressBar
 			android:id="@+id/progress"
@@ -53,7 +53,6 @@
 			android:textStyle="bold"
 			android:textColor="#53A8CC"
 			android:textSize="18dp"
-			android:text="ESPAL 1"
 		/>
 		<TextView
 			android:id="@+id/city"
@@ -61,7 +60,6 @@
 					android:layout_height="wrap_content"
 					android:textColor="#666666"
 					android:textSize="12dip"
-					android:text="Ciutat Villa, Barcelona" 
 				/>
 	</LinearLayout>
 	<ImageView

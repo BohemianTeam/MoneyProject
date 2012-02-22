@@ -1,7 +1,6 @@
 package com.ibc.view;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -13,7 +12,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -50,29 +48,27 @@ public class VenueRowHolder {
 	}
 	
 	public void display() {
-		_title.setText(_data.venuesName);
-		if (_city != null) {
-			if (null != _data && _data.city != null) {
-				_city.setText(Html.fromHtml(_data.city));
-			} else {
-				_city.setText("");
-			}
+		if (_data != null) {
+			_title.setText(_data.venuesName);
+			String city = _data.city == null ? "" : _data.city;
+			String distance = _data.distance == null ? "" : _data.distance;
+			_city.setText(distance + city);
+			getImage();
 		}
-		getImage();
 	}
 	
 	private void getImage() {
-		_id = _data.venuesCode;
-		String dir = _context.getCacheDir() + "/" + _id + "_vn.png";
-		File file = new File(dir);
-		if (file.exists()) {
-			BitmapFactory.Options options = new BitmapFactory.Options();
-//			options.inTempStorage = new byte[16 * 1024];
-//			options.inSampleSize = 4;
-			_bitmap = BitmapFactory.decodeFile(dir);
-			_img.setImageBitmap(BitmapFactory.decodeFile(dir,options));
-			_progress.setVisibility(View.INVISIBLE);
-		} else {
+//		_id = _data.venuesCode;
+//		String dir = _context.getCacheDir() + "/" + _id + "_vn.png";
+//		File file = new File(dir);
+//		if (file.exists()) {
+//			BitmapFactory.Options options = new BitmapFactory.Options();
+////			options.inTempStorage = new byte[16 * 1024];
+////			options.inSampleSize = 4;
+//			_bitmap = BitmapFactory.decodeFile(dir);
+//			_img.setImageBitmap(BitmapFactory.decodeFile(dir,options));
+//			_progress.setVisibility(View.INVISIBLE);
+//		} else {
 			if (_connecting) {
 				return;
 			} else {
@@ -80,7 +76,7 @@ public class VenueRowHolder {
 				new DownloadTask().execute(new String[] {
 						Config.URL_IMAGE + _data.icon, "" });
 			}
-		}
+//		}
 	}
 	
 	/**
