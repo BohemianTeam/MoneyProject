@@ -19,6 +19,7 @@
 #define PlatformVersion         @"v"
 #define ScreenResolution        @"r"
 #define AppVersion              @"a"
+#define VenueCode               @"vc"
 
 //API response
 #define InstID                  @"instID"
@@ -36,8 +37,8 @@
 #define EventMenu               @"ESPECTACLES"
 #define VenueMenu               @"ESPAIS"
 #define CalendarMenu            @"AGENDA"
-#define VenueDictance           @"A PROP"
-#define Starr
+#define VenueDictanceMenu           @"A PROP"
+#define StarredMenu                 @"FAVORITS"
 
 #define kAppInstall @"InstallationID"
 #define API_URL @"http://ws.kinectia.com/public/api/v1"

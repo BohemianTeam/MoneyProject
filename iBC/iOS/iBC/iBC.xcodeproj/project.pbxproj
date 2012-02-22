@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		665AB0B514F216200018D33C /* EventListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 665AB0B314F216200018D33C /* EventListViewController.m */; };
+		665AB0B614F216200018D33C /* EventListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 665AB0B414F216200018D33C /* EventListViewController.xib */; };
+		665AB0BA14F21B040018D33C /* VenuePlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 665AB0B814F21B040018D33C /* VenuePlaceholder.png */; };
+		665AB0BB14F21B040018D33C /* EventPlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 665AB0B914F21B040018D33C /* EventPlaceholder.png */; };
 		6688ABE914EB8E41008D6AEC /* ResponseObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 6688ABE814EB8E40008D6AEC /* ResponseObj.m */; };
 		6688ABF114EBB221008D6AEC /* StarredListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6688ABEF14EBB221008D6AEC /* StarredListViewController.m */; };
 		6688ABF214EBB221008D6AEC /* StarredListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6688ABF014EBB221008D6AEC /* StarredListViewController.xib */; };
@@ -64,6 +68,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		665AB0B214F216200018D33C /* EventListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventListViewController.h; sourceTree = "<group>"; };
+		665AB0B314F216200018D33C /* EventListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventListViewController.m; sourceTree = "<group>"; };
+		665AB0B414F216200018D33C /* EventListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventListViewController.xib; sourceTree = "<group>"; };
+		665AB0B814F21B040018D33C /* VenuePlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VenuePlaceholder.png; sourceTree = "<group>"; };
+		665AB0B914F21B040018D33C /* EventPlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EventPlaceholder.png; sourceTree = "<group>"; };
 		6688ABE714EB8E40008D6AEC /* ResponseObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseObj.h; sourceTree = "<group>"; };
 		6688ABE814EB8E40008D6AEC /* ResponseObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseObj.m; sourceTree = "<group>"; };
 		6688ABEE14EBB221008D6AEC /* StarredListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StarredListViewController.h; sourceTree = "<group>"; };
@@ -243,6 +252,8 @@
 		66B2936514E022B60006B641 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				665AB0B814F21B040018D33C /* VenuePlaceholder.png */,
+				665AB0B914F21B040018D33C /* EventPlaceholder.png */,
 				66D5EE1314ECC5D4005005CC /* eventTest.jpg */,
 				66D5EE1414ECC5D4005005CC /* venueTest.jpg */,
 				6688ABF314EBB71F008D6AEC /* EventsTitle.png */,
@@ -309,6 +320,9 @@
 				668C242B14F0932500997FBB /* VenueListViewController.h */,
 				668C242C14F0932500997FBB /* VenueListViewController.m */,
 				668C242D14F0932500997FBB /* VenueListViewController.xib */,
+				665AB0B214F216200018D33C /* EventListViewController.h */,
+				665AB0B314F216200018D33C /* EventListViewController.m */,
+				665AB0B414F216200018D33C /* EventListViewController.xib */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -469,6 +483,9 @@
 				66D5EE1514ECC5D4005005CC /* eventTest.jpg in Resources */,
 				66D5EE1614ECC5D4005005CC /* venueTest.jpg in Resources */,
 				668C242F14F0932500997FBB /* VenueListViewController.xib in Resources */,
+				665AB0B614F216200018D33C /* EventListViewController.xib in Resources */,
+				665AB0BA14F21B040018D33C /* VenuePlaceholder.png in Resources */,
+				665AB0BB14F21B040018D33C /* EventPlaceholder.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,6 +526,7 @@
 				66D5EE1214ECBC3B005005CC /* EventViewCell.m in Sources */,
 				66D5EE1E14ECD6B0005005CC /* ImageDownloader.m in Sources */,
 				668C242E14F0932500997FBB /* VenueListViewController.m in Sources */,
+				665AB0B514F216200018D33C /* EventListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,8 +573,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -571,8 +589,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PROVISIONING_PROFILE = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -583,8 +599,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -593,8 +609,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -604,14 +618,12 @@
 		66B2935E14E021160006B641 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iBC/iBC-Prefix.pch";
 				INFOPLIST_FILE = "iBC/iBC-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -619,14 +631,12 @@
 		66B2935F14E021160006B641 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Trinh Hung (N2P55ZSV7A)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iBC/iBC-Prefix.pch";
 				INFOPLIST_FILE = "iBC/iBC-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AC086193-3A78-4C4E-9CE8-433C94D39C57";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -160,7 +160,7 @@
                 [self startIconDownload:obj forIndexPath:indexPath];
             }
             // if a download is deferred or in progress, return a placeholder image
-            cell.imgViewLogo.image = [UIImage imageNamed:@"venueTest.jpg"];
+            cell.imgViewLogo.image = [UIImage imageNamed:@"VenuePlaceholder"];
         }else{
             cell.imgViewLogo.image = obj.imgLogo;
         }
@@ -183,7 +183,7 @@
                 [self startIconDownload:obj forIndexPath:indexPath];
             }
             // if a download is deferred or in progress, return a placeholder image
-            cell.imgViewLogo.image = [UIImage imageNamed:@"eventTest.jpg"];
+            cell.imgViewLogo.image = [UIImage imageNamed:@"EventPlaceholder"];
         }else{
             cell.imgViewLogo.image = obj.imgLogo;
         }

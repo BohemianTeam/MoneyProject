@@ -46,6 +46,10 @@
 {
     return (NSString*)[super getObjectForKey:Logo];
 }
+- (NSString*)getVenueCode
+{
+    return (NSString*)[super getObjectForKey:VenueCode];
+}
 - (void)dealloc
 {
     [imgLogo release];

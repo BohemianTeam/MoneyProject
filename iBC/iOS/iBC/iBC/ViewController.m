@@ -11,6 +11,8 @@
 #import "MenuTableViewCell.h"
 #import "SubMenuViewController.h"
 #import "StarredListViewController.h"
+#import "VenueListViewController.h"
+#import "EventListViewController.h"
 #import "Service.h"
 @interface ViewController(private)
 - (void) initMenu;
@@ -51,23 +53,23 @@
     // Release any cached data, images, etc that aren't in use.
 }
 - (void) initMenu {
-    MenuItemData *item = [[MenuItemData alloc] initWithTitle:@"ESPECTACLES" andButtonImage:@"v01_bt01.png"];
+    MenuItemData *item = [[MenuItemData alloc] initWithTitle:EventMenu andButtonImage:@"v01_bt01.png"];
     [_arrMenuItems addObject:item];
     [item release];
     
-    MenuItemData *item1 = [[MenuItemData alloc] initWithTitle:@"ESPAIS" andButtonImage:@"v01_bt02.png"];
+    MenuItemData *item1 = [[MenuItemData alloc] initWithTitle:VenueMenu andButtonImage:@"v01_bt02.png"];
     [_arrMenuItems addObject:item1];
     [item1 release];
     
-    MenuItemData *item2 = [[MenuItemData alloc] initWithTitle:@"AGENDA" andButtonImage:@"v01_bt03.png"];
+    MenuItemData *item2 = [[MenuItemData alloc] initWithTitle:CalendarMenu andButtonImage:@"v01_bt03.png"];
     [_arrMenuItems addObject:item2];
     [item2 release];
     
-    MenuItemData *item3 = [[MenuItemData alloc] initWithTitle:@"A PROP" andButtonImage:@"v01_bt04.png"];
+    MenuItemData *item3 = [[MenuItemData alloc] initWithTitle:VenueDictanceMenu andButtonImage:@"v01_bt04.png"];
     [_arrMenuItems addObject:item3];
     [item3 release];
     
-    MenuItemData *item4 = [[MenuItemData alloc] initWithTitle:@"FAVORITS" andButtonImage:@"v01_bt05.png"];
+    MenuItemData *item4 = [[MenuItemData alloc] initWithTitle:StarredMenu andButtonImage:@"v01_bt05.png"];
     [_arrMenuItems addObject:item4];
     [item4 release];
 }
@@ -156,11 +158,28 @@
 //    [vc release];
     
     MenuItemData *data = [_arrMenuItems objectAtIndex:indexPath.row];
-    if([data.title isEqual:@""])
     NSString *title = [self CapitalizedString:data.title];
-    StarredListViewController *starredVC = [[StarredListViewController alloc] initWithTitle:title];
-    [self.navigationController pushViewController:starredVC animated:YES];
-    [starredVC release];
+    if([data.title isEqual:StarredMenu]){
+        StarredListViewController *starredVC = [[StarredListViewController alloc] initWithTitle:title];
+        [self.navigationController pushViewController:starredVC animated:YES];
+        [starredVC release];
+        
+        return;
+    }
+    if([data.title isEqual:VenueMenu]){
+        VenueListViewController *venueVC = [[VenueListViewController alloc] initWithTitle:title];
+        [self.navigationController pushViewController:venueVC animated:YES];
+        [venueVC release];
+        
+        return;
+    }
+    if([data.title isEqual:EventMenu]){
+        EventListViewController *eventVC = [[EventListViewController alloc] initWithTitle:title];
+        [self.navigationController pushViewController:eventVC animated:YES];
+        [eventVC release];
+        
+        return;
+    }
 }
 
 

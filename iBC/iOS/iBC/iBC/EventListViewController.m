@@ -1,20 +1,19 @@
 //
-//  VenueListViewController.m
+//  EventListViewController.m
 //  iBC
 //
-//  Created by bohemian on 2/19/12.
+//  Created by bohemian on 2/20/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "VenueListViewController.h"
+#import "EventListViewController.h"
+
 #import "Util.h"
 #import "Service.h"
 #import "VenuesObj.h"
 #import "CJSONDeserializer.h"
-#import "VenueViewCell.h"
-#import "ResponseObj.h"
-
-@implementation VenueListViewController
+#import "EventViewCell.h"
+@implementation EventListViewController
 @synthesize imageDownloadsInProgress;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -31,12 +30,12 @@
         self.title = [title retain];
         
         // Custom initialization
-        venueTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 480) style:UITableViewStylePlain];
-        venueTable.dataSource = self;
-        venueTable.delegate = self;
-        venueTable.autoresizesSubviews = YES;
-        venueTable.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-        [self.view addSubview:venueTable];
+        eventTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 480) style:UITableViewStylePlain];
+        eventTable.dataSource = self;
+        eventTable.delegate = self;
+        eventTable.autoresizesSubviews = YES;
+        eventTable.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+        [self.view addSubview:eventTable];
         
         //get data
         haveData = NO;
@@ -76,8 +75,8 @@
 }
 - (void)dealloc
 {
-    [venueTable release];
-    [venuesList release];
+    [eventTable release];
+    [eventsList release];
     [imageDownloadsInProgress release];
     [super dealloc];
 }
@@ -93,7 +92,7 @@
     srv.canShowLoading = YES;
     
     //test
-    [srv getVenueList:@"41.385756~2.164129"];
+    [srv getEventList];
 }
 #pragma mark - tableview delegate and datasource
 
@@ -102,11 +101,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [venuesList count];
+    return [eventsList count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return VENUE_CELL_HEIGHT;
+    return EVENT_CELL_HEIGHT;
 }
 
 
@@ -115,22 +114,22 @@
     if(haveData == NO)
         return nil;
     
-    static NSString *VenuesCell = @"VenuesCell";
-    VenueViewCell *cell = [tableView dequeueReusableCellWithIdentifier:VenuesCell];
+    static NSString *EventsCell = @"EventsCell";
+    EventViewCell *cell = [tableView dequeueReusableCellWithIdentifier:EventsCell];
     if (cell == nil) {
-        cell = [[[VenueViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:VenuesCell] autorelease];
+        cell = [[[EventViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:EventsCell] autorelease];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    VenuesObj *obj = [venuesList objectAtIndex:indexPath.row];
+    EventsObj *obj = [eventsList objectAtIndex:indexPath.row];
     [cell setupData:obj];
     if(!obj.imgLogo){
-        if (venueTable.dragging == NO && venueTable.decelerating == NO)
+        if (eventTable.dragging == NO && eventTable.decelerating == NO)
         {
             [self startIconDownload:obj forIndexPath:indexPath];
         }
         // if a download is deferred or in progress, return a placeholder image
-        cell.imgViewLogo.image = [UIImage imageNamed:@"VenuePlaceholder"];
+        cell.imgViewLogo.image = [UIImage imageNamed:@"EventPlaceholder"];
     }else{
         cell.imgViewLogo.image = obj.imgLogo;
     }
@@ -142,30 +141,20 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    VenuesObj *venueObj = [venuesList objectAtIndex:indexPath.row];
-    //show loading
-    [Util showLoading:self.view];
-    Service *srv = [[Service alloc] init];
-    srv.delegate = self;
-    srv.canShowAlert = YES;
-    srv.canShowLoading = YES;
-    
-    //test
-    [srv getVenueDetail:[venueObj getVenueCode]];
 }
 #pragma mark - servide delegate
-- (void) mServiceGetVenueSucces:(Service *) service responses:(id) response {
-    NSLog(@"API mServiceGetVenueSucces : success");
+- (void) mServiceGetEventListSucces:(Service *) service responses:(id) response {
+    NSLog(@"API mServiceGetEventListSucces : success");
     
-    if(venuesList)
-        [venuesList release];
+    if(eventsList)
+        [eventsList release];
     
-    venuesList = [[NSMutableArray alloc] init];
+    eventsList = [[NSMutableArray alloc] init];
     CJSONDeserializer *jsonDeserializer = [CJSONDeserializer deserializer];
     NSArray *resArray = [jsonDeserializer deserializeAsArray:(NSData*)response error:nil];
     for (NSDictionary *dict in resArray) {
-        VenuesObj *obj = [[VenuesObj alloc] iniWithDictionary:dict];
-        [venuesList addObject:obj];
+        EventsObj *obj = [[EventsObj alloc] iniWithDictionary:dict];
+        [eventsList addObject:obj];
         
         [obj release];
     }
@@ -173,13 +162,7 @@
     //end loading
     [Util hideLoading];
     haveData = YES;
-    [venueTable reloadData];
-}
-- (void) mServiceGetVenueDetailSucces:(Service *) service responses:(id) response {
-    NSLog(@"API mServiceGetVenueDetailSucces : success");
-    ResponseObj *resObj = [[ResponseObj alloc] initWithDataResponse:response];
-    
-    [Util hideLoading];
+    [eventTable reloadData];
 }
 
 - (void) mService:(Service *) service didFailWithError:(NSError *) error {
@@ -207,13 +190,13 @@
 // this method is used in case the user scrolled into a set of cells that don't have their app icons yet
 - (void)loadImagesForOnscreenRows
 {
-    if ([venuesList count] > 0)
+    if ([eventsList count] > 0)
     {
         NSLog(@"loadImagesForOnscreenRows");
-        NSArray *visiblePaths = [venueTable indexPathsForVisibleRows];
+        NSArray *visiblePaths = [eventTable indexPathsForVisibleRows];
         for (NSIndexPath *indexPath in visiblePaths)
         {
-            VenuesObj *venueObj = [venuesList objectAtIndex:indexPath.row];
+            EventsObj *venueObj = [eventsList objectAtIndex:indexPath.row];
             if(!venueObj.imgLogo)
                 [self startIconDownload:venueObj forIndexPath:indexPath];
         }
@@ -227,11 +210,11 @@
     ImageDownloader *imgDownloader = [imageDownloadsInProgress objectForKey:indexPath];
     if (imgDownloader != nil)
     {
-        VenueViewCell *cell = (VenueViewCell*)[venueTable cellForRowAtIndexPath:indexPath];
-        cell.imgViewLogo.image = ((VenuesObj*)[venuesList objectAtIndex:indexPath.row]).imgLogo;
+        EventViewCell *cell = (EventViewCell*)[eventTable cellForRowAtIndexPath:indexPath];
+        cell.imgViewLogo.image = ((EventsObj*)[eventsList objectAtIndex:indexPath.row]).imgLogo;
     }
     
-    [venueTable reloadData];
+    [eventTable reloadData];
 }
 
 #pragma mark - Deferred image loading (UIScrollViewDelegate)
