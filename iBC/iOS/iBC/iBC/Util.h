@@ -52,5 +52,10 @@
 + (NSMutableArray *) postVenues:(NSData *) value;
 
 + (void)showLoading:(UIView*)view;
++ (void)showLoading:(NSString*)content view:(UIView*)view;
 + (void)hideLoading;
+
+
+//utils for string
++ (CGSize)sizeOfText: (NSString*)text withFont:(UIFont*)font constrainedToSize:(CGSize)constrainedSize lineBreakMode:(UILineBreakMode)mode;
 @end

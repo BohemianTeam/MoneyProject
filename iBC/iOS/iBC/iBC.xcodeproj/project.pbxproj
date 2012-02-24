@@ -7,17 +7,45 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6605336B14F39A580032897F /* starred@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6605336914F39A580032897F /* starred@2x.png */; };
+		6605336C14F39A580032897F /* unstarred@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6605336A14F39A580032897F /* unstarred@2x.png */; };
 		665AB0B514F216200018D33C /* EventListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 665AB0B314F216200018D33C /* EventListViewController.m */; };
 		665AB0B614F216200018D33C /* EventListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 665AB0B414F216200018D33C /* EventListViewController.xib */; };
 		665AB0BA14F21B040018D33C /* VenuePlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 665AB0B814F21B040018D33C /* VenuePlaceholder.png */; };
 		665AB0BB14F21B040018D33C /* EventPlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 665AB0B914F21B040018D33C /* EventPlaceholder.png */; };
+		66878D8A14F4B657005C5DB6 /* EventDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66878D8814F4B657005C5DB6 /* EventDetailViewController.m */; };
+		66878D8B14F4B657005C5DB6 /* EventDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66878D8914F4B657005C5DB6 /* EventDetailViewController.xib */; };
+		66878D8E14F4D729005C5DB6 /* buybutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66878D8D14F4D729005C5DB6 /* buybutton@2x.png */; };
+		66878D9114F4E48D005C5DB6 /* InfoBlockViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 66878D9014F4E48D005C5DB6 /* InfoBlockViewCell.m */; };
+		66878DC214F4EE41005C5DB6 /* Kal.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 66878DA414F4EE41005C5DB6 /* Kal.bundle */; };
+		66878DC314F4EE41005C5DB6 /* KalDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 66878DAB14F4EE41005C5DB6 /* KalDataSource.m */; };
+		66878DC414F4EE41005C5DB6 /* KalDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 66878DAD14F4EE41005C5DB6 /* KalDate.m */; };
+		66878DC514F4EE41005C5DB6 /* KalGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66878DAF14F4EE41005C5DB6 /* KalGridView.m */; };
+		66878DC614F4EE41005C5DB6 /* KalLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 66878DB114F4EE41005C5DB6 /* KalLogic.m */; };
+		66878DC714F4EE41005C5DB6 /* KalMonthView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66878DB314F4EE41005C5DB6 /* KalMonthView.m */; };
+		66878DC814F4EE41005C5DB6 /* KalTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66878DB614F4EE41005C5DB6 /* KalTileView.m */; };
+		66878DC914F4EE41005C5DB6 /* KalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66878DB814F4EE41005C5DB6 /* KalView.m */; };
+		66878DCA14F4EE41005C5DB6 /* KalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66878DBA14F4EE41005C5DB6 /* KalViewController.m */; };
+		66878DCB14F4EE41005C5DB6 /* NSDateAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 66878DBC14F4EE41005C5DB6 /* NSDateAdditions.m */; };
+		66878DCC14F4EE41005C5DB6 /* UIViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 66878DBE14F4EE41005C5DB6 /* UIViewAdditions.m */; };
+		66878DD114F4EE61005C5DB6 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66878DD014F4EE61005C5DB6 /* EventKit.framework */; };
+		66878DD314F4EE6A005C5DB6 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66878DD214F4EE6A005C5DB6 /* EventKitUI.framework */; };
 		6688ABE914EB8E41008D6AEC /* ResponseObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 6688ABE814EB8E40008D6AEC /* ResponseObj.m */; };
 		6688ABF114EBB221008D6AEC /* StarredListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6688ABEF14EBB221008D6AEC /* StarredListViewController.m */; };
 		6688ABF214EBB221008D6AEC /* StarredListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6688ABF014EBB221008D6AEC /* StarredListViewController.xib */; };
 		6688ABF514EBB71F008D6AEC /* EventsTitle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6688ABF314EBB71F008D6AEC /* EventsTitle.png */; };
 		6688ABF614EBB71F008D6AEC /* VenueTitle.png in Resources */ = {isa = PBXBuildFile; fileRef = 6688ABF414EBB71F008D6AEC /* VenueTitle.png */; };
+		668B4B8814F71BE5007BE993 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 668B4B8614F71BE5007BE993 /* MapViewController.m */; };
+		668B4B8914F71BE5007BE993 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 668B4B8714F71BE5007BE993 /* MapViewController.xib */; };
+		668B4B8B14F72643007BE993 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 668B4B8A14F72643007BE993 /* QuartzCore.framework */; };
+		668B4B9214F72BA0007BE993 /* MyLocaAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 668B4B9114F72BA0007BE993 /* MyLocaAnnotation.m */; };
+		668BB62114F5D9E00018A8AC /* ImgDownloaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 668BB62014F5D9E00018A8AC /* ImgDownloaderView.m */; };
+		668BB62314F5E8D50018A8AC /* ttt.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 668BB62214F5E8D50018A8AC /* ttt.jpg */; };
 		668C242E14F0932500997FBB /* VenueListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 668C242C14F0932500997FBB /* VenueListViewController.m */; };
 		668C242F14F0932500997FBB /* VenueListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 668C242D14F0932500997FBB /* VenueListViewController.xib */; };
+		669465F514F229AE00C4062E /* VenueDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 669465F314F229AE00C4062E /* VenueDetailViewController.m */; };
+		669465F614F229AE00C4062E /* VenueDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 669465F414F229AE00C4062E /* VenueDetailViewController.xib */; };
+		669465FD14F254AC00C4062E /* venue_mapa@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 669465FC14F254AC00C4062E /* venue_mapa@2x.png */; };
 		66B2934114E021160006B641 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66B2934014E021160006B641 /* UIKit.framework */; };
 		66B2934314E021160006B641 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66B2934214E021160006B641 /* Foundation.framework */; };
 		66B2934514E021160006B641 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66B2934414E021160006B641 /* CoreGraphics.framework */; };
@@ -65,14 +93,61 @@
 		66D5EE1514ECC5D4005005CC /* eventTest.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 66D5EE1314ECC5D4005005CC /* eventTest.jpg */; };
 		66D5EE1614ECC5D4005005CC /* venueTest.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 66D5EE1414ECC5D4005005CC /* venueTest.jpg */; };
 		66D5EE1E14ECD6B0005005CC /* ImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 66D5EE1D14ECD6B0005005CC /* ImageDownloader.m */; };
+		66F6812D14F33C0500C01F17 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F6812C14F33C0500C01F17 /* MapKit.framework */; };
+		66F6812F14F33F3600C01F17 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66F6812E14F33F3600C01F17 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		66878DCE14F4EE41005C5DB6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 66878DA614F4EE41005C5DB6 /* Kal.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = Kal;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		6605336914F39A580032897F /* starred@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "starred@2x.png"; sourceTree = "<group>"; };
+		6605336A14F39A580032897F /* unstarred@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unstarred@2x.png"; sourceTree = "<group>"; };
 		665AB0B214F216200018D33C /* EventListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventListViewController.h; sourceTree = "<group>"; };
 		665AB0B314F216200018D33C /* EventListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventListViewController.m; sourceTree = "<group>"; };
 		665AB0B414F216200018D33C /* EventListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventListViewController.xib; sourceTree = "<group>"; };
 		665AB0B814F21B040018D33C /* VenuePlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VenuePlaceholder.png; sourceTree = "<group>"; };
 		665AB0B914F21B040018D33C /* EventPlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EventPlaceholder.png; sourceTree = "<group>"; };
+		66878D8714F4B657005C5DB6 /* EventDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDetailViewController.h; sourceTree = "<group>"; };
+		66878D8814F4B657005C5DB6 /* EventDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventDetailViewController.m; sourceTree = "<group>"; };
+		66878D8914F4B657005C5DB6 /* EventDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventDetailViewController.xib; sourceTree = "<group>"; };
+		66878D8D14F4D729005C5DB6 /* buybutton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buybutton@2x.png"; sourceTree = "<group>"; };
+		66878D8F14F4E48D005C5DB6 /* InfoBlockViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoBlockViewCell.h; sourceTree = "<group>"; };
+		66878D9014F4E48D005C5DB6 /* InfoBlockViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoBlockViewCell.m; sourceTree = "<group>"; };
+		66878DA414F4EE41005C5DB6 /* Kal.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Kal.bundle; sourceTree = "<group>"; };
+		66878DA514F4EE41005C5DB6 /* Kal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Kal.h; sourceTree = "<group>"; };
+		66878DA614F4EE41005C5DB6 /* Kal.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Kal.xcodeproj; sourceTree = "<group>"; };
+		66878DA914F4EE41005C5DB6 /* Kal_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Kal_Prefix.pch; sourceTree = "<group>"; };
+		66878DAA14F4EE41005C5DB6 /* KalDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KalDataSource.h; sourceTree = "<group>"; };
+		66878DAB14F4EE41005C5DB6 /* KalDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KalDataSource.m; sourceTree = "<group>"; };
+		66878DAC14F4EE41005C5DB6 /* KalDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KalDate.h; sourceTree = "<group>"; };
+		66878DAD14F4EE41005C5DB6 /* KalDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KalDate.m; sourceTree = "<group>"; };
+		66878DAE14F4EE41005C5DB6 /* KalGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KalGridView.h; sourceTree = "<group>"; };
+		66878DAF14F4EE41005C5DB6 /* KalGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KalGridView.m; sourceTree = "<group>"; };
+		66878DB014F4EE41005C5DB6 /* KalLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KalLogic.h; sourceTree = "<group>"; };
+		66878DB114F4EE41005C5DB6 /* KalLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KalLogic.m; sourceTree = "<group>"; };
+		66878DB214F4EE41005C5DB6 /* KalMonthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KalMonthView.h; sourceTree = "<group>"; };
+		66878DB314F4EE41005C5DB6 /* KalMonthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KalMonthView.m; sourceTree = "<group>"; };
+		66878DB414F4EE41005C5DB6 /* KalPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KalPrivate.h; sourceTree = "<group>"; };
+		66878DB514F4EE41005C5DB6 /* KalTileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KalTileView.h; sourceTree = "<group>"; };
+		66878DB614F4EE41005C5DB6 /* KalTileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KalTileView.m; sourceTree = "<group>"; };
+		66878DB714F4EE41005C5DB6 /* KalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KalView.h; sourceTree = "<group>"; };
+		66878DB814F4EE41005C5DB6 /* KalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KalView.m; sourceTree = "<group>"; };
+		66878DB914F4EE41005C5DB6 /* KalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KalViewController.h; sourceTree = "<group>"; };
+		66878DBA14F4EE41005C5DB6 /* KalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KalViewController.m; sourceTree = "<group>"; };
+		66878DBB14F4EE41005C5DB6 /* NSDateAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDateAdditions.h; sourceTree = "<group>"; };
+		66878DBC14F4EE41005C5DB6 /* NSDateAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDateAdditions.m; sourceTree = "<group>"; };
+		66878DBD14F4EE41005C5DB6 /* UIViewAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIViewAdditions.h; sourceTree = "<group>"; };
+		66878DBE14F4EE41005C5DB6 /* UIViewAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIViewAdditions.m; sourceTree = "<group>"; };
+		66878DD014F4EE61005C5DB6 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		66878DD214F4EE6A005C5DB6 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		6688ABE714EB8E40008D6AEC /* ResponseObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseObj.h; sourceTree = "<group>"; };
 		6688ABE814EB8E40008D6AEC /* ResponseObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseObj.m; sourceTree = "<group>"; };
 		6688ABEE14EBB221008D6AEC /* StarredListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StarredListViewController.h; sourceTree = "<group>"; };
@@ -80,9 +155,22 @@
 		6688ABF014EBB221008D6AEC /* StarredListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StarredListViewController.xib; sourceTree = "<group>"; };
 		6688ABF314EBB71F008D6AEC /* EventsTitle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EventsTitle.png; sourceTree = "<group>"; };
 		6688ABF414EBB71F008D6AEC /* VenueTitle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VenueTitle.png; sourceTree = "<group>"; };
+		668B4B8514F71BE5007BE993 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		668B4B8614F71BE5007BE993 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		668B4B8714F71BE5007BE993 /* MapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
+		668B4B8A14F72643007BE993 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		668B4B9014F72BA0007BE993 /* MyLocaAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLocaAnnotation.h; sourceTree = "<group>"; };
+		668B4B9114F72BA0007BE993 /* MyLocaAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLocaAnnotation.m; sourceTree = "<group>"; };
+		668BB61F14F5D9E00018A8AC /* ImgDownloaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImgDownloaderView.h; sourceTree = "<group>"; };
+		668BB62014F5D9E00018A8AC /* ImgDownloaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImgDownloaderView.m; sourceTree = "<group>"; };
+		668BB62214F5E8D50018A8AC /* ttt.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ttt.jpg; sourceTree = "<group>"; };
 		668C242B14F0932500997FBB /* VenueListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenueListViewController.h; sourceTree = "<group>"; };
 		668C242C14F0932500997FBB /* VenueListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenueListViewController.m; sourceTree = "<group>"; };
 		668C242D14F0932500997FBB /* VenueListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VenueListViewController.xib; sourceTree = "<group>"; };
+		669465F214F229AE00C4062E /* VenueDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VenueDetailViewController.h; sourceTree = "<group>"; };
+		669465F314F229AE00C4062E /* VenueDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VenueDetailViewController.m; sourceTree = "<group>"; };
+		669465F414F229AE00C4062E /* VenueDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VenueDetailViewController.xib; sourceTree = "<group>"; };
+		669465FC14F254AC00C4062E /* venue_mapa@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "venue_mapa@2x.png"; sourceTree = "<group>"; };
 		66B2933C14E021160006B641 /* iBC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iBC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66B2934014E021160006B641 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		66B2934214E021160006B641 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -161,6 +249,8 @@
 		66D5EE1414ECC5D4005005CC /* venueTest.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = venueTest.jpg; sourceTree = "<group>"; };
 		66D5EE1C14ECD6B0005005CC /* ImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDownloader.h; sourceTree = "<group>"; };
 		66D5EE1D14ECD6B0005005CC /* ImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDownloader.m; sourceTree = "<group>"; };
+		66F6812C14F33C0500C01F17 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		66F6812E14F33F3600C01F17 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +258,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				668B4B8B14F72643007BE993 /* QuartzCore.framework in Frameworks */,
+				66878DD314F4EE6A005C5DB6 /* EventKitUI.framework in Frameworks */,
+				66878DD114F4EE61005C5DB6 /* EventKit.framework in Frameworks */,
+				66F6812F14F33F3600C01F17 /* CoreLocation.framework in Frameworks */,
+				66F6812D14F33C0500C01F17 /* MapKit.framework in Frameworks */,
 				66B293C414E0639C0006B641 /* CFNetwork.framework in Frameworks */,
 				66B293C514E0639C0006B641 /* SystemConfiguration.framework in Frameworks */,
 				66B2934114E021160006B641 /* UIKit.framework in Frameworks */,
@@ -179,11 +274,57 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		66878DA214F4EE09005C5DB6 /* Calendar lib */ = {
+			isa = PBXGroup;
+			children = (
+				66878DA314F4EE41005C5DB6 /* src */,
+			);
+			name = "Calendar lib";
+			sourceTree = "<group>";
+		};
+		66878DA314F4EE41005C5DB6 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				66878DA414F4EE41005C5DB6 /* Kal.bundle */,
+				66878DA514F4EE41005C5DB6 /* Kal.h */,
+				66878DA614F4EE41005C5DB6 /* Kal.xcodeproj */,
+				66878DA914F4EE41005C5DB6 /* Kal_Prefix.pch */,
+				66878DAA14F4EE41005C5DB6 /* KalDataSource.h */,
+				66878DAB14F4EE41005C5DB6 /* KalDataSource.m */,
+				66878DAC14F4EE41005C5DB6 /* KalDate.h */,
+				66878DAD14F4EE41005C5DB6 /* KalDate.m */,
+				66878DAE14F4EE41005C5DB6 /* KalGridView.h */,
+				66878DAF14F4EE41005C5DB6 /* KalGridView.m */,
+				66878DB014F4EE41005C5DB6 /* KalLogic.h */,
+				66878DB114F4EE41005C5DB6 /* KalLogic.m */,
+				66878DB214F4EE41005C5DB6 /* KalMonthView.h */,
+				66878DB314F4EE41005C5DB6 /* KalMonthView.m */,
+				66878DB414F4EE41005C5DB6 /* KalPrivate.h */,
+				66878DB514F4EE41005C5DB6 /* KalTileView.h */,
+				66878DB614F4EE41005C5DB6 /* KalTileView.m */,
+				66878DB714F4EE41005C5DB6 /* KalView.h */,
+				66878DB814F4EE41005C5DB6 /* KalView.m */,
+				66878DB914F4EE41005C5DB6 /* KalViewController.h */,
+				66878DBA14F4EE41005C5DB6 /* KalViewController.m */,
+				66878DBB14F4EE41005C5DB6 /* NSDateAdditions.h */,
+				66878DBC14F4EE41005C5DB6 /* NSDateAdditions.m */,
+				66878DBD14F4EE41005C5DB6 /* UIViewAdditions.h */,
+				66878DBE14F4EE41005C5DB6 /* UIViewAdditions.m */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		66878DA714F4EE41005C5DB6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				66878DCF14F4EE41005C5DB6 /* libKal.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		66B2933114E021160006B641 = {
 			isa = PBXGroup;
 			children = (
-				66B293C214E0639B0006B641 /* CFNetwork.framework */,
-				66B293C314E0639C0006B641 /* SystemConfiguration.framework */,
 				66B2934614E021160006B641 /* iBC */,
 				66B2933F14E021160006B641 /* Frameworks */,
 				66B2933D14E021160006B641 /* Products */,
@@ -201,6 +342,13 @@
 		66B2933F14E021160006B641 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				668B4B8A14F72643007BE993 /* QuartzCore.framework */,
+				66878DD214F4EE6A005C5DB6 /* EventKitUI.framework */,
+				66878DD014F4EE61005C5DB6 /* EventKit.framework */,
+				66F6812E14F33F3600C01F17 /* CoreLocation.framework */,
+				66F6812C14F33C0500C01F17 /* MapKit.framework */,
+				66B293C214E0639B0006B641 /* CFNetwork.framework */,
+				66B293C314E0639C0006B641 /* SystemConfiguration.framework */,
 				66B2934014E021160006B641 /* UIKit.framework */,
 				66B2934214E021160006B641 /* Foundation.framework */,
 				66B2934414E021160006B641 /* CoreGraphics.framework */,
@@ -211,6 +359,7 @@
 		66B2934614E021160006B641 /* iBC */ = {
 			isa = PBXGroup;
 			children = (
+				66878DA214F4EE09005C5DB6 /* Calendar lib */,
 				66B2939814E062CA0006B641 /* Util */,
 				66B2939014E062470006B641 /* Service */,
 				66B2938914E036F00006B641 /* Controller */,
@@ -243,6 +392,8 @@
 		66B2936414E022AC0006B641 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				668BB62214F5E8D50018A8AC /* ttt.jpg */,
+				66878D8D14F4D729005C5DB6 /* buybutton@2x.png */,
 				66B2936514E022B60006B641 /* Images */,
 				66B2936A14E022E80006B641 /* Localizable.strings */,
 			);
@@ -252,6 +403,9 @@
 		66B2936514E022B60006B641 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				6605336914F39A580032897F /* starred@2x.png */,
+				6605336A14F39A580032897F /* unstarred@2x.png */,
+				669465FC14F254AC00C4062E /* venue_mapa@2x.png */,
 				665AB0B814F21B040018D33C /* VenuePlaceholder.png */,
 				665AB0B914F21B040018D33C /* EventPlaceholder.png */,
 				66D5EE1314ECC5D4005005CC /* eventTest.jpg */,
@@ -267,12 +421,18 @@
 		66B2936B14E023920006B641 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				668B4B9014F72BA0007BE993 /* MyLocaAnnotation.h */,
+				668B4B9114F72BA0007BE993 /* MyLocaAnnotation.m */,
+				668BB61F14F5D9E00018A8AC /* ImgDownloaderView.h */,
+				668BB62014F5D9E00018A8AC /* ImgDownloaderView.m */,
 				66B2937E14E0292C0006B641 /* MenuTableViewCell.h */,
 				66B2937F14E0292C0006B641 /* MenuTableViewCell.m */,
 				66D5EE0714ECA776005005CC /* VenueViewCell.h */,
 				66D5EE0814ECA776005005CC /* VenueViewCell.m */,
 				66D5EE1014ECBC3B005005CC /* EventViewCell.h */,
 				66D5EE1114ECBC3B005005CC /* EventViewCell.m */,
+				66878D8F14F4E48D005C5DB6 /* InfoBlockViewCell.h */,
+				66878D9014F4E48D005C5DB6 /* InfoBlockViewCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -280,6 +440,12 @@
 		66B2936C14E023C00006B641 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6688ABE714EB8E40008D6AEC /* ResponseObj.h */,
+				6688ABE814EB8E40008D6AEC /* ResponseObj.m */,
+				66D5EE0414ECA4FA005005CC /* VenuesObj.h */,
+				66D5EE0514ECA4FA005005CC /* VenuesObj.m */,
+				66D5EE0D14ECBA4A005005CC /* EventsObj.h */,
+				66D5EE0E14ECBA4A005005CC /* EventsObj.m */,
 				66B2936D14E023EC0006B641 /* MenuItemData.h */,
 				66B2936E14E023EC0006B641 /* MenuItemData.m */,
 			);
@@ -323,6 +489,15 @@
 				665AB0B214F216200018D33C /* EventListViewController.h */,
 				665AB0B314F216200018D33C /* EventListViewController.m */,
 				665AB0B414F216200018D33C /* EventListViewController.xib */,
+				669465F214F229AE00C4062E /* VenueDetailViewController.h */,
+				669465F314F229AE00C4062E /* VenueDetailViewController.m */,
+				669465F414F229AE00C4062E /* VenueDetailViewController.xib */,
+				66878D8714F4B657005C5DB6 /* EventDetailViewController.h */,
+				66878D8814F4B657005C5DB6 /* EventDetailViewController.m */,
+				66878D8914F4B657005C5DB6 /* EventDetailViewController.xib */,
+				668B4B8514F71BE5007BE993 /* MapViewController.h */,
+				668B4B8614F71BE5007BE993 /* MapViewController.m */,
+				668B4B8714F71BE5007BE993 /* MapViewController.xib */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -386,12 +561,6 @@
 			children = (
 				66B9901914EB52CA006F6CBD /* VenuesResponse.h */,
 				66B9901A14EB52CA006F6CBD /* VenuesResponse.m */,
-				6688ABE714EB8E40008D6AEC /* ResponseObj.h */,
-				6688ABE814EB8E40008D6AEC /* ResponseObj.m */,
-				66D5EE0414ECA4FA005005CC /* VenuesObj.h */,
-				66D5EE0514ECA4FA005005CC /* VenuesObj.m */,
-				66D5EE0D14ECBA4A005005CC /* EventsObj.h */,
-				66D5EE0E14ECBA4A005005CC /* EventsObj.m */,
 			);
 			name = "Service Response";
 			sourceTree = "<group>";
@@ -452,12 +621,28 @@
 			mainGroup = 66B2933114E021160006B641;
 			productRefGroup = 66B2933D14E021160006B641 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 66878DA714F4EE41005C5DB6 /* Products */;
+					ProjectRef = 66878DA614F4EE41005C5DB6 /* Kal.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				66B2933B14E021160006B641 /* iBC */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		66878DCF14F4EE41005C5DB6 /* libKal.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libKal.a;
+			remoteRef = 66878DCE14F4EE41005C5DB6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		66B2933A14E021160006B641 /* Resources */ = {
@@ -486,6 +671,15 @@
 				665AB0B614F216200018D33C /* EventListViewController.xib in Resources */,
 				665AB0BA14F21B040018D33C /* VenuePlaceholder.png in Resources */,
 				665AB0BB14F21B040018D33C /* EventPlaceholder.png in Resources */,
+				669465F614F229AE00C4062E /* VenueDetailViewController.xib in Resources */,
+				669465FD14F254AC00C4062E /* venue_mapa@2x.png in Resources */,
+				6605336B14F39A580032897F /* starred@2x.png in Resources */,
+				6605336C14F39A580032897F /* unstarred@2x.png in Resources */,
+				66878D8B14F4B657005C5DB6 /* EventDetailViewController.xib in Resources */,
+				66878D8E14F4D729005C5DB6 /* buybutton@2x.png in Resources */,
+				66878DC214F4EE41005C5DB6 /* Kal.bundle in Resources */,
+				668BB62314F5E8D50018A8AC /* ttt.jpg in Resources */,
+				668B4B8914F71BE5007BE993 /* MapViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,6 +721,22 @@
 				66D5EE1E14ECD6B0005005CC /* ImageDownloader.m in Sources */,
 				668C242E14F0932500997FBB /* VenueListViewController.m in Sources */,
 				665AB0B514F216200018D33C /* EventListViewController.m in Sources */,
+				669465F514F229AE00C4062E /* VenueDetailViewController.m in Sources */,
+				66878D8A14F4B657005C5DB6 /* EventDetailViewController.m in Sources */,
+				66878D9114F4E48D005C5DB6 /* InfoBlockViewCell.m in Sources */,
+				66878DC314F4EE41005C5DB6 /* KalDataSource.m in Sources */,
+				66878DC414F4EE41005C5DB6 /* KalDate.m in Sources */,
+				66878DC514F4EE41005C5DB6 /* KalGridView.m in Sources */,
+				66878DC614F4EE41005C5DB6 /* KalLogic.m in Sources */,
+				66878DC714F4EE41005C5DB6 /* KalMonthView.m in Sources */,
+				66878DC814F4EE41005C5DB6 /* KalTileView.m in Sources */,
+				66878DC914F4EE41005C5DB6 /* KalView.m in Sources */,
+				66878DCA14F4EE41005C5DB6 /* KalViewController.m in Sources */,
+				66878DCB14F4EE41005C5DB6 /* NSDateAdditions.m in Sources */,
+				66878DCC14F4EE41005C5DB6 /* UIViewAdditions.m in Sources */,
+				668BB62114F5D9E00018A8AC /* ImgDownloaderView.m in Sources */,
+				668B4B8814F71BE5007BE993 /* MapViewController.m in Sources */,
+				668B4B9214F72BA0007BE993 /* MyLocaAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -573,8 +783,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tien Doan (25FKU2MUR7)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -589,6 +799,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -599,8 +811,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tien Doan (25FKU2MUR7)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -609,6 +821,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -618,12 +832,14 @@
 		66B2935E14E021160006B641 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iBC/iBC-Prefix.pch";
 				INFOPLIST_FILE = "iBC/iBC-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -631,15 +847,55 @@
 		66B2935F14E021160006B641 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tien Doan (25FKU2MUR7)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iBC/iBC-Prefix.pch";
 				INFOPLIST_FILE = "iBC/iBC-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
+		};
+		97F3BA0414F4F55D008BD25B /* Adhoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Adhoc;
+		};
+		97F3BA0514F4F55D008BD25B /* Adhoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iBC/iBC-Prefix.pch";
+				INFOPLIST_FILE = "iBC/iBC-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Adhoc;
 		};
 /* End XCBuildConfiguration section */
 
@@ -649,6 +905,7 @@
 			buildConfigurations = (
 				66B2935B14E021160006B641 /* Debug */,
 				66B2935C14E021160006B641 /* Release */,
+				97F3BA0414F4F55D008BD25B /* Adhoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -658,6 +915,7 @@
 			buildConfigurations = (
 				66B2935E14E021160006B641 /* Debug */,
 				66B2935F14E021160006B641 /* Release */,
+				97F3BA0514F4F55D008BD25B /* Adhoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

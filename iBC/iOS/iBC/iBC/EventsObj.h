@@ -20,6 +20,9 @@
 - (NSString*)getDates;
 - (NSString*)getPrice;
 - (NSString*)getLogoUrl;
-
-
+- (NSString*)getCode;
+- (NSString*)getGenre;
+- (NSString*)getSynopsis;
+- (NSArray*)getImgs;
+- (NSArray*)getInfoBlocks;
 @end

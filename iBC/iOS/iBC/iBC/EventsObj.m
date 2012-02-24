@@ -18,6 +18,10 @@
     }
     return self;
 }
+- (NSString*)getCode
+{
+    return (NSString*)[super getObjectForKey:EventCode];
+}
 - (NSString*)getTitle
 {
     NSString *title = (NSString*)[super getObjectForKey:Title];
@@ -55,6 +59,22 @@
 - (NSString*)getLogoUrl
 {
     return (NSString*)[super getObjectForKey:Logo];
+}
+- (NSString*)getGenre
+{
+    return (NSString*)[super getObjectForKey:Genre];
+}
+- (NSString*)getSynopsis
+{
+    return (NSString*)[super getObjectForKey:Synopsis];
+}
+- (NSArray*)getImgs
+{
+    return (NSArray*)[super getObjectForKey:Images];
+}
+- (NSArray*)getInfoBlocks
+{
+    return (NSArray*)[super getObjectForKey:InfoBlocks];
 }
 - (void)dealloc
 {

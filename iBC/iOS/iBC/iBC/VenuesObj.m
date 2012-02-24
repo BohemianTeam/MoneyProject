@@ -30,6 +30,34 @@
 }
 - (NSString*)getAddress
 {
+    NSString *addHtml = (NSString*)[super getObjectForKey:Address];
+    addHtml = [addHtml stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    NSLog(@"1: %@", addHtml);
+    addHtml = [addHtml stringByReplacingOccurrencesOfString:@"<br />" withString:@"\n"];
+    NSLog(@"2: %@", addHtml);
+    addHtml = [addHtml stringByReplacingOccurrencesOfString:@"<p>" withString:@""];
+    NSLog(@"3: %@", addHtml);
+    addHtml = [addHtml stringByReplacingOccurrencesOfString:@"</p>" withString:@""];
+    return addHtml;
+}
+- (NSArray*)getImgs
+{
+    return (NSArray*)[super getObjectForKey:Images];
+}
+- (NSString*)getPhone
+{
+    return (NSString*)[super getObjectForKey:Phone];
+}
+- (NSString*)getEmail
+{
+    return (NSString*)[super getObjectForKey:Email];
+}
+- (NSString*)getWeb
+{
+    return (NSString*)[super getObjectForKey:WebAdd];
+}
+- (NSString*)getDistanceOrCity
+{
     NSString *add = (NSString*)[super getObjectForKey:Distance];
     if(add){
         return add;
@@ -49,6 +77,14 @@
 - (NSString*)getVenueCode
 {
     return (NSString*)[super getObjectForKey:VenueCode];
+}
+- (NSString*)getDescription
+{
+    return (NSString*)[super getObjectForKey:Description];
+}
+- (NSString*)getCoordinates
+{
+    return (NSString*)[super getObjectForKey:Coordinates];
 }
 - (void)dealloc
 {

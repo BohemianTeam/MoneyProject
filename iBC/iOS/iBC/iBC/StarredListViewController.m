@@ -101,6 +101,7 @@
     srv.canShowLoading = YES;
     
     [srv getStarred];
+    [srv release];
 }
 #pragma mark - tableview delegate and datasource
 

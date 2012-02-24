@@ -14,6 +14,7 @@
 #import "VenueListViewController.h"
 #import "EventListViewController.h"
 #import "Service.h"
+#import "KalViewController.h"
 @interface ViewController(private)
 - (void) initMenu;
 @end
@@ -40,12 +41,6 @@
     //add menu item
     _arrMenuItems = [[NSMutableArray alloc] init];
     [self initMenu];
-    
-    Service *sv = [[Service alloc] init];
-    sv.canShowAlert = YES;
-    sv.canShowLoading = YES;
-    sv.delegate = self;
-    [sv getVenueList:@"41.385756~2.164129"];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -150,12 +145,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"venue list selected..");
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    MenuItemData *data = [_arrMenuItems objectAtIndex:indexPath.row];
-//    NSString *title = [self CapitalizedString:data.title];
-//    SubMenuViewController *vc = [[SubMenuViewController alloc] initWithTitle:title];
-//    [self.navigationController pushViewController:vc animated:YES];
-//    [vc release];
+
     
     MenuItemData *data = [_arrMenuItems objectAtIndex:indexPath.row];
     NSString *title = [self CapitalizedString:data.title];
@@ -171,12 +163,21 @@
         [self.navigationController pushViewController:venueVC animated:YES];
         [venueVC release];
         
+        
         return;
     }
     if([data.title isEqual:EventMenu]){
         EventListViewController *eventVC = [[EventListViewController alloc] initWithTitle:title];
         [self.navigationController pushViewController:eventVC animated:YES];
         [eventVC release];
+        
+        return;
+    }
+    if([data.title isEqual:CalendarMenu]){
+        KalViewController *cal = [[KalViewController alloc] init];
+        cal.title = title;
+        
+        [self.navigationController pushViewController:cal animated:YES];
         
         return;
     }

@@ -39,7 +39,7 @@
 - (void)setupData: (VenuesObj*)data
 {
     lbName.text = [data getName];
-    lbAddress.text = [data getAddress];
+    lbAddress.text = [data getDistanceOrCity];
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {

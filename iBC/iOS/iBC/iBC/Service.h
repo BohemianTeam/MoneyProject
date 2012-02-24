@@ -22,6 +22,7 @@ typedef enum {
     ActionTypeGetVenueList,
     ActionTypeGetVenueDetail,
     ActionTypeGetEventList,
+    ActionTypeGetEventDetail,
     ActionTypeGetStarred,
 } ActionType;
 
@@ -65,6 +66,7 @@ typedef enum {
 - (void) getVenueList:(NSString *) coordinates;
 - (void) getVenueDetail:(NSString*) venueCode;
 - (void) getEventList;
+- (void) getEventDetail:(NSString*)eventCode;
 - (void) getStarred;
 - (void) stop;
 @end
