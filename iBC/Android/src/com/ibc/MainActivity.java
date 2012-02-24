@@ -1,10 +1,7 @@
 package com.ibc;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -14,6 +11,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.ibc.adapter.MenuListAdapter;
 import com.ibc.model.MenuItemData;
@@ -39,6 +37,10 @@ public class MainActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		String title = getResources().getString(R.string.main_title);
+		if(null != title) {
+        	((TextView) findViewById(R.id.title)).setText(title);
+        }
 		initMenu();
 		mListView = (ListView) findViewById(R.id.list);
 		MenuListAdapter adapter = new MenuListAdapter(mMenuList, this);
@@ -47,6 +49,7 @@ public class MainActivity extends Activity {
 
 	}
 
+	@SuppressWarnings("unused")
 	private void show() {
 		_dialog = ProgressDialog.show(this, "", "Loading...", true, true);
 	}
@@ -76,6 +79,7 @@ public class MainActivity extends Activity {
 		mMenuList.add(data4);
 	}
 
+	@SuppressWarnings("unused")
 	private ServiceListener _listener = new ServiceListener() {
 
 		@SuppressWarnings("unchecked")
@@ -88,7 +92,7 @@ public class MainActivity extends Activity {
 							.getData();
 					iBCApplication.sharedInstance().putData("venues", status);
 					//
-					Service sv = new Service(_listener);
+//					Service sv = new Service(_listener);
 //					sv.getEvents("1", getCurrentTimeString());
 				} else {
 					System.out.println(result.getResultCode());

@@ -4,18 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 
+import com.ibc.EventDetailActivity;
 import com.ibc.R;
+import com.ibc.VenueDetailActivity;
 import com.ibc.model.service.response.EventsResponse;
 import com.ibc.model.service.response.VenuesResponse;
 import com.ibc.view.EventRowHolder;
 import com.ibc.view.VenueRowHolder;
 
-public class StarredListAdapter extends BaseAdapter {
+public class StarredListAdapter extends BaseAdapter implements OnItemClickListener{
 
 	private List<EventsResponse> _events = new ArrayList<EventsResponse>();
 	private List<VenuesResponse> _venues = new ArrayList<VenuesResponse>();
@@ -125,5 +130,27 @@ public class StarredListAdapter extends BaseAdapter {
 			return vv;
 		}
 		return v;
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+		int type = getItemViewType(position);
+		Object object = getItem(position);
+		if (type == ITEM_TYPE_VENUES_CONTENT || type == ITEM_TYPE_VENUES_HAS_HEADER) {
+			
+			if (object instanceof VenuesResponse) {
+				VenuesResponse item = (VenuesResponse) object;
+				Intent intent = new Intent(_context, VenueDetailActivity.class);
+				intent.putExtra("v_code", item.venuesCode);
+				_context.startActivity(intent);
+			}
+		} else {
+			if (object instanceof EventsResponse) {
+				EventsResponse item = (EventsResponse) object;
+				Intent intent = new Intent(_context, EventDetailActivity.class);
+				intent.putExtra("e_code", item.eventCode);
+				_context.startActivity(intent);
+			}
+		}
 	}
 }

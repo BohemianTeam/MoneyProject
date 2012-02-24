@@ -2,13 +2,12 @@ package com.ibc.adapter;
 
 import java.util.ArrayList;
 
-import com.ibc.EventsListViewActivity;
-import com.ibc.StarredActivity;
-import com.ibc.SubMenuActivity;
-import com.ibc.VenusListViewActivity;
-import com.ibc.model.MenuItemData;
-import com.ibc.view.ListMenuRowHolder;
+import vn.lmchanh.lib.widget.calendar.CalendarActivity;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -16,6 +15,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+
+import com.ibc.EventsListViewActivity;
+import com.ibc.StarredActivity;
+import com.ibc.VenusListViewActivity;
+import com.ibc.iBCApplication;
+import com.ibc.library.CalendarProvider;
+import com.ibc.model.MenuItemData;
+import com.ibc.view.ListMenuRowHolder;
 
 public class MenuListAdapter extends BaseAdapter implements OnItemClickListener{
 	ArrayList<MenuItemData> mDatas = new ArrayList<MenuItemData>();
@@ -79,16 +86,48 @@ public class MenuListAdapter extends BaseAdapter implements OnItemClickListener{
 		} else if (position == 1 ) {
 			Intent intent = new Intent(mContext, VenusListViewActivity.class);
 			intent.putExtra("title", data.mTitle);
-			intent.putExtra("lat", 41.385756);
-			intent.putExtra("lon", 2.164129);
+			iBCApplication application = iBCApplication.sharedInstance();
+			application.putData("lat", 41.385756);
+			application.putData("lon", 2.164129);
+
 			mContext.startActivity(intent);
 		} else if (position == 2) {
-			Intent intent = new Intent(mContext, SubMenuActivity.class);
-			intent.putExtra("title", data.mTitle);
+	        /*
+			CalendarProvider provider = CalendarProvider.sharedInstance();
+	        boolean hasCalendar = provider.hasCalendar();
+	        if (hasCalendar) {
+				Intent i = new Intent();
+				i.setComponent(ComponentName.unflattenFromString("com.android.calendar/com.android.calendar.AgendaActivity"));
+				mContext.startActivity(i);
+	        } else {
+	        	AlertDialog.Builder builder = new Builder(mContext);
+	        	builder.setMessage("Don't provider agenda calendar");
+	        	builder.setTitle("Alert");
+	        	AlertDialog dialog = builder.create();
+	        	dialog.show();
+	        }
+	        */
+			/*
+			Intent intent = new Intent(Intent.ACTION_EDIT);  
+
+			intent.setType("vnd.android.cursor.item/event");
+
+			intent.putExtra("title", "Demon Hunter");
+
+			intent.putExtra("description", "Are there demon nearby?");
+
+			intent.putExtra("beginTime", System.currentTimeMillis());
+
+			intent.putExtra("endTime", System.currentTimeMillis() + 1800 * 1000);
+			*/
+	        Intent intent = CalendarActivity.createCalendarIntent((Activity) mContext, true, true, true, true);
+//			Intent intent = new Intent(mContext, SubMenuActivity.class);
+//			intent.putExtra("title", data.mTitle);
 			mContext.startActivity(intent);
 		} else if (position == 3) {
 			Intent intent = new Intent(mContext, VenusListViewActivity.class);
 			intent.putExtra("title", data.mTitle);
+			intent.putExtra("need_get_gps", true);
 			mContext.startActivity(intent);
 		} else if (position == 4) {
 			Intent intent = new Intent(mContext, StarredActivity.class);

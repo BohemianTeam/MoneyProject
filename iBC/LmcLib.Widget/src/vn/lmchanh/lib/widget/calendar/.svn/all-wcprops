@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/MCProject/!svn/ver/139/trunk/LmcLib.Widget/src/vn/lmchanh/lib/widget/calendar
+END
+IOnDateCellClickListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/MCProject/!svn/ver/111/trunk/LmcLib.Widget/src/vn/lmchanh/lib/widget/calendar/IOnDateCellClickListener.java
+END
+CalendarActivity.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/MCProject/!svn/ver/139/trunk/LmcLib.Widget/src/vn/lmchanh/lib/widget/calendar/CalendarActivity.java
+END
+IOnTimesSelectedListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/MCProject/!svn/ver/111/trunk/LmcLib.Widget/src/vn/lmchanh/lib/widget/calendar/IOnTimesSelectedListener.java
+END

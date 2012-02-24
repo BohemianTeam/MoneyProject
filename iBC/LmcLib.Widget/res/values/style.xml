@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~ COMMON ~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+	<style name="activity">
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">fill_parent</item>
+		<item name="android:background">@color/bg_light</item>
+		<item name="android:orientation">vertical</item>
+	</style>
+
+	<style name="dialog" parent="activity">
+		<item name="android:padding">10dp</item>
+	</style>
+
+
+	<style name="color_strip">
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">6dp</item>
+		<item name="android:foreground">@drawable/colorstrip_shadow</item>
+		<item name="android:background">#fff0a8a8</item>
+	</style>
+
+	<style name="color_strip.reserve">
+		<item name="android:foreground">@drawable/colorstrip_shadow_reserve</item>
+	</style>
+
+	<style name="shadowed_text">
+		<item name="android:shadowColor">#fff</item>
+		<item name="android:shadowDx">0</item>
+		<item name="android:shadowDy">1</item>
+		<item name="android:shadowRadius">0.00001</item>
+		<item name="android:singleLine">true</item>
+		<item name="android:ellipsize">end</item>
+	</style>
+
+	<style name="shadowed_text.white_shadow">
+		<item name="android:shadowColor">#ffffffff</item>
+	</style>
+
+	<style name="button">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+	</style>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~ ACTION BAR ~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+	<style name="actionbar">
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">@dimen/actionbar_height</item>
+		<item name="android:background">@drawable/actionbar_bg</item>
+		<item name="android:orientation">horizontal</item>
+	</style>
+
+	<style name="actionbar_button" parent="shadowed_text.white_shadow">
+		<item name="android:layout_height">fill_parent</item>
+		<item name="android:background">@drawable/actionbar_btn_bg_x</item>
+	</style>
+
+	<style name="actionbar_image_button" parent="actionbar_button">
+		<item name="android:layout_width">@dimen/actionbar_button_default_width</item>
+		<item name="android:scaleType">centerInside</item>
+	</style>
+
+	<style name="actionbar_text_button" parent="actionbar_button">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:paddingLeft">10dp</item>
+		<item name="android:paddingRight">10dp</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:textColor">#ff555555</item>
+	</style>
+
+	<style name="actionbar_seperator">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">fill_parent</item>
+		<item name="android:background">@drawable/actionbar_separator</item>
+	</style>
+
+	<style name="actionbar_title" parent="shadowed_text.white_shadow">
+		<item name="android:layout_width">0dp</item>
+		<item name="android:layout_height">fill_parent</item>
+		<item name="android:layout_weight">1</item>
+		<item name="android:gravity">center_vertical</item>
+		<item name="android:textColor">#ff666666</item>
+		<item name="android:textSize">16dp</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~ CALENDAR ~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+	<style name="cal_activity">
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">fill_parent</item>
+		<item name="android:background">@color/cal_activity_bg</item>
+	</style>
+
+	<style name="cal_week_header">
+		<item name="android:layout_width">0dp</item>
+		<item name="android:layout_height">@dimen/cal_day_header_height</item>
+		<item name="android:layout_weight">1</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:textColor">#ffdddddd</item>
+		<item name="android:gravity">center</item>
+	</style>
+
+	<style name="calendarTypeText">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:textColor">#ff333333</item>
+		<item name="android:shadowColor">#fff</item>
+		<item name="android:shadowDx">0</item>
+		<item name="android:shadowDy">1</item>
+		<item name="android:shadowRadius">0.00001</item>
+		<item name="android:singleLine">true</item>
+		<item name="android:ellipsize">end</item>
+	</style>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+</resources>

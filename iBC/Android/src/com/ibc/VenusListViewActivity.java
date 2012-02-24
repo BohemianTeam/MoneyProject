@@ -62,9 +62,14 @@ public class VenusListViewActivity extends Activity {
 			VenuesResponse item = list.get(position);
 			Intent intent = new Intent(VenusListViewActivity.this, VenueDetailActivity.class);
 			intent.putExtra("v_code", item.venuesCode);
+			intent.putExtra("di", item.distance);
 			VenusListViewActivity.this.startActivity(intent);
 		}
 	};
+	
+	double _lat;
+	double _lon;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -78,16 +83,28 @@ public class VenusListViewActivity extends Activity {
 		_listView = (ListView) findViewById(R.id.list);
 		_gpsService = new GPSService(this, _gpsServiceListener);
 		_service = new Service(_listener);
-		double lat = intent.getDoubleExtra("lat", -1);
-		double lon = intent.getDoubleExtra("lon", -1);
-		if (lat == lon && lon == -1) {
-			_gpsService.getGSP();
+		
+		boolean needGetGPS = intent.getBooleanExtra("need_get_gps", false);
+		if (needGetGPS) {
+			_gpsService.getCurrentLocation();
 			show(true);
 		} else {
-			String slat = String.valueOf(lat);
-			String slon = String.valueOf(lon);
-			_service.getVenues(slat, slon);
-			show(false);
+			iBCApplication app = iBCApplication.sharedInstance();
+			if (app.getData("lat") != null && app.getData("lon") != null) {
+				_lat = (Double) app.getData("lat");
+				_lon = (Double) app.getData("lon");
+			}
+			if (_lon == 0 || _lat == 0) {
+				_gpsService.getCurrentLocation();
+				show(true);
+			} else {
+				app.putData("lat", _lat);
+				app.putData("lon", _lon);
+				String slat = String.valueOf(_lat);
+				String slon = String.valueOf(_lon);
+				_service.getVenues(slat, slon);
+				show(false);
+			}
 		}
 	}
 	
@@ -97,10 +114,15 @@ public class VenusListViewActivity extends Activity {
 		public void onGetGPSSuccess(GPSInfo gpsInfo) {
 			hide();
 			show(false);
+			_lat = gpsInfo.getLat();
+			_lon = gpsInfo.getLng();
+			iBCApplication app = iBCApplication.sharedInstance();
+			app.putData("lat", _lat);
+			app.putData("lon", _lon);
 			String lat = String.valueOf(gpsInfo.getLat());
 			String lon = String.valueOf(gpsInfo.getLng());
 			_service.getVenues(lat, lon);
-			Log.d(TAG, "Get GPS Success with lat : " + lat + "; lon : " + lon);
+			Log.d(TAG, "Get GPS Success with lat : " + lat + "; lon : " + lon + " address :" + gpsInfo.getInfo());
 		}
 		
 		@Override
@@ -108,13 +130,15 @@ public class VenusListViewActivity extends Activity {
 			Log.d(TAG, "get GPS Failed");
 			hide();
 			show(false);
+			_lat = 41.385756;
+			_lon = 2.164129;
 			_service.getVenues("41.385756", "2.164129");
 		}
 	};
 	
 	private void show(boolean isGetGPS) {
 		if (isGetGPS) {
-			_dialog = ProgressDialog.show(this, "", "Get GPS ...",true , true);
+			_dialog = ProgressDialog.show(this, "", "Get GPS ...");
 		} else {
 			_dialog = ProgressDialog.show(this, "", "Loading Venues...",true , true);
 		}

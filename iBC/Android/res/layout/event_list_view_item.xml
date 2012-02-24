@@ -45,7 +45,6 @@
 			android:textStyle="bold"
 			android:textColor="#53A8CC"
 			android:textSize="18dp"
-			android:text="BABEL(WORDS)"
 			android:layout_marginLeft="5dp"
 			android:layout_marginBottom="2dp"
 		/>
@@ -61,15 +60,15 @@
 					android:layout_marginLeft="5dp"
 			>
 				<ImageView
-					android:layout_width="78dip"
-					android:layout_height="106dip"
-					android:background="@drawable/xx"
+				    android:id="@+id/img"
+					android:layout_width="40dip"
+					android:layout_height="60dip"
+					android:layout_centerInParent="true"
 					android:scaleType="fitXY"
-					android:id="@+id/img"
 				/>
 				<ProgressBar
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
+					android:layout_width="30dip"
+					android:layout_height="30dip"
 					android:layout_centerInParent="true" 
 					android:id="@+id/progress"
 				/>
@@ -88,7 +87,6 @@
 					android:layout_height="wrap_content"
 					android:textColor="#666666"
 					android:textSize="12dip"
-					android:text="Morcat de les Flors" 
 				/>
 				
 				<LinearLayout
@@ -99,7 +97,6 @@
 					<TextView
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content" 
-						android:text="15.04.11 - 17.04.11"
 						android:textColor="#666666"
 						android:textStyle="bold"
 						android:textSize="13dip"
@@ -110,7 +107,6 @@
 					<TextView
 						 android:layout_width="wrap_content"
 						android:layout_height="wrap_content" 
-						android:text="16 $"
 						android:textColor="#CC3366"
 						android:textStyle="bold"
 						android:textSize="12dip"

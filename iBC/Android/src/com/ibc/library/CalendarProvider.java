@@ -29,33 +29,32 @@ public class CalendarProvider {
 	}
 
 	public boolean hasCalendar() {
-		String[] projection = { "_id", "displayName" };
+		String[] projection = { "_id", "displayName" , "name"};
 		String selection = null;//"selected = 1";
 		String[] selectionArgs = null;
 		String sortOrder = null;
 		Cursor cursor = _context.getContentResolver().query( Uri.parse(CALENDER_URI), projection, selection, selectionArgs, sortOrder);
 		if (cursor != null && cursor.moveToFirst()) {
-			int nameColumn = cursor.getColumnIndex("name");
-			int idColumn = cursor.getColumnIndex("_id");
+//			int nameColumn = cursor.getColumnIndex("name");
+//			int idColumn = cursor.getColumnIndex("_id");
 			String[] calNames = new String[cursor.getCount()];
 			int[] calIds = new int[cursor.getCount()];
 			for (int i = 0; i < calNames.length; i++) {
 				calIds[i] = cursor.getInt(0);
 				calNames[i] = cursor.getString(1);
-				System.out.println(calNames[i]);
-
+				if (calNames[i].equalsIgnoreCase("phone calendar")) {
+					return true;
+				}
 				cursor.moveToNext();
 			}
 			cursor.close();
 			if (calIds.length > 0) {
 				// WE'RE SAFE HERE TO DO ANY FURTHER WORK
 			}
-		}
-		if (cursor != null) {
-			return (cursor.getCount() != 0);
-		} else {
 			return false;
 		}
+		
+		return false;
 	}
 	
 	public void insertEvent(int cal_id) {

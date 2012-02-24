@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content"
+			android:background="@android:color/white"
+			android:orientation="vertical"
+>
+	<LinearLayout
+	android:id="@+id/header"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content" 
+	android:background="@drawable/event_header_notitle"
+	android:orientation="horizontal"
+	>	
+		
+		<TextView
+		    android:id="@+id/room_name"
+			android:layout_width="wrap_content" 
+			android:layout_height="fill_parent"
+			android:text="ESPECTACLES"
+			android:textColor="@android:color/white"
+			android:textStyle="bold"
+			android:textSize="22dp"
+			android:layout_weight="1.0"
+			android:gravity="center"
+			android:layout_marginRight="90dip"
+		/>
+		 
+	</LinearLayout>
+	
+	<LinearLayout
+	android:id="@+id/content"
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:layout_margin="5dp"
+	>
+		<TextView
+			android:id="@+id/title"
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content"
+			android:textStyle="bold"
+			android:textColor="#53A8CC"
+			android:textSize="18dp"
+			android:layout_marginLeft="5dp"
+			android:layout_marginBottom="2dp"
+		/>
+		<LinearLayout
+			android:orientation="horizontal" 
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			
+		>
+			<RelativeLayout 
+				android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="5dp"
+			>
+				<ImageView
+				    android:id="@+id/img"
+					android:layout_width="40dip"
+					android:layout_height="60dip"
+					android:scaleType="fitXY"
+				/>
+				<ProgressBar
+					android:layout_width="30dip"
+					android:layout_height="30dip"
+					android:layout_centerInParent="true" 
+					android:id="@+id/progress"
+				/>
+			</RelativeLayout>
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1.0"
+				android:orientation="vertical"
+				android:layout_gravity="center"
+				android:layout_marginLeft="10dp"
+			>
+				<TextView
+					android:id="@+id/venueName"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textColor="#666666"
+					android:textSize="12dip"
+				/>
+				
+				<LinearLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content" 
+				>
+				
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content" 
+						android:textColor="#666666"
+						android:textStyle="bold"
+						android:textSize="13dip"
+						android:layout_weight="1.0"
+						android:id="@+id/dates"
+					/>
+					
+					<TextView
+						 android:layout_width="wrap_content"
+						android:layout_height="wrap_content" 
+						android:textColor="#CC3366"
+						android:textStyle="bold"
+						android:textSize="12dip"
+						android:layout_gravity="right"
+						android:id="@+id/price"
+					/>
+				</LinearLayout>
+			</LinearLayout>
+			
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:background="@drawable/black_accessory"
+				android:layout_marginLeft="2dp" 
+				android:layout_marginRight="2dp"
+			/>
+		</LinearLayout>
+		
+		
+	</LinearLayout>
+</LinearLayout>
