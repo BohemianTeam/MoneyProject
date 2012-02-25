@@ -46,9 +46,9 @@ public class MainActivity extends Activity {
 		MenuListAdapter adapter = new MenuListAdapter(mMenuList, this);
 		mListView.setAdapter(adapter);
 		mListView.setOnItemClickListener(adapter);
-
+		
 	}
-
+	
 	@SuppressWarnings("unused")
 	private void show() {
 		_dialog = ProgressDialog.show(this, "", "Loading...", true, true);

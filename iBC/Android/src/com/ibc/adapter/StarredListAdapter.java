@@ -67,13 +67,13 @@ public class StarredListAdapter extends BaseAdapter implements OnItemClickListen
 		convertView = getViewForType(getItemViewType(position));
 		if (object instanceof VenuesResponse) {
 			VenuesResponse data = (VenuesResponse) object;
-			vnRowHolder = new VenueRowHolder(convertView, data, _context);
-			vnRowHolder.display();
+			vnRowHolder = new VenueRowHolder(convertView, _context);
+			vnRowHolder.display(data);
 			convertView.setTag(vnRowHolder);
 		} else if (object instanceof EventsResponse){
 			EventsResponse data = (EventsResponse) object;
-			evRowHolder = new EventRowHolder(_context, convertView, data);
-			evRowHolder.display();
+			evRowHolder = new EventRowHolder(_context, convertView);
+			evRowHolder.display(data);
 			convertView.setTag(evRowHolder);
 		}
 

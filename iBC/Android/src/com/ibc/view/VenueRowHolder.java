@@ -1,6 +1,7 @@
 package com.ibc.view;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -37,9 +38,9 @@ public class VenueRowHolder {
 	Bitmap _bitmap;
 	private String _id;
 	
-	public VenueRowHolder(View root , VenuesResponse data, Context context) {
+	public VenueRowHolder(View root ,Context context) {
 		_root = root;
-		_data = data;
+		
 		_context = context;
 		_img = (ImageView) _root.findViewById(R.id.img);
 		_title = (TextView) _root.findViewById(R.id.title);
@@ -47,7 +48,8 @@ public class VenueRowHolder {
 		_progress = (ProgressBar) _root.findViewById(R.id.progress);
 	}
 	
-	public void display() {
+	public void display(VenuesResponse data) {
+		_data = data;
 		if (_data != null) {
 			_title.setText(_data.venuesName);
 			String city = _data.city == null ? "" : _data.city;
@@ -58,17 +60,17 @@ public class VenueRowHolder {
 	}
 	
 	private void getImage() {
-//		_id = _data.venuesCode;
-//		String dir = _context.getCacheDir() + "/" + _id + "_vn.png";
-//		File file = new File(dir);
-//		if (file.exists()) {
-//			BitmapFactory.Options options = new BitmapFactory.Options();
-////			options.inTempStorage = new byte[16 * 1024];
-////			options.inSampleSize = 4;
-//			_bitmap = BitmapFactory.decodeFile(dir);
-//			_img.setImageBitmap(BitmapFactory.decodeFile(dir,options));
-//			_progress.setVisibility(View.INVISIBLE);
-//		} else {
+		_id = _data.venuesCode;
+		String dir = _context.getCacheDir() + "/" + _id + "_vn.png";
+		File file = new File(dir);
+		if (file.exists()) {
+			BitmapFactory.Options options = new BitmapFactory.Options();
+//			options.inTempStorage = new byte[16 * 1024];
+//			options.inSampleSize = 4;
+			_bitmap = BitmapFactory.decodeFile(dir);
+			_img.setImageBitmap(BitmapFactory.decodeFile(dir,options));
+			_progress.setVisibility(View.INVISIBLE);
+		} else {
 			if (_connecting) {
 				return;
 			} else {
@@ -76,7 +78,7 @@ public class VenueRowHolder {
 				new DownloadTask().execute(new String[] {
 						Config.URL_IMAGE + _data.icon, "" });
 			}
-//		}
+		}
 	}
 	
 	/**

@@ -1,6 +1,8 @@
 package com.ibc.view;
 
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -32,6 +34,7 @@ public class EventAvatar extends RelativeLayout {
 	private HttpURLConnection _connection;
 	boolean _connecting;
 	Bitmap _bitmap;
+	String _id;
 	
 	public EventAvatar(Context context) {
 		super(context);
@@ -56,12 +59,22 @@ public class EventAvatar extends RelativeLayout {
 	}
 	
 	public void getImage(EventResponse data) {
-		if (_connecting) {
-			return;
+		_id = data.eventCode;
+		String dir = _context.getCacheDir() + "/" + _id + "_vn.png";
+		File file = new File(dir);
+		if (file.exists()) {
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			_bitmap = BitmapFactory.decodeFile(dir);
+			_img.setImageBitmap(BitmapFactory.decodeFile(dir,options));
+			_progress.setVisibility(View.INVISIBLE);
 		} else {
-			_connecting = true;
-			new DownloadTask().execute(new String[] {
-					Config.URL_IMAGE + data.icon, "" });
+			if (_connecting) {
+				return;
+			} else {
+				_connecting = true;
+				new DownloadTask().execute(new String[] {
+						Config.URL_IMAGE + data.icon, "" });
+			}
 		}
 	}
 	
@@ -124,6 +137,12 @@ public class EventAvatar extends RelativeLayout {
 			}
 			if (buff != null) {
 				try {
+					String dir = _context.getCacheDir() + "/" + _id + "_vn.png";
+					FileOutputStream out = new FileOutputStream(dir);
+					buff.compress(Bitmap.CompressFormat.PNG, 100, out);
+					out.flush();
+					out.close();
+					
 					Drawable drawable = new BitmapDrawable(buff);
 					_img.setBackgroundDrawable(drawable);
 					

@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -25,7 +27,7 @@ import com.ibc.service.ServiceAction;
 import com.ibc.service.ServiceListener;
 import com.ibc.service.ServiceRespone;
 
-public class VenusListViewActivity extends Activity {
+public class VenusListViewActivity extends Activity implements OnScrollListener{
 	static final String TAG = "VenuesListViewAct";
 	GPSService _gpsService;
 	ListView _listView;
@@ -33,6 +35,23 @@ public class VenusListViewActivity extends Activity {
 	List<VenuesResponse> list = new ArrayList<VenuesResponse>();
 	ProgressDialog _dialog;
 	Service _service;
+	boolean _loadMore;
+	
+	@Override
+	public void onScroll(AbsListView view, int firstVisibleItem,
+			int visibleItemCount, int totalItemCount) {
+		_loadMore = firstVisibleItem + visibleItemCount >= totalItemCount;
+		if (_loadMore) {
+			System.out.println("load more");
+//			_adapter.getCount() += _adapter.rowOfPage;
+		}
+	}
+
+	@Override
+	public void onScrollStateChanged(AbsListView view, int scrollState) {
+		
+	}
+	
 	ServiceListener _listener = new ServiceListener() {
 		
 		@SuppressWarnings("unchecked")
@@ -149,4 +168,5 @@ public class VenusListViewActivity extends Activity {
 			_dialog.dismiss();
 		}
 	}
+
 }
