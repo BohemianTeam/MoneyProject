@@ -97,6 +97,7 @@ NSString *const KalDataSourceChangedNotification = @"KalDataSourceChangedNotific
 
 - (void)didSelectDate:(KalDate *)date
 {
+    NSLog(@"didSelectDate");
   self.selectedDate = [date NSDate];
   NSDate *from = [[date NSDate] cc_dateByMovingToBeginningOfDay];
   NSDate *to = [[date NSDate] cc_dateByMovingToEndOfDay];

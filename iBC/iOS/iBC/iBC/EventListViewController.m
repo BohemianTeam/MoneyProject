@@ -16,7 +16,8 @@
 #import "EventDetailViewController.h"
 @implementation EventListViewController
 @synthesize imageDownloadsInProgress;
-
+@synthesize dateFilter;
+@synthesize filterType;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -30,6 +31,8 @@
     if (self) {
         self.title = [title retain];
         
+        filterType = EventFilterNone;
+        dateFilter = nil;
         // Custom initialization
         eventTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 480) style:UITableViewStylePlain];
         eventTable.dataSource = self;
@@ -58,6 +61,8 @@
 
 - (void)viewDidLoad
 {
+    [imageDownloadsInProgress release];
+    [dateFilter release];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
@@ -153,6 +158,30 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 #pragma mark - servide delegate
+- (void)getEventObjFrom: (NSArray*)arr
+{
+    if(filterType == EventFilterByDate){
+        for (NSDictionary *dict in arr)
+        {
+            NSString *dates = [dict objectForKey:Dates];
+            if([dates isEqual:dateFilter]){
+                EventsObj *obj = [[EventsObj alloc] iniWithDictionary:dict];
+                [eventsList addObject:obj];
+                
+                [obj release];
+            }
+            
+        }
+    }else{
+        for (NSDictionary *dict in arr) {
+            EventsObj *obj = [[EventsObj alloc] iniWithDictionary:dict];
+            [eventsList addObject:obj];
+            
+            [obj release];
+        }
+    }
+    
+}
 - (void) mServiceGetEventListSucces:(Service *) service responses:(id) response {
     NSLog(@"API mServiceGetEventListSucces : success");
     
@@ -162,12 +191,8 @@
     eventsList = [[NSMutableArray alloc] init];
     CJSONDeserializer *jsonDeserializer = [CJSONDeserializer deserializer];
     NSArray *resArray = [jsonDeserializer deserializeAsArray:(NSData*)response error:nil];
-    for (NSDictionary *dict in resArray) {
-        EventsObj *obj = [[EventsObj alloc] iniWithDictionary:dict];
-        [eventsList addObject:obj];
-        
-        [obj release];
-    }
+    [self getEventObjFrom:resArray];
+    
     
     //end loading
     [Util hideLoading];

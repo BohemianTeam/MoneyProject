@@ -39,6 +39,7 @@
 		668B4B8914F71BE5007BE993 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 668B4B8714F71BE5007BE993 /* MapViewController.xib */; };
 		668B4B8B14F72643007BE993 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 668B4B8A14F72643007BE993 /* QuartzCore.framework */; };
 		668B4B9214F72BA0007BE993 /* MyLocaAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 668B4B9114F72BA0007BE993 /* MyLocaAnnotation.m */; };
+		668B4BAF14F77F05007BE993 /* CalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 668B4BAE14F77F04007BE993 /* CalendarViewController.m */; };
 		668BB62114F5D9E00018A8AC /* ImgDownloaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 668BB62014F5D9E00018A8AC /* ImgDownloaderView.m */; };
 		668BB62314F5E8D50018A8AC /* ttt.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 668BB62214F5E8D50018A8AC /* ttt.jpg */; };
 		668C242E14F0932500997FBB /* VenueListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 668C242C14F0932500997FBB /* VenueListViewController.m */; };
@@ -161,6 +162,8 @@
 		668B4B8A14F72643007BE993 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		668B4B9014F72BA0007BE993 /* MyLocaAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLocaAnnotation.h; sourceTree = "<group>"; };
 		668B4B9114F72BA0007BE993 /* MyLocaAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLocaAnnotation.m; sourceTree = "<group>"; };
+		668B4BAD14F77F03007BE993 /* CalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewController.h; sourceTree = "<group>"; };
+		668B4BAE14F77F04007BE993 /* CalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewController.m; sourceTree = "<group>"; };
 		668BB61F14F5D9E00018A8AC /* ImgDownloaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImgDownloaderView.h; sourceTree = "<group>"; };
 		668BB62014F5D9E00018A8AC /* ImgDownloaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImgDownloaderView.m; sourceTree = "<group>"; };
 		668BB62214F5E8D50018A8AC /* ttt.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ttt.jpg; sourceTree = "<group>"; };
@@ -498,6 +501,8 @@
 				668B4B8514F71BE5007BE993 /* MapViewController.h */,
 				668B4B8614F71BE5007BE993 /* MapViewController.m */,
 				668B4B8714F71BE5007BE993 /* MapViewController.xib */,
+				668B4BAD14F77F03007BE993 /* CalendarViewController.h */,
+				668B4BAE14F77F04007BE993 /* CalendarViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -737,6 +742,7 @@
 				668BB62114F5D9E00018A8AC /* ImgDownloaderView.m in Sources */,
 				668B4B8814F71BE5007BE993 /* MapViewController.m in Sources */,
 				668B4B9214F72BA0007BE993 /* MyLocaAnnotation.m in Sources */,
+				668B4BAF14F77F05007BE993 /* CalendarViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

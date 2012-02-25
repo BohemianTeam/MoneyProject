@@ -55,7 +55,7 @@
 + (void)showLoading:(NSString*)content view:(UIView*)view;
 + (void)hideLoading;
 
-
++ (NSString*)convertDateToString:(NSDate*)date;
 //utils for string
 + (CGSize)sizeOfText: (NSString*)text withFont:(UIFont*)font constrainedToSize:(CGSize)constrainedSize lineBreakMode:(UILineBreakMode)mode;
 @end

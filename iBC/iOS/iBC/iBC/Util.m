@@ -474,6 +474,19 @@ static MBProgressHUD    *loadingView;
 }
 
 #pragma - Utils for String
++ (NSString*)convertDateToString:(NSDate*)date
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"dd/mm/yyyy"];
+    
+    //Optionally for time zone converstions
+    //[formatter setTimeZone:[NSTimeZone timeZoneWithName:@"..."]];
+    
+    NSString *stringFromDate = [formatter stringFromDate:date];
+    [formatter release];
+    
+    return stringFromDate;
+}
 + (CGSize)sizeOfText: (NSString*)text withFont:(UIFont*)font constrainedToSize:(CGSize)constrainedSize lineBreakMode:(UILineBreakMode)mode
 {
     
