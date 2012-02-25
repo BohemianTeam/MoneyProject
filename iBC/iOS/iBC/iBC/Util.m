@@ -440,11 +440,22 @@ static MBProgressHUD    *loadingView;
 //    }
 //    
 //    return appID;
+    
     //using test
     return @"823ab7fc7820d402";
 }
++ (void)showLoading:(NSString*)content view:(UIView*)view
+{
+    NSLog(@"---loading");
+    loadingView = [[MBProgressHUD alloc] initWithView:view];
+    loadingView.labelText = content;
+    [view addSubview:loadingView];
+    
+    [loadingView show:YES];
+}
 + (void)showLoading:(UIView*)view
 {
+    NSLog(@"---loading");
     loadingView = [[MBProgressHUD alloc] initWithView:view];
     loadingView.labelText = @"loading..!";
     [view addSubview:loadingView];
@@ -453,8 +464,25 @@ static MBProgressHUD    *loadingView;
 }
 + (void)hideLoading
 {
-    [loadingView removeFromSuperview];
-    [loadingView show:NO];
-    [loadingView release];
+    NSLog(@"---hideloading");
+    if(loadingView){
+        [loadingView removeFromSuperview];
+        [loadingView show:NO];
+        [loadingView release];
+    }
+    
+}
+
+#pragma - Utils for String
++ (CGSize)sizeOfText: (NSString*)text withFont:(UIFont*)font constrainedToSize:(CGSize)constrainedSize lineBreakMode:(UILineBreakMode)mode
+{
+    
+    CGSize sizeText = CGSizeMake(0, 0);
+    if(text != nil && ![text isEqual:@""]){
+        sizeText = [text sizeWithFont:font constrainedToSize:constrainedSize lineBreakMode:mode];
+        
+        return sizeText;
+    }
+    return sizeText;
 }
 @end

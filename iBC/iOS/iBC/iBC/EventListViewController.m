@@ -13,6 +13,7 @@
 #import "VenuesObj.h"
 #import "CJSONDeserializer.h"
 #import "EventViewCell.h"
+#import "EventDetailViewController.h"
 @implementation EventListViewController
 @synthesize imageDownloadsInProgress;
 
@@ -93,6 +94,7 @@
     
     //test
     [srv getEventList];
+    [srv release];
 }
 #pragma mark - tableview delegate and datasource
 
@@ -138,9 +140,17 @@
     
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
+{
     
+    EventsObj *eventObj = [eventsList objectAtIndex:indexPath.row];
+    
+    EventDetailViewController *eventDetailVC = [[EventDetailViewController alloc] init];
+    eventDetailVC.eventCode = [eventObj getCode];
+    [self.navigationController pushViewController:eventDetailVC animated:YES];
+    
+    [eventDetailVC release];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 #pragma mark - servide delegate
 - (void) mServiceGetEventListSucces:(Service *) service responses:(id) response {

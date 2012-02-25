@@ -13,7 +13,7 @@
 #define IMAGE_HEIGHT 160
 
 @implementation ImageDownloader
-@synthesize indexPathInTableView;
+@synthesize indexPath;
 @synthesize setImgDelegate, delegate;
 @synthesize activeDownload;
 @synthesize imageConnection;
@@ -23,7 +23,7 @@
 - (void)dealloc
 {
     [activeDownload release];
-    [indexPathInTableView release];
+    [indexPath release];
     [imageConnection cancel];
     [imageConnection release];
     
@@ -67,6 +67,7 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    NSLog(@"download finish");
     // Set appIcon and clear temporary data/image
     UIImage *image = [[UIImage alloc] initWithData:self.activeDownload];
     
@@ -94,6 +95,6 @@
     self.imageConnection = nil;
     
     // call our delegate and tell it that our icon is ready for display
-    [delegate appImageDidLoad:self.indexPathInTableView];
+    [delegate appImageDidLoad:self.indexPath];
 }
 @end

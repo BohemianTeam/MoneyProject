@@ -17,7 +17,14 @@
 @property(nonatomic, retain)UIImage     *imgLogo;
 
 - (NSString*)getName;
+- (NSString*)getDistanceOrCity;
 - (NSString*)getAddress;
 - (NSString*)getVenueCode;
-
+- (NSString*)getLogoUrl;
+- (NSString*)getDescription;
+- (NSString*)getWeb;
+- (NSString*)getEmail;
+- (NSString*)getPhone;
+- (NSString*)getCoordinates;
+- (NSArray*)getImgs;
 @end
