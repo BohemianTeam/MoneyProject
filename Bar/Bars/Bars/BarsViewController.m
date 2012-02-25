@@ -56,5 +56,9 @@
     // Return YES for supported orientations
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
-
+- (void)dealloc
+{
+    [tableView release];
+    [super dealloc];
+}
 @end

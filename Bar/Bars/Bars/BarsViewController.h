@@ -10,6 +10,7 @@
 
 @interface BarsViewController : UIViewController<UINavigationControllerDelegate>
 {
-    
+    UITableView     *tableView;
 }
+
 @end
