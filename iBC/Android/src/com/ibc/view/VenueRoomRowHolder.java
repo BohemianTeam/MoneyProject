@@ -1,6 +1,8 @@
 package com.ibc.view;
 
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -33,17 +35,17 @@ public class VenueRoomRowHolder {
 	private TextView _dates;
 	private TextView _price;
 	
-//	private Context _context;
+	private Context _context;
 	
 	private HttpURLConnection _connection;
 	boolean _connecting;
 	Bitmap _bitmap;
-//	private String _id;
+	private String _id;
 	
 	public VenueRoomRowHolder(View root, VenueRoomEventData event, Context context) {
 		_root = root;
 		_data = event;
-//		_context = context;
+		_context = context;
 		
 		_roomName = (TextView) _root.findViewById(R.id.room_name);
 		_img = (ImageView) _root.findViewById(R.id.img);
@@ -68,15 +70,15 @@ public class VenueRoomRowHolder {
 	}
 	
 	private void getImage() {
-//		_id = _data._event.eventCode;
-//		String dir = _context.getCacheDir() + "/" + _id + "_ev.png";
-//		File file = new File(dir);
-//		if (file.exists()) {
-//			BitmapFactory.Options options = new BitmapFactory.Options();
-//			_bitmap = BitmapFactory.decodeFile(dir);
-//			_img.setImageBitmap(BitmapFactory.decodeFile(dir,options));
-//			_progress.setVisibility(View.INVISIBLE);
-//		} else {
+		_id = _data._event.eventCode;
+		String dir = _context.getCacheDir() + "/" + _id + "_ev.png";
+		File file = new File(dir);
+		if (file.exists()) {
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			_bitmap = BitmapFactory.decodeFile(dir);
+			_img.setImageBitmap(BitmapFactory.decodeFile(dir,options));
+			_progress.setVisibility(View.INVISIBLE);
+		} else {
 			if (_connecting) {
 				return;
 			} else {
@@ -84,7 +86,7 @@ public class VenueRoomRowHolder {
 				new DownloadTask().execute(new String[] {
 						Config.URL_IMAGE + _data._event.icon, "" });
 			}
-//		}
+		}
 	}
 	
 	/**
@@ -147,11 +149,11 @@ public class VenueRoomRowHolder {
 			}
 			if (buff != null) {
 				try {
-//					String dir = _context.getCacheDir() + "/" + _id + "_ev.png";
-//					FileOutputStream out = new FileOutputStream(dir);
-//					buff.compress(Bitmap.CompressFormat.PNG, 100, out);
-//					out.flush();
-//					out.close();
+					String dir = _context.getCacheDir() + "/" + _id + "_ev.png";
+					FileOutputStream out = new FileOutputStream(dir);
+					buff.compress(Bitmap.CompressFormat.PNG, 100, out);
+					out.flush();
+					out.close();
 					Drawable drawable = new BitmapDrawable(buff);
 					_img.setBackgroundDrawable(drawable);
 					

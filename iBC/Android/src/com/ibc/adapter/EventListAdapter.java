@@ -82,16 +82,15 @@ public class EventListAdapter extends BaseAdapter {
 		if (_isVenue) {
 			VenueRowHolder vRowHolder;
 			VenuesResponse vn = (VenuesResponse) getItem(position);
-			vRowHolder = new VenueRowHolder(convertView, vn, _context);
-			vRowHolder.display();
+			vRowHolder = new VenueRowHolder(convertView, _context);
+			vRowHolder.display(vn);
 			convertView.setTag(vRowHolder);
 			return convertView;
 		} else {
 			EventRowHolder eRowHolder;
 			EventsResponse ev = (EventsResponse) getItem(position);
-			
-			eRowHolder = new EventRowHolder(_context, convertView, ev);
-			eRowHolder.display();
+			eRowHolder = new EventRowHolder(_context, convertView);
+			eRowHolder.display(ev);
 			convertView.setTag(eRowHolder);
 			return convertView;
 		}

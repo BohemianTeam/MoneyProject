@@ -3,11 +3,7 @@ package com.ibc.adapter;
 import java.util.ArrayList;
 
 import vn.lmchanh.lib.widget.calendar.CalendarActivity;
-
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -20,7 +16,6 @@ import com.ibc.EventsListViewActivity;
 import com.ibc.StarredActivity;
 import com.ibc.VenusListViewActivity;
 import com.ibc.iBCApplication;
-import com.ibc.library.CalendarProvider;
 import com.ibc.model.MenuItemData;
 import com.ibc.view.ListMenuRowHolder;
 
@@ -57,9 +52,10 @@ public class MenuListAdapter extends BaseAdapter implements OnItemClickListener{
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
+		
 		ListMenuRowHolder rowHolder = new ListMenuRowHolder(mContext);
 		rowHolder.setData(getItem(position), ((position % 2) == 0));
+		
 		return rowHolder;
 	}
 	
@@ -120,7 +116,7 @@ public class MenuListAdapter extends BaseAdapter implements OnItemClickListener{
 
 			intent.putExtra("endTime", System.currentTimeMillis() + 1800 * 1000);
 			*/
-	        Intent intent = CalendarActivity.createCalendarIntent((Activity) mContext, true, true, true, true);
+	        Intent intent = CalendarActivity.createCalendarIntent((Activity) mContext, true, false, false, true);
 //			Intent intent = new Intent(mContext, SubMenuActivity.class);
 //			intent.putExtra("title", data.mTitle);
 			mContext.startActivity(intent);
