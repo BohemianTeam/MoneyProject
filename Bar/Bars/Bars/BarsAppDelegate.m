@@ -26,7 +26,10 @@
     [_tabbar release];
     [super dealloc];
 }
-
+- (void)sendEmail
+{
+    NSLog(@"request...");
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [Util createEditableCopyOfDatabaseIfNeeded:DBFILE];
@@ -34,16 +37,29 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
 
+    UIBarButtonItem *btnCancel = [[UIBarButtonItem alloc] initWithTitle:@"Request" 
+                                                                  style:UIBarButtonItemStyleBordered 
+                                                                 target:self 
+                                                                 action:@selector(sendEmail)];    
+
+    
     BarsViewController *vc1 = [[[BarsViewController alloc] initWithID:0 type:States] autorelease];
     vc1.title = @"USA";
+    UIImage *tabImage = [UIImage imageNamed:@"CompletedIcon"];
+    UITabBarItem *theItem = [[UITabBarItem alloc] initWithTitle:@"USA" image:tabImage tag:2];
+    vc1.tabBarItem = theItem;
+    [theItem release];
+    vc1.navigationItem.rightBarButtonItem = btnCancel;
+    [btnCancel release];
     UINavigationController *navVC1 = [[[UINavigationController alloc] initWithRootViewController:vc1] autorelease];
     navVC1.navigationBar.barStyle = UIBarStyleBlack;
-
+    
+    
     //wishlist view controller
     BarsViewController *vc2 = [[[BarsViewController alloc] initWithID:0 type:Wishlists] autorelease];
     vc2.title = @"WishList";
-    UIImage* tabImage = [UIImage imageNamed:@"wishIcon"];
-    UITabBarItem* theItem = [[UITabBarItem alloc] initWithTitle:@"WishList" image:tabImage tag:0];
+    tabImage = [UIImage imageNamed:@"wishIcon"];
+    theItem = [[UITabBarItem alloc] initWithTitle:@"WishList" image:tabImage tag:1];
     vc2.tabBarItem = theItem;
     [theItem release];
     UINavigationController *navVC2 = [[[UINavigationController alloc] initWithRootViewController:vc2] autorelease];
@@ -52,6 +68,10 @@
     //complete view controller
     BarsViewController *vc3 = [[[BarsViewController alloc] initWithID:0 type:Completeds] autorelease];
     vc3.title = @"Complete";
+    tabImage = [UIImage imageNamed:@"CompletedIcon"];
+    theItem = [[UITabBarItem alloc] initWithTitle:@"Completed" image:tabImage tag:2];
+    vc3.tabBarItem = theItem;
+    [theItem release];
     UINavigationController *navVC3 = [[[UINavigationController alloc] initWithRootViewController:vc3] autorelease];
     navVC3.navigationBar.barStyle = UIBarStyleBlack;
     
