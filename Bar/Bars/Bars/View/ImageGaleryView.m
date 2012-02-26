@@ -55,7 +55,7 @@
         _leftArrow = [[UIButton alloc] init];
         _leftArrow.frame = CGRectMake(0, (233 - 46) / 2, 46, 46);
         _leftArrow.tintColor = [UIColor blueColor];
-        [_leftArrow setImage:[UIImage imageNamed:@"ArrowLeft"] forState:UIControlStateNormal];
+        [_leftArrow setImage:[UIImage imageNamed:@"ArrowRight"] forState:UIControlStateNormal];
         [_leftArrow addTarget:self action:@selector(didArrowClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_leftArrow];
         
