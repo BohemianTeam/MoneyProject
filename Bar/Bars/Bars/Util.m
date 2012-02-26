@@ -399,6 +399,16 @@ static MBProgressHUD    *loadingView;
     return [dir stringByAppendingString:@"/subs"];
 }
 
++ (NSString *) getImageBarDir:(NSString *)barName {
+    NSString *dir = [Util documentsPath];
+    NSString *imgDir = [dir stringByAppendingFormat:@"/%@",barName];
+    NSFileManager *fm = [NSFileManager defaultManager];
+    if (![fm fileExistsAtPath:imgDir]) {
+        [Util createDirectoryAtPath:imgDir];
+    }
+    return imgDir;
+}
+
 + (BOOL) checkFileExits:(NSString *)path {
     NSFileManager *fm = [NSFileManager defaultManager];
     return [fm fileExistsAtPath:path];

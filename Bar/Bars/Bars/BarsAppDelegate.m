@@ -13,6 +13,7 @@
 #import "Util.h"
 #import "Config.h"
 #import "BarDetailViewController.h"
+#import "Bar.h"
 
 @implementation BarsAppDelegate
 
@@ -38,7 +39,9 @@
     UINavigationController *navVC1 = [[[UINavigationController alloc] initWithRootViewController:vc1] autorelease];
     navVC1.navigationBar.barStyle = UIBarStyleBlack;
     
-    BarDetailViewController *vc2 = [[[BarDetailViewController alloc] initWithBar:nil] autorelease];
+    Bar *bar = [[Bar alloc] initWithID:1 cityID:1 name:@"Bar" address:@"111 AA" info:@"Dan Kelly's Bar & Grill, in business since 1997, is an Irish-themed bar that features Happy Hour specials and a huge selection of down-home, Irish fare appetizers." location:@"~"];
+    BarDetailViewController *vc2 = [[[BarDetailViewController alloc] initWithBar:bar] autorelease];
+    [bar release];
     vc2.title = @"vc2";
     UINavigationController *navVC2 = [[[UINavigationController alloc] initWithRootViewController:vc2] autorelease];
     

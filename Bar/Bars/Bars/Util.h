@@ -35,6 +35,7 @@
 + (NSString *) getVideoDir;
 + (NSString *) getSubDir;
 + (NSString *) getTimeLineDir;
++ (NSString *) getImageBarDir:(NSString *) barName;
 + (NSString *) getPlatform;
 + (NSString *) getPlatformVer;
 + (NSString *) getScreenResolution;
