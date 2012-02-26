@@ -28,6 +28,7 @@
 - (NSInteger)lookingSumCitysInState: (NSInteger)stateID;
 - (NSArray*)lookingCitysByStateID:(NSInteger)stateID;
 - (NSArray*)lookingCitysByWish;
+- (NSArray*)lookingCitysByCompleted;
 - (CityObj*)lookingCityByCityID: (NSInteger)cityID;
 
 - (NSInteger)lookingSumBarsInCity:(NSInteger)cityID;
