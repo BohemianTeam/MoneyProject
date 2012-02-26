@@ -13,6 +13,11 @@
 #define TEXT_VIEW_HEIGHT 80
 #define GROUP_BUTTON_HEIGHT 54
 #define TABLEVIEW_HEIGHT (416 - 49)
+
+@interface BarDetailViewController(private)
+- (UIImage *)imageWithImage:(UIImage*)image scaledToSize:(CGSize)size;
+@end
+
 @implementation BarDetailViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -107,22 +112,207 @@
         _map = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         _map.frame = CGRectMake(20, (GROUP_BUTTON_HEIGHT - 46) / 2, 72, 46);
         [_map setTitle:@"Map" forState:UIControlStateNormal];
+        [_map addTarget:self action:@selector(didButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:_map];
         
         _camera = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         _camera.frame = CGRectMake(124, (GROUP_BUTTON_HEIGHT - 46) / 2, 72, 46);
         [_camera setTitle:@"Camera" forState:UIControlStateNormal];
+        [_camera addTarget:self action:@selector(didButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:_camera];
         
         _upload = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         _upload.frame = CGRectMake(228, (GROUP_BUTTON_HEIGHT - 46) / 2, 72, 46);
         [_upload setTitle:@"Upload" forState:UIControlStateNormal];
+        [_upload addTarget:self action:@selector(didButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:_upload];
         
     }
     return cell;
 }
 
+
+- (void) didButtonClicked:(id) sender {
+    if (sender == _map) {
+        
+    } else if (sender == _camera) {
+        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+        UIActionSheet *ac = [[UIActionSheet alloc] initWithTitle:@"" 
+                                                        delegate:self 
+                                               cancelButtonTitle:@"Cancel"
+                                          destructiveButtonTitle:nil 
+                                               otherButtonTitles:
+                             @"Photo from Library",@"Take a Picture", nil];
+        [ac showFromTabBar:self.tabBarController.tabBar];
+        [ac release];
+        [pool release];
+
+    } else if (sender == _upload) {
+        
+    }
+}
+
+#pragma UIActionSheet delegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (_picker) {
+        [_picker release];
+        _picker = nil;        
+    }
+    if (buttonIndex == 0) {
+        _picker = [[UIImagePickerController alloc] init];
+        _picker.delegate = self;
+        _picker.allowsEditing = YES;
+        _picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    } else if (buttonIndex == 1) {
+        _picker = [[UIImagePickerController alloc] init];
+        _picker.delegate = self;
+        _picker.allowsEditing = YES;
+        _picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }
+    if (_picker) {
+        [self presentModalViewController:_picker animated:YES];
+    }
+}
+
+#pragma UIImagePickerController delegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage *image;
+    if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
+        image = [info objectForKey:UIImagePickerControllerEditedImage];
+    } else {
+        image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+    }
+    UIImage *newImage = [self imageWithImage:image scaledToSize:CGSizeMake(180, 180)];
+    
+    [_picker dismissModalViewControllerAnimated:NO];
+    if (_picker) {
+        [_picker release];
+        _picker = nil;        
+    }
+
+}
+
+
+- (void)image:(UIImage *) image didFinishSavingWithError: (NSError *) error contextInfo: (void *) contextInfo {
+    NSLog(@"SAVE IMAGE COMPLETE");
+    if(error != nil) {
+        NSLog(@"ERROR SAVING:%@",[error localizedDescription]);
+    }
+}
+
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissModalViewControllerAnimated:YES];
+    if (_picker) {
+        [_picker release];
+        _picker = nil;        
+    }
+}
+#pragma Util
+
+- (void)saveImage:(UIImage *)image withName:(NSString *)name {
+    
+    //grab the data from our image
+    NSData *data = UIImageJPEGRepresentation(image, 1.0);
+    
+    //get a path to the documents Directory
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,  YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    
+    // Add out name to the end of the path with .PNG
+    NSString *fullPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"/%@/%@.png",_bar.name, name]];
+    
+    //Save the file, over write existing if exists. 
+    [fileManager createFileAtPath:fullPath contents:data attributes:nil];
+    
+}
+
+
+- (UIImage *)imageWithImage:(UIImage*)image scaledToSize:(CGSize)size {
+	if (image == nil)    
+        return nil;
+    
+    CGImageRef imageRef     = NULL;
+    CGContextRef context    = NULL;
+    CGImageRef newImage     = NULL;
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();    
+	
+    float w = image.size.width;
+    float h = image.size.height;
+    float s = (w < h) ? w : h;
+    
+    CGRect r = CGRectMake((h-s)/2, (w-s)/2, s, s);
+    if (image.imageOrientation == UIImageOrientationLeft) {
+        r = CGRectMake((h-s)/2, (w-s)/2, s, s);
+	} else if (image.imageOrientation == UIImageOrientationRight) {
+        r = CGRectMake((h-s)/2, (w-s)/2, s, s);
+	} else if (image.imageOrientation == UIImageOrientationUp) {
+        r = CGRectMake((w-s)/2, (h-s)/2, s, s);
+	} else if (image.imageOrientation == UIImageOrientationDown) {
+        r = CGRectMake((w-s)/2, (h-s)/2, s, s);
+	}
+    imageRef = CGImageCreateWithImageInRect([image CGImage], r);
+    if (imageRef == NULL)
+        goto scale_error;
+    
+    context = CGBitmapContextCreate(NULL, size.width, size.height, 8, 0, colorSpace, kCGImageAlphaNoneSkipFirst);
+    NSLog(@"imageOrientation:%d", image.imageOrientation);
+    if (image.imageOrientation == UIImageOrientationLeft) {		
+        CGContextRotateCTM(context, M_PI/2);
+        CGContextTranslateCTM(context, 0, -size.height);		        
+	} else if (image.imageOrientation == UIImageOrientationRight) {		
+        CGContextRotateCTM(context, -M_PI/2);
+        CGContextTranslateCTM(context, -size.height, 0);
+	} else if (image.imageOrientation == UIImageOrientationUp) {
+	} else if (image.imageOrientation == UIImageOrientationDown) {
+        CGContextTranslateCTM(context, size.width, size.height);		
+		CGContextRotateCTM(context, -M_PI);        
+	}
+    
+    CGContextDrawImage(context, CGRectMake(0, 0, size.width, size.height), imageRef);    
+    CGImageRelease(imageRef);
+    imageRef = NULL;
+    
+    UIImage *cover = nil;
+    newImage = CGBitmapContextCreateImage(context);
+    if (newImage) {
+        cover = [UIImage imageWithCGImage:newImage];
+        CGImageRelease(newImage);
+        newImage = NULL;
+    }
+    if (colorSpace) {
+        CGColorSpaceRelease(colorSpace);
+    }
+    if (context) {
+        CGContextRelease(context);
+        context = NULL;
+    }
+    return cover;
+    
+scale_error:
+    if (colorSpace) {
+        CGColorSpaceRelease(colorSpace);
+    }
+    if (imageRef) {
+        CGImageRelease(imageRef);
+        imageRef = NULL;
+    }
+    if (newImage) {
+        CGImageRelease(newImage);
+        newImage = NULL;
+    }
+    if (context) {
+        CGContextRelease(context);
+        context = NULL;
+    }
+    return nil;
+	
+}
+
+
+#pragma UITableView delegate & datasource
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	[_tableView deselectRowAtIndexPath:indexPath animated:YES];
