@@ -84,6 +84,7 @@ static AppDatabase *__sharedDatabase = nil;
 	return 0;
 }
 #pragma - Looking database method
+//looking states
 - (NSInteger)lookingSumStates
 {
     NSString *stringQuery = [NSString stringWithFormat:@"Select count(*) From %@", STATE_TABLE];
@@ -173,6 +174,21 @@ static AppDatabase *__sharedDatabase = nil;
 	sqlite3_finalize(statement);
 	
 	return [city autorelease];
+}
+//looking bars
+- (NSInteger)lookingSumBarsInCity:(NSInteger)cityID
+{
+    NSString *stringQuery = [NSString stringWithFormat:@"Select count(*) From %@ where city_id = %d", BAR_TABLE, cityID];
+	sqlite3_stmt *statement = [self setupAndCompileStatement: stringQuery];
+	NSInteger sumBars = 0;
+    
+	if (statement)
+		if (sqlite3_step(statement) == SQLITE_ROW)
+			sumBars = sqlite3_column_int(statement, 0);
+	
+	sqlite3_finalize(statement);
+    
+    return sumBars;
 }
 - (NSArray*)lookingBarsByCityID:(NSInteger)cityID
 {

@@ -10,6 +10,9 @@
 #import "AppDatabase.h"
 #import "CityObj.h"
 #import "CityViewCell.h"
+
+#define HEIGHT_CELL 50
+
 @interface BarsViewController (private)
 - (void)loadDataFromDatabase;
 @end
@@ -135,10 +138,10 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return sumRow;
 }
-//
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    return ;
-//}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return HEIGHT_CELL;
+}
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

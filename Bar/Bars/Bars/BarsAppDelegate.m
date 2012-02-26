@@ -9,13 +9,11 @@
 #import "BarsAppDelegate.h"
 
 #import "BarsViewController.h"
-<<<<<<< HEAD
 #import "AppDatabase.h"
 #import "Util.h"
 #import "Config.h"
-=======
 #import "BarDetailViewController.h"
->>>>>>> 588ab44767fee8bd9a901dcd18fc4e0827bb976a
+
 @implementation BarsAppDelegate
 
 @synthesize window = _window;
@@ -34,20 +32,17 @@
     [[AppDatabase sharedDatabase] openDB:[Util documentsPath:DBFILE]];
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
-<<<<<<< HEAD
+
     BarsViewController *vc1 = [[[BarsViewController alloc] initWithID:0 type:States] autorelease];
     vc1.title = @"USA";
     
-    UIViewController *vc2 = [[[UIViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-=======
-    BarsViewController *vc1 = [[[BarsViewController alloc] initWithNibName:@"BarsViewController" bundle:nil] autorelease];
     BarDetailViewController *vc2 = [[[BarDetailViewController alloc] initWithBar:nil] autorelease];
->>>>>>> 588ab44767fee8bd9a901dcd18fc4e0827bb976a
     vc2.title = @"vc2";
     UINavigationController *navVC2 = [[[UINavigationController alloc] initWithRootViewController:vc2] autorelease];
     
     
     UINavigationController *navVC1 = [[[UINavigationController alloc] initWithRootViewController:vc1] autorelease];
+    navVC1.navigationBar.barStyle = UIBarStyleBlack;
     self.tabbar = [[UITabBarController alloc] init];
     [self.tabbar addChildViewController:navVC1];
     [self.tabbar addChildViewController:navVC2];

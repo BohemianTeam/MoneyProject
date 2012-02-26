@@ -24,7 +24,16 @@
 		663EEA7314F8F03B004D7765 /* CityViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 663EEA7214F8F03B004D7765 /* CityViewCell.m */; };
 		663EEA7614F8F17E004D7765 /* selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 663EEA7414F8F17E004D7765 /* selected.png */; };
 		663EEA7714F8F17E004D7765 /* unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 663EEA7514F8F17E004D7765 /* unselected.png */; };
-
+		66859D2A14F9CD3C001EDE5B /* BarDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66859D2914F9CD3C001EDE5B /* BarDetailViewController.m */; };
+		66859D2E14F9CD7C001EDE5B /* Bar.m in Sources */ = {isa = PBXBuildFile; fileRef = 66859D2D14F9CD7C001EDE5B /* Bar.m */; };
+		66859D3114F9CDDD001EDE5B /* ImageGaleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66859D3014F9CDDD001EDE5B /* ImageGaleryView.m */; };
+		66859D3914F9CE01001EDE5B /* album.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D3214F9CE01001EDE5B /* album.png */; };
+		66859D3A14F9CE01001EDE5B /* ArrowScrollLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D3314F9CE01001EDE5B /* ArrowScrollLeft.png */; };
+		66859D3B14F9CE01001EDE5B /* ArrowScrollLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D3414F9CE01001EDE5B /* ArrowScrollLeft@2x.png */; };
+		66859D3C14F9CE01001EDE5B /* ArrowScrollRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D3514F9CE01001EDE5B /* ArrowScrollRight.png */; };
+		66859D3D14F9CE01001EDE5B /* ArrowScrollRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D3614F9CE01001EDE5B /* ArrowScrollRight@2x.png */; };
+		66859D3E14F9CE01001EDE5B /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D3714F9CE01001EDE5B /* camera.png */; };
+		66859D3F14F9CE01001EDE5B /* image_border.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D3814F9CE01001EDE5B /* image_border.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,7 +65,19 @@
 		663EEA7214F8F03B004D7765 /* CityViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityViewCell.m; sourceTree = "<group>"; };
 		663EEA7414F8F17E004D7765 /* selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selected.png; sourceTree = "<group>"; };
 		663EEA7514F8F17E004D7765 /* unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unselected.png; sourceTree = "<group>"; };
-
+		66859D2814F9CD3C001EDE5B /* BarDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BarDetailViewController.h; path = "View Controller/BarDetailViewController.h"; sourceTree = "<group>"; };
+		66859D2914F9CD3C001EDE5B /* BarDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BarDetailViewController.m; path = "View Controller/BarDetailViewController.m"; sourceTree = "<group>"; };
+		66859D2C14F9CD7C001EDE5B /* Bar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bar.h; path = Bars/Model/Bar.h; sourceTree = "<group>"; };
+		66859D2D14F9CD7C001EDE5B /* Bar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Bar.m; path = Bars/Model/Bar.m; sourceTree = "<group>"; };
+		66859D2F14F9CDDD001EDE5B /* ImageGaleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageGaleryView.h; path = View/ImageGaleryView.h; sourceTree = "<group>"; };
+		66859D3014F9CDDD001EDE5B /* ImageGaleryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageGaleryView.m; path = View/ImageGaleryView.m; sourceTree = "<group>"; };
+		66859D3214F9CE01001EDE5B /* album.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = album.png; sourceTree = "<group>"; };
+		66859D3314F9CE01001EDE5B /* ArrowScrollLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowScrollLeft.png; sourceTree = "<group>"; };
+		66859D3414F9CE01001EDE5B /* ArrowScrollLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ArrowScrollLeft@2x.png"; sourceTree = "<group>"; };
+		66859D3514F9CE01001EDE5B /* ArrowScrollRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowScrollRight.png; sourceTree = "<group>"; };
+		66859D3614F9CE01001EDE5B /* ArrowScrollRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ArrowScrollRight@2x.png"; sourceTree = "<group>"; };
+		66859D3714F9CE01001EDE5B /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
+		66859D3814F9CE01001EDE5B /* image_border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image_border.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +154,8 @@
 		663EEA4314F8D11F004D7765 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				66859D2C14F9CD7C001EDE5B /* Bar.h */,
+				66859D2D14F9CD7C001EDE5B /* Bar.m */,
 				663EEA3F14F8D114004D7765 /* AppDatabase.h */,
 				663EEA4014F8D114004D7765 /* AppDatabase.m */,
 				663EEA4614F8D44F004D7765 /* Config.h */,
@@ -146,6 +169,8 @@
 		663EEA4414F8D130004D7765 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				66859D2814F9CD3C001EDE5B /* BarDetailViewController.h */,
+				66859D2914F9CD3C001EDE5B /* BarDetailViewController.m */,
 				663EEA1514F8C93D004D7765 /* BarsAppDelegate.h */,
 				663EEA1614F8C93D004D7765 /* BarsAppDelegate.m */,
 				663EEA1814F8C93D004D7765 /* BarsViewController.h */,
@@ -158,6 +183,13 @@
 		663EEA4514F8D143004D7765 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				66859D3214F9CE01001EDE5B /* album.png */,
+				66859D3314F9CE01001EDE5B /* ArrowScrollLeft.png */,
+				66859D3414F9CE01001EDE5B /* ArrowScrollLeft@2x.png */,
+				66859D3514F9CE01001EDE5B /* ArrowScrollRight.png */,
+				66859D3614F9CE01001EDE5B /* ArrowScrollRight@2x.png */,
+				66859D3714F9CE01001EDE5B /* camera.png */,
+				66859D3814F9CE01001EDE5B /* image_border.png */,
 				663EEA7414F8F17E004D7765 /* selected.png */,
 				663EEA7514F8F17E004D7765 /* unselected.png */,
 			);
@@ -167,6 +199,8 @@
 		663EEA7014F8F025004D7765 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				66859D2F14F9CDDD001EDE5B /* ImageGaleryView.h */,
+				66859D3014F9CDDD001EDE5B /* ImageGaleryView.m */,
 				663EEA7114F8F03B004D7765 /* CityViewCell.h */,
 				663EEA7214F8F03B004D7765 /* CityViewCell.m */,
 			);
@@ -228,6 +262,13 @@
 				663EEA6D14F8E72E004D7765 /* db_bar.sqlite in Resources */,
 				663EEA7614F8F17E004D7765 /* selected.png in Resources */,
 				663EEA7714F8F17E004D7765 /* unselected.png in Resources */,
+				66859D3914F9CE01001EDE5B /* album.png in Resources */,
+				66859D3A14F9CE01001EDE5B /* ArrowScrollLeft.png in Resources */,
+				66859D3B14F9CE01001EDE5B /* ArrowScrollLeft@2x.png in Resources */,
+				66859D3C14F9CE01001EDE5B /* ArrowScrollRight.png in Resources */,
+				66859D3D14F9CE01001EDE5B /* ArrowScrollRight@2x.png in Resources */,
+				66859D3E14F9CE01001EDE5B /* camera.png in Resources */,
+				66859D3F14F9CE01001EDE5B /* image_border.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,6 +287,9 @@
 				663EEA6414F8E51A004D7765 /* Util.m in Sources */,
 				663EEA6714F8E579004D7765 /* MBProgressHUD.m in Sources */,
 				663EEA7314F8F03B004D7765 /* CityViewCell.m in Sources */,
+				66859D2A14F9CD3C001EDE5B /* BarDetailViewController.m in Sources */,
+				66859D2E14F9CD7C001EDE5B /* Bar.m in Sources */,
+				66859D3114F9CDDD001EDE5B /* ImageGaleryView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
