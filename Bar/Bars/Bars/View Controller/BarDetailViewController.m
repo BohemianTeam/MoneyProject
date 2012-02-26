@@ -9,6 +9,7 @@
 #import "BarDetailViewController.h"
 #import "Bar.h"
 #import "ImageGaleryView.h"
+#import "Util.h"
 
 #define TEXT_VIEW_HEIGHT 80
 #define GROUP_BUTTON_HEIGHT 54
@@ -16,6 +17,8 @@
 
 @interface BarDetailViewController(private)
 - (UIImage *)imageWithImage:(UIImage*)image scaledToSize:(CGSize)size;
+- (NSString *) getCurrentDateTimeString;
+- (void)saveImage:(UIImage *)image withName:(NSString *)name;
 @end
 
 @implementation BarDetailViewController
@@ -98,14 +101,14 @@
         _barDescription.textAlignment = UITextAlignmentLeft;
         _barDescription.lineBreakMode = UILineBreakModeWordWrap;
         _barDescription.numberOfLines = 5;
-        _barDescription.text = @"Dan Kelly's Bar & Grill, in business since 1997, is an Irish-themed bar that features Happy Hour specials and a huge selection of down-home, Irish fare appetizers.";
+        _barDescription.text = _bar.barInfo;
         [cell addSubview:_barDescription];
     }else if (section == 1) {
         int h = TABLEVIEW_HEIGHT - TEXT_VIEW_HEIGHT - GROUP_BUTTON_HEIGHT;
         int w = 320;
         int igh = 180;
         int igw = 320;
-        _galeryView = [[ImageGaleryView alloc] initWithFrame:CGRectMake((w - igw) / 2, (h - igh) / 2, igw, igh)];
+        _galeryView = [[ImageGaleryView alloc] initWithFrame:CGRectMake((w - igw) / 2, (h - igh) / 2, igw, igh) withBar:_bar];
         [cell addSubview:_galeryView];
         
     } else if (section == 2) {
@@ -136,6 +139,19 @@
     if (sender == _map) {
         
     } else if (sender == _camera) {
+        if (_picker) {
+            [_picker release];
+            _picker = nil;        
+        }
+        _picker = [[UIImagePickerController alloc] init];
+        _picker.delegate = self;
+        _picker.allowsEditing = YES;
+        _picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        
+        if (_picker) {
+            [self presentModalViewController:_picker animated:YES];
+        }
+        /*
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
         UIActionSheet *ac = [[UIActionSheet alloc] initWithTitle:@"" 
                                                         delegate:self 
@@ -146,7 +162,7 @@
         [ac showFromTabBar:self.tabBarController.tabBar];
         [ac release];
         [pool release];
-
+         */
     } else if (sender == _upload) {
         
     }
@@ -184,6 +200,10 @@
         UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
     }
     UIImage *newImage = [self imageWithImage:image scaledToSize:CGSizeMake(180, 180)];
+    NSString *imgName = [self getCurrentDateTimeString];
+    [self saveImage:newImage withName:imgName];
+    
+    [_galeryView notifyDataSetChanged];
     
     [_picker dismissModalViewControllerAnimated:NO];
     if (_picker) {
@@ -209,7 +229,22 @@
         _picker = nil;        
     }
 }
-#pragma Util
+#pragma Util mark -----
+
+- (NSString *) getCurrentDateTimeString {
+    NSDateFormatter *formatter;
+    NSString        *dateString;
+    
+    formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+    
+    dateString = [formatter stringFromDate:[NSDate date]];
+    
+    [formatter release];
+    
+    return dateString;
+}
+
 
 - (void)saveImage:(UIImage *)image withName:(NSString *)name {
     
@@ -218,11 +253,9 @@
     
     //get a path to the documents Directory
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,  YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    
+    NSString *barImageDir = [Util getImageBarDir:_bar.barName];
     // Add out name to the end of the path with .PNG
-    NSString *fullPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"/%@/%@.png",_bar.name, name]];
+    NSString *fullPath = [barImageDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png", name]];
     
     //Save the file, over write existing if exists. 
     [fileManager createFileAtPath:fullPath contents:data attributes:nil];
@@ -258,7 +291,7 @@
         goto scale_error;
     
     context = CGBitmapContextCreate(NULL, size.width, size.height, 8, 0, colorSpace, kCGImageAlphaNoneSkipFirst);
-    NSLog(@"imageOrientation:%d", image.imageOrientation);
+//    NSLog(@"imageOrientation:%d", image.imageOrientation);
     if (image.imageOrientation == UIImageOrientationLeft) {		
         CGContextRotateCTM(context, M_PI/2);
         CGContextTranslateCTM(context, 0, -size.height);		        

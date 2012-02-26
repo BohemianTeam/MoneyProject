@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class Bar;
 @interface ImageGaleryView : UIView <UIScrollViewDelegate>{
     NSMutableArray              *_views;
     NSMutableArray              *_imageLinks;
@@ -20,7 +20,10 @@
     
     int                         _currentItemIndex;
     int                         _totalItems;
+    
+    Bar                         *_bar;
 
 }
-
+- (id) initWithFrame:(CGRect)frame withBar:(Bar *) bar;
+- (void) notifyDataSetChanged;
 @end

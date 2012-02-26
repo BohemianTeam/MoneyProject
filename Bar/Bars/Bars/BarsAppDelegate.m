@@ -9,7 +9,12 @@
 #import "BarsAppDelegate.h"
 
 #import "BarsViewController.h"
+#import "AppDatabase.h"
+#import "Util.h"
+#import "Config.h"
 #import "BarDetailViewController.h"
+#import "Bar.h"
+
 @implementation BarsAppDelegate
 
 @synthesize window = _window;
@@ -24,15 +29,23 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [Util createEditableCopyOfDatabaseIfNeeded:DBFILE];
+    [[AppDatabase sharedDatabase] openDB:[Util documentsPath:DBFILE]];
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
-    BarsViewController *vc1 = [[[BarsViewController alloc] initWithNibName:@"BarsViewController" bundle:nil] autorelease];
-    BarDetailViewController *vc2 = [[[BarDetailViewController alloc] initWithBar:nil] autorelease];
+
+    BarsViewController *vc1 = [[[BarsViewController alloc] initWithID:0 type:States] autorelease];
+    vc1.title = @"USA";
+    
+    Bar *bar = [[Bar alloc] initWithID:1 cityID:1 name:@"Bar" address:@"111 AA" info:@"Dan Kelly's Bar & Grill, in business since 1997, is an Irish-themed bar that features Happy Hour specials and a huge selection of down-home, Irish fare appetizers." location:@"~"];
+    BarDetailViewController *vc2 = [[[BarDetailViewController alloc] initWithBar:bar] autorelease];
+    [bar release];
     vc2.title = @"vc2";
     UINavigationController *navVC2 = [[[UINavigationController alloc] initWithRootViewController:vc2] autorelease];
     
     
     UINavigationController *navVC1 = [[[UINavigationController alloc] initWithRootViewController:vc1] autorelease];
+    navVC1.navigationBar.barStyle = UIBarStyleBlack;
     self.tabbar = [[UITabBarController alloc] init];
     [self.tabbar addChildViewController:navVC1];
     [self.tabbar addChildViewController:navVC2];
