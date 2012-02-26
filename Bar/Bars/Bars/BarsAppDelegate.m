@@ -45,8 +45,8 @@
     
     BarsViewController *vc1 = [[[BarsViewController alloc] initWithID:0 type:States] autorelease];
     vc1.title = @"USA";
-    UIImage *tabImage = [UIImage imageNamed:@"CompletedIcon"];
-    UITabBarItem *theItem = [[UITabBarItem alloc] initWithTitle:@"USA" image:tabImage tag:2];
+    UIImage *tabImage = [UIImage imageNamed:@"usa_Icon"];
+    UITabBarItem *theItem = [[UITabBarItem alloc] initWithTitle:@"USA" image:tabImage tag:0];
     vc1.tabBarItem = theItem;
     [theItem release];
     vc1.navigationItem.rightBarButtonItem = btnCancel;
