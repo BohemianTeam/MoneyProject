@@ -8,6 +8,7 @@
 
 #import "CityViewCell.h"
 #import "CityObj.h"
+#import "AppDatabase.h"
 @implementation CityViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -18,9 +19,9 @@
         cityID = 0;
         isWish = FALSE;
         
-        btnWish = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 30, 30)];
-        [btnWish setBackgroundImage:[UIImage imageNamed:@"unselected"] forState:UIControlStateNormal];
-        [btnWish setBackgroundImage:[UIImage imageNamed:@"selected"] forState:UIControlStateSelected];
+        btnWish = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 40, 40)];
+        [btnWish setBackgroundImage:[UIImage imageNamed:@"unwish"] forState:UIControlStateNormal];
+        [btnWish setBackgroundImage:[UIImage imageNamed:@"wish"] forState:UIControlStateSelected];
         [btnWish addTarget:self action:@selector(btnWishPressed) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:btnWish];
         [btnWish release];
@@ -43,10 +44,12 @@
     {
         [btnWish setSelected:NO];
         //remove wish from database
+        [[AppDatabase sharedDatabase] updateCity:cityID withWish:NO];
     }else
     {
         [btnWish setSelected:YES];
         //add wish
+        [[AppDatabase sharedDatabase] updateCity:cityID withWish:YES];
     }
     
     isWish = !isWish;
@@ -61,7 +64,8 @@
 - (void)setData:(CityObj*)city
 {
     cityID = city.cityID;
-    [btnWish setSelected:city.isWishlist];
+    isWish = city.isWishlist;
+    [btnWish setSelected:isWish];
     lbName.text = city.cityName;
     lbPrice.text = city.cityPrice;
 }

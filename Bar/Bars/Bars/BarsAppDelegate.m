@@ -36,6 +36,8 @@
 
     BarsViewController *vc1 = [[[BarsViewController alloc] initWithID:0 type:States] autorelease];
     vc1.title = @"USA";
+    UINavigationController *navVC1 = [[[UINavigationController alloc] initWithRootViewController:vc1] autorelease];
+    navVC1.navigationBar.barStyle = UIBarStyleBlack;
     
     Bar *bar = [[Bar alloc] initWithID:1 cityID:1 name:@"Bar" address:@"111 AA" info:@"Dan Kelly's Bar & Grill, in business since 1997, is an Irish-themed bar that features Happy Hour specials and a huge selection of down-home, Irish fare appetizers." location:@"~"];
     BarDetailViewController *vc2 = [[[BarDetailViewController alloc] initWithBar:bar] autorelease];
@@ -43,12 +45,15 @@
     vc2.title = @"vc2";
     UINavigationController *navVC2 = [[[UINavigationController alloc] initWithRootViewController:vc2] autorelease];
     
+    BarsViewController *vc3 = [[[BarsViewController alloc] initWithID:0 type:Wishlists] autorelease];
+    vc3.title = @"WishList";
+    UINavigationController *navVC3 = [[[UINavigationController alloc] initWithRootViewController:vc3] autorelease];
+    navVC3.navigationBar.barStyle = UIBarStyleBlack;
     
-    UINavigationController *navVC1 = [[[UINavigationController alloc] initWithRootViewController:vc1] autorelease];
-    navVC1.navigationBar.barStyle = UIBarStyleBlack;
     self.tabbar = [[UITabBarController alloc] init];
     [self.tabbar addChildViewController:navVC1];
     [self.tabbar addChildViewController:navVC2];
+    [self.tabbar addChildViewController:navVC3];
     self.window.rootViewController = self.tabbar;
     [self.window makeKeyAndVisible];
     return YES;

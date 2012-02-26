@@ -9,7 +9,9 @@
 #import "BarsViewController.h"
 #import "AppDatabase.h"
 #import "CityObj.h"
+#import "Bar.h"
 #import "CityViewCell.h"
+
 
 #define HEIGHT_CELL 50
 
@@ -39,12 +41,13 @@
         [self.view addSubview:table];
         
         
-        [self loadDataFromDatabase];
+        //[self loadDataFromDatabase];
         
     }
     return self;
 }
 - (id) initWithID:(NSInteger)dataId type:(DataSourceType)type{
+    NSLog(@"init");
     self = [super init];
     if (self) {
         dataID = dataId;
@@ -58,7 +61,7 @@
         table.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
         [self.view addSubview:table];
      
-        [self loadDataFromDatabase];
+        //[self loadDataFromDatabase];
     }
     return self;
 }
@@ -66,8 +69,10 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"view did load");
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
     
 }
 
@@ -81,6 +86,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self loadDataFromDatabase];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -113,6 +119,11 @@
 #pragma mark - Class methods
 - (void)loadDataFromDatabase
 {
+    if(datas != nil)
+    {
+        [datas release];
+        datas = nil;
+    }
     switch (dataType) {
         case States:
             datas = nil;
@@ -120,6 +131,14 @@
             break;
         case Citys:
             datas = [[NSArray alloc] initWithArray:[[AppDatabase sharedDatabase] lookingCitysByStateID:dataID]];
+            sumRow = [datas count];
+            break;
+        case Bars:
+            datas = [[NSArray alloc] initWithArray:[[AppDatabase sharedDatabase] lookingBarsByCityID:dataID]];
+            sumRow = [datas count];
+            break;
+        case Wishlists:
+            datas = [[NSArray alloc] initWithArray:[[AppDatabase sharedDatabase] lookingCitysByWish]];
             sumRow = [datas count];
             break;
         default:
@@ -159,14 +178,12 @@
         
         NSInteger cityID = [(NSNumber*)[datas objectAtIndex:indexPath.row] intValue];
         
-        CityObj * cityObj = [[[AppDatabase sharedDatabase] lookingCityByCityID:cityID] retain];
+        CityObj * cityObj = [[AppDatabase sharedDatabase] lookingCityByCityID:cityID];
         [cell setData:cityObj];
         
         
         return cell;
-    }
-    if(dataType == States)
-    {
+    }else{
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Cell];
         if (cell == nil) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Cell] autorelease];
@@ -174,26 +191,44 @@
         }
         
         NSInteger stID = indexPath.row + 1;
-        cell.textLabel.text = [[AppDatabase sharedDatabase] lookingStateByStateID:stID];
+        
+        if(dataType == States)
+        {
+            cell.textLabel.text = [[AppDatabase sharedDatabase] lookingStateByStateID:stID];
+        }
+        if(dataType == Bars)
+        {
+            Bar *barObj = [[AppDatabase sharedDatabase] lookingBarByBarID:stID];
+            cell.textLabel.text = barObj.barName;
+        }
+        if(dataType == Wishlists)
+        {
+            stID = indexPath.row;
+            CityObj * cityObj = [[AppDatabase sharedDatabase] lookingCityByCityID:[[datas objectAtIndex:stID] intValue]];
+            cell.textLabel.text = cityObj.cityName;
+        }
         
         return cell;
     }
-    
-    return nil;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     BarsViewController *newVC = nil;
     switch (dataType) {
         case States:
             newVC = [[BarsViewController alloc] initWithID:indexPath.row type:Citys];
             newVC.title = [[AppDatabase sharedDatabase] lookingStateByStateID:indexPath.row + 1];
             break;
+        case Citys:
+            NSLog(@"Selected City");
+            NSInteger cityID = [[datas objectAtIndex:indexPath.row] intValue];
+            newVC = [[BarsViewController alloc] initWithID:cityID type:Bars];
+            CityObj * cityObj = [[AppDatabase sharedDatabase] lookingCityByCityID:cityID];
+            newVC.title = cityObj.cityName;
         default:
             break;
     }
-    
     [self.navigationController pushViewController:newVC animated:YES];
 }
 

@@ -9,9 +9,11 @@
 #import "AppDatabase.h"
 #import "Config.h"
 #import "CityObj.h"
+#import "Bar.h"
 
 @interface AppDatabase (private)
 - (sqlite3_stmt*) setupAndCompileStatement: (NSString*) stringQuery;
+- (BOOL)updateCity:(NSInteger)cityID column:(NSString*)column value:(int)val;
 @end
 @implementation AppDatabase
 @synthesize dbPath;
@@ -148,6 +150,24 @@ static AppDatabase *__sharedDatabase = nil;
     
     return [citys autorelease];
 }
+- (NSArray*)lookingCitysByWish
+{
+    NSMutableArray *citys = [[NSMutableArray alloc] init];
+    NSString *stringQuery = [NSString stringWithFormat:@"Select id From %@ Where %@ = %d", CITY_TABLE, WISHLIST_COLUMN, TRUE];
+	sqlite3_stmt *statement = [self setupAndCompileStatement: stringQuery];
+	
+	if (statement){
+		while (sqlite3_step(statement) == SQLITE_ROW)
+		{
+			NSInteger cityID = sqlite3_column_int(statement, 0);
+            [citys addObject:[NSNumber numberWithInt: cityID]];
+		}
+	}
+	sqlite3_finalize(statement);
+    
+    
+    return [citys autorelease];
+}
 - (CityObj*)lookingCityByCityID: (NSInteger)cityID
 {
     NSString *query = [NSString stringWithFormat:@"Select * From %@ Where id = %i", CITY_TABLE, cityID];
@@ -192,13 +212,67 @@ static AppDatabase *__sharedDatabase = nil;
 }
 - (NSArray*)lookingBarsByCityID:(NSInteger)cityID
 {
-    return nil;
+    NSMutableArray *bars = [[NSMutableArray alloc] init];
+    NSString *stringQuery = [NSString stringWithFormat:@"Select id From %@ Where city_id = %d", BAR_TABLE, cityID];
+	sqlite3_stmt *statement = [self setupAndCompileStatement: stringQuery];
+	
+	if (statement){
+		while (sqlite3_step(statement) == SQLITE_ROW)
+		{
+			NSInteger barID = sqlite3_column_int(statement, 0);
+            [bars addObject:[NSNumber numberWithInt: barID]];
+		}
+	}
+	sqlite3_finalize(statement);
+    
+    
+    return [bars autorelease];
 }
-- (NSString*)lookingBarByBarID:(NSInteger)barID
+- (Bar*)lookingBarByBarID:(NSInteger)barID
 {
-    return nil;
+    NSString *query = [NSString stringWithFormat:@"Select * From %@ Where id = %i", BAR_TABLE, barID];
+	sqlite3_stmt *statement = [self setupAndCompileStatement: query];
+	Bar *bar = nil;
+	if (statement)
+		if (sqlite3_step(statement) == SQLITE_ROW)
+		{
+            NSString  *name = [[NSString alloc] initWithUTF8String:(char*) sqlite3_column_text(statement, 1)];
+            NSString  *address = [[NSString alloc] initWithUTF8String:(char*) sqlite3_column_text(statement, 2)];
+            NSString  *info = [[NSString alloc] initWithUTF8String:(char*) sqlite3_column_text(statement, 3)];
+            NSInteger cityID = sqlite3_column_int(statement, 4);
+            NSString  *loca = [[NSString alloc] initWithUTF8String:(char*) sqlite3_column_text(statement, 5)];
+            
+			bar = [[Bar alloc] initWithID:barID cityID:cityID name:name address:address info:info location:loca];
+            
+            [loca release];
+            [info release];
+            [address release];
+            [name release];
+		}
+	sqlite3_finalize(statement);
+	
+	return [bar autorelease];
 }
 
+//update database method
+- (BOOL)updateCity:(NSInteger)cityID column:(NSString*)column value:(int)val
+{
+    NSString *stringQuery = [NSString stringWithFormat:@"Update %@ Set %@ = %d Where id = %d", CITY_TABLE, column, val, cityID];
+	sqlite3_stmt *statement = [self setupAndCompileStatement: stringQuery];
+	BOOL result = NO;
+    
+	if (statement)
+		if (sqlite3_step(statement) == SQLITE_ROW)
+			result = YES;
+	
+	sqlite3_finalize(statement);
+    
+    return result;
+}
+- (BOOL)updateCity:(NSInteger)cityID withWish:(BOOL)isWish
+{
+    return [self updateCity:cityID column:WISHLIST_COLUMN value:isWish];
+}
 //- (NSArray*) lookingDataByIndexPath: (NSInteger) index
 //{
 //    NSInteger videoID = [[videoIDArray objectAtIndex:index] integerValue];
