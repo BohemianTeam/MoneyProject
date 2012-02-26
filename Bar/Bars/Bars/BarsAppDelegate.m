@@ -9,7 +9,9 @@
 #import "BarsAppDelegate.h"
 
 #import "BarsViewController.h"
-
+#import "AppDatabase.h"
+#import "Util.h"
+#import "Config.h"
 @implementation BarsAppDelegate
 
 @synthesize window = _window;
@@ -24,9 +26,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [Util createEditableCopyOfDatabaseIfNeeded:DBFILE];
+    [[AppDatabase sharedDatabase] openDB:[Util documentsPath:DBFILE]];
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
-    BarsViewController *vc1 = [[[BarsViewController alloc] initWithNibName:@"BarsViewController" bundle:nil] autorelease];
+    BarsViewController *vc1 = [[[BarsViewController alloc] initWithID:0 type:States] autorelease];
+    vc1.title = @"USA";
+    
     UIViewController *vc2 = [[[UIViewController alloc] initWithNibName:nil bundle:nil] autorelease];
     vc2.title = @"vc2";
     

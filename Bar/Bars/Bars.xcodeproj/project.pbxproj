@@ -15,6 +15,15 @@
 		663EEA1714F8C93D004D7765 /* BarsAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 663EEA1614F8C93D004D7765 /* BarsAppDelegate.m */; };
 		663EEA1A14F8C93D004D7765 /* BarsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 663EEA1914F8C93D004D7765 /* BarsViewController.m */; };
 		663EEA1D14F8C93D004D7765 /* BarsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 663EEA1B14F8C93D004D7765 /* BarsViewController.xib */; };
+		663EEA4114F8D114004D7765 /* AppDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 663EEA4014F8D114004D7765 /* AppDatabase.m */; };
+		663EEA4914F8D65D004D7765 /* CityObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 663EEA4814F8D65D004D7765 /* CityObj.m */; };
+		663EEA6414F8E51A004D7765 /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 663EEA6314F8E51A004D7765 /* Util.m */; };
+		663EEA6714F8E579004D7765 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 663EEA6614F8E579004D7765 /* MBProgressHUD.m */; };
+		663EEA6D14F8E72E004D7765 /* db_bar.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 663EEA6C14F8E72E004D7765 /* db_bar.sqlite */; };
+		663EEA6F14F8E7A6004D7765 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 663EEA6E14F8E7A5004D7765 /* libsqlite3.dylib */; };
+		663EEA7314F8F03B004D7765 /* CityViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 663EEA7214F8F03B004D7765 /* CityViewCell.m */; };
+		663EEA7614F8F17E004D7765 /* selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 663EEA7414F8F17E004D7765 /* selected.png */; };
+		663EEA7714F8F17E004D7765 /* unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 663EEA7514F8F17E004D7765 /* unselected.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +40,21 @@
 		663EEA1814F8C93D004D7765 /* BarsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarsViewController.h; sourceTree = "<group>"; };
 		663EEA1914F8C93D004D7765 /* BarsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BarsViewController.m; sourceTree = "<group>"; };
 		663EEA1C14F8C93D004D7765 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/BarsViewController.xib; sourceTree = "<group>"; };
+		663EEA3F14F8D114004D7765 /* AppDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDatabase.h; path = Bars/AppDatabase.h; sourceTree = "<group>"; };
+		663EEA4014F8D114004D7765 /* AppDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDatabase.m; path = Bars/AppDatabase.m; sourceTree = "<group>"; };
+		663EEA4614F8D44F004D7765 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
+		663EEA4714F8D65D004D7765 /* CityObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityObj.h; sourceTree = "<group>"; };
+		663EEA4814F8D65D004D7765 /* CityObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityObj.m; sourceTree = "<group>"; };
+		663EEA6214F8E51A004D7765 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
+		663EEA6314F8E51A004D7765 /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
+		663EEA6514F8E579004D7765 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		663EEA6614F8E579004D7765 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		663EEA6C14F8E72E004D7765 /* db_bar.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = db_bar.sqlite; sourceTree = "<group>"; };
+		663EEA6E14F8E7A5004D7765 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		663EEA7114F8F03B004D7765 /* CityViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityViewCell.h; sourceTree = "<group>"; };
+		663EEA7214F8F03B004D7765 /* CityViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityViewCell.m; sourceTree = "<group>"; };
+		663EEA7414F8F17E004D7765 /* selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selected.png; sourceTree = "<group>"; };
+		663EEA7514F8F17E004D7765 /* unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unselected.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				663EEA6F14F8E7A6004D7765 /* libsqlite3.dylib in Frameworks */,
 				663EEA0714F8C93D004D7765 /* UIKit.framework in Frameworks */,
 				663EEA0914F8C93D004D7765 /* Foundation.framework in Frameworks */,
 				663EEA0B14F8C93D004D7765 /* CoreGraphics.framework in Frameworks */,
@@ -50,6 +75,7 @@
 		663EE9F714F8C93D004D7765 = {
 			isa = PBXGroup;
 			children = (
+				663EEA6E14F8E7A5004D7765 /* libsqlite3.dylib */,
 				663EEA0C14F8C93D004D7765 /* Bars */,
 				663EEA0514F8C93D004D7765 /* Frameworks */,
 				663EEA0314F8C93D004D7765 /* Products */,
@@ -77,11 +103,15 @@
 		663EEA0C14F8C93D004D7765 /* Bars */ = {
 			isa = PBXGroup;
 			children = (
-				663EEA1514F8C93D004D7765 /* BarsAppDelegate.h */,
-				663EEA1614F8C93D004D7765 /* BarsAppDelegate.m */,
-				663EEA1814F8C93D004D7765 /* BarsViewController.h */,
-				663EEA1914F8C93D004D7765 /* BarsViewController.m */,
-				663EEA1B14F8C93D004D7765 /* BarsViewController.xib */,
+				663EEA7014F8F025004D7765 /* Views */,
+				663EEA6514F8E579004D7765 /* MBProgressHUD.h */,
+				663EEA6614F8E579004D7765 /* MBProgressHUD.m */,
+				663EEA6214F8E51A004D7765 /* Util.h */,
+				663EEA6314F8E51A004D7765 /* Util.m */,
+				663EEA4514F8D143004D7765 /* Source */,
+				663EEA6C14F8E72E004D7765 /* db_bar.sqlite */,
+				663EEA4414F8D130004D7765 /* Controllers */,
+				663EEA4314F8D11F004D7765 /* Model */,
 				663EEA0D14F8C93D004D7765 /* Supporting Files */,
 			);
 			path = Bars;
@@ -96,6 +126,49 @@
 				663EEA1414F8C93D004D7765 /* Bars-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		663EEA4314F8D11F004D7765 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				663EEA3F14F8D114004D7765 /* AppDatabase.h */,
+				663EEA4014F8D114004D7765 /* AppDatabase.m */,
+				663EEA4614F8D44F004D7765 /* Config.h */,
+				663EEA4714F8D65D004D7765 /* CityObj.h */,
+				663EEA4814F8D65D004D7765 /* CityObj.m */,
+			);
+			name = Model;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		663EEA4414F8D130004D7765 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				663EEA1514F8C93D004D7765 /* BarsAppDelegate.h */,
+				663EEA1614F8C93D004D7765 /* BarsAppDelegate.m */,
+				663EEA1814F8C93D004D7765 /* BarsViewController.h */,
+				663EEA1914F8C93D004D7765 /* BarsViewController.m */,
+				663EEA1B14F8C93D004D7765 /* BarsViewController.xib */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		663EEA4514F8D143004D7765 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				663EEA7414F8F17E004D7765 /* selected.png */,
+				663EEA7514F8F17E004D7765 /* unselected.png */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		663EEA7014F8F025004D7765 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				663EEA7114F8F03B004D7765 /* CityViewCell.h */,
+				663EEA7214F8F03B004D7765 /* CityViewCell.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,6 +223,9 @@
 			files = (
 				663EEA1114F8C93D004D7765 /* InfoPlist.strings in Resources */,
 				663EEA1D14F8C93D004D7765 /* BarsViewController.xib in Resources */,
+				663EEA6D14F8E72E004D7765 /* db_bar.sqlite in Resources */,
+				663EEA7614F8F17E004D7765 /* selected.png in Resources */,
+				663EEA7714F8F17E004D7765 /* unselected.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,6 +239,11 @@
 				663EEA1314F8C93D004D7765 /* main.m in Sources */,
 				663EEA1714F8C93D004D7765 /* BarsAppDelegate.m in Sources */,
 				663EEA1A14F8C93D004D7765 /* BarsViewController.m in Sources */,
+				663EEA4114F8D114004D7765 /* AppDatabase.m in Sources */,
+				663EEA4914F8D65D004D7765 /* CityObj.m in Sources */,
+				663EEA6414F8E51A004D7765 /* Util.m in Sources */,
+				663EEA6714F8E579004D7765 /* MBProgressHUD.m in Sources */,
+				663EEA7314F8F03B004D7765 /* CityViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +353,7 @@
 				663EEA2214F8C93D004D7765 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

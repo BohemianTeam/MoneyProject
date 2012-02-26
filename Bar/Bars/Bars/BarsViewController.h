@@ -7,10 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface BarsViewController : UIViewController<UINavigationControllerDelegate>
+typedef enum DataSourceType
 {
-    UITableView     *tableView;
+    States = 0,
+    Citys,
+    Bars,
+    Completeds,
+    Wishlists,
+}DataSourceType;
+@interface BarsViewController : UIViewController<UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+{
+    UITableView     *table;
+    NSArray         *datas;
+    NSInteger       sumRow;
+    NSInteger       dataID;
+    DataSourceType  dataType;
 }
-
+@property(nonatomic,assign)DataSourceType  dataType;
+@property(nonatomic,assign)NSInteger       dataID;
+- (id) initWithTitle:(NSString *)title;
+- (id) initWithID:(NSInteger)dataId type:(DataSourceType)type;
 @end
