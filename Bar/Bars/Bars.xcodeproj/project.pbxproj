@@ -22,8 +22,6 @@
 		663EEA6D14F8E72E004D7765 /* db_bar.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 663EEA6C14F8E72E004D7765 /* db_bar.sqlite */; };
 		663EEA6F14F8E7A6004D7765 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 663EEA6E14F8E7A5004D7765 /* libsqlite3.dylib */; };
 		663EEA7314F8F03B004D7765 /* CityViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 663EEA7214F8F03B004D7765 /* CityViewCell.m */; };
-		663EEA7614F8F17E004D7765 /* selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 663EEA7414F8F17E004D7765 /* selected.png */; };
-		663EEA7714F8F17E004D7765 /* unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 663EEA7514F8F17E004D7765 /* unselected.png */; };
 		66859D2A14F9CD3C001EDE5B /* BarDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66859D2914F9CD3C001EDE5B /* BarDetailViewController.m */; };
 		66859D2E14F9CD7C001EDE5B /* Bar.m in Sources */ = {isa = PBXBuildFile; fileRef = 66859D2D14F9CD7C001EDE5B /* Bar.m */; };
 		66859D3114F9CDDD001EDE5B /* ImageGaleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66859D3014F9CDDD001EDE5B /* ImageGaleryView.m */; };
@@ -65,8 +63,6 @@
 		663EEA6E14F8E7A5004D7765 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		663EEA7114F8F03B004D7765 /* CityViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityViewCell.h; sourceTree = "<group>"; };
 		663EEA7214F8F03B004D7765 /* CityViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityViewCell.m; sourceTree = "<group>"; };
-		663EEA7414F8F17E004D7765 /* selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selected.png; sourceTree = "<group>"; };
-		663EEA7514F8F17E004D7765 /* unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unselected.png; sourceTree = "<group>"; };
 		66859D2814F9CD3C001EDE5B /* BarDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BarDetailViewController.h; path = "View Controller/BarDetailViewController.h"; sourceTree = "<group>"; };
 		66859D2914F9CD3C001EDE5B /* BarDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BarDetailViewController.m; path = "View Controller/BarDetailViewController.m"; sourceTree = "<group>"; };
 		66859D2C14F9CD7C001EDE5B /* Bar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bar.h; path = Bars/Model/Bar.h; sourceTree = "<group>"; };
@@ -196,8 +192,6 @@
 				66859D3614F9CE01001EDE5B /* ArrowScrollRight@2x.png */,
 				66859D3714F9CE01001EDE5B /* camera.png */,
 				66859D3814F9CE01001EDE5B /* image_border.png */,
-				663EEA7414F8F17E004D7765 /* selected.png */,
-				663EEA7514F8F17E004D7765 /* unselected.png */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -266,8 +260,6 @@
 				663EEA1114F8C93D004D7765 /* InfoPlist.strings in Resources */,
 				663EEA1D14F8C93D004D7765 /* BarsViewController.xib in Resources */,
 				663EEA6D14F8E72E004D7765 /* db_bar.sqlite in Resources */,
-				663EEA7614F8F17E004D7765 /* selected.png in Resources */,
-				663EEA7714F8F17E004D7765 /* unselected.png in Resources */,
 				66859D3914F9CE01001EDE5B /* album.png in Resources */,
 				66859D3A14F9CE01001EDE5B /* ArrowScrollLeft.png in Resources */,
 				66859D3B14F9CE01001EDE5B /* ArrowScrollLeft@2x.png in Resources */,

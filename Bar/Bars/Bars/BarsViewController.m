@@ -11,7 +11,7 @@
 #import "CityObj.h"
 #import "Bar.h"
 #import "CityViewCell.h"
-
+#import "BarDetailViewController.h"
 
 #define HEIGHT_CELL 50
 
@@ -198,7 +198,8 @@
         }
         if(dataType == Bars)
         {
-            Bar *barObj = [[AppDatabase sharedDatabase] lookingBarByBarID:stID];
+            stID = indexPath.row;
+            Bar *barObj = [[AppDatabase sharedDatabase] lookingBarByBarID:[[datas objectAtIndex:stID] intValue]];
             cell.textLabel.text = barObj.barName;
         }
         if(dataType == Wishlists)
@@ -217,19 +218,38 @@
     BarsViewController *newVC = nil;
     switch (dataType) {
         case States:
-            newVC = [[BarsViewController alloc] initWithID:indexPath.row type:Citys];
-            newVC.title = [[AppDatabase sharedDatabase] lookingStateByStateID:indexPath.row + 1];
+            NSLog(@"Selected State");
+            NSInteger stateID = indexPath.row + 1;
+            newVC = [[BarsViewController alloc] initWithID:stateID type:Citys];
+            newVC.title = [[AppDatabase sharedDatabase] lookingStateByStateID:stateID];
+            
+            [self.navigationController pushViewController:newVC animated:YES];
             break;
+            
         case Citys:
             NSLog(@"Selected City");
             NSInteger cityID = [[datas objectAtIndex:indexPath.row] intValue];
             newVC = [[BarsViewController alloc] initWithID:cityID type:Bars];
             CityObj * cityObj = [[AppDatabase sharedDatabase] lookingCityByCityID:cityID];
             newVC.title = cityObj.cityName;
+            
+            [self.navigationController pushViewController:newVC animated:YES];
+            break;
+            
+        case Bars:
+            NSLog(@"Selected Bar");
+            NSInteger barID = [[datas objectAtIndex:indexPath.row] intValue];
+            
+            Bar *bar = [[AppDatabase sharedDatabase] lookingBarByBarID:barID];
+            BarDetailViewController *barDetailVC = [[[BarDetailViewController alloc] initWithBar:bar] autorelease];           
+            barDetailVC.title = bar.barName;
+            
+            [self.navigationController pushViewController:barDetailVC animated:YES];
+            break;
         default:
             break;
     }
-    [self.navigationController pushViewController:newVC animated:YES];
+    
 }
 
 
