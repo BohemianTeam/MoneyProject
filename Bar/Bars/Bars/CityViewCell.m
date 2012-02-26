@@ -8,6 +8,7 @@
 
 #import "CityViewCell.h"
 #import "CityObj.h"
+#import "AppDatabase.h"
 @implementation CityViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -43,10 +44,12 @@
     {
         [btnWish setSelected:NO];
         //remove wish from database
+        [[AppDatabase sharedDatabase] updateCity:cityID withWish:NO];
     }else
     {
         [btnWish setSelected:YES];
         //add wish
+        [[AppDatabase sharedDatabase] updateCity:cityID withWish:YES];
     }
     
     isWish = !isWish;
@@ -61,7 +64,8 @@
 - (void)setData:(CityObj*)city
 {
     cityID = city.cityID;
-    [btnWish setSelected:city.isWishlist];
+    isWish = city.isWishlist;
+    [btnWish setSelected:isWish];
     lbName.text = city.cityName;
     lbPrice.text = city.cityPrice;
 }

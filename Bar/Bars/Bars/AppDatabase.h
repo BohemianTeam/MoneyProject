@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "sqlite3.h"
 @class CityObj;
+@class Bar;
 
 @interface AppDatabase : NSObject
 {
@@ -26,11 +27,16 @@
 
 - (NSInteger)lookingSumCitysInState: (NSInteger)stateID;
 - (NSArray*)lookingCitysByStateID:(NSInteger)stateID;
+- (NSArray*)lookingCitysByWish;
 - (CityObj*)lookingCityByCityID: (NSInteger)cityID;
 
 - (NSInteger)lookingSumBarsInCity:(NSInteger)cityID;
 - (NSArray*)lookingBarsByCityID:(NSInteger)cityID;
-- (NSString*)lookingBarByBarID:(NSInteger)barID;
+- (Bar*)lookingBarByBarID:(NSInteger)barID;
+
+//update database
+- (BOOL)updateCity:(NSInteger)cityID withWish:(BOOL)isWish;
+
 
 //
 //- (NSArray*) lookingDataByIndexPath: (NSInteger) index;

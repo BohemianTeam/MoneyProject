@@ -35,17 +35,22 @@
 
     BarsViewController *vc1 = [[[BarsViewController alloc] initWithID:0 type:States] autorelease];
     vc1.title = @"USA";
+    UINavigationController *navVC1 = [[[UINavigationController alloc] initWithRootViewController:vc1] autorelease];
+    navVC1.navigationBar.barStyle = UIBarStyleBlack;
     
     BarDetailViewController *vc2 = [[[BarDetailViewController alloc] initWithBar:nil] autorelease];
     vc2.title = @"vc2";
     UINavigationController *navVC2 = [[[UINavigationController alloc] initWithRootViewController:vc2] autorelease];
     
+    BarsViewController *vc3 = [[[BarsViewController alloc] initWithID:0 type:Wishlists] autorelease];
+    vc3.title = @"WishList";
+    UINavigationController *navVC3 = [[[UINavigationController alloc] initWithRootViewController:vc3] autorelease];
+    navVC3.navigationBar.barStyle = UIBarStyleBlack;
     
-    UINavigationController *navVC1 = [[[UINavigationController alloc] initWithRootViewController:vc1] autorelease];
-    navVC1.navigationBar.barStyle = UIBarStyleBlack;
     self.tabbar = [[UITabBarController alloc] init];
     [self.tabbar addChildViewController:navVC1];
     [self.tabbar addChildViewController:navVC2];
+    [self.tabbar addChildViewController:navVC3];
     self.window.rootViewController = self.tabbar;
     [self.window makeKeyAndVisible];
     return YES;

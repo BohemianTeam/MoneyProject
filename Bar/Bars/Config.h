@@ -17,5 +17,6 @@
 #define STATE_TABLE         @"state"
 #define CITY_TABLE          @"city"
 #define BAR_TABLE           @"bar"
-
+#define WISHLIST_COLUMN     @"is_wishlist"
+#define COMPLETE_COLUMN     @"is_completed"
 #endif
