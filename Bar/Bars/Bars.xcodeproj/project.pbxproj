@@ -34,6 +34,8 @@
 		66859D3D14F9CE01001EDE5B /* ArrowScrollRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D3614F9CE01001EDE5B /* ArrowScrollRight@2x.png */; };
 		66859D3E14F9CE01001EDE5B /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D3714F9CE01001EDE5B /* camera.png */; };
 		66859D3F14F9CE01001EDE5B /* image_border.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D3814F9CE01001EDE5B /* image_border.png */; };
+		66859D4214F9EFC0001EDE5B /* unwish@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D4014F9EFC0001EDE5B /* unwish@2x.png */; };
+		66859D4314F9EFC0001EDE5B /* wish@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D4114F9EFC0001EDE5B /* wish@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +80,8 @@
 		66859D3614F9CE01001EDE5B /* ArrowScrollRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ArrowScrollRight@2x.png"; sourceTree = "<group>"; };
 		66859D3714F9CE01001EDE5B /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		66859D3814F9CE01001EDE5B /* image_border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image_border.png; sourceTree = "<group>"; };
+		66859D4014F9EFC0001EDE5B /* unwish@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unwish@2x.png"; sourceTree = "<group>"; };
+		66859D4114F9EFC0001EDE5B /* wish@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wish@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +187,8 @@
 		663EEA4514F8D143004D7765 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				66859D4014F9EFC0001EDE5B /* unwish@2x.png */,
+				66859D4114F9EFC0001EDE5B /* wish@2x.png */,
 				66859D3214F9CE01001EDE5B /* album.png */,
 				66859D3314F9CE01001EDE5B /* ArrowScrollLeft.png */,
 				66859D3414F9CE01001EDE5B /* ArrowScrollLeft@2x.png */,
@@ -269,6 +275,8 @@
 				66859D3D14F9CE01001EDE5B /* ArrowScrollRight@2x.png in Resources */,
 				66859D3E14F9CE01001EDE5B /* camera.png in Resources */,
 				66859D3F14F9CE01001EDE5B /* image_border.png in Resources */,
+				66859D4214F9EFC0001EDE5B /* unwish@2x.png in Resources */,
+				66859D4314F9EFC0001EDE5B /* wish@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

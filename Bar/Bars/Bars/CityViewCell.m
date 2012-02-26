@@ -19,9 +19,9 @@
         cityID = 0;
         isWish = FALSE;
         
-        btnWish = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 30, 30)];
-        [btnWish setBackgroundImage:[UIImage imageNamed:@"unselected"] forState:UIControlStateNormal];
-        [btnWish setBackgroundImage:[UIImage imageNamed:@"selected"] forState:UIControlStateSelected];
+        btnWish = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 40, 40)];
+        [btnWish setBackgroundImage:[UIImage imageNamed:@"unwish"] forState:UIControlStateNormal];
+        [btnWish setBackgroundImage:[UIImage imageNamed:@"wish"] forState:UIControlStateSelected];
         [btnWish addTarget:self action:@selector(btnWishPressed) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:btnWish];
         [btnWish release];
