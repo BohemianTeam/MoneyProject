@@ -55,13 +55,13 @@
         _leftArrow = [[UIButton alloc] init];
         _leftArrow.frame = CGRectMake(0, (233 - 46) / 2, 46, 46);
         _leftArrow.tintColor = [UIColor blueColor];
-        [_leftArrow setImage:[UIImage imageNamed:@"left_arrow.jpeg"] forState:UIControlStateNormal];
+        [_leftArrow setImage:[UIImage imageNamed:@"ArrowLeft"] forState:UIControlStateNormal];
         [_leftArrow addTarget:self action:@selector(didArrowClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_leftArrow];
         
         _rightArrow = [[UIButton alloc] init];
         _rightArrow.frame = CGRectMake(274, (233 - 46) / 2, 46, 46);
-        [_rightArrow setImage:[UIImage imageNamed:@"right-arrow.jpeg"] forState:UIControlStateNormal];
+        [_rightArrow setImage:[UIImage imageNamed:@"ArrowLeft"] forState:UIControlStateNormal];
         [_rightArrow addTarget:self action:@selector(didArrowClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_rightArrow];
         

@@ -141,8 +141,13 @@
             datas = [[NSArray alloc] initWithArray:[[AppDatabase sharedDatabase] lookingCitysByWish]];
             sumRow = [datas count];
             break;
+        case Completeds:
+            datas = [[NSArray alloc] initWithArray:[[AppDatabase sharedDatabase] lookingCitysByCompleted]];
+            sumRow = [datas count];
+            break;
         default:
             datas = nil;
+            sumRow = 0;
             break;
     }
     
@@ -202,13 +207,15 @@
             Bar *barObj = [[AppDatabase sharedDatabase] lookingBarByBarID:[[datas objectAtIndex:stID] intValue]];
             cell.textLabel.text = barObj.barName;
         }
-        if(dataType == Wishlists)
+        if(dataType == Wishlists || dataType == Completeds)
         {
             stID = indexPath.row;
             CityObj * cityObj = [[AppDatabase sharedDatabase] lookingCityByCityID:[[datas objectAtIndex:stID] intValue]];
             cell.textLabel.text = cityObj.cityName;
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.textLabel.textAlignment = UITextAlignmentCenter;
         }
-        
+                
         return cell;
     }
 }

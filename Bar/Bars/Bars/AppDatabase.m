@@ -168,6 +168,24 @@ static AppDatabase *__sharedDatabase = nil;
     
     return [citys autorelease];
 }
+- (NSArray*)lookingCitysByCompleted
+{
+    NSMutableArray *citys = [[NSMutableArray alloc] init];
+    NSString *stringQuery = [NSString stringWithFormat:@"Select id From %@ Where %@ = %d", CITY_TABLE, COMPLETE_COLUMN, TRUE];
+	sqlite3_stmt *statement = [self setupAndCompileStatement: stringQuery];
+	
+	if (statement){
+		while (sqlite3_step(statement) == SQLITE_ROW)
+		{
+			NSInteger cityID = sqlite3_column_int(statement, 0);
+            [citys addObject:[NSNumber numberWithInt: cityID]];
+		}
+	}
+	sqlite3_finalize(statement);
+    
+    
+    return [citys autorelease];
+}
 - (CityObj*)lookingCityByCityID: (NSInteger)cityID
 {
     NSString *query = [NSString stringWithFormat:@"Select * From %@ Where id = %i", CITY_TABLE, cityID];
