@@ -9,7 +9,7 @@
 #import "BarsAppDelegate.h"
 
 #import "BarsViewController.h"
-
+#import "BarDetailViewController.h"
 @implementation BarsAppDelegate
 
 @synthesize window = _window;
@@ -27,13 +27,15 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
     BarsViewController *vc1 = [[[BarsViewController alloc] initWithNibName:@"BarsViewController" bundle:nil] autorelease];
-    UIViewController *vc2 = [[[UIViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+    BarDetailViewController *vc2 = [[[BarDetailViewController alloc] initWithBar:nil] autorelease];
     vc2.title = @"vc2";
+    UINavigationController *navVC2 = [[[UINavigationController alloc] initWithRootViewController:vc2] autorelease];
+    
     
     UINavigationController *navVC1 = [[[UINavigationController alloc] initWithRootViewController:vc1] autorelease];
     self.tabbar = [[UITabBarController alloc] init];
     [self.tabbar addChildViewController:navVC1];
-    [self.tabbar addChildViewController:vc2];
+    [self.tabbar addChildViewController:navVC2];
     self.window.rootViewController = self.tabbar;
     [self.window makeKeyAndVisible];
     return YES;

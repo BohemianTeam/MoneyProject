@@ -15,6 +15,16 @@
 		663EEA1714F8C93D004D7765 /* BarsAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 663EEA1614F8C93D004D7765 /* BarsAppDelegate.m */; };
 		663EEA1A14F8C93D004D7765 /* BarsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 663EEA1914F8C93D004D7765 /* BarsViewController.m */; };
 		663EEA1D14F8C93D004D7765 /* BarsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 663EEA1B14F8C93D004D7765 /* BarsViewController.xib */; };
+		66B31C8814F8D0D1003C88CB /* BarDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B31C8714F8D0D1003C88CB /* BarDetailViewController.m */; };
+		66B31C8C14F8D20E003C88CB /* Bar.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B31C8B14F8D20E003C88CB /* Bar.m */; };
+		66B31D3B14F8E0E1003C88CB /* image_border.png in Resources */ = {isa = PBXBuildFile; fileRef = 66B31D3A14F8E0E1003C88CB /* image_border.png */; };
+		66B31D4014F8E18B003C88CB /* ArrowScrollLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 66B31D3C14F8E18B003C88CB /* ArrowScrollLeft.png */; };
+		66B31D4114F8E18B003C88CB /* ArrowScrollLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66B31D3D14F8E18B003C88CB /* ArrowScrollLeft@2x.png */; };
+		66B31D4214F8E18B003C88CB /* ArrowScrollRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 66B31D3E14F8E18B003C88CB /* ArrowScrollRight.png */; };
+		66B31D4314F8E18B003C88CB /* ArrowScrollRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66B31D3F14F8E18B003C88CB /* ArrowScrollRight@2x.png */; };
+		66B31D4B14F8E262003C88CB /* ImageGaleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B31D4A14F8E262003C88CB /* ImageGaleryView.m */; };
+		66B31D4D14F8F48C003C88CB /* album.png in Resources */ = {isa = PBXBuildFile; fileRef = 66B31D4C14F8F48C003C88CB /* album.png */; };
+		66B31D4F14F8F57F003C88CB /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 66B31D4E14F8F57F003C88CB /* camera.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +41,19 @@
 		663EEA1814F8C93D004D7765 /* BarsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarsViewController.h; sourceTree = "<group>"; };
 		663EEA1914F8C93D004D7765 /* BarsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BarsViewController.m; sourceTree = "<group>"; };
 		663EEA1C14F8C93D004D7765 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/BarsViewController.xib; sourceTree = "<group>"; };
+		66B31C8614F8D0D1003C88CB /* BarDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BarDetailViewController.h; path = "View Controller/BarDetailViewController.h"; sourceTree = "<group>"; };
+		66B31C8714F8D0D1003C88CB /* BarDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BarDetailViewController.m; path = "View Controller/BarDetailViewController.m"; sourceTree = "<group>"; };
+		66B31C8A14F8D20E003C88CB /* Bar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bar.h; path = Model/Bar.h; sourceTree = "<group>"; };
+		66B31C8B14F8D20E003C88CB /* Bar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Bar.m; path = Model/Bar.m; sourceTree = "<group>"; };
+		66B31D3A14F8E0E1003C88CB /* image_border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image_border.png; sourceTree = "<group>"; };
+		66B31D3C14F8E18B003C88CB /* ArrowScrollLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowScrollLeft.png; sourceTree = "<group>"; };
+		66B31D3D14F8E18B003C88CB /* ArrowScrollLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ArrowScrollLeft@2x.png"; sourceTree = "<group>"; };
+		66B31D3E14F8E18B003C88CB /* ArrowScrollRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowScrollRight.png; sourceTree = "<group>"; };
+		66B31D3F14F8E18B003C88CB /* ArrowScrollRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ArrowScrollRight@2x.png"; sourceTree = "<group>"; };
+		66B31D4914F8E262003C88CB /* ImageGaleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageGaleryView.h; path = View/ImageGaleryView.h; sourceTree = "<group>"; };
+		66B31D4A14F8E262003C88CB /* ImageGaleryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageGaleryView.m; path = View/ImageGaleryView.m; sourceTree = "<group>"; };
+		66B31D4C14F8F48C003C88CB /* album.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = album.png; sourceTree = "<group>"; };
+		66B31D4E14F8F57F003C88CB /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +100,10 @@
 		663EEA0C14F8C93D004D7765 /* Bars */ = {
 			isa = PBXGroup;
 			children = (
+				66B31D4814F8E212003C88CB /* View */,
+				66B31D3614F8E090003C88CB /* Resouces */,
+				66B31C8914F8D1EE003C88CB /* Model */,
+				66B31C8414F8D090003C88CB /* View Controller */,
 				663EEA1514F8C93D004D7765 /* BarsAppDelegate.h */,
 				663EEA1614F8C93D004D7765 /* BarsAppDelegate.m */,
 				663EEA1814F8C93D004D7765 /* BarsViewController.h */,
@@ -96,6 +123,55 @@
 				663EEA1414F8C93D004D7765 /* Bars-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		66B31C8414F8D090003C88CB /* View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				66B31C8614F8D0D1003C88CB /* BarDetailViewController.h */,
+				66B31C8714F8D0D1003C88CB /* BarDetailViewController.m */,
+			);
+			name = "View Controller";
+			sourceTree = "<group>";
+		};
+		66B31C8914F8D1EE003C88CB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				66B31C8A14F8D20E003C88CB /* Bar.h */,
+				66B31C8B14F8D20E003C88CB /* Bar.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		66B31D3614F8E090003C88CB /* Resouces */ = {
+			isa = PBXGroup;
+			children = (
+				66B31D3714F8E098003C88CB /* Image */,
+			);
+			name = Resouces;
+			sourceTree = "<group>";
+		};
+		66B31D3714F8E098003C88CB /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				66B31D4E14F8F57F003C88CB /* camera.png */,
+				66B31D4C14F8F48C003C88CB /* album.png */,
+				66B31D3C14F8E18B003C88CB /* ArrowScrollLeft.png */,
+				66B31D3D14F8E18B003C88CB /* ArrowScrollLeft@2x.png */,
+				66B31D3E14F8E18B003C88CB /* ArrowScrollRight.png */,
+				66B31D3F14F8E18B003C88CB /* ArrowScrollRight@2x.png */,
+				66B31D3A14F8E0E1003C88CB /* image_border.png */,
+			);
+			name = Image;
+			sourceTree = "<group>";
+		};
+		66B31D4814F8E212003C88CB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				66B31D4914F8E262003C88CB /* ImageGaleryView.h */,
+				66B31D4A14F8E262003C88CB /* ImageGaleryView.m */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,6 +226,13 @@
 			files = (
 				663EEA1114F8C93D004D7765 /* InfoPlist.strings in Resources */,
 				663EEA1D14F8C93D004D7765 /* BarsViewController.xib in Resources */,
+				66B31D3B14F8E0E1003C88CB /* image_border.png in Resources */,
+				66B31D4014F8E18B003C88CB /* ArrowScrollLeft.png in Resources */,
+				66B31D4114F8E18B003C88CB /* ArrowScrollLeft@2x.png in Resources */,
+				66B31D4214F8E18B003C88CB /* ArrowScrollRight.png in Resources */,
+				66B31D4314F8E18B003C88CB /* ArrowScrollRight@2x.png in Resources */,
+				66B31D4D14F8F48C003C88CB /* album.png in Resources */,
+				66B31D4F14F8F57F003C88CB /* camera.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,6 +246,9 @@
 				663EEA1314F8C93D004D7765 /* main.m in Sources */,
 				663EEA1714F8C93D004D7765 /* BarsAppDelegate.m in Sources */,
 				663EEA1A14F8C93D004D7765 /* BarsViewController.m in Sources */,
+				66B31C8814F8D0D1003C88CB /* BarDetailViewController.m in Sources */,
+				66B31C8C14F8D20E003C88CB /* Bar.m in Sources */,
+				66B31D4B14F8E262003C88CB /* ImageGaleryView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +358,7 @@
 				663EEA2214F8C93D004D7765 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
