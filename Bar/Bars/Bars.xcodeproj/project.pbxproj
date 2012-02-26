@@ -24,6 +24,7 @@
 		663EEA7314F8F03B004D7765 /* CityViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 663EEA7214F8F03B004D7765 /* CityViewCell.m */; };
 		663EEA7614F8F17E004D7765 /* selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 663EEA7414F8F17E004D7765 /* selected.png */; };
 		663EEA7714F8F17E004D7765 /* unselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 663EEA7514F8F17E004D7765 /* unselected.png */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		663EEA7214F8F03B004D7765 /* CityViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityViewCell.m; sourceTree = "<group>"; };
 		663EEA7414F8F17E004D7765 /* selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selected.png; sourceTree = "<group>"; };
 		663EEA7514F8F17E004D7765 /* unselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unselected.png; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
