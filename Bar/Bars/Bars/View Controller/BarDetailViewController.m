@@ -51,13 +51,8 @@
 
 - (void) dealloc {
     [_tableView release];
-    [_bar release];
     [_barDescription release];
     [_galeryView release];
-    [_map release];
-    [_camera release];
-    [_upload release];
-    
     
     [super dealloc];
 }
@@ -103,10 +98,11 @@
         _barDescription.numberOfLines = 5;
         _barDescription.text = _bar.barInfo;
         [cell addSubview:_barDescription];
-    }else if (section == 1) {
+    } 
+    else if (section == 1) {
         int h = TABLEVIEW_HEIGHT - TEXT_VIEW_HEIGHT - GROUP_BUTTON_HEIGHT;
         int w = 320;
-        int igh = 180;
+        int igh = 233;
         int igw = 320;
         _galeryView = [[ImageGaleryView alloc] initWithFrame:CGRectMake((w - igw) / 2, (h - igh) / 2, igw, igh) withBar:_bar];
         [cell addSubview:_galeryView];
@@ -199,9 +195,9 @@
         image = [info objectForKey:UIImagePickerControllerOriginalImage];
         UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
     }
-    UIImage *newImage = [self imageWithImage:image scaledToSize:CGSizeMake(180, 180)];
+//    UIImage *newImage = [self imageWithImage:image scaledToSize:CGSizeMake(180, 180)];
     NSString *imgName = [self getCurrentDateTimeString];
-    [self saveImage:newImage withName:imgName];
+    [self saveImage:image withName:imgName];
     
     [_galeryView notifyDataSetChanged];
     
