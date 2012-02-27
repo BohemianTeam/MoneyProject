@@ -10,6 +10,7 @@
 #import "Bar.h"
 #import "ImageGaleryView.h"
 #import "Util.h"
+#import "MapViewController.h"
 
 #define TEXT_VIEW_HEIGHT 80
 #define GROUP_BUTTON_HEIGHT 54
@@ -133,7 +134,10 @@
 
 - (void) didButtonClicked:(id) sender {
     if (sender == _map) {
-        
+        MapViewController *mapVC = [[MapViewController alloc] initWithAddress:_bar.barAddress];
+        mapVC.title = _bar.barName;
+        [self.navigationController pushViewController:mapVC animated:YES];
+        [mapVC release];
     } else if (sender == _camera) {
         if (_picker) {
             [_picker release];
