@@ -463,15 +463,15 @@
 		66859D7014FA2C42001EDE5B /* Ad Hoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tran Manh Hung";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tran Manh Hung";
 				CODE_SIGN_RESOURCE_RULES_PATH = Entitlements.plist;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bars/Bars-Prefix.pch";
 				INFOPLIST_FILE = "Bars/Bars-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
+				PROVISIONING_PROFILE = "1148FECA-4778-4DBA-90C7-C55C1E7D4C1E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1148FECA-4778-4DBA-90C7-C55C1E7D4C1E";
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Ad Hoc";
