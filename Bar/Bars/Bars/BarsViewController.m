@@ -46,6 +46,15 @@
     }
     return self;
 }
+- (void)sendEmail
+{
+    NSLog(@"request...");
+    UIAlertView *reqAlert = [[UIAlertView alloc] initWithTitle:@"Request Email" message:@"Alert demo" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    
+    [reqAlert show];
+    
+    [reqAlert release];
+}
 - (id) initWithID:(NSInteger)dataId type:(DataSourceType)type{
     NSLog(@"init");
     self = [super init];
@@ -61,6 +70,12 @@
         table.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
         [self.view addSubview:table];
      
+        UIBarButtonItem *btnRequest = [[UIBarButtonItem alloc] initWithTitle:@"Request" 
+                                                                       style:UIBarButtonItemStyleBordered 
+                                                                      target:self 
+                                                                      action:@selector(sendEmail)];
+        self.navigationItem.rightBarButtonItem = btnRequest;
+        [btnRequest release];
         //[self loadDataFromDatabase];
     }
     return self;

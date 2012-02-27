@@ -11,13 +11,7 @@
 @implementation AddressAnnotation
 
 @synthesize coordinate;
-
-- (NSString *)subtitle{
-	return @"Sub Title";
-}
-- (NSString *)title{
-	return @"Title";
-}
+@synthesize title = mTitle;
 
 -(id)initWithCoordinate:(CLLocationCoordinate2D) c {
 	coordinate = c;
@@ -42,7 +36,7 @@
 -(CLLocationCoordinate2D) addressLocation {
 	NSString *urlString = [NSString stringWithFormat:@"http://maps.google.com/maps/geo?q=%@&output=csv", 
                            [_address stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-
+    NSLog(@"%@",_address);
 	NSString *locationString = [NSString stringWithContentsOfURL:[NSURL URLWithString:urlString]];
 	NSArray *listItems = [locationString componentsSeparatedByString:@","];
 	
@@ -89,6 +83,7 @@
 	}
 	
 	_addAnnotation = [[AddressAnnotation alloc] initWithCoordinate:location];
+    _addAnnotation.title = _address;
 	[_mapView addAnnotation:_addAnnotation];
 	
 	[_mapView setRegion:region animated:TRUE];

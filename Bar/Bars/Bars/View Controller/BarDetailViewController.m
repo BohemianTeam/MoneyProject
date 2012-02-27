@@ -135,6 +135,7 @@
 - (void) didButtonClicked:(id) sender {
     if (sender == _map) {
         MapViewController *mapVC = [[MapViewController alloc] initWithAddress:_bar.barAddress];
+        mapVC.title = _bar.barName;
         [self.navigationController pushViewController:mapVC animated:YES];
         [mapVC release];
     } else if (sender == _camera) {

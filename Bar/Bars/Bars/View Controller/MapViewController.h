@@ -12,8 +12,10 @@
 	CLLocationCoordinate2D coordinate;
 	
 	NSString *mTitle;
-	NSString *mSubTitle;
+//	NSString *mSubTitle;
 }
+@property (nonatomic, assign) NSString *title;
+
 @end
 
 @interface MapViewController : UIViewController <MKMapViewDelegate> {
