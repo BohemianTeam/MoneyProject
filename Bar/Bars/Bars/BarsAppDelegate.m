@@ -26,10 +26,7 @@
     [_tabbar release];
     [super dealloc];
 }
-- (void)sendEmail
-{
-    NSLog(@"request...");
-}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [Util createEditableCopyOfDatabaseIfNeeded:DBFILE];
@@ -37,10 +34,7 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
 
-    UIBarButtonItem *btnCancel = [[UIBarButtonItem alloc] initWithTitle:@"Request" 
-                                                                  style:UIBarButtonItemStyleBordered 
-                                                                 target:self 
-                                                                 action:@selector(sendEmail)];    
+        
 
     
     BarsViewController *vc1 = [[[BarsViewController alloc] initWithID:0 type:States] autorelease];
@@ -49,8 +43,8 @@
     UITabBarItem *theItem = [[UITabBarItem alloc] initWithTitle:@"USA" image:tabImage tag:0];
     vc1.tabBarItem = theItem;
     [theItem release];
-    vc1.navigationItem.rightBarButtonItem = btnCancel;
-    [btnCancel release];
+    
+
     UINavigationController *navVC1 = [[[UINavigationController alloc] initWithRootViewController:vc1] autorelease];
     navVC1.navigationBar.barStyle = UIBarStyleBlack;
     
@@ -67,7 +61,7 @@
     
     //complete view controller
     BarsViewController *vc3 = [[[BarsViewController alloc] initWithID:0 type:Completeds] autorelease];
-    vc3.title = @"Complete";
+    vc3.title = @"Completed";
     tabImage = [UIImage imageNamed:@"CompletedIcon"];
     theItem = [[UITabBarItem alloc] initWithTitle:@"Completed" image:tabImage tag:2];
     vc3.tabBarItem = theItem;

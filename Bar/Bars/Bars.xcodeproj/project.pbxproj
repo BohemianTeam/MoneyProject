@@ -40,7 +40,7 @@
 		66859D5B14FA1C0A001EDE5B /* CompletedIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D5A14FA1C0A001EDE5B /* CompletedIcon@2x.png */; };
 		66859D5D14FA1D22001EDE5B /* usa@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D5C14FA1D22001EDE5B /* usa@2x.png */; };
 		66859D6114FA1EA8001EDE5B /* usaIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D6014FA1EA8001EDE5B /* usaIcon@2x.png */; };
-		66859D6514FA20BB001EDE5B /* usa_Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D6414FA20BB001EDE5B /* usa_Icon@2x.png */; };
+		66859D6C14FA26C1001EDE5B /* usa_Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D6B14FA26C1001EDE5B /* usa_Icon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,7 +91,7 @@
 		66859D5A14FA1C0A001EDE5B /* CompletedIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CompletedIcon@2x.png"; sourceTree = "<group>"; };
 		66859D5C14FA1D22001EDE5B /* usa@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "usa@2x.png"; sourceTree = "<group>"; };
 		66859D6014FA1EA8001EDE5B /* usaIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "usaIcon@2x.png"; sourceTree = "<group>"; };
-		66859D6414FA20BB001EDE5B /* usa_Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "usa_Icon@2x.png"; sourceTree = "<group>"; };
+		66859D6B14FA26C1001EDE5B /* usa_Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "usa_Icon@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,7 +197,7 @@
 		663EEA4514F8D143004D7765 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				66859D6414FA20BB001EDE5B /* usa_Icon@2x.png */,
+				66859D6B14FA26C1001EDE5B /* usa_Icon@2x.png */,
 				66859D6014FA1EA8001EDE5B /* usaIcon@2x.png */,
 				66859D5C14FA1D22001EDE5B /* usa@2x.png */,
 				66859D5A14FA1C0A001EDE5B /* CompletedIcon@2x.png */,
@@ -296,7 +296,7 @@
 				66859D5B14FA1C0A001EDE5B /* CompletedIcon@2x.png in Resources */,
 				66859D5D14FA1D22001EDE5B /* usa@2x.png in Resources */,
 				66859D6114FA1EA8001EDE5B /* usaIcon@2x.png in Resources */,
-				66859D6514FA20BB001EDE5B /* usa_Icon@2x.png in Resources */,
+				66859D6C14FA26C1001EDE5B /* usa_Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,7 +348,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tien Doan (25FKU2MUR7)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -363,6 +364,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -372,7 +375,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tien Doan (25FKU2MUR7)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -381,6 +385,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -389,10 +395,15 @@
 		663EEA2114F8C93D004D7765 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				CODE_SIGN_RESOURCE_RULES_PATH = Entitlements.plist;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bars/Bars-Prefix.pch";
 				INFOPLIST_FILE = "Bars/Bars-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -400,13 +411,56 @@
 		663EEA2214F8C93D004D7765 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				CODE_SIGN_RESOURCE_RULES_PATH = Entitlements.plist;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bars/Bars-Prefix.pch";
 				INFOPLIST_FILE = "Bars/Bars-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
+		};
+		66859D6F14FA2C42001EDE5B /* Ad Hoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Ad Hoc";
+		};
+		66859D7014FA2C42001EDE5B /* Ad Hoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				CODE_SIGN_RESOURCE_RULES_PATH = Entitlements.plist;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Bars/Bars-Prefix.pch";
+				INFOPLIST_FILE = "Bars/Bars-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
+				WRAPPER_EXTENSION = app;
+			};
+			name = "Ad Hoc";
 		};
 /* End XCBuildConfiguration section */
 
@@ -416,6 +470,7 @@
 			buildConfigurations = (
 				663EEA1E14F8C93D004D7765 /* Debug */,
 				663EEA1F14F8C93D004D7765 /* Release */,
+				66859D6F14FA2C42001EDE5B /* Ad Hoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -425,6 +480,7 @@
 			buildConfigurations = (
 				663EEA2114F8C93D004D7765 /* Debug */,
 				663EEA2214F8C93D004D7765 /* Release */,
+				66859D7014FA2C42001EDE5B /* Ad Hoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

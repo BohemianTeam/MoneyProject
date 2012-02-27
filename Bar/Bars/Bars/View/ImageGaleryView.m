@@ -11,9 +11,9 @@
 #import "Util.h"
 
 #define kItemPerPage 1
-#define PAGE_WIDTH  180
-#define PAGE_HEIGH  180
-
+#define PAGE_WIDTH  200
+#define PAGE_HEIGH  188
+#define BORDER 10
 @interface ImageGaleryView (private)
 - (void) generateScroll;
 - (void) updateArrowButton;
@@ -27,12 +27,19 @@
 - (id) initWithFrame:(CGRect)frame withBar:(Bar *)bar{
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor clearColor];
         _bar = [bar retain];
         
         _views = [[NSMutableArray alloc] init];
         _imageLinks = [[NSMutableArray alloc] init];
         
-        _scrollFrame = CGRectMake((frame.size.width - PAGE_WIDTH) / 2, 0, PAGE_WIDTH, PAGE_HEIGH);
+        _scrollFrame = CGRectMake((frame.size.width - PAGE_WIDTH) / 2, BORDER + BORDER + 1, PAGE_WIDTH, PAGE_HEIGH);
+        
+        UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"image_border.png"]];
+        bg.frame = CGRectMake((frame.size.width - 247) / 2 , 0, 248, 233);
+        [self addSubview:bg];
+        [bg release];
+        
         _scrollView = [[UIScrollView alloc] initWithFrame:_scrollFrame];
         
         _scrollView.delegate = self;
@@ -41,17 +48,19 @@
         _scrollView.clipsToBounds = NO;
         _scrollView.showsHorizontalScrollIndicator = NO;
         _scrollView.showsVerticalScrollIndicator = NO;
+        _scrollView.backgroundColor = [UIColor clearColor];
+        _scrollView.scrollEnabled = NO;
         [self addSubview:_scrollView];
         
         _leftArrow = [[UIButton alloc] init];
-        _leftArrow.frame = CGRectMake(20, (PAGE_HEIGH - 46) / 2, 46, 46);
+        _leftArrow.frame = CGRectMake(0, (233 - 46) / 2, 46, 46);
         _leftArrow.tintColor = [UIColor blueColor];
         [_leftArrow setImage:[UIImage imageNamed:@"ArrowRight"] forState:UIControlStateNormal];
         [_leftArrow addTarget:self action:@selector(didArrowClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_leftArrow];
         
         _rightArrow = [[UIButton alloc] init];
-        _rightArrow.frame = CGRectMake(258, (PAGE_HEIGH - 46) / 2, 46, 46);
+        _rightArrow.frame = CGRectMake(274, (233 - 46) / 2, 46, 46);
         [_rightArrow setImage:[UIImage imageNamed:@"ArrowLeft"] forState:UIControlStateNormal];
         [_rightArrow addTarget:self action:@selector(didArrowClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_rightArrow];
@@ -104,8 +113,10 @@
 
 
 - (void) generateScroll {
-    for (UIView *subview in _scrollView.subviews) {
-        [subview removeFromSuperview];
+    if ([_scrollView.subviews count] > 0) {
+        for (UIView *subview in _scrollView.subviews) {
+            [subview removeFromSuperview];
+        }
     }
     
     for (int j = 0; j < [_imageLinks count]; j++) {
@@ -180,6 +191,8 @@
 
 
 - (void) dealloc {
+    [_leftArrow release];
+    [_rightArrow release];
     [_views release];
     [_scrollView release];
     [_imageLinks release];
