@@ -11,6 +11,7 @@
 #import "ImgDownloaderView.h"
 #import "Util.h"
 #import "MapViewController.h"
+#import "CJSONDeserializer.h"
 
 #define ROW_VENUE_DETAIL 4
 #define WIDTH_ADDRESS_VENUE 130
@@ -42,6 +43,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     imageDownloadsInProgress = [[NSMutableDictionary alloc] init];
+    
+    isGoDetailPage = NO;
+    //check is starred
+    isStarred = [Util isStarred:venueCode];
+    NSLog(@"isStarred: %d", isStarred);
+    
     // Custom initialization
     venueDetailTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 480) style:UITableViewStylePlain];
     venueDetailTable.dataSource = self;
@@ -51,19 +58,47 @@
     [self.view addSubview:venueDetailTable];
     
     //create starred button
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0, 0, 56, 65)];
-    [btn setImage:[UIImage imageNamed:@"unstarred"] forState:UIControlStateNormal];
-    [btn setImage:[UIImage imageNamed:@"starred"] forState:UIControlStateSelected];
+    btnStarred = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btnStarred setFrame:CGRectMake(0, 0, 56, 65)];
+    [btnStarred setImage:[UIImage imageNamed:@"unstarred"] forState:UIControlStateNormal];
+    [btnStarred setImage:[UIImage imageNamed:@"starred"] forState:UIControlStateSelected];
+    [btnStarred addTarget:self action:@selector(btnStarredPressed) forControlEvents:UIControlEventTouchUpInside];
+    [btnStarred setSelected:isStarred];
+    [btnStarred setEnabled:NO];
     
-    UIBarButtonItem *btnStarred = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    self.navigationItem.rightBarButtonItem = btnStarred;
+    UIBarButtonItem *btnBarStarred = [[UIBarButtonItem alloc] initWithCustomView:btnStarred];
+    self.navigationItem.rightBarButtonItem = btnBarStarred;
+    
+    //init service
+    service = [[Service alloc] init];
+    service.delegate = self;
+    service.canShowAlert = YES;
+    service.canShowLoading = YES;
+    
     //get data
     haveData = NO;
     [self getDataFromServer];
 
+    [btnBarStarred release];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    NSLog(@"viewWillDisappear");
+    
+    if(!isGoDetailPage)
+    {
+        [service stop];
+        
+        NSArray *allDownloads = [self.imageDownloadsInProgress allValues];
+        [allDownloads makeObjectsPerformSelector:@selector(cancelDownload)];
+    }
+    
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    isGoDetailPage = NO;
+}
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -78,12 +113,23 @@
 }
 - (void)dealloc
 {
+    [service stop];
+    [service release];
     [imageDownloadsInProgress release];
     [venueRoomList release];
     [venueDetailTable release];
     [venueCode release];
     [super dealloc];
 }
+#pragma mark - Event methods
+- (void)btnStarredPressed
+{
+    NSLog(@"starred pressed: %d", isStarred);
+    
+    NSString *stt = (isStarred == YES)?OFF:ON;
+    [self setStarredStatus:stt];
+}
+
 #pragma mark - custom cell
 - (CGFloat)heightForDescriptionCell
 {
@@ -219,7 +265,7 @@
     //set lb email
     UILabel *lbEmail = [[UILabel alloc] init];
     lbEmail.backgroundColor = [UIColor clearColor];
-    lbEmail.text = @"test";//[venueObj getEmail];
+    lbEmail.text = [venueObj getEmail];
     lbEmail.textColor = [UIColor whiteColor];
     lbEmail.font = [UIFont fontWithName:@"Arial" size:14];
     [lbEmail setFrame:CGRectMake(WIDTH_VIEW - width, 20,width, 15)];
@@ -433,31 +479,63 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    isGoDetailPage = YES;
     if(indexPath.section == 0 && indexPath.row == 1)
     {
         MapViewController *mapView = [[MapViewController alloc] initWithNibName:@"MapViewController" bundle:nil];
         mapView.title = [venueObj getName];
         mapView.locaStr = [venueObj getCoordinates];
+        
         [self.navigationController pushViewController:mapView animated:YES];
+        [mapView.btnEmail setTitle:[venueObj getEmail] forState:UIControlStateNormal];
+        [mapView.btnPhoneNumber setTitle:[venueObj getPhone] forState:UIControlStateNormal];
         [mapView release];
     }
 }
-#pragma mark - servide delegate 
+#pragma mark - Service methods
 - (void)getDataFromServer
 {
     //show loading
     [Util showLoading:self.view];
-    Service *srv = [[Service alloc] init];
-    srv.delegate = self;
-    srv.canShowAlert = YES;
-    srv.canShowLoading = YES;
-    
-    //
-    [srv getVenueDetail:venueCode];
-    [srv release];
+
+    [service getVenueDetail:venueCode];
 }
 
+- (void)setStarredStatus:(NSString*)status
+{
+    //show loading
+    [Util showLoading:self.view];
+
+    [service setStarred:venueCode status:status];
+
+}
+
+#pragma mark - servide delegate 
+- (void) mServiceSetStarredSucces:(Service *) service responses:(id) response {
+    NSLog(@"API mServiceSetStarredSucces : success");
+    
+    CJSONDeserializer *jsonDeserializer = [CJSONDeserializer deserializer];
+    NSDictionary *resultDict = (NSDictionary*)[jsonDeserializer deserializeAsDictionary:(NSData*)response error:nil];
+    NSString *result = [[resultDict objectForKey:ResultRes] lowercaseString];
+    
+    if([result isEqual:OK]){
+        if(isStarred){
+            //remove starred
+            [Util updateStarredList:venueCode status:0];
+            [btnStarred setSelected:NO];
+            
+        }else{
+            //add starred
+            [Util updateStarredList:venueCode status:1];
+            [btnStarred setSelected:YES];
+        }
+        
+        isStarred = !isStarred;
+
+    }
+    
+    [Util hideLoading];
+}
 - (void) mServiceGetVenueDetailSucces:(Service *) service responses:(id) response {
     NSLog(@"API mServiceGetVenueDetailSucces : success");
     
@@ -466,6 +544,7 @@
     haveData = TRUE;
     [venueDetailTable reloadData];
     [Util hideLoading];
+    [btnStarred setEnabled:YES];
 }
 
 - (void) mService:(Service *) service didFailWithError:(NSError *) error {

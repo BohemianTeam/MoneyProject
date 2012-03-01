@@ -13,6 +13,7 @@
 #import "ImgDownloaderView.h"
 #import "ImageDownloader.h"
 #import "Util.h"
+#import "CJSONDeserializer.h"
 @implementation EventDetailViewController
 @synthesize eventCode;
 @synthesize imageDownloadsInProgress;
@@ -40,6 +41,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     imageDownloadsInProgress = [[NSMutableDictionary alloc] init];
+    
+    //check is starred
+    isStarred = [Util isStarred:eventCode];
+    
     // Custom initialization
     eventDetailTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 460) style:UITableViewStylePlain];
     eventDetailTable.dataSource = self;
@@ -49,17 +54,27 @@
     [self.view addSubview:eventDetailTable];
     
     //create starred button
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(0, 0, 56, 65)];
-    [btn setImage:[UIImage imageNamed:@"unstarred"] forState:UIControlStateNormal];
-    [btn setImage:[UIImage imageNamed:@"starred"] forState:UIControlStateSelected];
+    btnStarred = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btnStarred setFrame:CGRectMake(0, 0, 56, 65)];
+    [btnStarred setImage:[UIImage imageNamed:@"unstarred"] forState:UIControlStateNormal];
+    [btnStarred setImage:[UIImage imageNamed:@"starred"] forState:UIControlStateSelected];
+    [btnStarred addTarget:self action:@selector(btnStarredPressed) forControlEvents:UIControlEventTouchUpInside];
+    [btnStarred setSelected:isStarred];
+    [btnStarred setEnabled:NO];
     
-    UIBarButtonItem *btnStarred = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    self.navigationItem.rightBarButtonItem = btnStarred;
+    //init service
+    service = [[Service alloc] init];
+    service.delegate = self;
+    service.canShowAlert = YES;
+    service.canShowLoading = YES;
+    
+    UIBarButtonItem *btnBarStarred = [[UIBarButtonItem alloc] initWithCustomView:btnStarred];
+    self.navigationItem.rightBarButtonItem = btnBarStarred;
     //get data
     haveData = NO;
     [self getDataFromServer];
     
+    [btnBarStarred release];
 }
 
 - (void)viewDidUnload
@@ -68,7 +83,14 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
-
+- (void)viewWillDisappear:(BOOL)animated
+{
+    NSLog(@"viewWillDisappear");
+    [service stop];
+    
+    NSArray *allDownloads = [self.imageDownloadsInProgress allValues];
+    [allDownloads makeObjectsPerformSelector:@selector(cancelDownload)];
+}
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
@@ -76,6 +98,8 @@
 }
 - (void)dealloc
 {
+    [service stop];
+    [service release];
     [imageDownloadsInProgress release];
     [infoBlockList release];
     [eventDetailTable release];
@@ -228,6 +252,7 @@
     UIButton *btnBuy = [[UIButton alloc] init];
     [btnBuy setImage:imgBuy forState:UIControlStateNormal];
     [btnBuy setFrame:CGRectMake(nameWidth, lbPrice.frame.origin.y + lbPrice.frame.size.height, imgBuy.size.width, imgBuy.size.height)];
+    [btnBuy addTarget:self action:@selector(btnBuyPressed) forControlEvents:UIControlEventTouchUpInside];
     [cell addSubview:btnBuy];
     
     cellHeight = cellHeight >= btnBuy.frame.size.height ? cellHeight : btnBuy.frame.size.height;
@@ -305,37 +330,42 @@
     }
     
 }
-- (CGFloat)createSynoCell:(UITableViewCell*)cell
+- (void)createSynoCell:(UITableViewCell*)cell
 {
-    CGSize maximumLabelSize = CGSizeMake(WIDTH_VIEW - 20,9999);
-    //add
-    
-    UILabel *lbSyno = [[UILabel alloc] init];
-    lbSyno.numberOfLines = 0;
-    lbSyno.text = [eventObj getSynopsis];
-    lbSyno.textColor = UIColorFromRGB(0x666666);
-    lbSyno.lineBreakMode = UILineBreakModeWordWrap;
-    lbSyno.font = [UIFont fontWithName:@"Arial" size:12];
-    CGSize size = [Util sizeOfText:lbSyno.text 
-                   withFont:lbSyno.font 
-          constrainedToSize:maximumLabelSize 
-              lineBreakMode:lbSyno.lineBreakMode];
-    [lbSyno setFrame:CGRectMake(10, 5, WIDTH_VIEW-20, size.height)];
-    
-    
-    
-    //UIWebView *webSyno = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_VIEW, size.height)];
-    UIWebView *webSyno = [[UIWebView alloc] init];
-    [webSyno sizeThatFits:CGSizeZero];
-    [webSyno loadHTMLString:lbSyno.text baseURL:[NSURL URLWithString:@""]];
-    CGSize webSize = webSyno.scrollView.contentSize;
-    [webSyno setFrame:CGRectMake(0, 0, WIDTH_VIEW, webSize.height)];
+    UIWebView *webSyno = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_VIEW, 1)];
+    [webSyno loadHTMLString:[eventObj getSynopsis] baseURL:[NSURL URLWithString:@""]];
+    webSyno.delegate = self;
     
     [cell addSubview:webSyno];
-    //[cell addSubview:lbSyno];
-    [lbSyno release];
     [webSyno release];
-    return size.height + 10;
+
+}
+#pragma mark - Event methods
+- (void)btnBuyPressed
+{
+    
+}
+- (void)btnStarredPressed
+{
+    NSLog(@"starred pressed: %d", isStarred);
+    
+    NSString *stt = (isStarred == YES)?OFF:ON;
+    [self setStarredStatus:stt];
+}
+
+#pragma mark - webview delegate
+- (void)webViewDidFinishLoad:(UIWebView *)webview{
+    float webHeight;
+    CGRect frame = webview.frame;
+    frame.size.height = 1;
+    webview.frame = frame;
+    CGSize fittingSize = [webview sizeThatFits:CGSizeZero];
+    frame.size = fittingSize;
+    webview.frame = frame;
+    webHeight=fittingSize.height;
+    
+    synoCellHeight = webHeight;
+    [eventDetailTable reloadData];
 }
 
 #pragma mark - tableview delegate and datasource
@@ -356,13 +386,12 @@
     NSLog(@"height");
 
     CGFloat height = 0;
-    UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] autorelease];
     switch (indexPath.row) {
         case 0:
             height = [self heightForDescriptionCell];
             break;
         case 1:
-            height = [self createSynoCell:cell];
+            height = synoCellHeight;
             break;  
         case 2:
             height = [self heightForVideoCell];
@@ -431,21 +460,48 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
-#pragma mark - servide delegate 
+#pragma mark - servide method
 - (void)getDataFromServer
 {
     //show loading
     [Util showLoading:self.view];
-    Service *srv = [[Service alloc] init];
-    srv.delegate = self;
-    srv.canShowAlert = YES;
-    srv.canShowLoading = YES;
-    
-    //
-    [srv getEventDetail:eventCode];
-    [srv release];
-}
 
+    [service getEventDetail:eventCode];
+}
+- (void)setStarredStatus:(NSString*)status
+{
+    //show loading
+    [Util showLoading:self.view];
+
+    [service setStarred:eventCode status:status];
+
+}
+#pragma mark - servide delegate
+- (void) mServiceSetStarredSucces:(Service *) service responses:(id) response {
+    NSLog(@"API mServiceSetStarredSucces : success");
+    
+    CJSONDeserializer *jsonDeserializer = [CJSONDeserializer deserializer];
+    NSDictionary *resultDict = (NSDictionary*)[jsonDeserializer deserializeAsDictionary:(NSData*)response error:nil];
+    NSString *result = [[resultDict objectForKey:ResultRes] lowercaseString];
+    
+    if([result isEqual:OK]){
+        if(isStarred){
+            //remove starred
+            [Util updateStarredList:eventCode status:0];
+            [btnStarred setSelected:NO];
+            
+        }else{
+            //add starred
+            [Util updateStarredList:eventCode status:1];
+            [btnStarred setSelected:YES];
+        }
+        
+        isStarred = !isStarred;
+        
+    }
+    
+    [Util hideLoading];
+}
 - (void) mServiceGetEventDetailSucces:(Service *) service responses:(id) response {
     NSLog(@"API mServiceGetEventDetailSucces : success");
     
@@ -454,6 +510,7 @@
     haveData = TRUE;
     [eventDetailTable reloadData];
     [Util hideLoading];
+    [btnStarred setEnabled:YES];
 }
 
 - (void) mService:(Service *) service didFailWithError:(NSError *) error {

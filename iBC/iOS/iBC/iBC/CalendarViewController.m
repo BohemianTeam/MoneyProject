@@ -75,7 +75,7 @@ void mach_absolute_difference(uint64_t end, uint64_t start, struct timespec *tp)
     logic = [[KalLogic alloc] initForDate:selectedDate];
     calendarView = [[[KalView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame] delegate:self logic:logic] autorelease];
     self.view = calendarView;
-    [calendarView selectDate:[KalDate dateFromNSDate:[NSDate date]]];
+    //[calendarView selectDate:[KalDate dateFromNSDate:[NSDate date]]];
 }
 
 
@@ -128,11 +128,11 @@ void mach_absolute_difference(uint64_t end, uint64_t start, struct timespec *tp)
     [self clearTable];
     [dataSource loadItemsFromDate:from toDate:to];
     
-    
+    NSLog(@"is first: %d", isFirst);
     if(!isFirst){
-        NSString *dateStr = [Util convertDateToString:selectedDate];
+        NSString *dateStr = [Util convertDateToString:to];
         EventListViewController *eventsVc = [[EventListViewController alloc] initWithTitle:@"event"];
-        eventsVc.dateFilter = @"18/11/2011";//dateStr;
+        eventsVc.dateFilter = dateStr;
         eventsVc.filterType = EventFilterByDate;
         
         [self.navigationController pushViewController:eventsVc animated:YES];
@@ -146,6 +146,7 @@ void mach_absolute_difference(uint64_t end, uint64_t start, struct timespec *tp)
 
 - (void)showPreviousMonth
 {
+    isFirst = YES;
     [self clearTable];
     [logic retreatToPreviousMonth];
     [calendarView slideDown];
@@ -154,6 +155,7 @@ void mach_absolute_difference(uint64_t end, uint64_t start, struct timespec *tp)
 
 - (void)showFollowingMonth
 {
+    isFirst = YES;
     [self clearTable];
     [logic advanceToFollowingMonth];
     [calendarView slideUp];

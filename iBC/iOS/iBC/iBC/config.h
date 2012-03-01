@@ -21,6 +21,10 @@
 #define AppVersion              @"a"
 #define VenueCode               @"vc"
 #define EventCode               @"ec"
+#define Code                    @"c"
+#define StarredStatus           @"s"
+#define ON                      @"on"
+#define OFF                     @"off"
 
 //API response
 #define InstID                  @"instID"
@@ -43,6 +47,11 @@
 #define Synopsis                @"sy"
 #define InfoBlocks              @"ib"
 #define Coordinates             @"cd"
+#define ResultRes               @"result"
+#define OK                      @"ok"
+#define DateSession             @"itdate"
+#define Detail                  @"detail"
+#define IDSessionCode           @"id"
 
 //Main Menu
 #define EventMenu               @"ESPECTACLES"
@@ -59,7 +68,7 @@
 #define KinectiaAppId @"rd4Gds"
 
 #define WIDTH_VIEW  320
-#define HEIGHT_VIEW 480
+#define HEIGHT_VIEW 460
 //Venue Size
 #define WIDTH_VENUE_LOGO 120
 #define HEIGHT_VENUE_LOGO 50

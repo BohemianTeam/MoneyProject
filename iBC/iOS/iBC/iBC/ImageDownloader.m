@@ -43,7 +43,10 @@
 
 - (void)cancelDownload
 {
+    NSLog(@"cancelDownload");
     [self.imageConnection cancel];
+    self.delegate = nil;
+    self.setImgDelegate = nil;
     self.imageConnection = nil;
     self.activeDownload = nil;
 }
@@ -67,6 +70,10 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    if(self.imageConnection == nil)
+    {
+        return;
+    }
     NSLog(@"download finish");
     // Set appIcon and clear temporary data/image
     UIImage *image = [[UIImage alloc] initWithData:self.activeDownload];
@@ -87,7 +94,8 @@
 //    {
 //        [self.setImgDelegate setImage:image];
 //    }
-    [self.setImgDelegate setImage:image];
+    if(self.setImgDelegate != nil)
+        [self.setImgDelegate setImage:image];
     self.activeDownload = nil;
     [image release];
     
@@ -95,6 +103,7 @@
     self.imageConnection = nil;
     
     // call our delegate and tell it that our icon is ready for display
-    [delegate appImageDidLoad:self.indexPath];
+    if(delegate)
+        [delegate appImageDidLoad:self.indexPath];
 }
 @end

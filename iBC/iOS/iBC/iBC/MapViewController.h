@@ -15,6 +15,7 @@
     IBOutlet UIButton               *btnEmail;
     
     NSString                        *locaStr;
+    
 }
 @property(nonatomic, retain)MKMapView           *mapView;
 @property(nonatomic, retain)UIButton            *btnPhoneNumber;

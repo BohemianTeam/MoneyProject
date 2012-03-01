@@ -30,16 +30,23 @@
     self = [super init];
     if (self) {
         self.title = [title retain];
+        isGoDetailPage = NO;
         
         filterType = EventFilterNone;
         dateFilter = nil;
         // Custom initialization
-        eventTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 480) style:UITableViewStylePlain];
+        eventTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 460) style:UITableViewStylePlain];
         eventTable.dataSource = self;
         eventTable.delegate = self;
         eventTable.autoresizesSubviews = YES;
         eventTable.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
         [self.view addSubview:eventTable];
+        
+        //init service
+        service = [[Service alloc] init];
+        service.delegate = self;
+        service.canShowAlert = YES;
+        service.canShowLoading = YES;
         
         //get data
         haveData = NO;
@@ -61,17 +68,28 @@
 
 - (void)viewDidLoad
 {
-    [imageDownloadsInProgress release];
-    [dateFilter release];
+    NSLog(@"viewDidLoad");
+    //[imageDownloadsInProgress release];
+    //[dateFilter release];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
-
-- (void)viewDidUnload
+- (void)viewWillDisappear:(BOOL)animated
 {
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    NSLog(@"viewWillDisappear");
+    
+    if(!isGoDetailPage)
+    {
+        [service stop];
+        
+        NSArray *allDownloads = [self.imageDownloadsInProgress allValues];
+        [allDownloads makeObjectsPerformSelector:@selector(cancelDownload)];
+    }
+    
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    isGoDetailPage = NO;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -81,6 +99,8 @@
 }
 - (void)dealloc
 {
+    [service stop];
+    [service release];
     [eventTable release];
     [eventsList release];
     [imageDownloadsInProgress release];
@@ -92,14 +112,9 @@
 {
     //show loading
     [Util showLoading:self.view];
-    Service *srv = [[Service alloc] init];
-    srv.delegate = self;
-    srv.canShowAlert = YES;
-    srv.canShowLoading = YES;
-    
+
     //test
-    [srv getEventList];
-    [srv release];
+    [service getEventList];
 }
 #pragma mark - tableview delegate and datasource
 
@@ -147,7 +162,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath 
 {
-    
+    isGoDetailPage = YES;
     EventsObj *eventObj = [eventsList objectAtIndex:indexPath.row];
     
     EventDetailViewController *eventDetailVC = [[EventDetailViewController alloc] init];
@@ -163,14 +178,12 @@
     if(filterType == EventFilterByDate){
         for (NSDictionary *dict in arr)
         {
-            NSString *dates = [dict objectForKey:Dates];
+            EventsObj *obj = [[EventsObj alloc] iniWithDictionary:dict];
+            NSString *dates = [obj getDates];
             if([dates isEqual:dateFilter]){
-                EventsObj *obj = [[EventsObj alloc] iniWithDictionary:dict];
                 [eventsList addObject:obj];
-                
-                [obj release];
             }
-            
+            [obj release];
         }
     }else{
         for (NSDictionary *dict in arr) {
@@ -219,6 +232,8 @@
         NSString *url = [((ResponseObj*)otherObj) getObjectForKey:Logo];
         [imgDownloader startDownloadWithUrl:[NSString stringWithFormat:@"%@%@", API_IMG_URL, url]];
         [imgDownloader release];
+        
+        NSLog(@"imageDownloadsInProgress: %d", [imageDownloadsInProgress count]);
     }
 }
 
@@ -247,6 +262,8 @@
     {
         EventViewCell *cell = (EventViewCell*)[eventTable cellForRowAtIndexPath:indexPath];
         cell.imgViewLogo.image = ((EventsObj*)[eventsList objectAtIndex:indexPath.row]).imgLogo;
+        
+        [imgDownloader release];
     }
     
     [eventTable reloadData];

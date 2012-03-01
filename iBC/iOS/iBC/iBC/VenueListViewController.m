@@ -31,15 +31,21 @@
     if (self) {
         self.title = [title retain];
         
-        isLoadData = NO;
+        isGoDetailPage = NO;
         
         // Custom initialization
-        venueTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 480) style:UITableViewStylePlain];
+        venueTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 460) style:UITableViewStylePlain];
         venueTable.dataSource = self;
         venueTable.delegate = self;
         venueTable.autoresizesSubviews = YES;
         venueTable.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
         [self.view addSubview:venueTable];
+        
+        //init service
+        service = [[Service alloc] init];
+        service.delegate = self;
+        service.canShowAlert = YES;
+        service.canShowLoading = YES;
         
         //get location
         locationManager = [[CLLocationManager alloc] init];
@@ -47,6 +53,7 @@
         //locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         //locationManager.distanceFilter = kCLDistanceFilterNone;
         [self getLocation];
+        
         
         //get data
         haveData = NO;
@@ -56,7 +63,10 @@
     }
     return self;
 }
-
+- (void)btnBackPressed
+{
+    NSLog(@"btnBackPressed");
+}
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -72,13 +82,34 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
-
-- (void)viewDidUnload
+- (void)viewWillDisappear:(BOOL)animated
 {
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    NSLog(@"viewWillDisappear");
+    
+    if(!isGoDetailPage)
+    {
+        [service stop];
+        
+        NSArray *allDownloads = [self.imageDownloadsInProgress allValues];
+        [allDownloads makeObjectsPerformSelector:@selector(cancelDownload)];
+    }
+    
 }
+- (void)viewWillAppear:(BOOL)animated
+{
+    isGoDetailPage = NO;
+}
+//- (void)viewDidUnload
+//{
+//    NSLog(@"viewDidUnload");
+//    [super viewDidUnload];
+//    // Release any retained subviews of the main view.
+//    // e.g. self.myOutlet = nil;
+//    
+//    //stop download image
+//    NSArray *allDownloads = [self.imageDownloadsInProgress allValues];
+//    [allDownloads makeObjectsPerformSelector:@selector(cancelDownload)];
+//}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -87,12 +118,14 @@
 }
 - (void)dealloc
 {
+    [service stop];
+    [service release];
     [venueTable release];
     [venuesList release];
     [imageDownloadsInProgress release];
     [super dealloc];
 }
-#pragma mark - 
+#pragma mark - Service methods
 - (void)getLocation
 {
     //show loading
@@ -100,22 +133,14 @@
     
     [locationManager startUpdatingLocation];
 }
+
 - (void)getDataFromServer:(NSString*)loca
 {
     NSLog(@"get data");
-    isLoadData = YES;
     [Util showLoading:@"Loading data.." view:self.view];
-    
-    Service *srv = [[Service alloc] init];
-    srv.delegate = self;
-    srv.canShowAlert = YES;
-    srv.canShowLoading = YES;
-    
+
     //test
-    [srv getVenueList:loca];
-    [srv release];
-    
-    
+    [service getVenueList:loca];    
 }
 #pragma mark - tableview delegate and datasource
 
@@ -163,6 +188,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"Venue selected...");
     
+    isGoDetailPage = YES;
     VenuesObj *venueObj = [venuesList objectAtIndex:indexPath.row];
     
     VenueDetailViewController *venueDetailVC = [[VenueDetailViewController alloc] init];
@@ -194,6 +220,7 @@
     haveData = YES;
     [venueTable reloadData];
 }
+
 
 
 - (void) mService:(Service *) service didFailWithError:(NSError *) error {

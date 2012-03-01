@@ -16,6 +16,9 @@
 #import "Service.h"
 #import "KalViewController.h"
 #import "CalendarViewController.h"
+
+#import "EventCalendarView.h"
+
 @interface ViewController(private)
 - (void) initMenu;
 @end
@@ -176,11 +179,17 @@
         return;
     }
     if([data.title isEqual:CalendarMenu]){
-//        KalViewController *cal = [[KalViewController alloc] init];
-//        cal.title = title;
+        KalViewController *cal = [[KalViewController alloc] init];
+        cal.title = title;
         CalendarViewController *calVC = [[CalendarViewController alloc] initWithTitle:title];
         [self.navigationController pushViewController:calVC animated:YES];
-        
+
+        return;
+    }
+    if([data.title isEqual:VenueDictanceMenu]){
+        EventCalendarView *calVC = [[EventCalendarView alloc] init];
+        calVC.title = @"Event Calendar";
+        [self.navigationController pushViewController:calVC animated:YES];
         return;
     }
 }

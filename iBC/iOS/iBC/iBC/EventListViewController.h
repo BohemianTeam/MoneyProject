@@ -19,11 +19,12 @@ typedef enum EventFilter
     UITableView         *eventTable;
     
     NSMutableArray      *eventsList;
-    
+    Service             *service;
     
     NSMutableDictionary *imageDownloadsInProgress;  // the set of imgDownloader objects for each app
     
     BOOL                haveData;
+    BOOL                isGoDetailPage;
     EventFilter         filterType;
     NSString            *dateFilter;
 }
