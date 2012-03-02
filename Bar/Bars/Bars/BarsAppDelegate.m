@@ -33,9 +33,6 @@
     [[AppDatabase sharedDatabase] openDB:[Util documentsPath:DBFILE]];
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
-
-        
-
     
     BarsViewController *vc1 = [[[BarsViewController alloc] initWithID:0 type:States] autorelease];
     vc1.title = @"USA";
@@ -47,8 +44,7 @@
 
     UINavigationController *navVC1 = [[[UINavigationController alloc] initWithRootViewController:vc1] autorelease];
     navVC1.navigationBar.barStyle = UIBarStyleBlack;
-    
-    
+        
     //wishlist view controller
     BarsViewController *vc2 = [[[BarsViewController alloc] initWithID:0 type:Wishlists] autorelease];
     vc2.title = @"WishList";
@@ -70,9 +66,10 @@
     navVC3.navigationBar.barStyle = UIBarStyleBlack;
     
     self.tabbar = [[UITabBarController alloc] init];
-    [self.tabbar addChildViewController:navVC1];
-    [self.tabbar addChildViewController:navVC2];
-    [self.tabbar addChildViewController:navVC3];
+    [self.tabbar setViewControllers:[NSArray arrayWithObjects:navVC1, navVC2, navVC3, nil]];
+    //[self.tabbar addChildViewController:navVC1];
+    //[self.tabbar addChildViewController:navVC2];
+    //[self.tabbar addChildViewController:navVC3];
 
     self.window.rootViewController = self.tabbar;
     [self.window makeKeyAndVisible];
