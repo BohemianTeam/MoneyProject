@@ -18,6 +18,7 @@ import org.xml.sax.InputSource;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ibc.model.service.response.EventResponse;
+import com.ibc.model.service.response.EventSessionsResponse;
 import com.ibc.model.service.response.EventsResponse;
 import com.ibc.model.service.response.ImageResponse;
 import com.ibc.model.service.response.InfoBlocksResponse;
@@ -247,5 +248,32 @@ public class DataParser {
 		} catch (JSONException e) {
 		}
 		return response;
+	}
+
+	public boolean getStatus() {
+		if (_root == null && _array == null) {
+			return false;
+		}
+		try {
+			String ok = _root.getString("result");
+			if (ok.equalsIgnoreCase("Ok")) {
+				return true;
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return false;
+	}
+
+	public List<EventSessionsResponse> getEventSessions(String result) {
+		if (_root == null && _array == null) {
+			return null;
+		}
+		List<EventSessionsResponse> list = new ArrayList<EventSessionsResponse>();
+		Type t = new TypeToken<List<EventSessionsResponse>>(){}.getType();
+		Gson gson = new Gson();
+		list = gson.fromJson(result, t);
+		return list;
 	}
 }

@@ -13,11 +13,14 @@ import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+
+import vn.lmchanh.lib.time.MCDate;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -57,6 +60,22 @@ public class Util {
 		String rs = getConcatenatedString();
 		rs = hashMac(rs);
 		return rs;
+	}
+	
+	public static MCDate mcDateFromDateString(String strDate) {
+		MCDate mcDate = null;
+		try {
+			DateFormat formatter;
+			Date date;
+			formatter = new SimpleDateFormat("yyyyMMdd");
+
+			date = (Date) formatter.parse(strDate);
+			mcDate = new MCDate(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return mcDate;
 	}
 	
 	/**

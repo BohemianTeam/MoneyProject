@@ -31,5 +31,6 @@
 				android:textColor="#FFFFFFFF" 
 				android:background="@drawable/unstarred"
 				android:visibility="invisible"
+				android:onClick="onStarredClicked"
 				/>
 		</LinearLayout>

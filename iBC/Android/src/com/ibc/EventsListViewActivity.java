@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -62,6 +63,8 @@ public class EventsListViewActivity extends Activity{
 		}
 	};
 	
+	private boolean _needReturn;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -71,11 +74,20 @@ public class EventsListViewActivity extends Activity{
         String title = intent.getStringExtra("title");
         if(null != title) {
         	((TextView) findViewById(R.id.title)).setText(title);
+        } else {
+        	((TextView) findViewById(R.id.title)).setText("ESPAIS");
         }
 		_listView = (ListView) findViewById(R.id.list);
 		_service = new Service(_listener);
-		_service.getEvents("1", getCurrentTimeString());
+		String date = intent.getStringExtra("date") == null ? "" : intent.getStringExtra("date");
+		if (date != null && date.equalsIgnoreCase("")) {
+			_service.getEvents("1", getCurrentTimeString());
+		} else {
+			_needReturn = true;
+			_service.getEvents("1", date);
+		}
 		show();
+		
 	}
 	
 	public String getCurrentTimeString() {
@@ -93,4 +105,21 @@ public class EventsListViewActivity extends Activity{
 			_dialog.dismiss();
 		}
 	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (_needReturn) {
+				setResult(RESULT_OK);
+				finish();
+			} else {
+				finish();
+				return true;
+			}
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+	
+	
 }

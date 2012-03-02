@@ -10,6 +10,7 @@ public enum ServiceAction {
 	ActionGetEventSessions,
 	ActionGetStarredList,
 	ActionGetStarred,
+	ActionSetStarred,
 	ActionGetInstID,
 	
 }

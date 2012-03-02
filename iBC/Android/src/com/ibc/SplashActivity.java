@@ -1,5 +1,6 @@
 package com.ibc;
 
+import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
@@ -12,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.ibc.model.service.response.InstIDResponse;
+import com.ibc.model.service.response.StarredListResponse;
 import com.ibc.model.service.response.StarredResponse;
 import com.ibc.service.ResultCode;
 import com.ibc.service.Service;
@@ -92,6 +94,7 @@ public class SplashActivity extends Activity {
    
    ServiceListener _listener = new ServiceListener() {
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public void onComplete(Service service, ServiceRespone result) {
 			if (result.getAction() == ServiceAction.ActionGetInstID) {
@@ -100,7 +103,9 @@ public class SplashActivity extends Activity {
 					InstIDResponse response = (InstIDResponse) result.getData();
 					String d = response.instID;
 					d = "823ab7fc7820d402";//for test
+					
 					iBCApplication app = iBCApplication.sharedInstance();
+					
 					app.getSharedPreferencesManager().saveInstID(d);
 					Map<String, String> map = app.getDiffServiceParams();
 					map.put("d", d);
@@ -108,9 +113,12 @@ public class SplashActivity extends Activity {
 					map.put("h", h);
 					app.setDiffParams(map);
 					
+					//save
+					app.getSharedPreferencesManager().saveInstID(d);
 					//get starred
 					Service sv = new Service(_listener);
-					sv.getStarred();
+//					sv.getStarred();
+					sv.getStarredList();
 				}
 				
 				
@@ -118,8 +126,17 @@ public class SplashActivity extends Activity {
 				if (result.getResultCode() == ResultCode.Success) {
 					StarredResponse response = (StarredResponse) result
 							.getData();
-					iBCApplication.sharedInstance()
-							.putData("starred", response);
+					iBCApplication.sharedInstance().setStarredResponse(response);
+				}
+				
+				//start loading the application data
+		        backgroundTask = new ApplicationDataLoadingTask();
+		        backgroundTask.execute();
+			} else if (result.getAction() == ServiceAction.ActionGetStarredList) {
+				if (result.getResultCode() == ResultCode.Success) {
+					List<StarredListResponse> list = (List<StarredListResponse>) result
+							.getData();
+					iBCApplication.sharedInstance().setList(list);
 				}
 				
 				//start loading the application data
@@ -146,7 +163,9 @@ public class SplashActivity extends Activity {
     @Override
     public void finish() {
         //cancel launch
-        backgroundTask.cancel(true);
+    	if (backgroundTask != null) {
+    		backgroundTask.cancel(true);
+    	}
         super.finish();
     }
 

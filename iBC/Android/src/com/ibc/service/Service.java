@@ -146,6 +146,18 @@ public class Service implements Runnable {
 		request("/getStarred/", params);
 	}
 	
+	public void setStarred(String code, String status) {
+		_action = ServiceAction.ActionSetStarred;
+		
+		Map<String, String> params = new HashMap<String, String>(iBCApplication.sharedInstance().getDiffServiceParams());
+		params.put("d", iBCApplication.sharedInstance().getSharedPreferencesManager().loadInstID());
+		params.put("s", status);
+		params.put("i", Config.KinectiaAppId);
+		params.put("c", code);
+		
+		request("/setStarred/", params);
+	}
+	
 	/**
 	 * Service Processing
 	 * 
@@ -196,7 +208,9 @@ public class Service implements Runnable {
 			_connection = (HttpURLConnection) url.openConnection();
 			_connection.setRequestMethod(_isGet ? "GET" : "POST");
 			_connection.setDoInput(true);
-
+//			_connection.setRequestMethod("HEAD");
+//			_connection.setConnectTimeout(10000);
+			
 			if (!_isGet) {
 				Log.d("Service", "Params:" + data);
 				_connection.setDoOutput(true);
@@ -294,13 +308,16 @@ public class Service implements Runnable {
 					resObj = parser.getEventResponse(result);
 					break;
 				case ActionGetEventSessions:
-					resObj = result;
+					resObj = parser.getEventSessions(result);
 					break;
 				case ActionGetStarredList:
 					resObj = parser.getStarredList(result);
 					break;
 				case ActionGetStarred:
 					resObj = parser.getStarred(result);
+					break;
+				case ActionSetStarred:
+					resObj = parser.getStatus();
 					break;
 				case ActionGetInstID:
 					resObj = parser.getInstID(result);

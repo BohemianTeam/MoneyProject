@@ -18,9 +18,8 @@ import com.ibc.controller.GPSService;
 import com.ibc.controller.GPSService.GPSServiceListener;
 import com.ibc.model.GPSInfo;
 import com.ibc.model.service.response.ImageResponse;
-import com.ibc.model.service.response.StarredResponse;
+import com.ibc.model.service.response.StarredListResponse;
 import com.ibc.model.service.response.VenueResponse;
-import com.ibc.model.service.response.VenuesResponse;
 import com.ibc.service.ResultCode;
 import com.ibc.service.Service;
 import com.ibc.service.ServiceAction;
@@ -61,6 +60,31 @@ public class VenueDetailActivity extends Activity {
 					}
 				}
 				hide();
+			} else if (result.getAction() == ServiceAction.ActionSetStarred) {
+				if (result.getResultCode() == ResultCode.Success) {
+					boolean ok = (Boolean) result.getData();
+					if (ok) {
+						List<StarredListResponse> list = iBCApplication.sharedInstance().getList();
+						isStarred = !isStarred;
+						if (isStarred) {
+							_navigationBar.findViewById(R.id.button_starred).setBackgroundResource(R.drawable.starred);
+							
+							StarredListResponse response = new StarredListResponse();
+							response.code = _venue.venueCode;
+							list.add(response);
+						} else {
+							_navigationBar.findViewById(R.id.button_starred).setBackgroundResource(R.drawable.unstarred);
+							for (StarredListResponse response : list) {
+								if (response.code.equalsIgnoreCase(_venue.venueCode)) {
+									list.remove(response);
+									break;
+								}
+							}
+						}
+					}
+				}
+				
+				hide();
 			}
 		}
 	};
@@ -76,8 +100,12 @@ public class VenueDetailActivity extends Activity {
 	VenueAvatar _avatar;
 	LinearLayout _layoutImg;
 	LinearLayout _listHeader;
+	
+	boolean isStarred = false;
+	
 	double _lat;
 	double _lon;
+	
 	private GPSServiceListener _gpsServiceListener = new GPSServiceListener() {
 		
 		@Override
@@ -180,11 +208,11 @@ public class VenueDetailActivity extends Activity {
 	
 	private void setNavigationBar(VenueResponse venue) {
 		iBCApplication app = iBCApplication.sharedInstance();
-		if (app.getData("starred") != null) {
-			StarredResponse response = (StarredResponse) app.getData("starred");
-			List<VenuesResponse> list = response.venues;
-			for (VenuesResponse e : list) {
-				if (venue.venueCode.equalsIgnoreCase(e.venuesCode)) {
+		if (app.getList() != null) {
+			List<StarredListResponse> list = app.getList();
+			for (StarredListResponse response : list) {
+				if (response.code.equalsIgnoreCase(_venue.venueCode)) {
+					isStarred = true;
 					_navigationBar.findViewById(R.id.button_starred).setBackgroundResource(R.drawable.starred);
 					break;
 				}
@@ -200,6 +228,12 @@ public class VenueDetailActivity extends Activity {
 		iBCApplication.sharedInstance().putData("venue", _venue);
 		Intent intent = new Intent(this, AddressActivity.class);
 		startActivity(intent);
+	}
+	
+	public void onStarredClicked(View v) {
+		_service.stop();
+		_service.setStarred(_venue.venueCode, isStarred == true ? "off" : "on");
+		show();
 	}
 	
 	private void show() {

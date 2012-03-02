@@ -1,6 +1,8 @@
 package com.ibc;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import android.app.Application;
@@ -8,6 +10,8 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.provider.Settings;
 
 import com.ibc.controller.SharedPreferencesManager;
+import com.ibc.model.service.response.StarredListResponse;
+import com.ibc.model.service.response.StarredResponse;
 import com.ibc.util.Config;
 import com.ibc.util.Util;
 
@@ -19,7 +23,17 @@ public class iBCApplication extends Application {
 	private Map<String, String> _paramsWithSecurityParams = new HashMap<String, String>();
 	private Map<String, String> _diffParamsWithSecurityParams = new HashMap<String, String>();
 	private SharedPreferencesManager _sharedManager;
+	private StarredResponse _starredResponse;
+	private List<StarredListResponse> list = new ArrayList<StarredListResponse>();
 	
+	public List<StarredListResponse> getList() {
+		return list;
+	}
+
+	public void setList(List<StarredListResponse> list) {
+		this.list = list;
+	}
+
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
@@ -71,6 +85,14 @@ public class iBCApplication extends Application {
 
 	public Object getData(Object key) {
 		return _data.get(key);
+	}
+	
+	public void setStarredResponse(StarredResponse response) {
+		_starredResponse = response;
+	}
+	
+	public StarredResponse getStarredResponse() {
+		return _starredResponse;
 	}
 	
     public String appVersion() {

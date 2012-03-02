@@ -1,6 +1,11 @@
 package com.ibc;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import vn.lmchanh.lib.time.MCDate;
+import vn.lmchanh.lib.time.MCDateSpan;
+import vn.lmchanh.lib.widget.calendar.CalendarActivity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -12,37 +17,80 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ibc.model.service.response.EventResponse;
-import com.ibc.model.service.response.EventsResponse;
+import com.ibc.model.service.response.EventSessionsResponse;
 import com.ibc.model.service.response.ImageResponse;
 import com.ibc.model.service.response.InfoBlocksResponse;
-import com.ibc.model.service.response.StarredResponse;
+import com.ibc.model.service.response.StarredListResponse;
 import com.ibc.service.ResultCode;
 import com.ibc.service.Service;
 import com.ibc.service.ServiceAction;
 import com.ibc.service.ServiceListener;
 import com.ibc.service.ServiceRespone;
+import com.ibc.util.Util;
 import com.ibc.view.EventAvatar;
 import com.ibc.view.EventRow;
 import com.ibc.view.ImageItem;
 
 public class EventDetailActivity extends Activity {
-
+	EventResponse _event;
 	ProgressDialog _dialog;
 	Service _service;
 	ServiceListener _listener = new ServiceListener() {
 		
+		@SuppressWarnings("unchecked")
 		@Override
 		public void onComplete(Service service, ServiceRespone result) {
 			if (result.getAction() == ServiceAction.ActionGetEvent) {
 				
 				if (result.getResultCode() == ResultCode.Success) {
 					EventResponse event = (EventResponse) result.getData();
-					
+					_event = event;
 					String title = event.eventTitle;
 					if(null != title) {
 			        	((TextView) findViewById(R.id.title)).setText(title);
 			        }
 					displayView(event);
+				}
+				
+				hide();
+			} else if (result.getAction() == ServiceAction.ActionSetStarred) {
+				if (result.getResultCode() == ResultCode.Success) {
+					boolean ok = (Boolean) result.getData();
+					if (ok) {
+						List<StarredListResponse> list = iBCApplication.sharedInstance().getList();
+						isStarred = !isStarred;
+						if (isStarred) {
+							_navigationBar.findViewById(R.id.button_starred).setBackgroundResource(R.drawable.starred);
+							
+							StarredListResponse response = new StarredListResponse();
+							response.code = _event.eventCode;
+							list.add(response);
+						} else {
+							_navigationBar.findViewById(R.id.button_starred).setBackgroundResource(R.drawable.unstarred);
+							for (StarredListResponse response : list) {
+								if (response.code.equalsIgnoreCase(_event.eventCode)) {
+									list.remove(response);
+									break;
+								}
+							}
+						}
+					}
+				}
+				
+				hide();
+			} else if (result.getAction() == ServiceAction.ActionGetEventSessions) {
+				if (result.getResultCode() == ResultCode.Success) {
+					List<EventSessionsResponse> list = (List<EventSessionsResponse>) result.getData();
+					ArrayList<MCDateSpan> dates = new ArrayList<MCDateSpan>();
+					for (EventSessionsResponse response : list) {
+						MCDate st = Util.mcDateFromDateString(response.date);
+						MCDate e = Util.mcDateFromDateString(response.date);
+						MCDateSpan date = new MCDateSpan(st, e, response.sessionCode, response.detail);
+						dates.add(date);
+					}
+					Intent intent = CalendarActivity.createCalendarIntent(EventDetailActivity.this, true, false, false, true, false);
+					intent.putExtra(CalendarActivity.EVENT_SESSIONS, dates);
+					EventDetailActivity.this.startActivity(intent);
 				}
 				
 				hide();
@@ -62,6 +110,8 @@ public class EventDetailActivity extends Activity {
 //	ListView _list;
 	TextView _desc;
 	
+	boolean isStarred = false;
+	
 	private void displayView(EventResponse event) {
 		setNavigationBar(event);
 		_avatar.getImage(event);
@@ -78,11 +128,11 @@ public class EventDetailActivity extends Activity {
 	
 	private void setNavigationBar(EventResponse event) {
 		iBCApplication app = iBCApplication.sharedInstance();
-		if (app.getData("starred") != null) {
-			StarredResponse response = (StarredResponse) app.getData("starred");
-			List<EventsResponse> list = response.events;
-			for (EventsResponse e : list) {
-				if (event.eventCode.equalsIgnoreCase(e.eventCode)) {
+		if (app.getList() != null) {
+			List<StarredListResponse> list = app.getList();
+			for (StarredListResponse response : list) {
+				if (response.code.equalsIgnoreCase(_event.eventCode)) {
+					isStarred = true;
 					_navigationBar.findViewById(R.id.button_starred).setBackgroundResource(R.drawable.starred);
 					break;
 				}
@@ -102,11 +152,13 @@ public class EventDetailActivity extends Activity {
 			}
 		} else {
 			//using test data
+			/*
 			for (int i = 0;i < 6;i++) {
 				EventRow row = new EventRow(this);
 				row.setItemViewType("PREMISS " + i, i);
 				_llRow.addView(row);
 			}
+			*/
 		}
 		
 	}
@@ -165,7 +217,15 @@ public class EventDetailActivity extends Activity {
 	}
 	
 	public void onBuyClicked(View v) {
-		System.out.println("on buy clicked");
+		_service.stop();
+		_service.getEventSessions(_event.eventCode);
+		show();
+	}
+		
+	public void onStarredClicked(View v) {
+		_service.stop();
+		_service.setStarred(_event.eventCode, isStarred == true ? "off" : "on");
+		show();
 	}
 	
 	private void show() {
