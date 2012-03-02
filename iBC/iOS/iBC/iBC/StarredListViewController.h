@@ -17,11 +17,12 @@
     
     NSMutableArray      *eventsList;
     NSMutableArray      *venuesList;
-    
+    Service             *service;
     MBProgressHUD       *loadingView;
     NSMutableDictionary *imageDownloadsInProgress;  // the set of imgDownloader objects for each app
     
     BOOL                haveData;
+    BOOL                isGoDetailPage;
 }
 @property (nonatomic, retain) NSMutableDictionary *imageDownloadsInProgress;
 - (id) initWithTitle:(NSString *) title;

@@ -11,9 +11,15 @@
 @class ViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
+{
+    NSMutableArray             *starredList;
+}
+@property(nonatomic, retain)NSMutableArray             *starredList;
+@property (strong, nonatomic)UIWindow           *window;
+@property (strong, nonatomic)ViewController     *viewController;
 
-@property (strong, nonatomic) UIWindow *window;
-
-@property (strong, nonatomic) ViewController *viewController;
-
+- (void)getUniqueInsKey;
+- (void)getStarredList;
+- (BOOL)isInStarredList:(NSString*)code;
+- (void)updateStarredList:(NSString*)code status:(NSInteger)stt;
 @end

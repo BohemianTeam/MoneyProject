@@ -37,16 +37,13 @@
 		66859D4E14FA1055001EDE5B /* ArrowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D4C14FA1055001EDE5B /* ArrowLeft@2x.png */; };
 		66859D4F14FA1055001EDE5B /* ArrowRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D4D14FA1055001EDE5B /* ArrowRight@2x.png */; };
 		66859D5114FA1581001EDE5B /* wishIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D5014FA1581001EDE5B /* wishIcon@2x.png */; };
-
-		6699904F14FB1F2600B042A6 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6699904E14FB1F2600B042A6 /* MapViewController.m */; };
-		6699905214FB1F3D00B042A6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6699905114FB1F3D00B042A6 /* MapKit.framework */; };
-		6699905414FB1F4700B042A6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6699905314FB1F4700B042A6 /* CoreLocation.framework */; };
-
 		66859D5B14FA1C0A001EDE5B /* CompletedIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D5A14FA1C0A001EDE5B /* CompletedIcon@2x.png */; };
 		66859D5D14FA1D22001EDE5B /* usa@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D5C14FA1D22001EDE5B /* usa@2x.png */; };
 		66859D6114FA1EA8001EDE5B /* usaIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D6014FA1EA8001EDE5B /* usaIcon@2x.png */; };
 		66859D6C14FA26C1001EDE5B /* usa_Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66859D6B14FA26C1001EDE5B /* usa_Icon@2x.png */; };
-
+		6699904F14FB1F2600B042A6 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6699904E14FB1F2600B042A6 /* MapViewController.m */; };
+		6699905214FB1F3D00B042A6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6699905114FB1F3D00B042A6 /* MapKit.framework */; };
+		6699905414FB1F4700B042A6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6699905314FB1F4700B042A6 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,17 +91,14 @@
 		66859D4C14FA1055001EDE5B /* ArrowLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ArrowLeft@2x.png"; sourceTree = "<group>"; };
 		66859D4D14FA1055001EDE5B /* ArrowRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ArrowRight@2x.png"; sourceTree = "<group>"; };
 		66859D5014FA1581001EDE5B /* wishIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wishIcon@2x.png"; sourceTree = "<group>"; };
-
-		6699904D14FB1F2600B042A6 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapViewController.h; path = "View Controller/MapViewController.h"; sourceTree = "<group>"; };
-		6699904E14FB1F2600B042A6 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapViewController.m; path = "View Controller/MapViewController.m"; sourceTree = "<group>"; };
-		6699905114FB1F3D00B042A6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		6699905314FB1F4700B042A6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-
 		66859D5A14FA1C0A001EDE5B /* CompletedIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CompletedIcon@2x.png"; sourceTree = "<group>"; };
 		66859D5C14FA1D22001EDE5B /* usa@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "usa@2x.png"; sourceTree = "<group>"; };
 		66859D6014FA1EA8001EDE5B /* usaIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "usaIcon@2x.png"; sourceTree = "<group>"; };
 		66859D6B14FA26C1001EDE5B /* usa_Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "usa_Icon@2x.png"; sourceTree = "<group>"; };
-
+		6699904D14FB1F2600B042A6 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapViewController.h; path = "View Controller/MapViewController.h"; sourceTree = "<group>"; };
+		6699904E14FB1F2600B042A6 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapViewController.m; path = "View Controller/MapViewController.m"; sourceTree = "<group>"; };
+		6699905114FB1F3D00B042A6 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		6699905314FB1F4700B042A6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -383,8 +377,8 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PROVISIONING_PROFILE = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				PROVISIONING_PROFILE = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
 				SDKROOT = iphoneos;
 			};
@@ -403,10 +397,10 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
+				PROVISIONING_PROFILE = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -421,6 +415,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bars/Bars-Prefix.pch";
 				INFOPLIST_FILE = "Bars/Bars-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
@@ -437,6 +432,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bars/Bars-Prefix.pch";
 				INFOPLIST_FILE = "Bars/Bars-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
@@ -457,9 +453,9 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
+				PROVISIONING_PROFILE = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -469,15 +465,16 @@
 		66859D7014FA2C42001EDE5B /* Ad Hoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tran Manh Hung";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tran Manh Hung";
 				CODE_SIGN_RESOURCE_RULES_PATH = Entitlements.plist;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bars/Bars-Prefix.pch";
 				INFOPLIST_FILE = "Bars/Bars-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
+				PROVISIONING_PROFILE = "1148FECA-4778-4DBA-90C7-C55C1E7D4C1E";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1148FECA-4778-4DBA-90C7-C55C1E7D4C1E";
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Ad Hoc";

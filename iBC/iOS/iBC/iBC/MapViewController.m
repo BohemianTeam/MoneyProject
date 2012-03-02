@@ -38,6 +38,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+
     NSArray *splits = [locaStr componentsSeparatedByString:@"~"];
     NSString *lat = [splits objectAtIndex:0];
     NSString *lon = [splits objectAtIndex:1];

@@ -1,0 +1,45 @@
+====================== REQUIREMENT 1:============================
+Open pdf (from link, dropbox), 
+mark keyword, 
+linking keywords, 
+linking sentence, 
+color keywords, add comment box
+
+====================== FEEDBACK 1:============================
+The feedback so far:
+1. PDF scrolling/zooming: good
+to-do: if I flip to the next page, it is "small" again.
+- we have to have the same size (if user zoomed in) on all other pages.
+
+2. I love the "over-view" gadgets !!
+this gave me a good idea of how to present the results from the function "search".
+(this is for later milestone, but to keep it in head: It would be fantastic, if we could
+show the user this kind of page overview, which shows the pages, where the search
+word is in.)
+
+3. I love the possibility to zoom the page to screen-size using the double tap on background.
+very nice!
+
+4. and a short design question:
+- is it possible to use our own design-bar for the upper bar (where the "Done" and other buttons are in) ?
+- I would like to use a bar with a pattern associating to the design on the web-page.
+- the main-target are students, so I want to come up with a fresh and fruity design, that stands
+out from the "dull-grey - work atmosphere"
+
+5. IMPORTANT:
+in both two documents there are zoom-levels, where some lines do not look razor-blade-sharp.
+I looked into the goodreader app, and everything is sharp on every zoom-level (but the text has another font).
+does this have to do with the font-type ?
+please send me the blink-eye pdf as email, so i can check with good reader.
+
+it is not horrible, i can read it still, but it is a little bit irritating and distracting.
+(but we can work on that later, if you say it is possible to improve that)
+
+6. just a small thing:
+please make the gap between the pages 1/3 the size it is now,
+so the pages are closer to each other.
+
+this is it so far.
+
+please implement the word highligting and these few remarks
+===================================================================

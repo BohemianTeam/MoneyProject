@@ -56,6 +56,15 @@
 + (void)hideLoading;
 
 + (NSString*)convertDateToString:(NSDate*)date;
++ (NSString*)convertDateToString:(NSDate*)date withFormat:(NSString*)format;
++ (NSDate*)convertStringToDate:(NSString*)dateStr withFormat:(NSString*)format;
 //utils for string
 + (CGSize)sizeOfText: (NSString*)text withFont:(UIFont*)font constrainedToSize:(CGSize)constrainedSize lineBreakMode:(UILineBreakMode)mode;
+
+//utils private for this app
++ (BOOL)isStarred:(NSString*)code;
++ (void)updateStarredList:(NSString*)code status:(NSInteger)stt;
++ (BOOL)isDate:(NSDate*)date betweenInclusiveFrom:(NSDate*)begin to:(NSDate*)end;
+
+
 @end

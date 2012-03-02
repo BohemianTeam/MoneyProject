@@ -13,6 +13,8 @@
 		665AB0B614F216200018D33C /* EventListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 665AB0B414F216200018D33C /* EventListViewController.xib */; };
 		665AB0BA14F21B040018D33C /* VenuePlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 665AB0B814F21B040018D33C /* VenuePlaceholder.png */; };
 		665AB0BB14F21B040018D33C /* EventPlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 665AB0B914F21B040018D33C /* EventPlaceholder.png */; };
+		66690EEC14FCD9DF00382F89 /* EventCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 66690EEB14FCD9DE00382F89 /* EventCalendarView.m */; };
+		66690EEF14FCDC9B00382F89 /* EventDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 66690EEE14FCDC9B00382F89 /* EventDataSource.m */; };
 		66878D8A14F4B657005C5DB6 /* EventDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66878D8814F4B657005C5DB6 /* EventDetailViewController.m */; };
 		66878D8B14F4B657005C5DB6 /* EventDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66878D8914F4B657005C5DB6 /* EventDetailViewController.xib */; };
 		66878D8E14F4D729005C5DB6 /* buybutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 66878D8D14F4D729005C5DB6 /* buybutton@2x.png */; };
@@ -116,6 +118,10 @@
 		665AB0B414F216200018D33C /* EventListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventListViewController.xib; sourceTree = "<group>"; };
 		665AB0B814F21B040018D33C /* VenuePlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VenuePlaceholder.png; sourceTree = "<group>"; };
 		665AB0B914F21B040018D33C /* EventPlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EventPlaceholder.png; sourceTree = "<group>"; };
+		66690EEA14FCD9DE00382F89 /* EventCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventCalendarView.h; sourceTree = "<group>"; };
+		66690EEB14FCD9DE00382F89 /* EventCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCalendarView.m; sourceTree = "<group>"; };
+		66690EED14FCDC9B00382F89 /* EventDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDataSource.h; sourceTree = "<group>"; };
+		66690EEE14FCDC9B00382F89 /* EventDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventDataSource.m; sourceTree = "<group>"; };
 		66878D8714F4B657005C5DB6 /* EventDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventDetailViewController.h; sourceTree = "<group>"; };
 		66878D8814F4B657005C5DB6 /* EventDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventDetailViewController.m; sourceTree = "<group>"; };
 		66878D8914F4B657005C5DB6 /* EventDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventDetailViewController.xib; sourceTree = "<group>"; };
@@ -451,6 +457,8 @@
 				66D5EE0E14ECBA4A005005CC /* EventsObj.m */,
 				66B2936D14E023EC0006B641 /* MenuItemData.h */,
 				66B2936E14E023EC0006B641 /* MenuItemData.m */,
+				66690EED14FCDC9B00382F89 /* EventDataSource.h */,
+				66690EEE14FCDC9B00382F89 /* EventDataSource.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -503,6 +511,8 @@
 				668B4B8714F71BE5007BE993 /* MapViewController.xib */,
 				668B4BAD14F77F03007BE993 /* CalendarViewController.h */,
 				668B4BAE14F77F04007BE993 /* CalendarViewController.m */,
+				66690EEA14FCD9DE00382F89 /* EventCalendarView.h */,
+				66690EEB14FCD9DE00382F89 /* EventCalendarView.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -743,6 +753,8 @@
 				668B4B8814F71BE5007BE993 /* MapViewController.m in Sources */,
 				668B4B9214F72BA0007BE993 /* MyLocaAnnotation.m in Sources */,
 				668B4BAF14F77F05007BE993 /* CalendarViewController.m in Sources */,
+				66690EEC14FCD9DF00382F89 /* EventCalendarView.m in Sources */,
+				66690EEF14FCDC9B00382F89 /* EventDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

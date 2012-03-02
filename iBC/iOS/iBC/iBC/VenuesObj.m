@@ -50,7 +50,10 @@
 }
 - (NSString*)getEmail
 {
-    return (NSString*)[super getObjectForKey:Email];
+    NSString *email = (NSString*)[super getObjectForKey:Email];
+    if(email != nil && ![email isEqual:@""])
+        return email;
+    return @"None email";
 }
 - (NSString*)getWeb
 {
