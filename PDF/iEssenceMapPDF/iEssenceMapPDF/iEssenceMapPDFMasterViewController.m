@@ -7,7 +7,7 @@
 //
 
 #import "iEssenceMapPDFMasterViewController.h"
-
+#import "PDFWebViewViewController.h"
 
 #import "FilesHelper.h"
 #import "ReaderViewController.h"
@@ -24,10 +24,18 @@
             self.clearsSelectionOnViewWillAppear = NO;
             self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
         }
+        
+        [[self navigationItem] setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(didLeftBarButtonClicked)]];
     }
     return self;
 }
-							
+
+- (void) didLeftBarButtonClicked {
+    PDFWebViewViewController *vc = [[PDFWebViewViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+    [vc release];
+}
+
 - (void)dealloc
 {
 //    [_detailViewController release];

@@ -27,7 +27,11 @@
 #import "ReaderViewController.h"
 #import "ReaderThumbCache.h"
 #import "ReaderThumbQueue.h"
+@interface ReaderViewController(private)
 
+- (void) resetZoom;
+
+@end
 @implementation ReaderViewController
 
 #pragma mark Constants
@@ -582,6 +586,17 @@
 	return NO;
 }
 
+- (void) resetZoom {
+    //restore zoom level
+    NSInteger page = [document.pageNumber integerValue]; // Current page #
+    
+    NSNumber *key = [NSNumber numberWithInteger:page]; // Page number key
+    
+    ReaderContentView *targetView = [contentViews objectForKey:key];
+    
+    [targetView zoomReset];
+}
+
 #pragma mark UIGestureRecognizer action methods
 
 - (void)decrementPageNumber
@@ -607,6 +622,9 @@
 			theScrollView.tag = (page - 1); // Decrement page number
 		}
 	}
+    
+    [self resetZoom];
+
 }
 
 - (void)incrementPageNumber
@@ -632,6 +650,8 @@
 			theScrollView.tag = (page + 1); // Increment page number
 		}
 	}
+    
+    [self resetZoom];
 }
 
 - (void)handleSingleTap:(UITapGestureRecognizer *)recognizer
