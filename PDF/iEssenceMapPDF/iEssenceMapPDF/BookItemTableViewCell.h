@@ -26,13 +26,13 @@
     NSString            *_name;
 }
 @property (nonatomic, retain) ASIHTTPRequest    *request;
-@property (nonatomic, copy)   NSString          *pdfToDownload;
+@property (nonatomic, retain)   NSString          *pdfToDownload;
 @property (nonatomic, retain) UIButton          *removeButton;
 @property (nonatomic, retain) UIButton          *openButton;
 @property (nonatomic, retain) UIProgressView    *progressDownload;
 @property (nonatomic, assign) id                delegate;
 @property (nonatomic, assign) id                datasource;
-@property (nonatomic, copy)   NSString          *localPath;
+@property (nonatomic, retain)   NSString          *localPath;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier path:(NSString *) path name:(NSString *)name;
 @end

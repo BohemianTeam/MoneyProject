@@ -36,7 +36,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        self.pdfToDownload = path;
+        self.pdfToDownload = [path retain];
         _name = [name retain];
         UIButton * aButton = nil;
         
@@ -54,10 +54,10 @@
         BOOL fileAlreadyExists = NO;
         // Paths to the cover and the document.
         
-        paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+        paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         documentsDirectory = [paths objectAtIndex:0];	
-        _localPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.pdf",_name]];
-        NSLog(@"%@",_localPath);
+        _localPath = [[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.pdf",_name]] retain];
+
         fileManager = [[NSFileManager alloc]init];
         
         //create the temp directory used for the resume of pdf.
@@ -72,12 +72,14 @@
         aButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [aButton setFrame:CGRectMake(310, 7, 80, 30)];
         [aButton setAutoresizingMask:UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleRightMargin];
-        [aButton setTitle:@"Download" forState:UIControlStateNormal];
+        
         // Open or download action, depend if the file is already present or not.
         
         if (!fileAlreadyExists) {
+            [aButton setTitle:@"Download" forState:UIControlStateNormal];
             [aButton addTarget:self action:@selector(actionDownloadPdf:) forControlEvents:UIControlEventTouchUpInside];
         } else {
+            [aButton setTitle:@"Open" forState:UIControlStateNormal];
             [aButton addTarget:self action:@selector(actionOpenPdf:) forControlEvents:UIControlEventTouchUpInside];
         }
         
@@ -103,7 +105,7 @@
         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             
             aLabel = [[UILabel alloc ] initWithFrame:CGRectMake(0, 7, 300, 30) ];
-            aLabel.textAlignment =  UITextAlignmentCenter;
+            aLabel.textAlignment =  UITextAlignmentLeft;
             aLabel.textColor = [UIColor blackColor];
             aLabel.backgroundColor = [UIColor clearColor];
             aLabel.font = [UIFont fontWithName:@"Arial Rounded MT Bold" size:(25.0)];
@@ -203,12 +205,12 @@
     if (_isPdfLink) {
         pdfPath = _localPath;//[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.pdf",namePdf]];
     }
-    
+
     request = [ASIHTTPRequest requestWithURL:url];
     [request setDelegate:self];
     
     [request setUseKeychainPersistence:YES];
-    [request setDownloadDestinationPath:pdfPath];
+    [request setDownloadDestinationPath:_localPath];
     [request setDidFinishSelector:@selector(requestFinished:)];
     [request setDidFailSelector:@selector(requestFailed:)];
     
@@ -236,6 +238,7 @@
 	[_openButton addTarget:self action:@selector(actionOpenPdf:) forControlEvents:UIControlEventTouchUpInside];
     [_openButton setTitle:@"Open" forState:UIControlStateNormal];
     _removeButton.hidden = NO;
+    self.progressDownload.hidden = YES;
 }
 
 -(void)requestFailed:(ASIHTTPRequest *)request {
