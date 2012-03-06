@@ -73,23 +73,18 @@ public class SplashActivity extends Activity {
             }
         }
         //get inst id
-//        iBCApplication app = iBCApplication.sharedInstance();
-//        String id = app.getSharedPreferencesManager().loadInstID();
-//        if (null == id) {
-    	Service service = new Service(_listener);
-    	service.getInstID();
-//        } else {
-        	//start loading the application data
-//            backgroundTask = new ApplicationDataLoadingTask();
-//            backgroundTask.execute();
-//        }
-        
+		IBCApplication app = IBCApplication.sharedInstance();
+		String id = app.getSharedPreferencesManager().loadInstID();
+		if (id == null || id.isEmpty()) {
+			Service service = new Service(_listener);
+			service.getInstID();
+		} else {
+			//start loading the application data
+	        backgroundTask = new ApplicationDataLoadingTask();
+	        backgroundTask.execute();
+		}
 
         Log.d(TAG, "onCreate ending");
-      //processing
-//        CalendarProvider provider = CalendarProvider.sharedInstance();
-//        provider.hasCalendar();
-//        CalendarProvider.addToCalendar(app, "demon hunter", Date.UTC(2012, 2, 16, 15, 0, 0), Date.UTC(2012, 2, 16, 16, 0, 0));
     }
    
    ServiceListener _listener = new ServiceListener() {
@@ -97,54 +92,60 @@ public class SplashActivity extends Activity {
 		@SuppressWarnings("unchecked")
 		@Override
 		public void onComplete(Service service, ServiceRespone result) {
-			if (result.getAction() == ServiceAction.ActionGetInstID) {
-				
-				if (result.getResultCode() == ResultCode.Success) {
-					InstIDResponse response = (InstIDResponse) result.getData();
-					String d = response.instID;
-					d = "823ab7fc7820d402";//for test
-					
-					iBCApplication app = iBCApplication.sharedInstance();
-					
-					app.getSharedPreferencesManager().saveInstID(d);
-					Map<String, String> map = app.getDiffServiceParams();
-					map.put("d", d);
-					String h = Util.hashMac(d + Config.KinectiaAppId);
-					map.put("h", h);
-					app.setDiffParams(map);
-					
-					//save
-					app.getSharedPreferencesManager().saveInstID(d);
-					//get starred
-					Service sv = new Service(_listener);
-//					sv.getStarred();
-					sv.getStarredList();
-				}
-				
-				
-			} else if (result.getAction() == ServiceAction.ActionGetStarred) {
-				if (result.getResultCode() == ResultCode.Success) {
-					StarredResponse response = (StarredResponse) result
-							.getData();
-					iBCApplication.sharedInstance().setStarredResponse(response);
-				}
-				
+			
+			if (result.getResultCode() != ResultCode.Success) {
 				//start loading the application data
 		        backgroundTask = new ApplicationDataLoadingTask();
 		        backgroundTask.execute();
-			} else if (result.getAction() == ServiceAction.ActionGetStarredList) {
-				if (result.getResultCode() == ResultCode.Success) {
-					List<StarredListResponse> list = (List<StarredListResponse>) result
-							.getData();
-					iBCApplication.sharedInstance().setList(list);
+			} else {
+				if (result.getAction() == ServiceAction.ActionGetInstID) {
+					
+					if (result.getResultCode() == ResultCode.Success) {
+						InstIDResponse response = (InstIDResponse) result.getData();
+						String d = response.instID;
+						d = "823ab7fc7820d402";//for test
+						
+						IBCApplication app = IBCApplication.sharedInstance();
+						
+						app.getSharedPreferencesManager().saveInstID(d);
+						Map<String, String> map = app.getDiffServiceParams();
+						map.put("d", d);
+						String h = Util.hashMac(d + Config.KinectiaAppId);
+						map.put("h", h);
+						app.setDiffParams(map);
+						
+						//save
+						app.getSharedPreferencesManager().saveInstID(d);
+						//get starred
+						Service sv = new Service(_listener);
+	//					sv.getStarred();
+						sv.getStarredList();
+					}
+					
+					
+				} else if (result.getAction() == ServiceAction.ActionGetStarred) {
+					if (result.getResultCode() == ResultCode.Success) {
+						StarredResponse response = (StarredResponse) result
+								.getData();
+						IBCApplication.sharedInstance().setStarredResponse(response);
+					}
+					
+					//start loading the application data
+			        backgroundTask = new ApplicationDataLoadingTask();
+			        backgroundTask.execute();
+				} else if (result.getAction() == ServiceAction.ActionGetStarredList) {
+					if (result.getResultCode() == ResultCode.Success) {
+						List<StarredListResponse> list = (List<StarredListResponse>) result
+								.getData();
+						IBCApplication.sharedInstance().setList(list);
+					}
+					
+					//start loading the application data
+			        backgroundTask = new ApplicationDataLoadingTask();
+			        backgroundTask.execute();
 				}
-				
-				//start loading the application data
-		        backgroundTask = new ApplicationDataLoadingTask();
-		        backgroundTask.execute();
 			}
 		}
-		
 	};
 	
     @Override

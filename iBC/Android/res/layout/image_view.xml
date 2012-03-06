@@ -12,6 +12,17 @@
 			android:scaleType="fitXY"
 			android:layout_centerInParent="true" 
 		/>
+		
+		<ImageView
+			android:id="@+id/video_icon"
+			android:layout_width="40dip" 
+			android:layout_height="40dip"
+			android:scaleType="fitXY"
+			android:layout_centerInParent="true" 
+			android:background="@drawable/play_icon"
+			android:visibility="gone"
+		/>
+		
 		<ProgressBar
 			android:id="@+id/progress"
 			android:layout_width="40dip"

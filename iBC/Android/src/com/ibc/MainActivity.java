@@ -35,6 +35,7 @@ public class MainActivity extends Activity implements OnItemClickListener{
 
 	private ArrayList<MenuItemData> mMenuList = new ArrayList<MenuItemData>();
 	private ListView mListView;
+	@SuppressWarnings("unused")
 	private Service _service;
 	private ProgressDialog _dialog;
 	
@@ -59,7 +60,7 @@ public class MainActivity extends Activity implements OnItemClickListener{
 	
 	@SuppressWarnings("unused")
 	private void show() {
-		_dialog = ProgressDialog.show(this, "", "Loading...", true, true);
+		_dialog = ProgressDialog.show(this, "", getString(R.string.loading), true, true);
 	}
 
 	private void hide() {
@@ -98,7 +99,7 @@ public class MainActivity extends Activity implements OnItemClickListener{
 				if (result.getResultCode() == ResultCode.Success) {
 					List<VenuesResponse> status = (List<VenuesResponse>) result
 							.getData();
-					iBCApplication.sharedInstance().putData("venues", status);
+					IBCApplication.sharedInstance().putData("venues", status);
 					//
 //					Service sv = new Service(_listener);
 //					sv.getEvents("1", getCurrentTimeString());
@@ -110,13 +111,13 @@ public class MainActivity extends Activity implements OnItemClickListener{
 				if (result.getResultCode() == ResultCode.Success) {
 					List<EventsResponse> data = (List<EventsResponse>) result
 							.getData();
-					iBCApplication.sharedInstance().putData("events", data);
+					IBCApplication.sharedInstance().putData("events", data);
 				}
 			} else if (result.getAction() == ServiceAction.ActionGetStarred) {
 				if (result.getResultCode() == ResultCode.Success) {
 					StarredResponse response = (StarredResponse) result
 							.getData();
-					iBCApplication.sharedInstance()
+					IBCApplication.sharedInstance()
 							.putData("starred", response);
 				}
 			} else if (result.getAction() == ServiceAction.ActionGetStarredList) {
@@ -138,9 +139,9 @@ public class MainActivity extends Activity implements OnItemClickListener{
 							}
 						}
 
-						iBCApplication.sharedInstance().putData("venue_codes",
+						IBCApplication.sharedInstance().putData("venue_codes",
 								venueCodes);
-						iBCApplication.sharedInstance().putData("event_codes",
+						IBCApplication.sharedInstance().putData("event_codes",
 								eventCodes);
 
 						ExtensionList exl = new ExtensionList();
@@ -219,16 +220,14 @@ public class MainActivity extends Activity implements OnItemClickListener{
 		// TODO Auto-generated method stub
 		MenuItemData data = ((MenuListAdapter) mListView.getAdapter()).getItem(position);
 		if (position == 0) {
-			Intent intent = new Intent(this, EventsListViewActivity.class);
+			Intent intent = new Intent(this, SubMenuActivity.class);
 			intent.putExtra("title", data.mTitle);
 			this.startActivity(intent);
 		} else if (position == 1 ) {
 			Intent intent = new Intent(this, VenusListViewActivity.class);
 			intent.putExtra("title", data.mTitle);
-			iBCApplication application = iBCApplication.sharedInstance();
-			application.putData("lat", 41.385756);
-			application.putData("lon", 2.164129);
-
+			intent.putExtra("ordered_alphabet", true);
+			
 			this.startActivity(intent);
 		} else if (position == 2) {
 	        /*

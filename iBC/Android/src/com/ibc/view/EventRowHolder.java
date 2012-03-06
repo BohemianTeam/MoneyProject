@@ -57,7 +57,7 @@ public class EventRowHolder  {
 	public void display(EventsResponse data) {
 		_data = data;
 		if (null != _data) {
-			_title.setText(_data.eventTitle);
+			_title.setText(_data.eventTitle.toUpperCase());
 			_venueName.setText(_data.venueName == null ? "" : _data.venueName);
 			_price.setText(_data.price);
 			_dates.setText(_data.date);

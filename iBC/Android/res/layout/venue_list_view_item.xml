@@ -52,14 +52,14 @@
 			android:layout_height="wrap_content"
 			android:textStyle="bold"
 			android:textColor="#53A8CC"
-			android:textSize="18dp"
+			android:textSize="16dp"
 		/>
 		<TextView
 			android:id="@+id/city"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:textColor="#666666"
-					android:textSize="12dip"
+					android:textSize="13dip"
 				/>
 	</LinearLayout>
 	<ImageView

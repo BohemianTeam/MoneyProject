@@ -40,6 +40,7 @@
 	        android:textStyle="bold"
 	        android:textColor="#266A85"
 	        android:layout_alignParentLeft="true"
+	        android:onClick="onRouteClicked"
         />
         <Button
             android:id="@+id/add"
@@ -51,6 +52,7 @@
 	        android:textStyle="bold"
 	        android:textColor="#266A85"
 	        android:layout_centerInParent="true"
+	        android:onClick="onAddAddressClicked"
         />
         <Button
             android:id="@+id/share"
@@ -62,6 +64,7 @@
 	        android:textSize="13dip"
 	        android:textStyle="bold"
 	        android:textColor="#266A85"
+	        android:onClick="onShareClicked"
         />
     </RelativeLayout>
     
@@ -76,6 +79,7 @@
             android:layout_height="44dip" 
             android:id="@+id/phone"
             android:background="@drawable/white_round_rect"
+            android:onClick="onPhoneClicked"
             />
         
         <Button
@@ -84,6 +88,7 @@
             android:layout_height="44dip" 
             android:id="@+id/email"
             android:background="@drawable/white_round_rect"
+            android:onClick="onEmailClicked"
             />
     </LinearLayout>
 </LinearLayout>

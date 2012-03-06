@@ -3,4 +3,10 @@
     <string name="hello">Hello World, MainActivity!</string>
     <string name="app_name">IBC</string>
     <string name="main_title">Tot Teatre</string>
+    <string name="loading_events">Carregant espectacles &#8230;</string>
+    <string name="loading_venues">Carregant espais &#8230;</string>
+    <string name="loading">Carregant &#8230;</string>
+    <string name="loading_gps">Accedint GPS &#8230;</string>
+    <string name="Title">Title</string>
+    <string name="done">Cancel</string>
 </resources>

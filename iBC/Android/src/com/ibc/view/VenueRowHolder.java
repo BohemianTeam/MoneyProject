@@ -51,7 +51,7 @@ public class VenueRowHolder {
 	public void display(VenuesResponse data) {
 		_data = data;
 		if (_data != null) {
-			_title.setText(_data.venuesName);
+			_title.setText(_data.venuesName.toUpperCase());
 			String city = _data.city == null ? "" : _data.city;
 			String distance = _data.distance == null ? "" : _data.distance;
 			_city.setText(distance + city);

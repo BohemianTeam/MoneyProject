@@ -1,5 +1,6 @@
 package com.ibc.model.service.response;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
@@ -52,7 +53,7 @@ public class EventResponse implements Cloneable{
 	
 	
 	
-	public List<ImageResponse> imgs;
-	public List<VideoResponse> vids;
-	public List<InfoBlocksResponse> ib;
+	public List<ImageResponse> imgs = new ArrayList<ImageResponse>();
+	public List<VideoResponse> vids = new ArrayList<VideoResponse>();
+	public List<InfoBlocksResponse> ib = new ArrayList<InfoBlocksResponse>();
 }

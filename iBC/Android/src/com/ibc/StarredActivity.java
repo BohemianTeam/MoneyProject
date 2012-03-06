@@ -101,8 +101,8 @@ public class StarredActivity extends Activity{
 
 	@SuppressWarnings({ "unchecked", "unused" })
 	private void buildByCorrectInstID() {
-		List<VenuesResponse> venues = (List<VenuesResponse>) iBCApplication.sharedInstance().getData("venues");
-		List<EventsResponse> events = (List<EventsResponse>) iBCApplication.sharedInstance().getData("events");
+		List<VenuesResponse> venues = (List<VenuesResponse>) IBCApplication.sharedInstance().getData("venues");
+		List<EventsResponse> events = (List<EventsResponse>) IBCApplication.sharedInstance().getData("events");
 		total = 0;
 		if (venues != null && 4 > venues.size()) {
 			
@@ -198,7 +198,7 @@ public class StarredActivity extends Activity{
 	};
 	
 	private void show() {
-    	_dialog = ProgressDialog.show(this, "", "Loading...", true, true);
+    	_dialog = ProgressDialog.show(this, "", getString(R.string.loading), true, true);
     }
     
     private void hide() {

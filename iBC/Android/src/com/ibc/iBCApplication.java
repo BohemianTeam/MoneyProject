@@ -15,9 +15,9 @@ import com.ibc.model.service.response.StarredResponse;
 import com.ibc.util.Config;
 import com.ibc.util.Util;
 
-public class iBCApplication extends Application {
+public class IBCApplication extends Application {
 
-	private static iBCApplication _instance = null;
+	private static IBCApplication _instance = null;
 	private final HashMap<Object,Object> _data = new HashMap<Object,Object>();
 	
 	private Map<String, String> _paramsWithSecurityParams = new HashMap<String, String>();
@@ -54,12 +54,12 @@ public class iBCApplication extends Application {
 		System.out.println("onCreate Application");
 	}
 	
-	public iBCApplication() {
+	public IBCApplication() {
 		super();
 		_instance = this;
 	}
 	
-	public static iBCApplication sharedInstance() {
+	public static IBCApplication sharedInstance() {
 		return _instance;
 	}
 	

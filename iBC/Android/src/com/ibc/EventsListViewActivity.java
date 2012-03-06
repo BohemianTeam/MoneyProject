@@ -8,12 +8,20 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,10 +33,14 @@ import com.ibc.service.ServiceAction;
 import com.ibc.service.ServiceListener;
 import com.ibc.service.ServiceRespone;
 
-public class EventsListViewActivity extends Activity{
+public class EventsListViewActivity extends Activity implements TextWatcher{
+	View _listviewHeader;
+	EditText _search;
+	Button _done;
 	ListView _listView;
 	EventListAdapter _adapter;
 	List<EventsResponse> list = new ArrayList<EventsResponse>();
+	List<EventsResponse> listBySearch = new ArrayList<EventsResponse>();
 	ProgressDialog _dialog;
 	Service _service;
 	ServiceListener _listener = new ServiceListener() {
@@ -67,24 +79,51 @@ public class EventsListViewActivity extends Activity{
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.events);
 		Intent intent = getIntent();
         String title = intent.getStringExtra("title");
         if(null != title) {
-        	((TextView) findViewById(R.id.title)).setText(title);
+        	((TextView) findViewById(R.id.title)).setText(title.toUpperCase());
         } else {
         	((TextView) findViewById(R.id.title)).setText("ESPAIS");
         }
+        
+        _listviewHeader = LayoutInflater.from(this).inflate(R.layout.header_listview, null);
+        _search = (EditText) _listviewHeader.findViewById(R.id.search);
+        
+        _done = (Button) _listviewHeader.findViewById(R.id.done);
+        _done.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(_search.getWindowToken(), 0);
+				_adapter = new EventListAdapter(EventsListViewActivity.this, list, null, true);
+				_listView.setAdapter(_adapter);
+				_done.setVisibility(View.GONE);
+				_search.setText("");
+			}
+		});
+		
+        _search.addTextChangedListener(this);
+        
 		_listView = (ListView) findViewById(R.id.list);
 		_service = new Service(_listener);
 		String date = intent.getStringExtra("date") == null ? "" : intent.getStringExtra("date");
+		String filter = intent.getStringExtra("filter") == null ? "1" : intent.getStringExtra("filter");
 		if (date != null && date.equalsIgnoreCase("")) {
-			_service.getEvents("1", getCurrentTimeString());
+			_service.getEvents(filter, getCurrentTimeString());
 		} else {
+			String dateTitle = date.substring(0, 4);
+			dateTitle += "/";
+			dateTitle += date.substring(4, 6);
+			dateTitle += "/";
+			dateTitle += date.substring(6, 8);
+			
+			((TextView) findViewById(R.id.title)).setText(dateTitle.toUpperCase());
 			_needReturn = true;
-			_service.getEvents("1", date);
+			_service.getEvents(filter, date);
 		}
 		show();
 		
@@ -97,7 +136,7 @@ public class EventsListViewActivity extends Activity{
 	}
 	
 	private void show() {
-		_dialog = ProgressDialog.show(this, "", "Loading events...",true , true);
+		_dialog = ProgressDialog.show(this, "", getResources().getString(R.string.loading_events),true , true);
 	}
 	
 	private void hide() {
@@ -119,6 +158,35 @@ public class EventsListViewActivity extends Activity{
 			}
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	public void afterTextChanged(Editable s) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void beforeTextChanged(CharSequence s, int start, int count,
+			int after) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onTextChanged(CharSequence s, int start, int before, int count) {
+		// TODO Auto-generated method stub
+		_done.setVisibility(View.VISIBLE);
+		listBySearch.clear();
+		String text = _search.getText().toString().toLowerCase();
+		for (EventsResponse v : list) {
+			if (v.eventTitle.contains(text)) {
+				listBySearch.add(v);
+			}
+		}
+		
+		_adapter = new EventListAdapter(EventsListViewActivity.this, listBySearch, null, true);
+		_listView.setAdapter(_adapter);
 	}
 	
 	

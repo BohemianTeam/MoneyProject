@@ -61,7 +61,7 @@ public class VenueRoomRowHolder {
 			_title.setText(_data._event.eventTitle);
 			_venueName.setText(_data._event.venueName == null ? "" : _data._event.venueName);
 			_price.setText(_data._event.price);
-			_dates.setText(_data._event.dates);
+			_dates.setText(_data._event.date);
 			
 			_roomName.setText(_data._venueRoomName);
 			

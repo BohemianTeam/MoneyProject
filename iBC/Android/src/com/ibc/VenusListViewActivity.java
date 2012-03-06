@@ -5,14 +5,22 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,13 +34,19 @@ import com.ibc.service.Service;
 import com.ibc.service.ServiceAction;
 import com.ibc.service.ServiceListener;
 import com.ibc.service.ServiceRespone;
+import com.ibc.util.Util;
+import com.ibc.util.Util.SortFilter;
 
-public class VenusListViewActivity extends Activity implements OnScrollListener{
+public class VenusListViewActivity extends Activity implements OnScrollListener, TextWatcher{
 	static final String TAG = "VenuesListViewAct";
 	GPSService _gpsService;
 	ListView _listView;
+	View _listviewHeader;
+	EditText _search;
+	Button _done;
 	EventListAdapter _adapter;
 	List<VenuesResponse> list = new ArrayList<VenuesResponse>();
+	List<VenuesResponse> listBySearch = new ArrayList<VenuesResponse>();
 	ProgressDialog _dialog;
 	Service _service;
 	boolean _loadMore;
@@ -61,6 +75,11 @@ public class VenusListViewActivity extends Activity implements OnScrollListener{
 				
 				if (result.getResultCode() == ResultCode.Success) {
 					list = (List<VenuesResponse>) result.getData();
+					if (_orderedAlphabet) {
+						list = Util.sortBy(SortFilter.Name, list);
+					} else {
+						list = Util.sortBy(SortFilter.Distance, list);
+					}
 					_adapter = new EventListAdapter(VenusListViewActivity.this, null, list, true);
 					_listView.setAdapter(_adapter);
 					_listView.setOnItemClickListener(_onItemClickListener);
@@ -77,7 +96,6 @@ public class VenusListViewActivity extends Activity implements OnScrollListener{
 		@Override
 		public void onItemClick(AdapterView<?> adapter, View view, int position,
 				long id) {
-			// TODO Auto-generated method stub
 			VenuesResponse item = list.get(position);
 			Intent intent = new Intent(VenusListViewActivity.this, VenueDetailActivity.class);
 			intent.putExtra("v_code", item.venuesCode);
@@ -88,7 +106,7 @@ public class VenusListViewActivity extends Activity implements OnScrollListener{
 	
 	double _lat;
 	double _lon;
-	
+	boolean _orderedAlphabet;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -99,7 +117,32 @@ public class VenusListViewActivity extends Activity implements OnScrollListener{
         if(null != title) {
         	((TextView) findViewById(R.id.title)).setText(title);
         }
+        _orderedAlphabet = intent.getBooleanExtra("ordered_alphabet", false);
+        
+        _listviewHeader = LayoutInflater.from(this).inflate(R.layout.header_listview, null);
+        _search = (EditText) _listviewHeader.findViewById(R.id.search);
+        
+        _done = (Button) _listviewHeader.findViewById(R.id.done);
+        _done.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(_search.getWindowToken(), 0);
+				_adapter = new EventListAdapter(VenusListViewActivity.this, null, list, true);
+				_listView.setAdapter(_adapter);
+				_done.setVisibility(View.GONE);
+				_search.setText("");
+			}
+		});
+		
+        _search.addTextChangedListener(this);
 		_listView = (ListView) findViewById(R.id.list);
+		
+		if (_listView.getHeaderViewsCount() == 0) {
+			_listView.addHeaderView(_listviewHeader);
+		}
+		
 		_gpsService = new GPSService(this, _gpsServiceListener);
 		_service = new Service(_listener);
 		
@@ -108,7 +151,7 @@ public class VenusListViewActivity extends Activity implements OnScrollListener{
 			_gpsService.getCurrentLocation();
 			show(true);
 		} else {
-			iBCApplication app = iBCApplication.sharedInstance();
+			IBCApplication app = IBCApplication.sharedInstance();
 			if (app.getData("lat") != null && app.getData("lon") != null) {
 				_lat = (Double) app.getData("lat");
 				_lon = (Double) app.getData("lon");
@@ -135,7 +178,7 @@ public class VenusListViewActivity extends Activity implements OnScrollListener{
 			show(false);
 			_lat = gpsInfo.getLat();
 			_lon = gpsInfo.getLng();
-			iBCApplication app = iBCApplication.sharedInstance();
+			IBCApplication app = IBCApplication.sharedInstance();
 			app.putData("lat", _lat);
 			app.putData("lon", _lon);
 			String lat = String.valueOf(gpsInfo.getLat());
@@ -151,15 +194,18 @@ public class VenusListViewActivity extends Activity implements OnScrollListener{
 			show(false);
 			_lat = 41.385756;
 			_lon = 2.164129;
+			IBCApplication app = IBCApplication.sharedInstance();
+			app.putData("lat", _lat);
+			app.putData("lon", _lon);
 			_service.getVenues("41.385756", "2.164129");
 		}
 	};
 	
 	private void show(boolean isGetGPS) {
 		if (isGetGPS) {
-			_dialog = ProgressDialog.show(this, "", "Get GPS ...");
+			_dialog = ProgressDialog.show(this, "", getString(R.string.loading_gps));
 		} else {
-			_dialog = ProgressDialog.show(this, "", "Loading Venues...",true , true);
+			_dialog = ProgressDialog.show(this, "", getString(R.string.loading_venues),true , true);
 		}
 	}
 	
@@ -167,6 +213,32 @@ public class VenusListViewActivity extends Activity implements OnScrollListener{
 		if (_dialog != null) {
 			_dialog.dismiss();
 		}
+	}
+
+	@Override
+	public void afterTextChanged(Editable s) {
+		
+	}
+
+	@Override
+	public void beforeTextChanged(CharSequence s, int start, int count,
+			int after) {
+		
+	}
+
+	@Override
+	public void onTextChanged(CharSequence s, int start, int before, int count) {
+		_done.setVisibility(View.VISIBLE);
+		listBySearch.clear();
+		String text = _search.getText().toString().toLowerCase();
+		for (VenuesResponse v : list) {
+			if (v.venuesName.contains(text)) {
+				listBySearch.add(v);
+			}
+		}
+		
+		_adapter = new EventListAdapter(VenusListViewActivity.this, null, listBySearch, true);
+		_listView.setAdapter(_adapter);
 	}
 
 }

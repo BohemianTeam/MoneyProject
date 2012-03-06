@@ -7,8 +7,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,13 +18,18 @@ import com.ibc.controller.GPSService;
 import com.ibc.controller.GPSService.GPSServiceListener;
 import com.ibc.model.GPSInfo;
 import com.ibc.model.service.response.ImageResponse;
+import com.ibc.model.service.response.InfoBlocksResponse;
 import com.ibc.model.service.response.StarredListResponse;
 import com.ibc.model.service.response.VenueResponse;
+import com.ibc.model.service.response.VideoResponse;
 import com.ibc.service.ResultCode;
 import com.ibc.service.Service;
 import com.ibc.service.ServiceAction;
 import com.ibc.service.ServiceListener;
 import com.ibc.service.ServiceRespone;
+import com.ibc.util.Config;
+import com.ibc.util.Util;
+import com.ibc.view.EventRow;
 import com.ibc.view.ImageItem;
 import com.ibc.view.VenueAvatar;
 
@@ -51,12 +56,20 @@ public class VenueDetailActivity extends Activity {
 			        	((TextView) findViewById(R.id.title)).setText(title);
 			        }
 					displayView(venue);
+					
 					if (venue.vr != null && venue.vr.size() > 0) {
-						VenueRoomListAdapter adapter = new VenueRoomListAdapter(VenueDetailActivity.this, venue.vr);
-						_eventList.setAdapter(adapter);
-						_listHeader.setVisibility(View.GONE);
+						if (venue.vr.get(0).events.size() > 0) {
+							VenueRoomListAdapter adapter = new VenueRoomListAdapter(VenueDetailActivity.this, venue.vr);
+							_eventList.setAdapter(adapter);
+							_eventList.setOnItemClickListener(adapter);
+							_listHeader.setVisibility(View.GONE);
+						} else {
+							if (venue.vr.get(0).name != null) {
+								_listHeader.setVisibility(View.VISIBLE);
+								_roomName.setText(venue.vr.get(0).name);
+							}
+						}
 					} else {
-						_listHeader.setVisibility(View.VISIBLE);
 					}
 				}
 				hide();
@@ -64,7 +77,7 @@ public class VenueDetailActivity extends Activity {
 				if (result.getResultCode() == ResultCode.Success) {
 					boolean ok = (Boolean) result.getData();
 					if (ok) {
-						List<StarredListResponse> list = iBCApplication.sharedInstance().getList();
+						List<StarredListResponse> list = IBCApplication.sharedInstance().getList();
 						isStarred = !isStarred;
 						if (isStarred) {
 							_navigationBar.findViewById(R.id.button_starred).setBackgroundResource(R.drawable.starred);
@@ -100,6 +113,8 @@ public class VenueDetailActivity extends Activity {
 	VenueAvatar _avatar;
 	LinearLayout _layoutImg;
 	LinearLayout _listHeader;
+	TextView _roomName;
+	LinearLayout _llInfoblocs;
 	
 	boolean isStarred = false;
 	
@@ -112,7 +127,7 @@ public class VenueDetailActivity extends Activity {
 		public void onGetGPSSuccess(GPSInfo gpsInfo) {
 			_lat = gpsInfo.getLat();
 			_lon = gpsInfo.getLng();
-			iBCApplication app = iBCApplication.sharedInstance();
+			IBCApplication app = IBCApplication.sharedInstance();
 			app.putData("lat", _lat);
 			app.putData("lon", _lon);
 			
@@ -128,7 +143,7 @@ public class VenueDetailActivity extends Activity {
 		public void onGetGPSFail() {
 			_lat = 41.385756;
 			_lon = 2.164129;
-			iBCApplication app = iBCApplication.sharedInstance();
+			IBCApplication app = IBCApplication.sharedInstance();
 			app.putData("lat", _lat);
 			app.putData("lon", _lon);
 			
@@ -148,7 +163,7 @@ public class VenueDetailActivity extends Activity {
 		setContentView(R.layout.venue_detail);
 		
 		inflatViews();
-		iBCApplication app = iBCApplication.sharedInstance();
+		IBCApplication app = IBCApplication.sharedInstance();
 		if (app.getData("lat") == null && app.getData("lon") == null) {
 			GPSService gpsService = new GPSService(app, _gpsServiceListener );
 			gpsService.getCurrentLocation();
@@ -176,6 +191,7 @@ public class VenueDetailActivity extends Activity {
 		_url.setText(venue.webAddress == null ? "" : venue.webAddress);
 		_avatar.getImage(venue);
 		inflatImageLayout(venue);
+		inflateInfoblocs(venue);
 	}
 	
 	private void inflatImageLayout(VenueResponse venue) {
@@ -186,6 +202,47 @@ public class VenueDetailActivity extends Activity {
 				ImageItem item = new ImageItem(this);
 				item.getImage(img.thumbPath);
 				_layoutImg.addView(item);
+			}
+		}
+		
+		if (venue.vids != null && venue.vids.size() > 0) {
+			for (VideoResponse video : venue.vids) {
+				String id = Util.youtubeIdByURL(video.url);
+				if (id.trim().length() > 0) {
+					ImageItem item = new ImageItem(this);
+					item.setVideoIconVisible();
+					item.setVideoURL(video.url);
+					String imgURL = String.format(Config.YOUTUBE_IMG_URL, id);
+					item.getImage(imgURL, false);
+					_layoutImg.addView(item);
+				}
+			}
+		}
+	}
+	
+	private void inflateInfoblocs(VenueResponse venue) {
+		_llInfoblocs.removeAllViews();
+		List<InfoBlocksResponse> ibs = venue.ib;
+		
+		if (ibs != null) {
+			for (int i = 0;i < ibs.size();i++) {
+				final InfoBlocksResponse ib = ibs.get(i);
+				final EventRow row = new EventRow(this);
+				row.setItemViewType(ib.title.toUpperCase(), i);
+				row.setTag(i);
+				row.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						IBCApplication app = IBCApplication.sharedInstance();
+						app.putData("venue", _venue);
+						app.putData("infoblocs", ib);
+						Intent intent = new Intent(VenueDetailActivity.this, InfoBlocsDetailActivity.class);
+						intent.putExtra("isvenue", true);
+						startActivity(intent);
+					}
+				});
+				_llInfoblocs.addView(row);
 			}
 		}
 	}
@@ -204,10 +261,12 @@ public class VenueDetailActivity extends Activity {
 		_eventList = (ListView) findViewById(R.id.event_list);
 		_layoutImg = (LinearLayout) findViewById(R.id.layout_img);
 		_listHeader = (LinearLayout) findViewById(R.id.header_list);
+		_roomName = (TextView) findViewById(R.id.room_name);
+		_llInfoblocs = (LinearLayout) findViewById(R.id.layout_row);
 	}
 	
 	private void setNavigationBar(VenueResponse venue) {
-		iBCApplication app = iBCApplication.sharedInstance();
+		IBCApplication app = IBCApplication.sharedInstance();
 		if (app.getList() != null) {
 			List<StarredListResponse> list = app.getList();
 			for (StarredListResponse response : list) {
@@ -220,12 +279,8 @@ public class VenueDetailActivity extends Activity {
 		}
 	}
 	
-	public void onGoToInfoBlocksClicked(View v) {
-		Log.d(TAG, "on go to info clicked");
-	}
-	
 	public void onGoToMapClicked(View v) {
-		iBCApplication.sharedInstance().putData("venue", _venue);
+		IBCApplication.sharedInstance().putData("venue", _venue);
 		Intent intent = new Intent(this, AddressActivity.class);
 		startActivity(intent);
 	}
@@ -237,7 +292,7 @@ public class VenueDetailActivity extends Activity {
 	}
 	
 	private void show() {
-		_dialog = ProgressDialog.show(this, "", "Loading ...",true , true);
+		_dialog = ProgressDialog.show(this, "", getString(R.string.loading),true , true);
 	}
 	
 	private void hide() {

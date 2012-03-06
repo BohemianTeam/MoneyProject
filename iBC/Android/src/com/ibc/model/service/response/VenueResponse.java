@@ -1,5 +1,6 @@
 package com.ibc.model.service.response;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
@@ -44,14 +45,14 @@ public class VenueResponse implements Cloneable{
 	@SerializedName("ic")
 	public String icon;
 	
-	public List<ImageResponse> imgs;
+	public List<ImageResponse> imgs = new ArrayList<ImageResponse>();
 	
-	public List<VideoResponse> vids;
+	public List<VideoResponse> vids = new ArrayList<VideoResponse>();
 	
 	@SerializedName("sh")
 	public String shareContent;
 	
-	public List<InfoBlocksResponse> ib;
+	public List<InfoBlocksResponse> ib = new ArrayList<InfoBlocksResponse>();
 	
-	public List<VenueRoomResponse> vr;
+	public List<VenueRoomResponse> vr = new ArrayList<VenueRoomResponse>();
 }
