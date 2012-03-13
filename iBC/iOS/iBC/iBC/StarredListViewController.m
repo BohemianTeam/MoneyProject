@@ -16,6 +16,8 @@
 #import "EventViewCell.h"
 #import "config.h"
 #import "ImageDownloader.h"
+#import "VenueDetailViewController.h"
+#import "EventDetailViewController.h"
 
 #define VENUES_SECTION 0
 #define EVENTS_SECTION 1
@@ -34,14 +36,20 @@
     self = [super init];
     if (self) {
         self.title = [title retain];
-        
+        isGoDetailPage = NO;
         // Custom initialization
-        starredTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 480) style:UITableViewStylePlain];
+        starredTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 460) style:UITableViewStylePlain];
         starredTable.dataSource = self;
         starredTable.delegate = self;
         starredTable.autoresizesSubviews = YES;
         starredTable.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
         [self.view addSubview:starredTable];
+        
+        //init service
+        service = [[Service alloc] init];
+        service.delegate = self;
+        service.canShowAlert = YES;
+        service.canShowLoading = YES;
         
         //get data
         haveData = NO;
@@ -75,9 +83,27 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
-
+- (void)viewWillDisappear:(BOOL)animated
+{
+    NSLog(@"viewWillDisappear");
+    
+    if(!isGoDetailPage)
+    {
+        [service stop];
+        
+        NSArray *allDownloads = [self.imageDownloadsInProgress allValues];
+        [allDownloads makeObjectsPerformSelector:@selector(cancelDownload)];
+    }
+    
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    isGoDetailPage = NO;
+}
 - (void)dealloc
 {
+    [service stop];
+    [service release];
     [imageDownloadsInProgress release];
     [starredTable release];
     [eventsList release];
@@ -101,6 +127,7 @@
     srv.canShowLoading = YES;
     
     [srv getStarred];
+    [srv release];
 }
 #pragma mark - tableview delegate and datasource
 
@@ -195,6 +222,26 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    isGoDetailPage = YES;
+    if(indexPath.section == 0)
+    {
+        VenuesObj *venueObj = [venuesList objectAtIndex:indexPath.row];
+        
+        VenueDetailViewController *venueDetailVC = [[VenueDetailViewController alloc] init];
+        venueDetailVC.venueCode = [venueObj getVenueCode];
+        [self.navigationController pushViewController:venueDetailVC animated:YES];
+        
+        [venueDetailVC release];
+    }else{
+        isGoDetailPage = YES;
+        EventsObj *eventObj = [eventsList objectAtIndex:indexPath.row];
+        
+        EventDetailViewController *eventDetailVC = [[EventDetailViewController alloc] init];
+        eventDetailVC.eventCode = [eventObj getCode];
+        [self.navigationController pushViewController:eventDetailVC animated:YES];
+        
+        [eventDetailVC release];
+    }
 }
 #pragma mark - servide delegate
 - (void) mServiceGetStarredSucces:(Service *) service responses:(id) response {

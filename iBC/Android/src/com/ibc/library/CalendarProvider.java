@@ -8,7 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.text.format.DateUtils;
 
-import com.ibc.iBCApplication;
+import com.ibc.IBCApplication;
 
 public class CalendarProvider {
 
@@ -19,7 +19,7 @@ public class CalendarProvider {
 	public static CalendarProvider sharedInstance() {
 		if (_instance == null) {
 			_instance = new CalendarProvider();
-			_context = iBCApplication.sharedInstance();
+			_context = IBCApplication.sharedInstance();
 			if (Integer.parseInt(Build.VERSION.SDK) < 14) {
 				CALENDER_URI = "content://com.android.calendar/calendars";
 			}

@@ -98,6 +98,52 @@ NSString *MBErrorDomain = @"com.iBC";
     [params release];
 
 }
+- (void) getEventDetail:(NSString*)eventCode
+{
+    self.action = ActionTypeGetEventDetail;
+    
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setObject:[Util getCurrentTimeString] forKey:UTCTime];
+    [params setObject:KinectiaAppId forKey:Kinectia];
+    [params setObject:[Util getRequestParameterString] forKey:Hash];
+    [params setObject:eventCode forKey:EventCode];
+    
+    NSString *url = [NSString stringWithFormat:@"%@/getEvent", API_URL];
+    [self doRequestWithURL:url params:params];
+    [params release];
+}
+- (void)getStarredList
+{
+    self.action = ActionTypeGetStarredList;
+    
+    NSString *instlID = [Util getInstID];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setObject:instlID forKey:@"d"];
+    [params setObject:KinectiaAppId forKey:Kinectia];
+    [params setObject:[Util getRequestParameterString:[NSString stringWithFormat:@"%@%@", instlID, KinectiaAppId]] 
+               forKey:@"h"];
+    
+    NSString *url = [NSString stringWithFormat:@"%@/getStarredList", API_URL];
+    [self doRequestWithURL:url params:params];
+    [params release];
+}
+- (void)setStarred:(NSString*)code status:(NSString*)status
+{
+    self.action = ActionTypeSetStarred;
+    
+    NSString *instlID = [Util getInstID];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setObject:code forKey:Code];
+    [params setObject:instlID forKey:@"d"];
+    [params setObject:status forKey:StarredStatus];
+    [params setObject:KinectiaAppId forKey:Kinectia];
+    [params setObject:[Util getRequestParameterString:[NSString stringWithFormat:@"%@%@", instlID, KinectiaAppId]] 
+               forKey:@"h"];
+    
+    NSString *url = [NSString stringWithFormat:@"%@/setStarred", API_URL];
+    [self doRequestWithURL:url params:params];
+    [params release];
+}
 - (void)getStarred{
     self.action = ActionTypeGetStarred;
     
@@ -131,12 +177,26 @@ NSString *MBErrorDomain = @"com.iBC";
     self.action = ActionTypeGetVenueDetail;
     
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [params setObject:[Util getCurrentTimeString] forKey:Dates];
+    [params setObject:[Util getCurrentTimeString] forKey:UTCTime];
     [params setObject:KinectiaAppId forKey:Kinectia];
     [params setObject:[Util getRequestParameterString] forKey:Hash];
     [params setObject:venueCode forKey:VenueCode];
     
     NSString *url = [NSString stringWithFormat:@"%@/getVenue", API_URL];
+    [self doRequestWithURL:url params:params];
+    [params release];
+}
+- (void) getEventSessions:(NSString*)eventCode
+{
+    self.action = ActionTypeGetEventSessions;
+    
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setObject:[Util getCurrentTimeString] forKey:@"d"];
+    [params setObject:KinectiaAppId forKey:@"i"];
+    [params setObject:[Util getRequestParameterString] forKey:@"h"];
+    [params setObject:eventCode forKey:EventCode];
+    
+    NSString *url = [NSString stringWithFormat:@"%@/getEventSessions", API_URL];
     [self doRequestWithURL:url params:params];
     [params release];
 }
@@ -396,6 +456,16 @@ NSString *MBErrorDomain = @"com.iBC";
             case ActionTypeGetEventList:
             {
                 SEL sel = @selector(mServiceGetEventListSucces:responses:);
+//                if(_delegate == nil)
+//                    break;
+                if([_delegate respondsToSelector:sel]){
+                    [_delegate performSelector:sel withObject:self withObject:data];
+                }
+                break;
+            }
+            case ActionTypeGetEventDetail:
+            {
+                SEL sel = @selector(mServiceGetEventDetailSucces:responses:);
                 if([_delegate respondsToSelector:sel]){
                     [_delegate performSelector:sel withObject:self withObject:data];
                 }
@@ -404,6 +474,30 @@ NSString *MBErrorDomain = @"com.iBC";
             case ActionTypeGetStarred:
             {
                 SEL sel = @selector(mServiceGetStarredSucces:responses:);
+                if([_delegate respondsToSelector:sel]){
+                    [_delegate performSelector:sel withObject:self withObject:data];
+                }
+                break;
+            }
+            case ActionTypeGetStarredList:
+            {
+                SEL sel = @selector(mServiceGetStarredListSucces:responses:);
+                if([_delegate respondsToSelector:sel]){
+                    [_delegate performSelector:sel withObject:self withObject:data];
+                }
+                break;
+            }
+            case ActionTypeSetStarred:
+            {
+                SEL sel = @selector(mServiceSetStarredSucces:responses:);
+                if([_delegate respondsToSelector:sel]){
+                    [_delegate performSelector:sel withObject:self withObject:data];
+                }
+                break;
+            }
+            case ActionTypeGetEventSessions:
+            {
+                SEL sel = @selector(mServiceGetEventSessionsSucces:responses:);
                 if([_delegate respondsToSelector:sel]){
                     [_delegate performSelector:sel withObject:self withObject:data];
                 }

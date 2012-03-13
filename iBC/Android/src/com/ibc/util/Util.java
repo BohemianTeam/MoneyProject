@@ -12,13 +12,21 @@ import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
+import java.text.Collator;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.RuleBasedCollator;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import vn.lmchanh.lib.time.MCDate;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
@@ -29,7 +37,86 @@ import android.graphics.Paint.Align;
 import android.graphics.Shader.TileMode;
 import android.util.Base64;
 
+import com.ibc.model.service.response.VenuesResponse;
+
 public class Util {
+	
+	public enum SortFilter {
+		Distance,
+		Name,
+	}
+	
+	public static List<VenuesResponse> sortBy(SortFilter filter,
+			List<VenuesResponse> list) {
+
+		String englishRules = ("< a,A < b,B < c,C < d,D < e,E < f,F "
+				+ "< g,G < h,H < i,I < j,J < k,K < l,L "
+				+ "< m,M < n,N < o,O < p,P < q,Q < r,R "
+				+ "< s,S < t,T < u,U < v,V < w,W < x,X " + "< y,Y < z,Z");
+		String smallnTilde = new String("\u00F1"); // –
+		String capitalNTilde = new String("\u00D1"); // „
+
+		String traditionalSpanishRules = ("< a,A < b,B < c,C "
+				+ "< ch, cH, Ch, CH " + "< d,D < e,E < f,F "
+				+ "< g,G < h,H < i,I < j,J < k,K < l,L " + "< ll, lL, Ll, LL "
+				+ "< m,M < n,N " + "< " + smallnTilde + "," + capitalNTilde
+				+ " " + "< o,O < p,P < q,Q < r,R "
+				+ "< s,S < t,T < u,U < v,V < w,W < x,X " + "< y,Y < z,Z");
+		try {
+			if (filter == SortFilter.Name) {
+				RuleBasedCollator spCollator = new RuleBasedCollator(
+						traditionalSpanishRules);
+
+				sortStrings(spCollator, list);
+			} else if (filter == SortFilter.Distance) {
+				RuleBasedCollator enCollator = new RuleBasedCollator(
+						englishRules);
+				sortDistances(enCollator, list);
+			}
+		} catch (ParseException e) {
+			System.out.println("Parse exception for rules");
+		}
+		return list;
+	}
+	
+	public static void sortDistances(Collator collator, List<VenuesResponse> list) {
+	    for (int i = 0; i < list.size(); i++) {
+	        for (int j = i + 1; j < list.size(); j++) {
+	            if (collator.compare(list.get(i).distance, list.get(j).distance) > 0) {
+	                Collections.swap(list, i, j);
+	            }
+	        }
+	    }
+	}
+	
+	public static void sortStrings(Collator collator, List<VenuesResponse> list) {
+	    for (int i = 0; i < list.size(); i++) {
+	        for (int j = i + 1; j < list.size(); j++) {
+	            if (collator.compare(list.get(i).venuesName, list.get(j).venuesName) > 0) {
+	                Collections.swap(list, i, j);
+	            }
+	        }
+	    }
+	}
+	
+	public static String youtubeIdByURL(String url) {
+		Pattern p = Pattern.compile("http.*\\?v=([a-zA-Z0-9_\\-]+)(?:&.)*");
+	    Matcher m = p.matcher(url);
+	    String input = "";
+	    if (m.matches()) {
+	      input = m.group(1);
+	    } else {
+	    	int idx = url.lastIndexOf("/");
+	    	int len = url.length();
+	    	input = url.substring(idx + 1, len - 1);
+	    	if (input.length() != 11) {
+	    		idx = url.lastIndexOf("v=");
+	    		input = url.substring(idx + 2, idx + 13);
+	    	}
+	    }
+	    return input;
+	}
+	
 	public static Bitmap resizeBimap(Bitmap bitmap, int newWidth, int newHeight) {
 		int width = bitmap.getWidth();
 		int height = bitmap.getHeight();
@@ -57,6 +144,22 @@ public class Util {
 		String rs = getConcatenatedString();
 		rs = hashMac(rs);
 		return rs;
+	}
+	
+	public static MCDate mcDateFromDateString(String strDate) {
+		MCDate mcDate = null;
+		try {
+			DateFormat formatter;
+			Date date;
+			formatter = new SimpleDateFormat("yyyyMMdd");
+
+			date = (Date) formatter.parse(strDate);
+			mcDate = new MCDate(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return mcDate;
 	}
 	
 	/**

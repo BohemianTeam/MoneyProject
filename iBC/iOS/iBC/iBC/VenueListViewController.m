@@ -13,6 +13,7 @@
 #import "CJSONDeserializer.h"
 #import "VenueViewCell.h"
 #import "ResponseObj.h"
+#import "VenueDetailViewController.h"
 
 @implementation VenueListViewController
 @synthesize imageDownloadsInProgress;
@@ -30,22 +31,42 @@
     if (self) {
         self.title = [title retain];
         
+        isGoDetailPage = NO;
+        
         // Custom initialization
-        venueTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 480) style:UITableViewStylePlain];
+        venueTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 460) style:UITableViewStylePlain];
         venueTable.dataSource = self;
         venueTable.delegate = self;
         venueTable.autoresizesSubviews = YES;
         venueTable.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
         [self.view addSubview:venueTable];
         
+        //init service
+        service = [[Service alloc] init];
+        service.delegate = self;
+        service.canShowAlert = YES;
+        service.canShowLoading = YES;
+        
+        //get location
+        locationManager = [[CLLocationManager alloc] init];
+        locationManager.delegate = self;
+        //locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        //locationManager.distanceFilter = kCLDistanceFilterNone;
+        [self getLocation];
+        
+        
         //get data
         haveData = NO;
-        [self getDataFromServer];
+        
+        //[self getDataFromServer];
         self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
     }
     return self;
 }
-
+- (void)btnBackPressed
+{
+    NSLog(@"btnBackPressed");
+}
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -61,13 +82,34 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
-
-- (void)viewDidUnload
+- (void)viewWillDisappear:(BOOL)animated
 {
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    NSLog(@"viewWillDisappear");
+    
+    if(!isGoDetailPage)
+    {
+        [service stop];
+        
+        NSArray *allDownloads = [self.imageDownloadsInProgress allValues];
+        [allDownloads makeObjectsPerformSelector:@selector(cancelDownload)];
+    }
+    
 }
+- (void)viewWillAppear:(BOOL)animated
+{
+    isGoDetailPage = NO;
+}
+//- (void)viewDidUnload
+//{
+//    NSLog(@"viewDidUnload");
+//    [super viewDidUnload];
+//    // Release any retained subviews of the main view.
+//    // e.g. self.myOutlet = nil;
+//    
+//    //stop download image
+//    NSArray *allDownloads = [self.imageDownloadsInProgress allValues];
+//    [allDownloads makeObjectsPerformSelector:@selector(cancelDownload)];
+//}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -76,24 +118,29 @@
 }
 - (void)dealloc
 {
+    [service stop];
+    [service release];
     [venueTable release];
     [venuesList release];
     [imageDownloadsInProgress release];
     [super dealloc];
 }
-#pragma mark - 
-
-- (void)getDataFromServer
+#pragma mark - Service methods
+- (void)getLocation
 {
     //show loading
-    [Util showLoading:self.view];
-    Service *srv = [[Service alloc] init];
-    srv.delegate = self;
-    srv.canShowAlert = YES;
-    srv.canShowLoading = YES;
+    //[Util showLoading:@"Get location.." view:self.view];    
     
+    [locationManager startUpdatingLocation];
+}
+
+- (void)getDataFromServer:(NSString*)loca
+{
+    NSLog(@"get data");
+    [Util showLoading:@"Loading data.." view:self.view];
+
     //test
-    [srv getVenueList:@"41.385756~2.164129"];
+    [service getVenueList:loca];    
 }
 #pragma mark - tableview delegate and datasource
 
@@ -102,6 +149,8 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if(haveData == NO)
+        return 0;
     return [venuesList count];
 }
 
@@ -112,9 +161,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(haveData == NO)
-        return nil;
-    
     static NSString *VenuesCell = @"VenuesCell";
     VenueViewCell *cell = [tableView dequeueReusableCellWithIdentifier:VenuesCell];
     if (cell == nil) {
@@ -140,18 +186,17 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSLog(@"Venue selected...");
     
+    isGoDetailPage = YES;
     VenuesObj *venueObj = [venuesList objectAtIndex:indexPath.row];
-    //show loading
-    [Util showLoading:self.view];
-    Service *srv = [[Service alloc] init];
-    srv.delegate = self;
-    srv.canShowAlert = YES;
-    srv.canShowLoading = YES;
     
-    //test
-    [srv getVenueDetail:[venueObj getVenueCode]];
+    VenueDetailViewController *venueDetailVC = [[VenueDetailViewController alloc] init];
+    venueDetailVC.venueCode = [venueObj getVenueCode];
+    [self.navigationController pushViewController:venueDetailVC animated:YES];
+    
+    [venueDetailVC release];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 #pragma mark - servide delegate
 - (void) mServiceGetVenueSucces:(Service *) service responses:(id) response {
@@ -175,15 +220,11 @@
     haveData = YES;
     [venueTable reloadData];
 }
-- (void) mServiceGetVenueDetailSucces:(Service *) service responses:(id) response {
-    NSLog(@"API mServiceGetVenueDetailSucces : success");
-    ResponseObj *resObj = [[ResponseObj alloc] initWithDataResponse:response];
-    
-    [Util hideLoading];
-}
+
+
 
 - (void) mService:(Service *) service didFailWithError:(NSError *) error {
-    
+    NSLog(@"error");
 }
 
 #pragma mark - Table cell image support
@@ -249,4 +290,36 @@
 {
     [self loadImagesForOnscreenRows];
 }
+/*================================CLLocationManagerDelegate========================*/
+#pragma mark - CLLocationManagerDelegate
+- (void) locationManager:(CLLocationManager *)manager 
+     didUpdateToLocation:(CLLocation *)newLocation 
+            fromLocation:(CLLocation *)oldLocation
+{
+    NSLog(@"finish....");
+    //NSString *acc = [[NSString alloc] initWithFormat:@"Accuracy: %f\n", newLocation.horizontalAccuracy];
+
+
+    [locationManager stopUpdatingLocation];
+    [locationManager release];
+    locationManager.delegate = nil;
+    locationManager = nil;
+    
+    //[Util hideLoading];
+    if(locationManager == nil)
+        [self getDataFromServer:[NSString stringWithFormat:@"%f~%f", newLocation.coordinate.latitude, newLocation.coordinate.longitude]];
+}
+- (void) locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSString *msg = [[NSString alloc] initWithString:@"Error obtaining location"];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ERROR" 
+                                                    message:msg 
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"Done" 
+                                          otherButtonTitles:nil];
+    [alert show];
+    [msg release];
+    [alert release];
+}
+
 @end

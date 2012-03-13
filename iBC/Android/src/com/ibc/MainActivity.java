@@ -4,12 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import vn.lmchanh.lib.time.MCDateSpan;
+import vn.lmchanh.lib.widget.calendar.CalendarActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,13 +31,16 @@ import com.ibc.service.ServiceAction;
 import com.ibc.service.ServiceListener;
 import com.ibc.service.ServiceRespone;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnItemClickListener{
 
-	ArrayList<MenuItemData> mMenuList = new ArrayList<MenuItemData>();
-	ListView mListView;
-	Service _service;
-	ProgressDialog _dialog;
-
+	private ArrayList<MenuItemData> mMenuList = new ArrayList<MenuItemData>();
+	private ListView mListView;
+	@SuppressWarnings("unused")
+	private Service _service;
+	private ProgressDialog _dialog;
+	
+	private static final int REQUEST_CODE_CALENDAR = 0;
+	private static final int REQUEST_CODE_REOPEN_CALENDAR = REQUEST_CODE_CALENDAR + 1;
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -45,13 +54,13 @@ public class MainActivity extends Activity {
 		mListView = (ListView) findViewById(R.id.list);
 		MenuListAdapter adapter = new MenuListAdapter(mMenuList, this);
 		mListView.setAdapter(adapter);
-		mListView.setOnItemClickListener(adapter);
-
+		mListView.setOnItemClickListener(MainActivity.this);
+		
 	}
-
+	
 	@SuppressWarnings("unused")
 	private void show() {
-		_dialog = ProgressDialog.show(this, "", "Loading...", true, true);
+		_dialog = ProgressDialog.show(this, "", getString(R.string.loading), true, true);
 	}
 
 	private void hide() {
@@ -90,7 +99,7 @@ public class MainActivity extends Activity {
 				if (result.getResultCode() == ResultCode.Success) {
 					List<VenuesResponse> status = (List<VenuesResponse>) result
 							.getData();
-					iBCApplication.sharedInstance().putData("venues", status);
+					IBCApplication.sharedInstance().putData("venues", status);
 					//
 //					Service sv = new Service(_listener);
 //					sv.getEvents("1", getCurrentTimeString());
@@ -102,13 +111,13 @@ public class MainActivity extends Activity {
 				if (result.getResultCode() == ResultCode.Success) {
 					List<EventsResponse> data = (List<EventsResponse>) result
 							.getData();
-					iBCApplication.sharedInstance().putData("events", data);
+					IBCApplication.sharedInstance().putData("events", data);
 				}
 			} else if (result.getAction() == ServiceAction.ActionGetStarred) {
 				if (result.getResultCode() == ResultCode.Success) {
 					StarredResponse response = (StarredResponse) result
 							.getData();
-					iBCApplication.sharedInstance()
+					IBCApplication.sharedInstance()
 							.putData("starred", response);
 				}
 			} else if (result.getAction() == ServiceAction.ActionGetStarredList) {
@@ -130,9 +139,9 @@ public class MainActivity extends Activity {
 							}
 						}
 
-						iBCApplication.sharedInstance().putData("venue_codes",
+						IBCApplication.sharedInstance().putData("venue_codes",
 								venueCodes);
-						iBCApplication.sharedInstance().putData("event_codes",
+						IBCApplication.sharedInstance().putData("event_codes",
 								eventCodes);
 
 						ExtensionList exl = new ExtensionList();
@@ -206,4 +215,88 @@ public class MainActivity extends Activity {
 		return super.onKeyDown(keyCode, event);
 	}
 
+	@Override
+	public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+		// TODO Auto-generated method stub
+		MenuItemData data = ((MenuListAdapter) mListView.getAdapter()).getItem(position);
+		if (position == 0) {
+			Intent intent = new Intent(this, SubMenuActivity.class);
+			intent.putExtra("title", data.mTitle);
+			this.startActivity(intent);
+		} else if (position == 1 ) {
+			Intent intent = new Intent(this, VenusListViewActivity.class);
+			intent.putExtra("title", data.mTitle);
+			intent.putExtra("ordered_alphabet", true);
+			
+			this.startActivity(intent);
+		} else if (position == 2) {
+	        /*
+			CalendarProvider provider = CalendarProvider.sharedInstance();
+	        boolean hasCalendar = provider.hasCalendar();
+	        if (hasCalendar) {
+				Intent i = new Intent();
+				i.setComponent(ComponentName.unflattenFromString("com.android.calendar/com.android.calendar.AgendaActivity"));
+				mContext.startActivity(i);
+	        } else {
+	        	AlertDialog.Builder builder = new Builder(mContext);
+	        	builder.setMessage("Don't provider agenda calendar");
+	        	builder.setTitle("Alert");
+	        	AlertDialog dialog = builder.create();
+	        	dialog.show();
+	        }
+	        */
+			/*
+			Intent intent = new Intent(Intent.ACTION_EDIT);  
+
+			intent.setType("vnd.android.cursor.item/event");
+
+			intent.putExtra("title", "Demon Hunter");
+
+			intent.putExtra("description", "Are there demon nearby?");
+
+			intent.putExtra("beginTime", System.currentTimeMillis());
+
+			intent.putExtra("endTime", System.currentTimeMillis() + 1800 * 1000);
+			*/
+	        Intent intent = CalendarActivity.createCalendarIntent(this, true, false, false, true, true);
+	        startActivityForResult(intent, REQUEST_CODE_CALENDAR);
+//			Intent intent = new Intent(mContext, SubMenuActivity.class);
+//			intent.putExtra("title", data.mTitle);
+		} else if (position == 3) {
+			Intent intent = new Intent(this, VenusListViewActivity.class);
+			intent.putExtra("title", data.mTitle);
+			intent.putExtra("need_get_gps", true);
+			this.startActivity(intent);
+		} else if (position == 4) {
+			Intent intent = new Intent(this, StarredActivity.class);
+			intent.putExtra("title", data.mTitle);
+			this.startActivity(intent);
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if (requestCode == REQUEST_CODE_CALENDAR) {
+			if (resultCode == RESULT_OK) {
+				ArrayList<MCDateSpan> times = data.getParcelableArrayListExtra(CalendarActivity.DATA_TIMES);
+				if (times != null && times.size() > 0) {
+					MCDateSpan date = times.get(0);
+					Intent intent = new Intent(this, EventsListViewActivity.class);
+					intent.putExtra("date", date.toEventDisplayString());
+					this.startActivityForResult(intent, REQUEST_CODE_REOPEN_CALENDAR);
+				}
+			}
+		} else if (requestCode == REQUEST_CODE_REOPEN_CALENDAR) {
+			if (resultCode == RESULT_OK) {
+				Intent intent = CalendarActivity.createCalendarIntent(this, true, false, false, true, true);
+				intent.putExtra("title", "ESPAIS");
+		        startActivityForResult(intent, REQUEST_CODE_CALENDAR);
+			}
+		}
+	}
+	
+	
 }

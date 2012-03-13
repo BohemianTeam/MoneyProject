@@ -12,4 +12,5 @@ public class EventSessionsResponse {
 	
 	@SerializedName("detail")
 	public String detail;
+
 }

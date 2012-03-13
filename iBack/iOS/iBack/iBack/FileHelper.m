@@ -101,8 +101,11 @@ static FileHelper * __sharedHelper = nil;
 - (NSArray*)getFilesInFolder
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
-
-    return [fileManager contentsOfDirectoryAtPath:saveFolderPath error:nil];
+    NSArray *files = [fileManager contentsOfDirectoryAtPath:saveFolderPath error:nil];
+    NSSortDescriptor *aSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
+    
+    
+    return [files sortedArrayUsingDescriptors:[NSArray arrayWithObject:aSortDescriptor]];
     
 }
 - (NSString*)createFullFilePath:(NSString*)file

@@ -15,9 +15,8 @@
 		
 		<TextView
 		    android:id="@+id/room_name"
-			android:layout_width="wrap_content" 
+			android:layout_width="0dip" 
 			android:layout_height="fill_parent"
-			android:text="ESPECTACLES"
 			android:textColor="@android:color/white"
 			android:textStyle="bold"
 			android:textSize="22dp"
@@ -41,7 +40,7 @@
 			android:layout_height="wrap_content"
 			android:textStyle="bold"
 			android:textColor="#53A8CC"
-			android:textSize="18dp"
+			android:textSize="16dp"
 			android:layout_marginLeft="5dp"
 			android:layout_marginBottom="2dp"
 		/>
@@ -70,7 +69,7 @@
 				/>
 			</RelativeLayout>
 			<LinearLayout
-				android:layout_width="wrap_content"
+				android:layout_width="0dip"
 				android:layout_height="wrap_content"
 				android:layout_weight="1.0"
 				android:orientation="vertical"
@@ -82,7 +81,7 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:textColor="#666666"
-					android:textSize="12dip"
+					android:textSize="13dip"
 				/>
 				
 				<LinearLayout
@@ -91,7 +90,7 @@
 				>
 				
 					<TextView
-						android:layout_width="wrap_content"
+						android:layout_width="0dip"
 						android:layout_height="wrap_content" 
 						android:textColor="#666666"
 						android:textStyle="bold"
@@ -105,7 +104,7 @@
 						android:layout_height="wrap_content" 
 						android:textColor="#CC3366"
 						android:textStyle="bold"
-						android:textSize="12dip"
+						android:textSize="13dip"
 						android:layout_gravity="right"
 						android:id="@+id/price"
 					/>

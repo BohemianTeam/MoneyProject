@@ -13,35 +13,22 @@
 #import "Service.h"
 #import "ResponseObj.h"
 #import "Util.h"
+#import "CJSONDeserializer.h"
 
 @implementation AppDelegate
-
+@synthesize starredList;
 @synthesize window = _window;
 @synthesize viewController = _viewController;
 
 - (void)dealloc
 {
+    [starredList release];
     [_window release];
     [_viewController release];
     [super dealloc];
 }
-- (void)checkUniqueInsKey
+- (void)showRootView
 {
-    NSString *instID = [Util getInstID];
-    if(instID == nil){
-        Service *service = [[Service alloc] init];
-        service.canShowAlert = YES;
-        service.canShowLoading = YES;
-        service.delegate = self;
-        [service getInstID];
-    }
-}
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    //check existed of unique key
-    [self checkUniqueInsKey];
-
-    
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -52,6 +39,19 @@
     UINavigationController * rootViewController = [[UINavigationController alloc] initWithRootViewController:self.viewController];
     self.window.rootViewController = rootViewController;
     [self.window makeKeyAndVisible];
+}
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    //check existed of unique key
+    NSString *instID = [Util getInstID];
+    if(instID == nil){
+        //get unique install key
+        [self getUniqueInsKey];
+    }else{
+        //get starred list
+        [self getStarredList];
+    }
+
     return YES;
 }
 
@@ -93,7 +93,72 @@
      See also applicationDidEnterBackground:.
      */
 }
-#pragma mark - servide delegate
+#pragma mark - Starredlist methods
+- (BOOL)isInStarredList:(NSString*)code
+{
+    if(starredList != nil)
+    {
+        if([starredList containsObject:code])
+            return YES;
+    }
+    
+    return NO;
+}
+- (void)updateStarredList:(NSString*)code status:(NSInteger)stt
+{
+    if(stt == 1)    //add code
+    {
+        [starredList addObject:code];
+    }else{          //remoce code
+        [starredList removeObject:code];
+    }
+}
+
+#pragma mark - Service methods
+- (void)getUniqueInsKey
+{
+    NSLog(@"getUniqueInsKey");
+    Service *service = [[Service alloc] init];
+    service.canShowAlert = YES;
+    service.canShowLoading = YES;
+    service.delegate = self;
+    [service getInstID];
+    
+    [service release];
+}
+- (void)getStarredList
+{
+    NSLog(@"getStarredList");
+    if(starredList != nil){
+        [starredList release];
+        starredList = nil;
+    }
+    starredList = [[NSMutableArray alloc] init];
+    
+    Service *service = [[Service alloc] init];
+    service.canShowAlert = YES;
+    service.canShowLoading = YES;
+    service.delegate = self;
+    [service getStarredList];
+    
+    [service release];
+}
+#pragma mark - service delegate
+- (void) mServiceGetStarredListSucces:(Service *) service responses:(id) response {
+    NSLog(@"API mServiceGetStarredListSucces : success");
+    
+    CJSONDeserializer *jsonDeserializer = [CJSONDeserializer deserializer];
+
+    //update starred list
+    NSArray *resArray = [jsonDeserializer deserializeAsArray:(NSData*)response error:nil];
+    for (NSDictionary *dict in resArray) {
+        NSLog(@"starredList: %@", [dict objectForKey:Code]);
+        [starredList addObject:[dict objectForKey:Code]];
+    }
+
+    //show root view controller
+    [self showRootView];
+}
 - (void) mServiceGetInstIDSucces:(Service *) service responses:(id) response {
     NSLog(@"API getInstID : success");
     
@@ -106,6 +171,9 @@
     {
         [standardUserDefaults setObject:instID forKey:kAppInstall];
     }
+    
+    //get starred list
+    [self getStarredList];
 }
 
 - (void) mService:(Service *) service didFailWithError:(NSError *) error {

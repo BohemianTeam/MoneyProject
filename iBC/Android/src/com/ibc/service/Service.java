@@ -18,7 +18,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.ibc.iBCApplication;
+import com.ibc.IBCApplication;
 import com.ibc.util.Config;
 import com.ibc.util.Util;
 
@@ -65,13 +65,13 @@ public class Service implements Runnable {
 	public void getStatus() {
 		_action = ServiceAction.ActionGetStatus;
 		
-		request("/getStatus/", new HashMap<String, String>(iBCApplication.sharedInstance().getServiceParams()));
+		request("/getStatus/", new HashMap<String, String>(IBCApplication.sharedInstance().getServiceParams()));
 	}
 	
 	public void getVenues(String lat,String lon) {
 		_action = ServiceAction.ActionGetVenues;
 		
-		Map<String, String> params = new HashMap<String, String>(iBCApplication.sharedInstance().getServiceParams());
+		Map<String, String> params = new HashMap<String, String>(IBCApplication.sharedInstance().getServiceParams());
 		String c = lat + "~" + lon;
 		params.put("c", c);
 		
@@ -81,7 +81,7 @@ public class Service implements Runnable {
 	public void getVenue(String venueCode) {
 		_action = ServiceAction.ActionGetVenue;
 		
-		Map<String, String> params = new HashMap<String, String>(iBCApplication.sharedInstance().getServiceParams());
+		Map<String, String> params = new HashMap<String, String>(IBCApplication.sharedInstance().getServiceParams());
 		params.put("vc", venueCode);
 		
 		request("/getVenue/", params);
@@ -90,7 +90,7 @@ public class Service implements Runnable {
 	public void getEvents(String f,String dt) {
 		_action = ServiceAction.ActionGetEvents;
 		
-		Map<String, String> params = new HashMap<String, String>(iBCApplication.sharedInstance().getServiceParams());
+		Map<String, String> params = new HashMap<String, String>(IBCApplication.sharedInstance().getServiceParams());
 		
 		params.put("f", f);
 		params.put("dt", dt);
@@ -101,7 +101,7 @@ public class Service implements Runnable {
 	public void getEvent(String eventCode) {
 		_action = ServiceAction.ActionGetEvent;
 		
-		Map<String, String> params = new HashMap<String, String>(iBCApplication.sharedInstance().getServiceParams());
+		Map<String, String> params = new HashMap<String, String>(IBCApplication.sharedInstance().getServiceParams());
 		params.put("ec", eventCode);
 		
 		request("/getEvent/", params);
@@ -110,7 +110,7 @@ public class Service implements Runnable {
 	public void getEventSessions(String eventCode) {
 		_action = ServiceAction.ActionGetEventSessions;
 		
-		Map<String, String> params = new HashMap<String, String>(iBCApplication.sharedInstance().getServiceParams());
+		Map<String, String> params = new HashMap<String, String>(IBCApplication.sharedInstance().getServiceParams());
 		params.put("ec", eventCode);
 		
 		request("/getEventSessions/", params);
@@ -119,7 +119,7 @@ public class Service implements Runnable {
 	public void getInstID() {
 		_action = ServiceAction.ActionGetInstID;
 		
-		iBCApplication app = iBCApplication.sharedInstance();
+		IBCApplication app = IBCApplication.sharedInstance();
 		
 		Map<String, String> params = app.getServiceParams();
 		params.put("a", app.appVersion());
@@ -133,7 +133,7 @@ public class Service implements Runnable {
 	public void getStarredList() {
 		_action = ServiceAction.ActionGetStarredList;
 		
-		Map<String, String> params = iBCApplication.sharedInstance().getDiffServiceParams();
+		Map<String, String> params = IBCApplication.sharedInstance().getDiffServiceParams();
 		
 		request("/getStarredList/", params);
 	}
@@ -141,9 +141,21 @@ public class Service implements Runnable {
 	public void getStarred() {
 		_action = ServiceAction.ActionGetStarred;
 		
-		Map<String, String> params = new HashMap<String, String>(iBCApplication.sharedInstance().getDiffServiceParams());
+		Map<String, String> params = new HashMap<String, String>(IBCApplication.sharedInstance().getDiffServiceParams());
 		
 		request("/getStarred/", params);
+	}
+	
+	public void setStarred(String code, String status) {
+		_action = ServiceAction.ActionSetStarred;
+		
+		Map<String, String> params = new HashMap<String, String>(IBCApplication.sharedInstance().getDiffServiceParams());
+		params.put("d", IBCApplication.sharedInstance().getSharedPreferencesManager().loadInstID());
+		params.put("s", status);
+		params.put("i", Config.KinectiaAppId);
+		params.put("c", code);
+		
+		request("/setStarred/", params);
 	}
 	
 	/**
@@ -196,7 +208,9 @@ public class Service implements Runnable {
 			_connection = (HttpURLConnection) url.openConnection();
 			_connection.setRequestMethod(_isGet ? "GET" : "POST");
 			_connection.setDoInput(true);
-
+//			_connection.setRequestMethod("HEAD");
+//			_connection.setConnectTimeout(10000);
+			
 			if (!_isGet) {
 				Log.d("Service", "Params:" + data);
 				_connection.setDoOutput(true);
@@ -294,13 +308,16 @@ public class Service implements Runnable {
 					resObj = parser.getEventResponse(result);
 					break;
 				case ActionGetEventSessions:
-					resObj = result;
+					resObj = parser.getEventSessions(result);
 					break;
 				case ActionGetStarredList:
 					resObj = parser.getStarredList(result);
 					break;
 				case ActionGetStarred:
 					resObj = parser.getStarred(result);
+					break;
+				case ActionSetStarred:
+					resObj = parser.getStatus();
 					break;
 				case ActionGetInstID:
 					resObj = parser.getInstID(result);

@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "Util.h"
 #import "CJSONDeserializer.h"
 #import "VenuesResponse.h"
@@ -440,11 +441,22 @@ static MBProgressHUD    *loadingView;
 //    }
 //    
 //    return appID;
+    
     //using test
     return @"823ab7fc7820d402";
 }
++ (void)showLoading:(NSString*)content view:(UIView*)view
+{
+    NSLog(@"---loading");
+    loadingView = [[MBProgressHUD alloc] initWithView:view];
+    loadingView.labelText = content;
+    [view addSubview:loadingView];
+    
+    [loadingView show:YES];
+}
 + (void)showLoading:(UIView*)view
 {
+    NSLog(@"---loading");
     loadingView = [[MBProgressHUD alloc] initWithView:view];
     loadingView.labelText = @"loading..!";
     [view addSubview:loadingView];
@@ -453,8 +465,94 @@ static MBProgressHUD    *loadingView;
 }
 + (void)hideLoading
 {
-    [loadingView removeFromSuperview];
-    [loadingView show:NO];
-    [loadingView release];
+    NSLog(@"---hideloading");
+    if(loadingView){
+        [loadingView removeFromSuperview];
+        [loadingView show:NO];
+        [loadingView release];
+    }
+    
+}
+
+#pragma mark - Utils for String
++ (NSString*)convertDateToString:(NSDate*)date
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"dd/MM/yyyy"];
+    
+    //Optionally for time zone converstions
+    //[formatter setTimeZone:[NSTimeZone timeZoneWithName:@"..."]];
+    
+    NSString *stringFromDate = [formatter stringFromDate:date];
+    [formatter release];
+    
+    return stringFromDate;
+}
++ (NSString*)convertDateToString:(NSDate*)date withFormat:(NSString*)format
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:format];
+    
+    //Optionally for time zone converstions
+    //[formatter setTimeZone:[NSTimeZone timeZoneWithName:@"..."]];
+    
+    NSString *stringFromDate = [formatter stringFromDate:date];
+    [formatter release];
+    
+    return stringFromDate;
+}
++ (NSDate*)convertStringToDate:(NSString*)dateStr withFormat:(NSString*)format
+{
+    unsigned int day = 0;
+    unsigned int year = 0;
+    unsigned int month = 0;
+    if([format isEqual:@"yyyyMMdd"])
+    {
+        NSRange range = NSMakeRange(0, 6);
+        day = [[dateStr stringByReplacingCharactersInRange:range withString:@""] intValue];
+        
+        range = NSMakeRange(4, 4);
+        year = [[dateStr stringByReplacingCharactersInRange:range withString:@""] intValue];
+        
+        range = NSMakeRange(0, 4);
+        NSString *monthStr = [dateStr stringByReplacingCharactersInRange:range withString:@""];
+        
+        range = NSMakeRange(2, 2);
+        month = [[monthStr stringByReplacingCharactersInRange:range withString:@""] intValue];
+    }
+    NSDateComponents *c = [[[NSDateComponents alloc] init] autorelease];
+    c.day = day;
+    c.month = month;
+    c.year = year;
+    return [[NSCalendar currentCalendar] dateFromComponents:c];
+}
++ (CGSize)sizeOfText: (NSString*)text withFont:(UIFont*)font constrainedToSize:(CGSize)constrainedSize lineBreakMode:(UILineBreakMode)mode
+{
+    
+    CGSize sizeText = CGSizeMake(0, 0);
+    if(text != nil && ![text isEqual:@""]){
+        sizeText = [text sizeWithFont:font constrainedToSize:constrainedSize lineBreakMode:mode];
+        
+        return sizeText;
+    }
+    return sizeText;
+}
+
+#pragma mark - Utils private for this app
++ (BOOL)isStarred:(NSString*)code
+{
+    AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    
+    return [appDelegate isInStarredList:code];
+}
++ (void)updateStarredList:(NSString*)code status:(NSInteger)stt
+{
+    AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    
+    return [appDelegate updateStarredList:code status:stt];
+}
++ (BOOL)isDate:(NSDate*)date betweenInclusiveFrom:(NSDate*)begin to:(NSDate*)end
+{
+    return [date compare:begin] != NSOrderedAscending && [date compare:end] != NSOrderedDescending;
 }
 @end

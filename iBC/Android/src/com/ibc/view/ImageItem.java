@@ -5,11 +5,14 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -27,11 +30,13 @@ public class ImageItem extends RelativeLayout {
 	private Context _context;
 	private View _root;
 	private ImageView _img;
+	private ImageView _videoIcon;
 	private ProgressBar _progress;
 	
 	private HttpURLConnection _connection;
-	boolean _connecting;
-	Bitmap _bitmap;
+	private boolean _connecting;
+//	private Bitmap _bitmap;
+	private String _videoURL;
 	
 	public ImageItem(Context context) {
 		super(context);
@@ -52,19 +57,52 @@ public class ImageItem extends RelativeLayout {
 		_context = context;
 		_root = LayoutInflater.from(_context).inflate(R.layout.image_view, this);
 		_img = (ImageView) _root.findViewById(R.id.venue_img);
+		_videoIcon = (ImageView) _root.findViewById(R.id.video_icon);
+		_videoIcon.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (_context instanceof Activity) {
+					/*
+					Intent intent = new Intent(_context, VideoPlayerActivity.class);
+					intent.putExtra("path", _videoURL);
+					_context.startActivity(intent);
+					*/
+					_context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(_videoURL)));
+				}
+			}
+		});
 		_progress = (ProgressBar) _root.findViewById(R.id.progress);
 	}
 	
+	public void setVideoIconVisible() {
+		_videoIcon.setVisibility(VISIBLE);
+	}
+	
+	public void setVideoURL(String url) {
+		_videoURL = url;
+	}
+	
+	public ImageView getImageView() {
+		return _img;
+	}
+	
+	public ProgressBar getProgress() {
+		return _progress;
+	}
+	
 	public void getImage(String url) {
-//		_id = data.venueCode;
-//		String dir = _context.getCacheDir() + "/" + _id + "_vn.png";
-//		File file = new File(dir);
-//		if (file.exists()) {
-//			BitmapFactory.Options options = new BitmapFactory.Options();
-//			_bitmap = BitmapFactory.decodeFile(dir);
-//			_img.setImageBitmap(BitmapFactory.decodeFile(dir,options));
-//			_progress.setVisibility(View.INVISIBLE);
-//		} else {
+		this.getImage(url, true);
+		/*
+		_id = data.venueCode;
+		String dir = _context.getCacheDir() + "/" + _id + "_vn.png";
+		File file = new File(dir);
+		if (file.exists()) {
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			_bitmap = BitmapFactory.decodeFile(dir);
+			_img.setImageBitmap(BitmapFactory.decodeFile(dir,options));
+			_progress.setVisibility(View.INVISIBLE);
+		} else {
 			if (_connecting) {
 				return;
 			} else {
@@ -72,7 +110,21 @@ public class ImageItem extends RelativeLayout {
 				new DownloadTask().execute(new String[] {
 						Config.URL_IMAGE + url, "" });
 			}
-//		}
+		}
+		*/
+	}
+	
+	public void getImage(String url, boolean includeId) {
+		if (_connecting) {
+			return;
+		} else {
+			_connecting = true;
+			if (includeId) {
+				new DownloadTask().execute(new String[] {Config.URL_IMAGE + url, "" });
+			} else {
+				new DownloadTask().execute(new String[] {url, "" });
+			}
+		}
 	}
 	
 	/**

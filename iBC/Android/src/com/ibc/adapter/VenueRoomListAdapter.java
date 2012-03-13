@@ -3,19 +3,25 @@ package com.ibc.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.AdapterView.OnItemClickListener;
 
+import com.ibc.EventDetailActivity;
+import com.ibc.EventsListViewActivity;
 import com.ibc.R;
 import com.ibc.model.VenueRoomEventData;
-import com.ibc.model.service.response.EventResponse;
+import com.ibc.model.service.response.EventsResponse;
 import com.ibc.model.service.response.VenueRoomResponse;
 import com.ibc.view.VenueRoomRowHolder;
 
-public class VenueRoomListAdapter extends BaseAdapter{
+public class VenueRoomListAdapter extends BaseAdapter implements OnItemClickListener{
 	
 	public static final int VIEW_TYPE_CONTENT = 0;
 	public static final int VIEW_TYPE_HEADER = VIEW_TYPE_CONTENT + 1;
@@ -33,9 +39,11 @@ public class VenueRoomListAdapter extends BaseAdapter{
 	private List<VenueRoomEventData> parserData() {
 		List<VenueRoomEventData> list = new ArrayList<VenueRoomEventData>();
 		for (VenueRoomResponse room : _data) {
-			for (EventResponse event : room.events) {
-				VenueRoomEventData data = new VenueRoomEventData(room.name, event);
-				list.add(data);
+			if (room.events != null) {
+				for (EventsResponse event : room.events) {
+					VenueRoomEventData data = new VenueRoomEventData(room.name, event);
+					list.add(data);
+				}
 			}
 		}
 		return list;
@@ -84,6 +92,8 @@ public class VenueRoomListAdapter extends BaseAdapter{
 		View view = LayoutInflater.from(_context).inflate(R.layout.venue_room_item, null);
 		if (type == VIEW_TYPE_CONTENT) {
 			view.findViewById(R.id.header).setVisibility(View.GONE);
+		} else if (type == VIEW_TYPE_HEADER) {
+			view.findViewById(R.id.header).setVisibility(View.VISIBLE);
 		}
 		return view;
 	}
@@ -92,13 +102,23 @@ public class VenueRoomListAdapter extends BaseAdapter{
 		if (position <= 0) {
 			return true;
 		}
-		VenueRoomResponse prev = _data.get(position - 1);
-		VenueRoomResponse curr = _data.get(position);
-		char prevHeader = prev.name.charAt(0);
-		char currHeader = curr.name.charAt(0);
+		VenueRoomEventData prev = _rowData.get(position - 1);
+		VenueRoomEventData curr = _rowData.get(position);
+		char prevHeader = prev._venueRoomName.charAt(0);
+		char currHeader = curr._venueRoomName.charAt(0);
 		if (prevHeader != currHeader) {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+		EventsResponse item = _rowData.get(position)._event;
+		if (_context instanceof Activity) {
+			Intent intent = new Intent(_context, EventDetailActivity.class);
+			intent.putExtra("e_code", item.eventCode);
+			_context.startActivity(intent);
+		}
 	}
 }

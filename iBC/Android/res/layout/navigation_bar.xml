@@ -4,19 +4,20 @@
 			android:background="@drawable/alpha_header_bg">
 			<ImageView android:layout_width="wrap_content"
 				android:layout_height="50dip" android:layout_margin="5dip"
-				android:background="@drawable/backbtn"
+				android:background="@drawable/unstarred"
 				android:id="@+id/btnBack"
 				android:visibility="invisible"
 				/>
 			<LinearLayout android:orientation="vertical"
 				android:layout_width="wrap_content" 
 				android:layout_height="wrap_content"
-				android:layout_weight="1.0" android:gravity="center"
+				android:layout_weight="1.0" 
 				android:layout_gravity="center">
 				<TextView
 				  android:id="@+id/title"
 				  android:singleLine="true"
 				  android:layout_width="fill_parent"
+				  android:gravity="center"
 				  android:textStyle="bold"
 				  android:shadowColor="#000000"
 					android:layout_height="wrap_content" 
@@ -31,5 +32,6 @@
 				android:textColor="#FFFFFFFF" 
 				android:background="@drawable/unstarred"
 				android:visibility="invisible"
+				android:onClick="onStarredClicked"
 				/>
 		</LinearLayout>

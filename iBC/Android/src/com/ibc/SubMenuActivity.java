@@ -5,13 +5,16 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ibc.adapter.MenuListAdapter;
 import com.ibc.model.MenuItemData;
 
-public class SubMenuActivity extends Activity {
+public class SubMenuActivity extends Activity implements OnItemClickListener{
 	ArrayList<MenuItemData> mMenuList = new ArrayList<MenuItemData>();
 	ListView mListView;
     /** Called when the activity is first created. */
@@ -23,14 +26,14 @@ public class SubMenuActivity extends Activity {
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
         if(null != title) {
-        	((TextView) findViewById(R.id.title)).setText(title);
+        	((TextView) findViewById(R.id.title)).setText(title.toUpperCase());
         }
         
         initMenu();
         mListView = (ListView) findViewById(R.id.list);
         MenuListAdapter adapter = new MenuListAdapter(mMenuList, this);
         mListView.setAdapter(adapter);
-//        mListView.setOnItemClickListener(adapter);
+        mListView.setOnItemClickListener(this);
     }
     
     private void initMenu() {
@@ -43,4 +46,22 @@ public class SubMenuActivity extends Activity {
     	mMenuList.add(data1);
     	mMenuList.add(data2);
     }
+
+	@Override
+	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+		MenuItemData data = ((MenuListAdapter) mListView.getAdapter()).getItem(position);
+		
+		Intent intent = new Intent(this, EventsListViewActivity.class);
+		intent.putExtra("title", data.mTitle);
+		
+		if (position == 0) {
+			intent.putExtra("filter", "1");
+		} else if (position == 1) {
+			intent.putExtra("filter", "2");
+		} else if (position == 2) {
+			intent.putExtra("filter", "3");
+		}
+		
+		this.startActivity(intent);
+	}
 }

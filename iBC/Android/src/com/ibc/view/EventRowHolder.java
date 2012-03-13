@@ -1,6 +1,8 @@
 package com.ibc.view;
 
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -23,7 +25,7 @@ import com.ibc.util.Config;
 
 public class EventRowHolder  {
 	
-//	private Context _context;
+	private Context _context;
 	private View _root;
 	private EventsResponse _data;
 	
@@ -37,12 +39,12 @@ public class EventRowHolder  {
 	private HttpURLConnection _connection;
 	boolean _connecting;
 	Bitmap _bitmap;
-//	private String _id;
+	private String _id;
 	
-	public EventRowHolder(Context context,View root, EventsResponse data) {
+	public EventRowHolder(Context context, View root) {
 		_root = root;
-		_data = data;
-//		_context = context;
+		
+		_context = context;
 		
 		_img = (ImageView) _root.findViewById(R.id.img);
 		_title = (TextView) _root.findViewById(R.id.title);
@@ -52,9 +54,10 @@ public class EventRowHolder  {
 		_progress = (ProgressBar) _root.findViewById(R.id.progress);
 	}
 	
-	public void display() {
+	public void display(EventsResponse data) {
+		_data = data;
 		if (null != _data) {
-			_title.setText(_data.eventTitle);
+			_title.setText(_data.eventTitle.toUpperCase());
 			_venueName.setText(_data.venueName == null ? "" : _data.venueName);
 			_price.setText(_data.price);
 			_dates.setText(_data.date);
@@ -64,15 +67,15 @@ public class EventRowHolder  {
 	}
 	
 	private void getImage() {
-//		_id = _data.eventCode;
-//		String dir = _context.getCacheDir() + "/" + _id + "_ev.png";
-//		File file = new File(dir);
-//		if (file.exists()) {
-//			BitmapFactory.Options options = new BitmapFactory.Options();
-//			_bitmap = BitmapFactory.decodeFile(dir);
-//			_img.setImageBitmap(BitmapFactory.decodeFile(dir,options));
-//			_progress.setVisibility(View.INVISIBLE);
-//		} else {
+		_id = _data.eventCode;
+		String dir = _context.getCacheDir() + "/" + _id + "_ev.png";
+		File file = new File(dir);
+		if (file.exists()) {
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			_bitmap = BitmapFactory.decodeFile(dir);
+			_img.setImageBitmap(BitmapFactory.decodeFile(dir,options));
+			_progress.setVisibility(View.INVISIBLE);
+		} else {
 			if (_connecting) {
 				return;
 			} else {
@@ -80,7 +83,7 @@ public class EventRowHolder  {
 				new DownloadTask().execute(new String[] {
 						Config.URL_IMAGE + _data.icon, "" });
 			}
-//		}
+		}
 	}
 	
 	/**
@@ -143,11 +146,11 @@ public class EventRowHolder  {
 			}
 			if (buff != null) {
 				try {
-//					String dir = _context.getCacheDir() + "/" + _id + "_ev.png";
-//					FileOutputStream out = new FileOutputStream(dir);
-//					buff.compress(Bitmap.CompressFormat.PNG, 100, out);
-//					out.flush();
-//					out.close();
+					String dir = _context.getCacheDir() + "/" + _id + "_ev.png";
+					FileOutputStream out = new FileOutputStream(dir);
+					buff.compress(Bitmap.CompressFormat.PNG, 100, out);
+					out.flush();
+					out.close();
 					Drawable drawable = new BitmapDrawable(buff);
 					_img.setBackgroundDrawable(drawable);
 					

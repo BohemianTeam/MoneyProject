@@ -7,20 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 #import "ImageDownloader.h"
 
-@interface VenueListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, ImageDownloaderDelegate, UIScrollViewDelegate>
+@interface VenueListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, ImageDownloaderDelegate, UIScrollViewDelegate,CLLocationManagerDelegate>
 {
     UITableView         *venueTable;
 
     NSMutableArray      *venuesList;
-    
-
+    CLLocationManager   *locationManager;
+    Service             *service;
     NSMutableDictionary *imageDownloadsInProgress;  // the set of imgDownloader objects for each app
     
     BOOL                haveData;
+    BOOL                isGoDetailPage;
 }
 @property (nonatomic, retain) NSMutableDictionary *imageDownloadsInProgress;
 - (id) initWithTitle:(NSString *) title;
-- (void)getDataFromServer;
-- (void)startIconDownload:(id)otherObj forIndexPath:(NSIndexPath*)indexPath;@end
+- (void)getLocation;
+- (void)getDataFromServer:(NSString*)loca;
+- (void)updateStarredList;
+- (void)startIconDownload:(id)otherObj forIndexPath:(NSIndexPath*)indexPath;
+- (void)btnBackPressed;
+@end

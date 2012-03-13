@@ -20,6 +20,11 @@
 #define ScreenResolution        @"r"
 #define AppVersion              @"a"
 #define VenueCode               @"vc"
+#define EventCode               @"ec"
+#define Code                    @"c"
+#define StarredStatus           @"s"
+#define ON                      @"on"
+#define OFF                     @"off"
 
 //API response
 #define InstID                  @"instID"
@@ -32,6 +37,21 @@
 #define Price                   @"pr"
 #define Dates                   @"dt"
 #define Title                   @"et"
+#define Description             @"ds"
+#define Address                 @"ad"
+#define Phone                   @"ph"
+#define Email                   @"em"
+#define WebAdd                  @"url"
+#define Images                  @"imgs"
+#define Genre                   @"gn"
+#define Synopsis                @"sy"
+#define InfoBlocks              @"ib"
+#define Coordinates             @"cd"
+#define ResultRes               @"result"
+#define OK                      @"ok"
+#define DateSession             @"itdate"
+#define Detail                  @"detail"
+#define IDSessionCode           @"id"
 
 //Main Menu
 #define EventMenu               @"ESPECTACLES"
@@ -47,10 +67,25 @@
 #define SECRET_KEY @"xaDEUfq6R8j3464sWrIjicaOoWsj1c17PkhWbqf6V9ygfXAjIuV4bY9DL9mFSx1"
 #define KinectiaAppId @"rd4Gds"
 
+#define WIDTH_VIEW  320
+#define HEIGHT_VIEW 460
+//Venue Size
+#define WIDTH_VENUE_LOGO 120
+#define HEIGHT_VENUE_LOGO 50
+
+//Event size
+#define WIDTH_EVENT_LOGO 40
+#define HEIGHT_EVENT_LOGO 60
+
+#define WIDTH_IMG_VIDEO 60
+#define HEIGHT_IMG_VIDEO 50
 
 #define ROW_HEIGHT 55
 #define SECTION_HEIGHT 36
 
 #define VENUE_CELL_HEIGHT 70
 #define EVENT_CELL_HEIGHT 100
+
+//using for MAP
+#define METERS_PER_MILE 1609.344
 #endif

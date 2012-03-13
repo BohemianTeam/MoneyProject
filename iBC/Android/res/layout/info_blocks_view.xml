@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+<include android:id="@+id/navigation_bar" layout="@layout/navigation_bar" android:layout_width="fill_parent" android:layout_height="wrap_content"/>
+
+<ScrollView
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF"
+    android:scrollbars="none"
+    >
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF"
+    >
+	
+	<LinearLayout 
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content"
+			android:background="@android:color/white"
+			android:orientation="vertical"
+	>
+	
+	<LinearLayout
+	android:id="@+id/content"
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:layout_margin="5dp"
+	>
+		
+		<LinearLayout
+		    android:id="@+id/event_info"
+			android:orientation="horizontal" 
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			
+		>
+			<com.ibc.view.EventAvatar 
+			    android:id="@+id/event_avatar"
+				android:layout_width="60dip"
+				android:layout_height="90dip"
+				android:layout_marginLeft="5dp"
+				android:layout_marginRight="8dip"
+				android:layout_gravity="center"
+			>
+			</com.ibc.view.EventAvatar>
+			
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1.0"
+				android:orientation="vertical"
+				android:layout_gravity="center"
+				android:layout_marginLeft="10dp"
+			>
+				<TextView
+					android:id="@+id/event_title"
+					android:layout_width="fill_parent" 
+					android:layout_height="wrap_content"
+					android:textStyle="bold"
+					android:textColor="#53A8CC"
+					android:textSize="16dp"
+				/>
+				
+				<TextView
+					android:id="@+id/event_name"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textColor="#666666"
+					android:textSize="13dip"
+					android:textStyle="bold"
+					android:layout_marginBottom="2dip"
+				/>
+				
+				<LinearLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content" 
+				>
+				
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content" 
+						android:textColor="#666666"
+						android:textStyle="bold"
+						android:textSize="13dip"
+						android:layout_weight="1.0"
+						android:id="@+id/dates"
+					/>
+					
+					<TextView
+						 android:layout_width="wrap_content"
+						android:layout_height="wrap_content" 
+						android:textColor="#CC3366"
+						android:textStyle="bold"
+						android:textSize="13dip"
+						android:layout_gravity="right"
+						android:id="@+id/price"
+					/>
+				</LinearLayout>
+				
+				<LinearLayout
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content" 
+				>
+				
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content" 
+						android:textColor="#53A8CC"
+						android:textSize="13dip"
+						android:layout_weight="1.0"
+						android:id="@+id/dramatic"
+						android:layout_gravity="center"
+					/>
+					
+					<ImageView
+						 android:layout_width="wrap_content"
+						android:layout_height="wrap_content" 
+						android:layout_gravity="right"
+						android:id="@+id/compra"
+						android:background="@drawable/buybutton"
+						android:onClick="onBuyClicked"
+					/>
+				</LinearLayout>
+				
+			</LinearLayout>
+
+		</LinearLayout>
+		
+	</LinearLayout>
+	
+	<LinearLayout 
+	android:id="@+id/venue_info"
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content"
+	android:layout_margin="10dp"
+>
+	<com.ibc.view.VenueAvatar
+	    android:id="@+id/venue_avatar"
+		android:layout_width="120dip" 
+		android:layout_height="60dip"
+		android:layout_gravity="center"
+		android:layout_marginRight="5dip"
+	/>
+	
+	
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:layout_weight="1.0"
+		android:layout_gravity="center"
+	>
+		<TextView
+			android:id="@+id/venue_name"
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content"
+			android:textStyle="bold"
+			android:textColor="#53A8CC"
+			android:textSize="18dp"
+		/>
+		<TextView
+			android:id="@+id/description"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textColor="#53A8CC"
+					android:textSize="12dip"
+				/>
+	</LinearLayout>
+</LinearLayout>
+	
+</LinearLayout>
+
+	<LinearLayout
+	android:layout_width="fill_parent"
+	android:layout_height="50dip" 
+	android:background="@drawable/title_bg"
+	android:orientation="horizontal"
+	>	
+		<TextView 
+		    android:id="@+id/info_title"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textStyle="bold"
+			android:textColor="@android:color/white"
+			android:layout_gravity="center"
+			android:layout_marginLeft="10dip"
+			android:textSize="16dip"
+		    />
+	</LinearLayout>
+	<WebView
+	    android:id="@+id/info_description"
+		android:layout_width="fill_parent"
+		android:layout_height="0dip"
+		android:layout_weight="1.0"
+	    />
+</LinearLayout>
+</ScrollView>
+</LinearLayout>

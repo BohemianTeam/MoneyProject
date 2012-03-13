@@ -1,13 +1,13 @@
 package com.ibc.model;
 
-import com.ibc.model.service.response.EventResponse;
+import com.ibc.model.service.response.EventsResponse;
 
 public class VenueRoomEventData {
 	
 	public String  _venueRoomName;
-	public EventResponse _event;
+	public EventsResponse _event;
 	
-	public VenueRoomEventData(String name, EventResponse event) {
+	public VenueRoomEventData(String name, EventsResponse event) {
 		_venueRoomName = name;
 		_event = event;
 	}

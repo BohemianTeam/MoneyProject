@@ -9,18 +9,28 @@
 #import <UIKit/UIKit.h>
 #import "ImageDownloader.h"
 
+typedef enum EventFilter
+{
+    EventFilterNone,
+    EventFilterByDate,
+}EventFilter;
 @interface EventListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, ImageDownloaderDelegate, UIScrollViewDelegate>
 {
     UITableView         *eventTable;
     
     NSMutableArray      *eventsList;
-    
+    Service             *service;
     
     NSMutableDictionary *imageDownloadsInProgress;  // the set of imgDownloader objects for each app
     
     BOOL                haveData;
+    BOOL                isGoDetailPage;
+    EventFilter         filterType;
+    NSString            *dateFilter;
 }
-@property (nonatomic, retain) NSMutableDictionary *imageDownloadsInProgress;
+@property(nonatomic, retain) NSMutableDictionary    *imageDownloadsInProgress;
+@property(nonatomic, retain) NSString               *dateFilter;
+@property(nonatomic, assign) EventFilter            filterType;
 - (id) initWithTitle:(NSString *) title;
 - (void)getDataFromServer;
 - (void)startIconDownload:(id)otherObj forIndexPath:(NSIndexPath*)indexPath;

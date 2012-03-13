@@ -18,6 +18,7 @@ import org.xml.sax.InputSource;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ibc.model.service.response.EventResponse;
+import com.ibc.model.service.response.EventSessionsResponse;
 import com.ibc.model.service.response.EventsResponse;
 import com.ibc.model.service.response.ImageResponse;
 import com.ibc.model.service.response.InfoBlocksResponse;
@@ -154,30 +155,58 @@ public class DataParser {
 			response.di = _root.getString("di");
 			response.icon = _root.getString("ic");
 			response.shareContent = _root.getString("sh");
-			JSONArray array = _root.getJSONArray("imgs");
+			JSONArray array = null;
+			if (_root.optJSONArray("imgs") != null) {
+				array = _root.getJSONArray("imgs");
+			}
 			if (null != array) {
 				Type t = new TypeToken<List<ImageResponse>>(){}.getType();
 				response.imgs = gson.fromJson(array.toString(), t);
 			}
-			array = _root.getJSONArray("vids");
-			if (null != array) {
-				Type t = new TypeToken<List<VideoResponse>>(){}.getType();
-				response.vids = gson.fromJson(array.toString(), t);
+			
+			array = null;
+			if (_root.optJSONArray("ib") != null) {
+				array = _root.getJSONArray("ib");
 			}
-			array = _root.getJSONArray("ib");
 			if (null != array) {
 				Type t = new TypeToken<List<InfoBlocksResponse>>(){}.getType();
 				response.ib = gson.fromJson(array.toString(), t);
 			}
-			array = _root.getJSONArray("vr");
-			if (null != array) {
-				Type t = new TypeToken<List<VenueRoomResponse>>(){}.getType();
-				response.vr = gson.fromJson(array.toString(), t);
+			
+			array = null;
+			if (_root.optJSONArray("vr") != null) {
+				array = _root.getJSONArray("vr");
 			}
+			if (null != array) {
+				for (int i = 0;i < array.length();i++) {
+					if (array.optJSONObject(i) != null) {
+						JSONObject obj = array.getJSONObject(i);
+						VenueRoomResponse vr = new VenueRoomResponse();
+						vr.name = obj.getString("n");
+						if (obj.optJSONArray("s") != null) {
+							JSONArray arr = obj.getJSONArray("s");
+							vr.events = getEventsReponse(arr.toString());
+						}
+						response.vr.add(vr);
+					}
+				}
+//				Type t = new TypeToken<List<VenueRoomResponse>>(){}.getType();
+//				response.vr = gson.fromJson(array.toString(), t);
+			}
+			
+			array = null;
+			if (_root.optJSONArray("vids") != null) {
+				array = _root.getJSONArray("vids");
+			}
+			if (null != array) {
+				Type t = new TypeToken<List<VideoResponse>>(){}.getType();
+				response.vids = gson.fromJson(array.toString(), t);
+			}
+			
 		} catch (JSONException e) {
+			e.printStackTrace();
 		}
 		
-//		gson.fromJson(result, VenueResponse.class);
 		return response;
 	}
 	
@@ -230,14 +259,20 @@ public class DataParser {
 		StarredResponse response = new StarredResponse();
 		Gson gson = new Gson();
 		try {
-			JSONArray venues = _root.getJSONArray("v");
+			JSONArray venues = null;
+			if (_root.optJSONArray("v") != null) {
+				venues = _root.getJSONArray("v");
+			}
 			if (null != venues) {
 				List<VenuesResponse> lv = new ArrayList<VenuesResponse>();
 				Type t = new TypeToken<List<VenuesResponse>>() {}.getType();
 				lv = gson.fromJson(venues.toString(), t);
 				response.venues = lv;
 			}
-			JSONArray events = _root.getJSONArray("e");
+			JSONArray events = null;
+			if (_root.optJSONArray("e") != null) {
+				events = _root.getJSONArray("e");
+			}
 			if (null != events) {
 				List<EventsResponse> le = new ArrayList<EventsResponse>();
 				Type t = new TypeToken<List<EventsResponse>>(){}.getType();
@@ -247,5 +282,32 @@ public class DataParser {
 		} catch (JSONException e) {
 		}
 		return response;
+	}
+
+	public boolean getStatus() {
+		if (_root == null && _array == null) {
+			return false;
+		}
+		try {
+			String ok = _root.getString("result");
+			if (ok.equalsIgnoreCase("Ok")) {
+				return true;
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return false;
+	}
+
+	public List<EventSessionsResponse> getEventSessions(String result) {
+		if (_root == null && _array == null) {
+			return null;
+		}
+		List<EventSessionsResponse> list = new ArrayList<EventSessionsResponse>();
+		Type t = new TypeToken<List<EventSessionsResponse>>(){}.getType();
+		Gson gson = new Gson();
+		list = gson.fromJson(result, t);
+		return list;
 	}
 }
