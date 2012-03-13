@@ -45,13 +45,16 @@ public abstract class CalendarFragment extends MCFragment implements
 
 	protected ArrayList<CalendarView> mCalendars;
 	protected ArrayList<MCDateSpan> mSelectDates;
+	protected ArrayList<MCDateSpan> mEventSessionDates;
 	protected boolean isSingleSelection;
-
+	protected boolean isShowEvent;
+	
 	protected Workspace mCalendarHost;
 	protected TextView mHeaderText;
 
 	protected IOnTimesSelectedListener mTimeSelectListener;
-
+	
+	protected IScreenChangeListener mScreenChangeListener;
 	// ======================================================================================
 
 	protected CalendarFragment(Context context) {
@@ -61,8 +64,13 @@ public abstract class CalendarFragment extends MCFragment implements
 	@Override
 	public void onCreate() {
 		this.mSelectDates = new ArrayList<MCDateSpan>();
+		//default highlight current day
+		MCDateSpan dateSpan = new MCDateSpan(Calendar.getInstance());
+		this.mSelectDates.add(dateSpan);
 		this.mCalendars = new ArrayList<CalendarFragment.CalendarView>();
 		this.isSingleSelection = false;
+		
+		this.mEventSessionDates = new ArrayList<MCDateSpan>();
 	}
 
 	public void initCalendar() {
@@ -97,7 +105,9 @@ public abstract class CalendarFragment extends MCFragment implements
 		((ImageButton) layout.findViewById(R.id.btn_next))
 				.setOnClickListener(this);
 		((Button) layout.findViewById(R.id.btn_OK)).setOnClickListener(this);
-
+		//hide select button
+		((Button) layout.findViewById(R.id.btn_OK)).setVisibility(View.INVISIBLE);
+		
 		this.mCalendarHost = (Workspace) layout
 				.findViewById(R.id.workspace_calendar);
 
@@ -108,7 +118,11 @@ public abstract class CalendarFragment extends MCFragment implements
 		this.isSingleSelection = singleSelection;
 		return this;
 	}
-
+	
+	public void setShowEvent(boolean isShowEvent) {
+		this.isShowEvent = isShowEvent;
+//		return this;
+	}
 	// ======================================================================================
 
 	private CalendarView getCurrentCalendar() {
@@ -137,18 +151,59 @@ public abstract class CalendarFragment extends MCFragment implements
 			}
 		}
 	}
+	
+	public void setEventSessions(ArrayList<MCDateSpan> times) {
+		clearHasEvent();
+		if (times != null) {
+			this.mEventSessionDates = times;
+			setCellHasEvent();
+		}
+	}
+	
+	public ArrayList<MCDateSpan> getEventSessionsDates() {
+		return this.mEventSessionDates;
+	}
+	
+	public void clearHasEvent() {
+//		if (this.mCalendars.size() == 0) {
+//			this.initCalendar();
+//		}
+		this.mEventSessionDates.clear();
+		for (CalendarView calendar : this.mCalendars) {
+			for (CalendarCellView cell : calendar.cells) {
+				cell.setCellHasEvent(false);
+			}
+		}
+	}
+	
+	public void setCellHasEvent() {
 
+		for (CalendarView calendar : this.mCalendars) {
+			for (CalendarCellView cell : calendar.cells) {
+				if (this.mEventSessionDates.contains(cell.getTime())) {
+					cell.setCellHasEvent(true);
+				}
+			}
+		}
+	}
+	
 	public void setOnTimeSelectListener(IOnTimesSelectedListener listener) {
 		this.mTimeSelectListener = listener;
 	}
-
+	
+	public void setOnScreenChangedListener(IScreenChangeListener listener) {
+		this.mScreenChangeListener = listener;
+	}
+	
 	@Override
 	public void OnClick(MCDateSpan dateSpan, CalendarCellView caller) {
 		if (this.isSingleSelection) {
 			this.clearSelected();
+//			this.clearHasEvent();
 			if (!this.mSelectDates.contains(dateSpan)) {
 				this.mSelectDates.add(dateSpan);
 				caller.setCellSelected(true);
+//				caller.setCellHasEvent(true);
 			}
 		} else {
 			if (this.mSelectDates.contains(dateSpan)) {
@@ -159,6 +214,14 @@ public abstract class CalendarFragment extends MCFragment implements
 				caller.setCellSelected(true);
 			}
 		}
+		if (this.mTimeSelectListener != null) {
+//			if (this.isShowEvent) {
+			this.mTimeSelectListener.onSelect(this.mSelectDates);
+//			} else {
+//				this.mTimeSelectListener.onSelect(this.mEventSessionDates);
+//			}
+		}
+
 	}
 
 	@Override
@@ -184,6 +247,10 @@ public abstract class CalendarFragment extends MCFragment implements
 		}
 
 		this.updateHeader();
+		
+		//update event view
+		setCellHasEvent();
+		this.mScreenChangeListener.onScreenChanged();
 	}
 
 	@Override
@@ -193,15 +260,21 @@ public abstract class CalendarFragment extends MCFragment implements
 
 	@Override
 	public void onClick(View v) {
+		
 		if (v.getId() == R.id.btn_previous) {
 			this.mCalendarHost.scrollLeft();
+//			clearHasEvent();
+			setCellHasEvent();
 		} else if (v.getId() == R.id.btn_next) {
 			this.mCalendarHost.scrollRight();
+//			clearHasEvent();
+			setCellHasEvent();
 		} else if (v.getId() == R.id.btn_OK) {
 			if (this.mTimeSelectListener != null) {
 				this.mTimeSelectListener.onSelect(this.mSelectDates);
 			}
 		}
+		this.mScreenChangeListener.onScreenChanged();
 	}
 
 	protected abstract Calendar getDefaultCalendar();
@@ -240,4 +313,7 @@ public abstract class CalendarFragment extends MCFragment implements
 	}
 
 	// ======================================================================================
+	public interface IScreenChangeListener {
+		public void onScreenChanged();
+	}
 }

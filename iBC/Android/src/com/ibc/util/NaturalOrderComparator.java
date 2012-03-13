@@ -2,6 +2,7 @@ package com.ibc.util;
 
 import java.util.Comparator;
 
+@SuppressWarnings("rawtypes")
 public class NaturalOrderComparator implements Comparator{
 	int compareRight(String a, String b)
     {

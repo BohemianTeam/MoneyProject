@@ -115,15 +115,18 @@ public class EventsListViewActivity extends Activity implements TextWatcher{
 		if (date != null && date.equalsIgnoreCase("")) {
 			_service.getEvents(filter, getCurrentTimeString());
 		} else {
-			String dateTitle = date.substring(0, 4);
-			dateTitle += "/";
-			dateTitle += date.substring(4, 6);
-			dateTitle += "/";
-			dateTitle += date.substring(6, 8);
+			
+			String yyyy = date.substring(0, 4);
+			String splash = "/";
+			String mm = date.substring(4, 6);
+			String dd = date.substring(6, 8);
+			
+			String dateTitle = dd + splash + mm + splash + yyyy;
 			
 			((TextView) findViewById(R.id.title)).setText(dateTitle.toUpperCase());
 			_needReturn = true;
 			_service.getEvents(filter, date);
+			
 		}
 		show();
 		

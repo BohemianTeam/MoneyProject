@@ -34,8 +34,6 @@ import com.ibc.service.Service;
 import com.ibc.service.ServiceAction;
 import com.ibc.service.ServiceListener;
 import com.ibc.service.ServiceRespone;
-import com.ibc.util.Util;
-import com.ibc.util.Util.SortFilter;
 
 public class VenusListViewActivity extends Activity implements OnScrollListener, TextWatcher{
 	static final String TAG = "VenuesListViewAct";
@@ -75,11 +73,14 @@ public class VenusListViewActivity extends Activity implements OnScrollListener,
 				
 				if (result.getResultCode() == ResultCode.Success) {
 					list = (List<VenuesResponse>) result.getData();
+					/*
 					if (_orderedAlphabet) {
 						list = Util.sortBy(SortFilter.Name, list);
 					} else {
 						list = Util.sortBy(SortFilter.Distance, list);
 					}
+					*/
+					
 					_adapter = new EventListAdapter(VenusListViewActivity.this, null, list, true);
 					_listView.setAdapter(_adapter);
 					_listView.setOnItemClickListener(_onItemClickListener);

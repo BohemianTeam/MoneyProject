@@ -7,6 +7,7 @@
     <string name="loading_venues">Carregant espais &#8230;</string>
     <string name="loading">Carregant &#8230;</string>
     <string name="loading_gps">Accedint GPS &#8230;</string>
-    <string name="Title">Title</string>
+    <string name="Title">Cercar &#8230;</string>
     <string name="done">Cancel</string>
+    <string name="cancel">Tancar</string>
 </resources>

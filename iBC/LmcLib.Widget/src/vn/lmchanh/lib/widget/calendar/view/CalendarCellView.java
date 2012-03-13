@@ -4,6 +4,12 @@ import vn.lmchanh.lib.time.MCDateSpan;
 import vn.lmchanh.lib.widget.R;
 import vn.lmchanh.lib.widget.calendar.IOnDateCellClickListener;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RadialGradient;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -13,6 +19,7 @@ public abstract class CalendarCellView extends TextView {
 	// ======================================================================================
 
 	protected boolean mIsSelected;
+	protected boolean mHasEvent;
 	protected MCDateSpan mcDateSpan;
 	protected IOnDateCellClickListener mClickListener;
 
@@ -82,6 +89,45 @@ public abstract class CalendarCellView extends TextView {
 		this.mIsSelected = selected;
 		this.setBackgroundColor(this.mIsSelected ? 0xffbbbbbb : 0xffeeeeee);
 	}
+	
+	public void setCellHasEvent(boolean hasEvent) {
+		this.mHasEvent = hasEvent;
+		if (this.mHasEvent) {
+			int w = 4, h = 4;
 
+			Config conf = Bitmap.Config.ARGB_8888; // see other conf types
+			Bitmap bmp = Bitmap.createBitmap(w, h, conf); // this creates a MUTABLE bitmap
+			Canvas canvas = new Canvas(bmp);
+			Paint paint = new Paint();
+	        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+	        paint.setColor(Color.BLUE);
+	        paint.setStrokeWidth(3);
+	        int r = 3;
+	        canvas.drawCircle(this.getWidth() / 2 - r, this.getHeight() - r * 2, r, paint);
+//			this.setBackgroundDrawable(new BitmapDrawable(bmp));
+//	        this.setBackgroundResource(R.drawable.dot);
+//			this.invalidate();
+		}
+	}
+
+	@Override
+	protected void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
+		if (this.mHasEvent) {
+			RadialGradient gradient = new RadialGradient(200, 200, 200, 0xFF00FF00,
+		            0xFF0000FF, android.graphics.Shader.TileMode.CLAMP);
+			
+	        Paint paint = new Paint();
+	        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+	        paint.setColor(Color.BLUE);
+	        paint.setStrokeWidth(1);
+	        paint.setDither(true);
+	        paint.setShader(gradient);
+	        
+	        int r = 3;
+	        canvas.drawCircle(this.getWidth() / 2 - r, this.getHeight() - r * 2, r, paint);
+		}
+	}
+	
 	// ======================================================================================
 }

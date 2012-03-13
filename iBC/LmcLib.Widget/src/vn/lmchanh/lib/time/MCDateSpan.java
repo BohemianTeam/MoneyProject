@@ -23,7 +23,9 @@ public class MCDateSpan implements Parcelable {
 
 	protected MCDate mStartDate;
 	protected MCDate mEndDate;
-
+	protected String mEventSessionCode;
+	protected String mEventSessionDetail;
+	private String mBuyUrl;
 	// ========================================================================================================
 
 	public MCDateSpan() {
@@ -44,8 +46,39 @@ public class MCDateSpan implements Parcelable {
 		this.mStartDate = start;
 		this.mEndDate = end;
 	}
-
+	
+	public MCDateSpan(MCDate start, MCDate end, String eventSessionCode, String eventSessionDetail, String buyUrl) {
+		this.mStartDate = start;
+		this.mEndDate = end;
+		this.mEventSessionCode = eventSessionCode;
+		this.mEventSessionDetail = eventSessionDetail;
+		this.mBuyUrl = buyUrl;
+	}
 	// ========================================================================================================
+	
+	public String getBuyUrl() {
+		return mBuyUrl;
+	}
+
+	public void setBuyUrl(String mBuyUrl) {
+		this.mBuyUrl = mBuyUrl;
+	}
+
+	public String getEventSessionCode() {
+		return mEventSessionCode;
+	}
+
+	public void setEventSessionCode(String mEventSessionCode) {
+		this.mEventSessionCode = mEventSessionCode;
+	}
+
+	public String getEventSessionDetail() {
+		return mEventSessionDetail;
+	}
+
+	public void setEventSessionDetail(String mEventSessionDetail) {
+		this.mEventSessionDetail = mEventSessionDetail;
+	}
 
 	public MCDate getStart() {
 		return this.mStartDate;
@@ -76,12 +109,19 @@ public class MCDateSpan implements Parcelable {
 		return String.format("%s-%s", this.mStartDate.toDisplayString(),
 				this.mEndDate.toDisplayString());
 	}
-
+	
+	public String toEventDisplayString() {
+		return this.mStartDate.toEventDisplayString();
+	}
+	
 	// ========================================================================================================
 
 	public MCDateSpan(Parcel par) {
 		this.mStartDate = new MCDate(par);
 		this.mEndDate = new MCDate(par);
+		this.mEventSessionCode = par.readString();
+		this.mEventSessionDetail = par.readString();
+		this.mBuyUrl = par.readString();
 	}
 
 	@Override
@@ -93,6 +133,9 @@ public class MCDateSpan implements Parcelable {
 	public void writeToParcel(Parcel dest, int flags) {
 		this.mStartDate.writeToParcel(dest, flags);
 		this.mEndDate.writeToParcel(dest, flags);
+		dest.writeString(this.mEventSessionCode);
+		dest.writeString(this.mEventSessionDetail);
+		dest.writeString(this.mBuyUrl);
 	}
 
 	public static final Parcelable.Creator<MCDateSpan> CREATOR = new Parcelable.Creator<MCDateSpan>() {

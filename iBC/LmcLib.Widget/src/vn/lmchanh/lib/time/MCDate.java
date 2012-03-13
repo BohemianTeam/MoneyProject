@@ -81,7 +81,11 @@ public class MCDate implements Parcelable {
 	public String toDisplayString() {
 		return String.format("%d/%d/%d", this.month + 1, this.day, this.year);
 	}
-
+	
+	public String toEventDisplayString() {
+		return String.format("%d%02d%02d", this.year,this.month + 1,this.day);
+	}
+	
 	public Calendar toCalendar() {
 		Calendar cal = Calendar.getInstance();
 		cal.set(this.year, this.month, this.day);

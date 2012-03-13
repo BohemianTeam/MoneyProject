@@ -27,7 +27,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:background="@drawable/done_button"
 	    android:layout_margin="5dip"
 	    android:visibility="gone"
-	    android:text="@string/done"
+	    android:text="@string/cancel"
 	    android:layout_gravity="center"
 	    />
 </LinearLayout>

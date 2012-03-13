@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 public class DayFragment extends CalendarFragment {
 	// ======================================================================================
-
+	
 	private static class DayView extends CalendarView {
 		public DayView(View root, Calendar calendar,
 				ArrayList<DayCellView> cells) {
@@ -33,8 +33,15 @@ public class DayFragment extends CalendarFragment {
 
 	public DayFragment(Context context) {
 		super(context);
+//		this.getDefaultCalendar();
+//		this.isShowEvent = false;
 	}
-
+	
+//	public DayFragment(Context context, boolean isShowEvent) {
+//		super(context);
+//		this.isShowEvent = isShowEvent;
+//	}
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -123,10 +130,29 @@ public class DayFragment extends CalendarFragment {
 			for (int i = 0; i < row.getChildCount(); i++) {
 				DayCellView cell = (DayCellView) row.getChildAt(i);
 				cell.setDate(new MCDay(cal));
-
-				boolean active = cal.get(Calendar.MONTH) == time
-						.get(Calendar.MONTH);
-
+				boolean active = false;
+				if (this.isShowEvent) {
+					if (this.mSelectDates.size() > 0) {
+						if (this.mSelectDates.get(0).getStart().getMonth() > cal.get(Calendar.MONTH)) {
+							active = false;
+						} else if (this.mSelectDates.get(0).getStart().getMonth() < cal.get(Calendar.MONTH)) {
+							active = cal.get(Calendar.MONTH) == time
+									.get(Calendar.MONTH);
+						} else {
+							if (cal.get(Calendar.MONTH) == time.get(Calendar.MONTH)) {
+								if (cell.getTime().getStart().getDay() < this.mSelectDates.get(0).getStart().getDay()) {
+									active = false;
+								} else {
+									active = true;
+								}
+							}
+						}
+					}
+				} else {
+					active = cal.get(Calendar.MONTH) == time
+							.get(Calendar.MONTH);
+				}
+				
 				cell.setActive(active);
 
 				if (active) {

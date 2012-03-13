@@ -10,11 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
 
 import com.ibc.EventDetailActivity;
-import com.ibc.EventsListViewActivity;
 import com.ibc.R;
 import com.ibc.model.VenueRoomEventData;
 import com.ibc.model.service.response.EventsResponse;

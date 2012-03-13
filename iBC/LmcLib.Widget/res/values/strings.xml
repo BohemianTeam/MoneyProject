@@ -8,26 +8,26 @@
     
     <string name="select">SELECT</string>
     
-    <string name="cal_jan">Jan</string>
-    <string name="cal_feb">Feb</string>
-    <string name="cal_mar">Mar</string>
-    <string name="cal_apr">Apr</string>
-    <string name="cal_may">May</string>
-    <string name="cal_jun">Jun</string>
-    <string name="cal_jul">Jul</string>
-    <string name="cal_aug">Aug</string>
-    <string name="cal_sep">Sep</string>
-    <string name="cal_oct">Oct</string>
-    <string name="cal_nov">Nov</string>
-    <string name="cal_dec">Dec</string>
+    <string name="cal_jan">Gener</string>
+    <string name="cal_feb">Febrer</string>
+    <string name="cal_mar">Març</string>
+    <string name="cal_apr">Abril</string>
+    <string name="cal_may">Maig</string>
+    <string name="cal_jun">Juny</string>
+    <string name="cal_jul">Juliol</string>
+    <string name="cal_aug">Agost</string>
+    <string name="cal_sep">Setembre</string>
+    <string name="cal_oct">Octubre</string>
+    <string name="cal_nov">Novembre</string>
+    <string name="cal_dec">Desembre</string>
     
-    <string name="cal_mon">Mon</string>
-    <string name="cal_tue">Tue</string>
-    <string name="cal_wed">Wed</string>
-    <string name="cal_thu">Thu</string>
-    <string name="cal_fri">Fri</string>
-    <string name="cal_sat">Sat</string>
-    <string name="cal_sun">Sun</string>
+    <string name="cal_mon">Dl</string>
+    <string name="cal_tue">Dm</string>
+    <string name="cal_wed">Dc</string>
+    <string name="cal_thu">Dj</string>
+    <string name="cal_fri">Dv</string>
+    <string name="cal_sat">Ds</string>
+    <string name="cal_sun">Dg</string>
     
     <string name="cal_day">Day</string>
     <string name="cal_month">Month</string>

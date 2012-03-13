@@ -140,41 +140,52 @@ containing a value of this type.
         public static int actionbar_btn_bg_selected_x=0x7f020005;
         public static int actionbar_btn_bg_x=0x7f020006;
         public static int actionbar_separator=0x7f020007;
-        public static int cal_btn_next=0x7f020008;
-        public static int cal_btn_prev=0x7f020009;
-        public static int cal_ic_day=0x7f02000a;
-        public static int cal_ic_month=0x7f02000b;
-        public static int cal_ic_week=0x7f02000c;
-        public static int cal_week_header_bg=0x7f02000d;
-        public static int colorstrip_shadow=0x7f02000e;
-        public static int colorstrip_shadow_reserve=0x7f02000f;
-        public static int popup=0x7f020010;
-        public static int tab_bg_selected=0x7f020011;
-        public static int tab_bg_selector=0x7f020012;
-        public static int tab_bg_unselected=0x7f020013;
-        public static int tab_divider=0x7f020014;
-        public static int tab_text_selector=0x7f020015;
+        public static int buybutton=0x7f020008;
+        public static int cal_btn_next=0x7f020009;
+        public static int cal_btn_prev=0x7f02000a;
+        public static int cal_ic_day=0x7f02000b;
+        public static int cal_ic_month=0x7f02000c;
+        public static int cal_ic_week=0x7f02000d;
+        public static int cal_week_header_bg=0x7f02000e;
+        public static int colorstrip_shadow=0x7f02000f;
+        public static int colorstrip_shadow_reserve=0x7f020010;
+        public static int dot=0x7f020011;
+        public static int list_divider=0x7f020012;
+        public static int popup=0x7f020013;
+        public static int tab_bg_selected=0x7f020014;
+        public static int tab_bg_selector=0x7f020015;
+        public static int tab_bg_unselected=0x7f020016;
+        public static int tab_divider=0x7f020017;
+        public static int tab_text_selector=0x7f020018;
     }
     public static final class id {
         public static int btn_OK=0x7f090005;
-        public static int btn_input_OK=0x7f09000a;
-        public static int btn_input_cancel=0x7f09000b;
+        public static int btn_input_OK=0x7f09000b;
+        public static int btn_input_cancel=0x7f09000c;
         public static int btn_next=0x7f090004;
         public static int btn_previous=0x7f090002;
-        public static int edit_input=0x7f090009;
-        public static int image_mode_icon=0x7f090007;
+        public static int button_buy=0x7f090010;
+        public static int edit_input=0x7f09000a;
+        public static int event_session=0x7f09000f;
+        public static int event_time=0x7f09000d;
+        public static int event_title=0x7f09000e;
+        public static int image_mode_icon=0x7f090008;
         public static int layout_calendar_btn_host=0x7f090001;
         public static int layout_fragment_host=0x7f090000;
+        public static int list=0x7f090007;
         public static int text_current_month=0x7f090003;
-        public static int text_mode_name=0x7f090008;
+        public static int text_mode_name=0x7f090009;
         public static int workspace_calendar=0x7f090006;
     }
     public static final class layout {
         public static int activity_calendar=0x7f030000;
         public static int cal_fragment=0x7f030001;
-        public static int cal_layout_time_type_selector=0x7f030002;
-        public static int cal_text_week_header=0x7f030003;
-        public static int dialog_input=0x7f030004;
+        public static int cal_layout_event=0x7f030002;
+        public static int cal_layout_time_type_selector=0x7f030003;
+        public static int cal_text_week_header=0x7f030004;
+        public static int dialog_input=0x7f030005;
+        public static int event_row_view=0x7f030006;
+        public static int event_session_view=0x7f030007;
     }
     public static final class string {
         public static int app_name=0x7f080000;
