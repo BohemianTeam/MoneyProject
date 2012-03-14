@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
@@ -6,7 +7,19 @@
     android:background="#FFFFFF"
     >
 	<include android:id="@+id/navigation_bar" layout="@layout/navigation_bar" android:layout_width="fill_parent" android:layout_height="wrap_content"/>
-	
+<ScrollView
+     android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF"
+    android:scrollbars="none"
+    android:overScrollMode="never"
+    >
+   <LinearLayout 
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF"
+    >
 	<LinearLayout 
 	android:layout_width="fill_parent" 
 	android:layout_height="wrap_content"
@@ -22,7 +35,7 @@
 	
 	
 	<LinearLayout
-		android:layout_width="wrap_content"
+		android:layout_width="0dip"
 		android:layout_height="wrap_content"
 		android:orientation="vertical"
 		android:layout_weight="1.0"
@@ -116,7 +129,8 @@
 	    	
 	</LinearLayout>
 
-	<HorizontalScrollView android:layout_width="wrap_content"
+	<HorizontalScrollView 
+	    android:layout_width="wrap_content"
 		android:layout_height="50dip" 
 		android:scrollbars="none"
 		android:layout_marginTop="5dip"
@@ -125,7 +139,7 @@
 		>
 		
 	<LinearLayout
-	     android:layout_width="wrap_content"
+	    android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/layout_img"
 		android:gravity="center_vertical"
@@ -140,7 +154,6 @@
 	     android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:background="#FFFFFF"
-		android:layout_weight="1.0"
 		android:id="@+id/layout_row"
 		android:orientation="vertical"
 		android:layout_marginBottom="5dip"
@@ -148,7 +161,7 @@
 	     
 	 </LinearLayout>
 	
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	<LinearLayout 
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal" 
@@ -158,7 +171,7 @@
     >
     	<TextView
 		    android:id="@+id/room_name"
-			android:layout_width="wrap_content" 
+			android:layout_width="0dip" 
 			android:layout_height="fill_parent"
 			android:textColor="@android:color/white"
 			android:textStyle="bold"
@@ -169,6 +182,20 @@
 		/>
 
 	</LinearLayout>
+
+	<LinearLayout
+	     android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/layout_events"
+		android:orientation="vertical"
+	    >
+	    
+	</LinearLayout>
+		
+</LinearLayout>
+
+</ScrollView>
+<!-- 
 	<ListView android:id="@+id/event_list" android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:background="#FFFFFFFF"
@@ -176,7 +203,6 @@
 			android:dividerHeight="1dip"
 			android:padding="0dip">
 		</ListView>
-	
-	
+ -->
 	
 </LinearLayout>

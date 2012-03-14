@@ -1,10 +1,16 @@
 package com.ibc;
 
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,6 +18,7 @@ import android.widget.TextView;
 import com.google.android.maps.MapActivity;
 import com.ibc.model.Maplocation;
 import com.ibc.model.service.response.VenueResponse;
+import com.ibc.share.ShareFacebookActivity;
 import com.ibc.view.MapLocationViewer;
 import com.ibc.view.MapViewOverlay;
 
@@ -21,8 +28,13 @@ public class AddressActivity extends MapActivity {
 	private MapLocationViewer _mapViewer;
 	private Button _phone;
 	private Button _email;
+	private Button _share;
 	double lat = 0.0;
 	double lon = 0.0;
+	
+	private static final int FB_MENU_ITEM = Menu.FIRST;
+	private static final int TW_MENU_ITEM = FB_MENU_ITEM + 1;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -36,6 +48,9 @@ public class AddressActivity extends MapActivity {
 		
 		_phone = (Button) findViewById(R.id.phone);
 		_email = (Button) findViewById(R.id.email);
+		_share = (Button) findViewById(R.id.share);
+		registerForContextMenu(_share);
+		
 		_mapViewer = (MapLocationViewer) findViewById(R.id.mapview);
 		
 		IBCApplication app = IBCApplication.sharedInstance();
@@ -52,7 +67,51 @@ public class AddressActivity extends MapActivity {
 		_phone.setText(_venue.phoneNumber == null ? "" : _venue.phoneNumber);
 		_email.setText(_venue.email == null ? "" : _venue.email);
 	}
-
+	
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		if (v == _share) {
+			System.out.println("onCreateContextMenu");
+			menu.setHeaderTitle("Share Via");
+			menu.add(0, FB_MENU_ITEM, 0, "Facebook");
+			menu.add(0, TW_MENU_ITEM, 0, "Twitter");
+		}
+	} 
+	
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		if (item.getTitle() == "Facebook") {
+			startActivity(new Intent(AddressActivity.this, ShareFacebookActivity.class));
+		} else if (item.getTitle() == "Twitter") {
+			
+		} else {
+			return false;
+		}
+		return true;
+	}
+	
+	public void onShareClicked(View v) {
+		new AlertDialog.Builder(this).setTitle("IBC")
+        .setMessage("Do you want to share via ?")
+        .setPositiveButton("Facebook", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            	startActivity(new Intent(AddressActivity.this, ShareFacebookActivity.class));
+            }
+        })
+        .setNeutralButton("Twitter", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+			}
+		}) 
+		.setNegativeButton("Cancel", null)
+        .create()
+        .show();
+	}
+	
 	@Override
 	protected boolean isRouteDisplayed() {
 		return false;
@@ -70,7 +129,33 @@ public class AddressActivity extends MapActivity {
 	}
 	
 	public void onAddAddressClicked(View v) {
-		
+		new AlertDialog.Builder(this).setTitle("IBC")
+        .setMessage("Do you want to add Address by?")
+        .setPositiveButton("Create New Contact", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            	Intent intent = new Intent(AddressActivity.this, ContactAdderActivity.class);
+            	if (!_phone.getText().toString().isEmpty()) {
+            		intent.putExtra("phone", _phone.getText().toString());
+            	}
+            	
+            	if (!_email.getText().toString().isEmpty()) {
+            		intent.putExtra("email", _email.getText().toString());
+        		}
+            	
+            	AddressActivity.this.startActivity(intent);
+            }
+        })
+        .setNeutralButton("Add to exists Contact", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+			}
+		}) 
+		.setNegativeButton("Cancel", null)
+        .create()
+        .show();
 		/*
 		int backRefIndex = 0;
 
@@ -94,10 +179,6 @@ public class AddressActivity extends MapActivity {
 		    exp.printStackTrace();
 		}
 		*/
-	}
-	
-	public void onShareClicked(View v) {
-		
 	}
 	
 	public void onPhoneClicked(View v) {

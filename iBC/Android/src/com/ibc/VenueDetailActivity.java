@@ -1,5 +1,6 @@
 package com.ibc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -7,20 +8,22 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.ibc.adapter.VenueRoomListAdapter;
 import com.ibc.controller.GPSService;
 import com.ibc.controller.GPSService.GPSServiceListener;
 import com.ibc.model.GPSInfo;
+import com.ibc.model.VenueRoomEventData;
+import com.ibc.model.service.response.EventsResponse;
 import com.ibc.model.service.response.ImageResponse;
 import com.ibc.model.service.response.InfoBlocksResponse;
 import com.ibc.model.service.response.StarredListResponse;
 import com.ibc.model.service.response.VenueResponse;
+import com.ibc.model.service.response.VenueRoomResponse;
 import com.ibc.model.service.response.VideoResponse;
 import com.ibc.service.ResultCode;
 import com.ibc.service.Service;
@@ -32,6 +35,7 @@ import com.ibc.util.Util;
 import com.ibc.view.EventRow;
 import com.ibc.view.ImageItem;
 import com.ibc.view.VenueAvatar;
+import com.ibc.view.VenueRoomRowHolder;
 
 public class VenueDetailActivity extends Activity {
 	
@@ -39,6 +43,7 @@ public class VenueDetailActivity extends Activity {
 	ProgressDialog _dialog;
 	Service _service;
 	VenueResponse _venue;
+	List<VenueRoomEventData> rowData = new ArrayList<VenueRoomEventData>();
 	ServiceListener _listener = new ServiceListener() {
 		
 		@Override
@@ -59,9 +64,12 @@ public class VenueDetailActivity extends Activity {
 					
 					if (venue.vr != null && venue.vr.size() > 0) {
 						if (venue.vr.get(0).events.size() > 0) {
-							VenueRoomListAdapter adapter = new VenueRoomListAdapter(VenueDetailActivity.this, venue.vr);
-							_eventList.setAdapter(adapter);
-							_eventList.setOnItemClickListener(adapter);
+							//VenueRoomListAdapter adapter = new VenueRoomListAdapter(VenueDetailActivity.this, venue.vr);
+							//_eventList.setAdapter(adapter);
+							//_eventList.setOnItemClickListener(adapter);
+							
+							rowData = parserData(venue.vr);
+							inflateEventList();
 							_listHeader.setVisibility(View.GONE);
 						} else {
 							if (venue.vr.get(0).name != null) {
@@ -109,10 +117,11 @@ public class VenueDetailActivity extends Activity {
 	TextView _phone;
 	TextView _email;
 	TextView _url;
-	ListView _eventList;
+	//ListView _eventList;
 	VenueAvatar _avatar;
 	LinearLayout _layoutImg;
 	LinearLayout _listHeader;
+	LinearLayout _eventListLayout;
 	TextView _roomName;
 	LinearLayout _llInfoblocs;
 	
@@ -178,6 +187,68 @@ public class VenueDetailActivity extends Activity {
 			}
 		}
 		
+	}
+	
+	public static final int VIEW_TYPE_CONTENT = 0;
+	public static final int VIEW_TYPE_HEADER = VIEW_TYPE_CONTENT + 1;
+	
+	private View getViewForType(int type) {
+		View view = LayoutInflater.from(this).inflate(R.layout.venue_room_item, null);
+		if (type == VIEW_TYPE_CONTENT) {
+			view.findViewById(R.id.header).setVisibility(View.GONE);
+		} else if (type == VIEW_TYPE_HEADER) {
+			view.findViewById(R.id.header).setVisibility(View.VISIBLE);
+		}
+		return view;
+	}
+	
+	public int getItemViewType(int position) {
+		int itemtype = VIEW_TYPE_CONTENT;
+		if (isStartGroup(position)) {
+			itemtype = VIEW_TYPE_HEADER;
+			return itemtype;
+		}
+		return itemtype;
+	}
+	
+	protected void inflateEventList() {
+		_eventListLayout.removeAllViews();
+		for (int i = 0;i < rowData.size();i++) {
+			
+			final VenueRoomEventData data = rowData.get(i);
+			
+			View convertView = getViewForType(getItemViewType(i));
+			
+			VenueRoomRowHolder holder = new VenueRoomRowHolder(convertView, data, this);
+			holder.display();
+			
+			LinearLayout content = (LinearLayout) convertView.findViewById(R.id.content);
+			content.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(VenueDetailActivity.this, EventDetailActivity.class);
+					intent.putExtra("e_code", data._event.eventCode);
+					VenueDetailActivity.this.startActivity(intent);
+				}
+			});
+			
+			_eventListLayout.addView(convertView);
+		}
+	}
+	
+	private boolean isStartGroup(int position) {
+		if (position <= 0) {
+			return true;
+		}
+		VenueRoomEventData prev = rowData.get(position - 1);
+		VenueRoomEventData curr = rowData.get(position);
+		char prevHeader = prev._venueRoomName.charAt(0);
+		char currHeader = curr._venueRoomName.charAt(0);
+		if (prevHeader != currHeader) {
+			return true;
+		}
+		return false;
 	}
 	
 	private void displayView(VenueResponse venue) {
@@ -258,8 +329,9 @@ public class VenueDetailActivity extends Activity {
 		_email = (TextView) findViewById(R.id.venue_email);
 		_url = (TextView) findViewById(R.id.venue_url);
 		_avatar = (VenueAvatar) findViewById(R.id.venue_avatar);
-		_eventList = (ListView) findViewById(R.id.event_list);
+		//_eventList = (ListView) findViewById(R.id.event_list);
 		_layoutImg = (LinearLayout) findViewById(R.id.layout_img);
+		_eventListLayout = (LinearLayout) findViewById(R.id.layout_events);
 		_listHeader = (LinearLayout) findViewById(R.id.header_list);
 		_roomName = (TextView) findViewById(R.id.room_name);
 		_llInfoblocs = (LinearLayout) findViewById(R.id.layout_row);
@@ -277,6 +349,19 @@ public class VenueDetailActivity extends Activity {
 				}
 			}
 		}
+	}
+	
+	private List<VenueRoomEventData> parserData(List<VenueRoomResponse> data) {
+		List<VenueRoomEventData> list = new ArrayList<VenueRoomEventData>();
+		for (VenueRoomResponse room : data) {
+			if (room.events != null) {
+				for (EventsResponse event : room.events) {
+					VenueRoomEventData dt = new VenueRoomEventData(room.name, event);
+					list.add(dt);
+				}
+			}
+		}
+		return list;
 	}
 	
 	public void onGoToMapClicked(View v) {
