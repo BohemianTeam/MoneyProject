@@ -52,7 +52,7 @@ public class EventsListViewActivity extends Activity implements TextWatcher{
 				
 				if (result.getResultCode() == ResultCode.Success) {
 					list = (List<EventsResponse>) result.getData();
-					_adapter = new EventListAdapter(EventsListViewActivity.this, list,null, false);
+					_adapter = new EventListAdapter(EventsListViewActivity.this, list, null, false);
 					_listView.setAdapter(_adapter);
 					_listView.setOnItemClickListener(_onItemClickListener);
 					hide();
@@ -68,7 +68,7 @@ public class EventsListViewActivity extends Activity implements TextWatcher{
 		@Override
 		public void onItemClick(AdapterView<?> adapter, View view, int position,
 				long id) {
-			EventsResponse item = list.get(position);
+			EventsResponse item = list.get(position - _listView.getHeaderViewsCount());
 			Intent intent = new Intent(EventsListViewActivity.this, EventDetailActivity.class);
 			intent.putExtra("e_code", item.eventCode);
 			startActivity(intent);
@@ -99,7 +99,7 @@ public class EventsListViewActivity extends Activity implements TextWatcher{
 			public void onClick(View v) {
 				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 				imm.hideSoftInputFromWindow(_search.getWindowToken(), 0);
-				_adapter = new EventListAdapter(EventsListViewActivity.this, list, null, true);
+				_adapter = new EventListAdapter(EventsListViewActivity.this, list, null, false);
 				_listView.setAdapter(_adapter);
 				_done.setVisibility(View.GONE);
 				_search.setText("");
@@ -109,6 +109,11 @@ public class EventsListViewActivity extends Activity implements TextWatcher{
         _search.addTextChangedListener(this);
         
 		_listView = (ListView) findViewById(R.id.list);
+		if (_listView.getHeaderViewsCount() == 0) {
+			_listView.addHeaderView(_listviewHeader);
+		}
+		
+		
 		_service = new Service(_listener);
 		String date = intent.getStringExtra("date") == null ? "" : intent.getStringExtra("date");
 		String filter = intent.getStringExtra("filter") == null ? "1" : intent.getStringExtra("filter");
@@ -181,14 +186,23 @@ public class EventsListViewActivity extends Activity implements TextWatcher{
 		// TODO Auto-generated method stub
 		_done.setVisibility(View.VISIBLE);
 		listBySearch.clear();
-		String text = _search.getText().toString().toLowerCase();
+		String text = _search.getText().toString();
+		int len = text.length();
+		for (EventsResponse v : list) {
+			if (len <= v.eventTitle.length()) {
+				if (text.equalsIgnoreCase(v.eventTitle.substring(0, len))) {
+					listBySearch.add(v);
+				} 
+			}
+		}
+		
 		for (EventsResponse v : list) {
 			if (v.eventTitle.contains(text)) {
 				listBySearch.add(v);
 			}
 		}
 		
-		_adapter = new EventListAdapter(EventsListViewActivity.this, listBySearch, null, true);
+		_adapter = new EventListAdapter(EventsListViewActivity.this, listBySearch, null, false);
 		_listView.setAdapter(_adapter);
 	}
 	

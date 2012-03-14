@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
@@ -201,6 +202,12 @@ public class InfoBlocsDetailActivity extends Activity {
 			_service.setStarred(_event.eventCode, isStarred == true ? "off" : "on");
 		}
 		show();
+	}
+	
+	public void onBuyClicked(View v) {
+		if (_event.buyURL.trim().length() > 0) {
+			this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(_event.buyURL)));
+		}
 	}
 	
 	private void show() {

@@ -97,7 +97,7 @@ public class VenusListViewActivity extends Activity implements OnScrollListener,
 		@Override
 		public void onItemClick(AdapterView<?> adapter, View view, int position,
 				long id) {
-			VenuesResponse item = list.get(position);
+			VenuesResponse item = list.get(position - _listView.getHeaderViewsCount());
 			Intent intent = new Intent(VenusListViewActivity.this, VenueDetailActivity.class);
 			intent.putExtra("v_code", item.venuesCode);
 			intent.putExtra("di", item.distance);
@@ -231,7 +231,17 @@ public class VenusListViewActivity extends Activity implements OnScrollListener,
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
 		_done.setVisibility(View.VISIBLE);
 		listBySearch.clear();
-		String text = _search.getText().toString().toLowerCase();
+		String text = _search.getText().toString();
+		int len = text.length();
+		for (VenuesResponse v : list) {
+			if (len <= v.venuesName.length()) {
+				if (text.equalsIgnoreCase(v.venuesName.substring(0, len))) {
+					listBySearch.add(v);
+				}
+			}
+			
+		}
+		
 		for (VenuesResponse v : list) {
 			if (v.venuesName.contains(text)) {
 				listBySearch.add(v);
