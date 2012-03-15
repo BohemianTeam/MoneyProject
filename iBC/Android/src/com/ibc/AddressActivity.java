@@ -66,6 +66,14 @@ public class AddressActivity extends MapActivity {
 		} 
 		_phone.setText(_venue.phoneNumber == null ? "" : _venue.phoneNumber);
 		_email.setText(_venue.email == null ? "" : _venue.email);
+		
+		if (_venue.phoneNumber == null) {
+			_phone.setVisibility(View.GONE);
+		}
+		
+		if (_venue.email == null) {
+			_email.setVisibility(View.GONE);
+		}
 	}
 	
 	@Override

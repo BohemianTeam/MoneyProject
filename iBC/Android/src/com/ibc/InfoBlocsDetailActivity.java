@@ -111,6 +111,10 @@ public class InfoBlocsDetailActivity extends Activity {
 		String mime = "text/html";
 		String encoding = "utf-8";
 		_infoDesc.loadDataWithBaseURL(null, html, mime, encoding, null);
+		
+		if (event.buyURL.trim().length() <= 0) {
+			findViewById(R.id.compra).setVisibility(View.INVISIBLE);
+		}
 	}
 	
 	private void setNavigationBar(VenueResponse venue) {

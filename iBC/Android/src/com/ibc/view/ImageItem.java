@@ -57,6 +57,7 @@ public class ImageItem extends RelativeLayout {
 		_context = context;
 		_root = LayoutInflater.from(_context).inflate(R.layout.image_view, this);
 		_img = (ImageView) _root.findViewById(R.id.venue_img);
+//		_img.setMaxZoom(4f);
 		_videoIcon = (ImageView) _root.findViewById(R.id.video_icon);
 		_videoIcon.setOnClickListener(new OnClickListener() {
 			
@@ -89,6 +90,10 @@ public class ImageItem extends RelativeLayout {
 	
 	public ProgressBar getProgress() {
 		return _progress;
+	}
+	
+	public Drawable getImageDrawable() {
+		return _img.getBackground();
 	}
 	
 	public void getImage(String url) {
@@ -194,6 +199,7 @@ public class ImageItem extends RelativeLayout {
 //					out.close();
 					Drawable drawable = new BitmapDrawable(buff);
 					_img.setBackgroundDrawable(drawable);
+//					_img.setImageBitmap(buff);
 					
 				} catch (Exception e) {
 					e.printStackTrace();

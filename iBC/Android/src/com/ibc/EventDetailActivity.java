@@ -130,6 +130,10 @@ public class EventDetailActivity extends Activity {
 		
 		inflateImageLayout(event);
 		inflateInfoblocs(event);
+		
+		if (event.buyURL.trim().length() <= 0) {
+			findViewById(R.id.compra).setVisibility(View.INVISIBLE);
+		}
 	}
 	
 	private void setNavigationBar(EventResponse event) {
@@ -191,6 +195,16 @@ public class EventDetailActivity extends Activity {
 			for (ImageResponse img : event.imgs) {
 				ImageItem item = new ImageItem(this);
 				item.getImage(img.thumbPath);
+				item.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(EventDetailActivity.this, GalleryViewActivity.class);
+						IBCApplication app = IBCApplication.sharedInstance();
+						app.putData("imgs", _event.imgs);
+						startActivity(intent);
+					}
+				});
 //				BitmapManager.INSTANCE.loadBitmap(Config.URL_IMAGE + img.thumbPath, item.getImageView(), item.getImageView().getWidth(), item.getImageView().getHeight());
 //				BitmapManager.INSTANCE.setProgress(item.getProgress());
 				_llVideo.addView(item);

@@ -20,6 +20,7 @@ public class EventListAdapter extends BaseAdapter {
 	List<EventsResponse> _data;
 	List<VenuesResponse> _venues;
 	boolean _isVenue;
+	boolean _isAlphabet;
 	public EventListAdapter(Context context, List<EventsResponse> list,List<VenuesResponse> venues, boolean isVenue) {
 		_context = context;
 		
@@ -29,6 +30,10 @@ public class EventListAdapter extends BaseAdapter {
 		} else {
 			_data = list;
 		}
+	}
+	
+	public EventListAdapter(Context context, List<EventsResponse> list,List<VenuesResponse> venues, boolean isVenue, boolean isAlphabet) {
+		
 	}
 	
 	@Override

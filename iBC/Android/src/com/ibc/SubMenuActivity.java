@@ -39,7 +39,7 @@ public class SubMenuActivity extends Activity implements OnItemClickListener{
     private void initMenu() {
     	MenuItemData data = new MenuItemData("EN CARTELL", getResources().getDrawable(R.drawable.v02_bt01));
     	MenuItemData data1 = new MenuItemData("PROPERAMENT", getResources().getDrawable(R.drawable.v02_bt02));
-    	MenuItemData data2 = new MenuItemData("́ÚLTIMA OPORTUNITAT", getResources().getDrawable(R.drawable.v02_bt03));
+    	MenuItemData data2 = new MenuItemData(getResources().getString(R.string.u), getResources().getDrawable(R.drawable.v02_bt03));
 
     	
     	mMenuList.add(data);

@@ -48,6 +48,7 @@ public class VenusListViewActivity extends Activity implements OnScrollListener,
 	ProgressDialog _dialog;
 	Service _service;
 	boolean _loadMore;
+	boolean _isSearching;
 	
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem,
@@ -97,7 +98,12 @@ public class VenusListViewActivity extends Activity implements OnScrollListener,
 		@Override
 		public void onItemClick(AdapterView<?> adapter, View view, int position,
 				long id) {
-			VenuesResponse item = list.get(position - _listView.getHeaderViewsCount());
+			VenuesResponse item = null;
+			if (_isSearching) {
+				item = listBySearch.get(position - _listView.getHeaderViewsCount());
+			} else {
+				item = list.get(position - _listView.getHeaderViewsCount());
+			}
 			Intent intent = new Intent(VenusListViewActivity.this, VenueDetailActivity.class);
 			intent.putExtra("v_code", item.venuesCode);
 			intent.putExtra("di", item.distance);
@@ -134,6 +140,7 @@ public class VenusListViewActivity extends Activity implements OnScrollListener,
 				_listView.setAdapter(_adapter);
 				_done.setVisibility(View.GONE);
 				_search.setText("");
+				_isSearching = false;
 			}
 		});
 		
@@ -224,7 +231,7 @@ public class VenusListViewActivity extends Activity implements OnScrollListener,
 	@Override
 	public void beforeTextChanged(CharSequence s, int start, int count,
 			int after) {
-		
+		_isSearching = true;
 	}
 
 	@Override

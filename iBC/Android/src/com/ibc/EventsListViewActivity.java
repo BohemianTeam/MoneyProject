@@ -39,6 +39,7 @@ public class EventsListViewActivity extends Activity implements TextWatcher{
 	Button _done;
 	ListView _listView;
 	EventListAdapter _adapter;
+	boolean _isSearching;
 	List<EventsResponse> list = new ArrayList<EventsResponse>();
 	List<EventsResponse> listBySearch = new ArrayList<EventsResponse>();
 	ProgressDialog _dialog;
@@ -68,7 +69,12 @@ public class EventsListViewActivity extends Activity implements TextWatcher{
 		@Override
 		public void onItemClick(AdapterView<?> adapter, View view, int position,
 				long id) {
-			EventsResponse item = list.get(position - _listView.getHeaderViewsCount());
+			EventsResponse item;
+			if (_isSearching) {
+				item = listBySearch.get(position - _listView.getHeaderViewsCount());
+			} else {
+				item = list.get(position - _listView.getHeaderViewsCount());
+			}
 			Intent intent = new Intent(EventsListViewActivity.this, EventDetailActivity.class);
 			intent.putExtra("e_code", item.eventCode);
 			startActivity(intent);
@@ -103,6 +109,7 @@ public class EventsListViewActivity extends Activity implements TextWatcher{
 				_listView.setAdapter(_adapter);
 				_done.setVisibility(View.GONE);
 				_search.setText("");
+				_isSearching = false;
 			}
 		});
 		
@@ -178,7 +185,7 @@ public class EventsListViewActivity extends Activity implements TextWatcher{
 	public void beforeTextChanged(CharSequence s, int start, int count,
 			int after) {
 		// TODO Auto-generated method stub
-		
+		_isSearching = true;
 	}
 
 	@Override
