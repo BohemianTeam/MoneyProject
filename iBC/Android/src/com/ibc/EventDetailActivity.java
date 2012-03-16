@@ -50,7 +50,7 @@ public class EventDetailActivity extends Activity {
 					_event = event;
 					String title = event.eventTitle;
 					if(null != title) {
-			        	((TextView) findViewById(R.id.title)).setText(title.toUpperCase());
+			        	//((TextView) findViewById(R.id.title)).setText(title.toUpperCase());
 			        }
 					displayView(event);
 				}
@@ -249,6 +249,7 @@ public class EventDetailActivity extends Activity {
 		_avatar = (EventAvatar) findViewById(R.id.event_avatar);
 		_llVideo = (LinearLayout) findViewById(R.id.ll_video);
 		_desc = (WebView) findViewById(R.id.event_desc);
+		_desc.getSettings().setDefaultFontSize(13);
 		_dramatic = (TextView) findViewById(R.id.dramatic);
 		_date = (TextView) findViewById(R.id.dates);
 		_price = (TextView) findViewById(R.id.price);

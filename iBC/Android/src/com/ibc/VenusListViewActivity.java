@@ -172,7 +172,11 @@ public class VenusListViewActivity extends Activity implements OnScrollListener,
 				app.putData("lon", _lon);
 				String slat = String.valueOf(_lat);
 				String slon = String.valueOf(_lon);
-				_service.getVenues(slat, slon);
+				if (_orderedAlphabet) {
+					_service.getVenues();
+				} else {
+					_service.getVenues(slat, slon);
+				}
 				show(false);
 			}
 		}
@@ -191,7 +195,11 @@ public class VenusListViewActivity extends Activity implements OnScrollListener,
 			app.putData("lon", _lon);
 			String lat = String.valueOf(gpsInfo.getLat());
 			String lon = String.valueOf(gpsInfo.getLng());
-			_service.getVenues(lat, lon);
+			if (_orderedAlphabet) {
+				_service.getVenues();
+			} else {
+				_service.getVenues(lat, lon);
+			}
 			Log.d(TAG, "Get GPS Success with lat : " + lat + "; lon : " + lon + " address :" + gpsInfo.getInfo());
 		}
 		
@@ -205,7 +213,11 @@ public class VenusListViewActivity extends Activity implements OnScrollListener,
 			IBCApplication app = IBCApplication.sharedInstance();
 			app.putData("lat", _lat);
 			app.putData("lon", _lon);
-			_service.getVenues("41.385756", "2.164129");
+			if (_orderedAlphabet) {
+				_service.getVenues();
+			} else {
+				_service.getVenues("41.385756", "2.164129");
+			}
 		}
 	};
 	

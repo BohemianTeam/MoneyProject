@@ -75,13 +75,13 @@ public class AddressActivity extends MapActivity {
 		if (_venue.email == null || _venue.email.trim().length() <= 0) {
 			_email.setVisibility(View.GONE);
 		}
+		
 	}
 	
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		if (v == _share) {
-			System.out.println("onCreateContextMenu");
 			menu.setHeaderTitle("Share Via");
 			menu.add(0, FB_MENU_ITEM, 0, "Facebook");
 			menu.add(0, TW_MENU_ITEM, 0, "Twitter");
@@ -138,33 +138,37 @@ public class AddressActivity extends MapActivity {
 	}
 	
 	public void onAddAddressClicked(View v) {
-		new AlertDialog.Builder(this).setTitle("IBC")
-        .setMessage("Do you want to add Address by?")
-        .setPositiveButton("Create New Contact", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            	Intent intent = new Intent(AddressActivity.this, ContactAdderActivity.class);
-            	if (!_phone.getText().toString().isEmpty()) {
-            		intent.putExtra("phone", _phone.getText().toString());
-            	}
-            	
-            	if (!_email.getText().toString().isEmpty()) {
-            		intent.putExtra("email", _email.getText().toString());
-        		}
-            	
-            	AddressActivity.this.startActivity(intent);
-            }
-        })
-        .setNeutralButton("Add to exists Contact", new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
+		if (_phone.getText().toString().isEmpty() && _email.getText().toString().isEmpty()) {
+			System.out.println("no phone and email to add");
+		} else {
+			new AlertDialog.Builder(this).setTitle("IBC")
+	        .setMessage("Do you want to add Address by?")
+	        .setPositiveButton("Create New Contact", new DialogInterface.OnClickListener() {
+	            @Override
+	            public void onClick(DialogInterface dialogInterface, int i) {
+	            	Intent intent = new Intent(AddressActivity.this, ContactAdderActivity.class);
+	            	if (!_phone.getText().toString().isEmpty()) {
+	            		intent.putExtra("phone", _phone.getText().toString());
+	            	}
+	            	
+	            	if (!_email.getText().toString().isEmpty()) {
+	            		intent.putExtra("email", _email.getText().toString());
+	        		}
+	            	
+	            	AddressActivity.this.startActivity(intent);
+	            }
+	        })
+	        .setNeutralButton("Add to exists Contact", new DialogInterface.OnClickListener() {
 				
-			}
-		}) 
-		.setNegativeButton("Cancel", null)
-        .create()
-        .show();
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					
+				}
+			}) 
+			.setNegativeButton("Cancel", null)
+	        .create()
+	        .show();
+		}
 		/*
 		int backRefIndex = 0;
 

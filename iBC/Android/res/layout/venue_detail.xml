@@ -71,13 +71,14 @@
 				android:orientation="vertical"
 				android:background="#53A8CC"
 	    	    >
-	    	    	<TextView
+	    	    	<WebView
 	    	    	    android:layout_margin="3dip"
 	    	    	    android:id="@+id/address"
 	    	    	    android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:textColor="#FFFFFF"
 						android:textSize="12dip"
+						android:background="#53A8CC"
 	    	    	/>
 	    	    	<ImageView
 	    	    	     android:layout_width="wrap_content"
@@ -108,6 +109,7 @@
 						android:textSize="12dip"
 						android:layout_marginLeft="5dip"
 						android:layout_marginTop="5dip"
+						android:singleLine="true"
 	    	    	    />
 	    	    	<TextView
 	    	    	    android:id="@+id/venue_email"
@@ -116,6 +118,8 @@
 						android:textColor="#FFFFFF"
 						android:textSize="12dip"
 						android:layout_marginLeft="5dip"
+						android:layout_marginTop="5dip"
+						android:singleLine="true"
 	    	    	    />
 	    	    	<TextView
 	    	    	    android:id="@+id/venue_url"
@@ -124,6 +128,8 @@
 						android:textColor="#FFFFFF"
 						android:textSize="12dip"
 						android:layout_marginLeft="5dip"
+						android:layout_marginTop="5dip"
+						android:singleLine="true"
 	    	    	    />
 	    	   </LinearLayout>
 	    	

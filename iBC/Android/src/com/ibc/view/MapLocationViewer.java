@@ -26,7 +26,7 @@ public class MapLocationViewer extends LinearLayout {
 		setOrientation(LinearLayout.VERTICAL);
 		setLayoutParams(new LinearLayout.LayoutParams(android.view.ViewGroup.LayoutParams.FILL_PARENT,android.view.ViewGroup.LayoutParams.FILL_PARENT));
 
-		_mapView = new MapView(getContext(),"0_CaK9g9NQHB8LmHq564xMiIWt2La3dpx7XjULg");
+		_mapView = new MapView(getContext(),"0_CaK9g9NQHDEnZ5WWNRxsTRwlGrFGquJqCoQrQ");
 		_mapView.setEnabled(true);
 		_mapView.setClickable(true);
 		_mapView.setBackgroundResource(R.drawable.white_round_rect);

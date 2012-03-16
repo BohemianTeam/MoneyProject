@@ -7,10 +7,10 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -58,7 +58,7 @@ public class VenueDetailActivity extends Activity {
 					_venue = venue;
 					String title = venue.venueName;
 					if(null != title) {
-			        	((TextView) findViewById(R.id.title)).setText(title);
+			        	//((TextView) findViewById(R.id.title)).setText(title);
 			        }
 					displayView(venue);
 					
@@ -113,7 +113,7 @@ public class VenueDetailActivity extends Activity {
 	View _navigationBar;
 	TextView _venueName;
 	TextView _desc;
-	TextView _address;
+	WebView _address;
 	TextView _phone;
 	TextView _email;
 	TextView _url;
@@ -255,11 +255,30 @@ public class VenueDetailActivity extends Activity {
 		setNavigationBar(venue);
 		_venueName.setText(venue.venueName == null ? "" : venue.venueName);
 		_desc.setText(venue.venueDescription == null ? "" : venue.venueDescription);
+		
 		String address = venue.address == null ? "" : venue.address;
-		_address.setText(Html.fromHtml(address));
+		address = "<font color='white'>" + address + "</font>";
+		String mime = "text/html";
+		String encoding = "utf-8";
+		_address.getSettings().setJavaScriptEnabled(true);
+		_address.loadDataWithBaseURL(null, address, mime, encoding, null);
+		
 		_phone.setText(venue.phoneNumber == null ? "" : venue.phoneNumber);
 		_email.setText(venue.email == null ? "" : venue.email);
 		_url.setText(venue.webAddress == null ? "" : venue.webAddress);
+		
+		if (venue.phoneNumber == null || venue.phoneNumber.trim().length() <= 0) {
+			_phone.setVisibility(View.GONE);
+		}
+		
+		if (venue.email == null || venue.email.trim().length() <= 0) {
+			_email.setVisibility(View.GONE);
+		}
+		
+		if (venue.webAddress == null || venue.webAddress.trim().length() <= 0) {
+			_url.setVisibility(View.GONE);
+		}
+		
 		_avatar.getImage(venue);
 		inflatImageLayout(venue);
 		inflateInfoblocs(venue);
@@ -324,7 +343,9 @@ public class VenueDetailActivity extends Activity {
 		
 		_venueName = (TextView) findViewById(R.id.venue_name);
 		_desc = (TextView) findViewById(R.id.description);
-		_address = (TextView) findViewById(R.id.address);
+		_address = (WebView) findViewById(R.id.address);
+		_address.setBackgroundColor(0x00000000);
+		_address.getSettings().setDefaultFontSize(13);
 		_phone = (TextView) findViewById(R.id.venue_phone);
 		_email = (TextView) findViewById(R.id.venue_email);
 		_url = (TextView) findViewById(R.id.venue_url);

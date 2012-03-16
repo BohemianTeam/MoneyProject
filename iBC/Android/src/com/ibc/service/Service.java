@@ -78,6 +78,13 @@ public class Service implements Runnable {
 		request("/getVenues/", params);
 	}
 	
+	public void getVenues() {
+		_action = ServiceAction.ActionGetVenues;
+		
+		Map<String, String> params = new HashMap<String, String>(IBCApplication.sharedInstance().getServiceParams());
+		request("/getVenues/", params);
+	}
+	
 	public void getVenue(String venueCode) {
 		_action = ServiceAction.ActionGetVenue;
 		

@@ -33,6 +33,10 @@ public class GalleryViewActivity extends Activity{
 		
 		if (IBCApplication.sharedInstance().getData("imgs") != null) {
 			imgsResponse = (List<ImageResponse>) IBCApplication.sharedInstance().getData("imgs");
+			
+			ImageResponse imageResponse = imgsResponse.get(0);
+			_img.getImage(imageResponse.thumbPath);
+			_img.setImageViewDimension();
 		}
 		
 		_gallery.setAdapter(new ImageAdapter(this));
