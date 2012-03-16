@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/MCProject/!svn/ver/159/trunk/LmcLib.Widget/res/layout
+END
+cal_fragment.xml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/MCProject/!svn/ver/111/trunk/LmcLib.Widget/res/layout/cal_fragment.xml
+END
+activity_calendar.xml
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/MCProject/!svn/ver/111/trunk/LmcLib.Widget/res/layout/activity_calendar.xml
+END
+cal_text_week_header.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/MCProject/!svn/ver/111/trunk/LmcLib.Widget/res/layout/cal_text_week_header.xml
+END
+quickaction.xml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/MCProject/!svn/ver/159/trunk/LmcLib.Widget/res/layout/quickaction.xml
+END
+cal_layout_time_type_selector.xml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/MCProject/!svn/ver/126/trunk/LmcLib.Widget/res/layout/cal_layout_time_type_selector.xml
+END
+action_item.xml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/MCProject/!svn/ver/159/trunk/LmcLib.Widget/res/layout/action_item.xml
+END
+dialog_input.xml
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/MCProject/!svn/ver/159/trunk/LmcLib.Widget/res/layout/dialog_input.xml
+END

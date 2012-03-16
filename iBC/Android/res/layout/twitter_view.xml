@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<include android:id="@+id/navigation_bar" layout="@layout/navigation_bar" android:layout_width="fill_parent" android:layout_height="wrap_content"/>
+	<RelativeLayout android:layout_height="44dip"
+		android:layout_width="fill_parent" android:id="@+id/relative_layout_header"
+		android:background="@drawable/navibg_teal" android:paddingLeft="5dip"
+		android:paddingRight="5dip">
+		<ImageView android:layout_width="80dip"
+			android:layout_centerVertical="true" android:layout_height="20dip"
+			android:id="@+id/image_button_logo" android:layout_alignParentLeft="true"
+			android:background="@drawable/twitter_logo" />
+		<TextView android:layout_height="wrap_content"
+			android:layout_width="wrap_content" android:layout_centerVertical="true"
+			android:layout_centerHorizontal="true" android:id="@+id/twitter_usename"
+			android:textStyle="bold" android:textSize="15dip" android:textColor="#ffffff"
+			android:layout_marginLeft="10dip" android:maxWidth="150dip" />
+		<TextView android:layout_height="wrap_content"
+			android:layout_width="60dip" android:layout_centerVertical="true"
+			android:layout_alignParentRight="true" android:id="@+id/twitter_numchar"
+			android:textStyle="bold" android:textSize="15dip" android:textColor="#ffffff"
+			android:text="140"  />
+	</RelativeLayout>
+	<EditText android:text="" android:hint="Your Status"
+		android:id="@+id/twitter_message" android:layout_width="fill_parent"
+		android:layout_height="130dip" android:clickable="true"
+		android:layout_marginTop="10dip" android:maxLength="140">
+	</EditText>
+	<RelativeLayout android:id="@+id/LinearLayout01"
+		android:layout_width="fill_parent" android:layout_height="50dip"
+		android:background="@drawable/navibg_teal" >
+		
+		<Button android:id="@+id/twitter_buttonSend"
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:text="Tweet"
+			android:layout_alignParentLeft="true"
+			android:layout_centerHorizontal="true"
+			>
+		    
+		</Button>
+		<Button android:id="@+id/twitter_buttonPushFacebook"
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:text="Post on Wall"
+			android:visibility="invisible"
+			android:layout_centerInParent="true"
+			>
+		</Button>
+		<Button android:id="@+id/twitter_buttonCancel"
+			android:layout_width="wrap_content" 
+			android:layout_centerHorizontal="true"
+			android:layout_height="wrap_content"
+			android:text="@string/Cancel" 
+			android:layout_alignParentRight="true"
+			>
+		    
+		</Button>
+	</RelativeLayout>
+</LinearLayout>

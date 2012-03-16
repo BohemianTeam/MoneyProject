@@ -105,6 +105,50 @@
 		<activity android:name="ContactAdderActivity" android:label="@string/addContactTitle" android:theme="@android:style/Theme.Black.NoTitleBar">
         </activity>
 		
+		<activity android:name=".share.twitter.TwitterActivity"
+			android:theme="@android:style/Theme.Translucent.NoTitleBar"
+			android:screenOrientation="portrait" android:launchMode="singleTask">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				 />
+			</intent-filter>
+		</activity>
+		
+		<activity android:name=".share.twitter.ConnectTwitter"
+			android:theme="@android:style/Theme.Black.NoTitleBar"
+			android:screenOrientation="portrait">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<!-- <data android:scheme="OauthTwitter" android:host="twitt"  -->/>
+			</intent-filter>
+		</activity>
+		
+		<activity android:name=".share.GeneralSharingActivity"
+			android:theme="@android:style/Theme.Dialog"
+			android:screenOrientation="portrait" />
+		
+		
+		<activity android:name=".share.twitter.ShareTwitterActivity"
+			android:theme="@android:style/Theme.Black.NoTitleBar"
+			android:screenOrientation="portrait" android:launchMode="singleTask">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="OauthTwitter" android:host="twitt" />
+			</intent-filter>
+			</activity>
+		
+		
+		<activity android:name=".share.facebook.FacebookActivity"
+			android:theme="@android:style/Theme.Translucent.NoTitleBar"
+			android:windowSoftInputMode = "adjustPan|stateVisible"
+			android:noHistory="true" android:screenOrientation="portrait" />
+		
 		<uses-library android:name="com.google.android.maps" />
     </application>
     

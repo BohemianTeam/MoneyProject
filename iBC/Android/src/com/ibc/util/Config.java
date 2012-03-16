@@ -8,6 +8,6 @@ public class Config {
 	public static final String KinectiaAppId = "rd4Gds";
 	public static final String YOUTUBE_IMG_URL = "http://img.youtube.com/vi/%s/1.jpg";
 	public static final String FACEBOOK_APPID = "";
-	public static final String CONSUMER_KEY = "";
-	public static final String CONSUMER_SECRET = "";
+	public static final String TWITTER_CONSUMER_KEY = "GhH1fGJCrbj93fufasB2tw";
+	public static final String TWITTER_CONSUMER_SECRET = "l89eql6OrTZPLCZDXFMbWFIKcahnPbAW9PuVq0dIxU";
 }

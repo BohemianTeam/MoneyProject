@@ -82,7 +82,7 @@ public class VenusListViewActivity extends Activity implements OnScrollListener,
 					}
 					*/
 					
-					_adapter = new EventListAdapter(VenusListViewActivity.this, null, list, true);
+					_adapter = new EventListAdapter(VenusListViewActivity.this, null, list, true, _orderedAlphabet);
 					_listView.setAdapter(_adapter);
 					_listView.setOnItemClickListener(_onItemClickListener);
 					hide();
@@ -136,7 +136,7 @@ public class VenusListViewActivity extends Activity implements OnScrollListener,
 			public void onClick(View v) {
 				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 				imm.hideSoftInputFromWindow(_search.getWindowToken(), 0);
-				_adapter = new EventListAdapter(VenusListViewActivity.this, null, list, true);
+				_adapter = new EventListAdapter(VenusListViewActivity.this, null, list, true, _orderedAlphabet);
 				_listView.setAdapter(_adapter);
 				_done.setVisibility(View.GONE);
 				_search.setText("");
@@ -255,7 +255,7 @@ public class VenusListViewActivity extends Activity implements OnScrollListener,
 			}
 		}
 		
-		_adapter = new EventListAdapter(VenusListViewActivity.this, null, listBySearch, true);
+		_adapter = new EventListAdapter(VenusListViewActivity.this, null, listBySearch, true, _orderedAlphabet);
 		_listView.setAdapter(_adapter);
 	}
 

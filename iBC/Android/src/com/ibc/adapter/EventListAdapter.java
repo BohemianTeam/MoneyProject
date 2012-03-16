@@ -21,19 +21,20 @@ public class EventListAdapter extends BaseAdapter {
 	List<VenuesResponse> _venues;
 	boolean _isVenue;
 	boolean _isAlphabet;
+	boolean _sortByAlphabet;
 	public EventListAdapter(Context context, List<EventsResponse> list,List<VenuesResponse> venues, boolean isVenue) {
+		this(context, list, venues, isVenue, false);
+	}
+	
+	public EventListAdapter(Context context, List<EventsResponse> list,List<VenuesResponse> venues, boolean isVenue, boolean isAlphabet) {
 		_context = context;
-		
+		_sortByAlphabet = isAlphabet;
 		_isVenue = isVenue;
 		if (_isVenue) {
 			_venues = venues;
 		} else {
 			_data = list;
 		}
-	}
-	
-	public EventListAdapter(Context context, List<EventsResponse> list,List<VenuesResponse> venues, boolean isVenue, boolean isAlphabet) {
-		
 	}
 	
 	@Override
@@ -88,7 +89,7 @@ public class EventListAdapter extends BaseAdapter {
 			VenueRowHolder vRowHolder;
 			VenuesResponse vn = (VenuesResponse) getItem(position);
 			vRowHolder = new VenueRowHolder(convertView, _context);
-			vRowHolder.display(vn);
+			vRowHolder.display(vn, _sortByAlphabet);
 			convertView.setTag(vRowHolder);
 			return convertView;
 		} else {

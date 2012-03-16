@@ -19,6 +19,7 @@ import com.google.android.maps.MapActivity;
 import com.ibc.model.Maplocation;
 import com.ibc.model.service.response.VenueResponse;
 import com.ibc.share.ShareFacebookActivity;
+import com.ibc.share.twitter.ShareTwitterActivity;
 import com.ibc.view.MapLocationViewer;
 import com.ibc.view.MapViewOverlay;
 
@@ -67,11 +68,11 @@ public class AddressActivity extends MapActivity {
 		_phone.setText(_venue.phoneNumber == null ? "" : _venue.phoneNumber);
 		_email.setText(_venue.email == null ? "" : _venue.email);
 		
-		if (_venue.phoneNumber == null) {
+		if (_venue.phoneNumber == null || _venue.phoneNumber.trim().length() <= 0) {
 			_phone.setVisibility(View.GONE);
 		}
 		
-		if (_venue.email == null) {
+		if (_venue.email == null || _venue.email.trim().length() <= 0) {
 			_email.setVisibility(View.GONE);
 		}
 	}
@@ -112,7 +113,7 @@ public class AddressActivity extends MapActivity {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				
+				startActivity(new Intent(AddressActivity.this, ShareTwitterActivity.class));	
 			}
 		}) 
 		.setNegativeButton("Cancel", null)

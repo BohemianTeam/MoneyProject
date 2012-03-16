@@ -28,4 +28,11 @@
     <string name="undefinedTypeLabel">(Undefined)</string>
     
     <string name="u">ÚLTIMA OPORTUNITAT</string>
+    
+    <string name="Cancel">Cancel</string>
+    <string name="TwitterScreenName">IBC</string>
+	<string name="TwitterFollowingMessage">\@%s Do you want to follow?</string>
+	<string name="TwitterFollowingTittle">Follow me!</string>
+	<string name="Ok">OK</string>
+	<string name="TwitterWaitingPostMsg">Posting to Twitter</string>
 </resources>
