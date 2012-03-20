@@ -801,8 +801,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Manh Hung Tran (Y85D37GJKQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manh Hung Tran (Y85D37GJKQ)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -817,8 +817,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PROVISIONING_PROFILE = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
+				PROVISIONING_PROFILE = "485487EB-0309-4D6C-8BD1-E762874E054D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "485487EB-0309-4D6C-8BD1-E762874E054D";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -829,8 +829,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Manh Hung Tran (Y85D37GJKQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manh Hung Tran (Y85D37GJKQ)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -839,8 +839,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
+				PROVISIONING_PROFILE = "485487EB-0309-4D6C-8BD1-E762874E054D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "485487EB-0309-4D6C-8BD1-E762874E054D";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -850,14 +850,14 @@
 		66B2935E14E021160006B641 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Manh Hung Tran (Y85D37GJKQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manh Hung Tran (Y85D37GJKQ)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iBC/iBC-Prefix.pch";
 				INFOPLIST_FILE = "iBC/iBC-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "485487EB-0309-4D6C-8BD1-E762874E054D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "485487EB-0309-4D6C-8BD1-E762874E054D";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -865,14 +865,14 @@
 		66B2935F14E021160006B641 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Tien Doan (25FKU2MUR7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tien Doan (25FKU2MUR7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Manh Hung Tran (Y85D37GJKQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manh Hung Tran (Y85D37GJKQ)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iBC/iBC-Prefix.pch";
 				INFOPLIST_FILE = "iBC/iBC-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9B28FE05-F13B-47BF-A9C6-16398B29B3B8";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D72762C5-6E33-4F37-8D51-2AEC0C83A482";
+				PROVISIONING_PROFILE = "485487EB-0309-4D6C-8BD1-E762874E054D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "485487EB-0309-4D6C-8BD1-E762874E054D";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -882,8 +882,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Manh Hung Tran (Y85D37GJKQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manh Hung Tran (Y85D37GJKQ)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -892,8 +892,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "485487EB-0309-4D6C-8BD1-E762874E054D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "485487EB-0309-4D6C-8BD1-E762874E054D";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -903,14 +903,14 @@
 		97F3BA0514F4F55D008BD25B /* Adhoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Manh Hung Tran (Y85D37GJKQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Manh Hung Tran (Y85D37GJKQ)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iBC/iBC-Prefix.pch";
 				INFOPLIST_FILE = "iBC/iBC-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "485487EB-0309-4D6C-8BD1-E762874E054D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "485487EB-0309-4D6C-8BD1-E762874E054D";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Adhoc;

@@ -133,6 +133,8 @@ public class EventDetailActivity extends Activity {
 		
 		if (event.buyURL.trim().length() <= 0) {
 			findViewById(R.id.compra).setVisibility(View.INVISIBLE);
+		} else {
+			findViewById(R.id.compra).setVisibility(View.VISIBLE);
 		}
 	}
 	
