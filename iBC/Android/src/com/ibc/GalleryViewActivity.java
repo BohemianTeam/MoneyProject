@@ -14,12 +14,11 @@ import android.widget.BaseAdapter;
 import android.widget.Gallery;
 
 import com.ibc.model.service.response.ImageResponse;
-import com.ibc.view.ImageItem;
+import com.ibc.view.ZoomImageView;
 
 public class GalleryViewActivity extends Activity{
 
 	Gallery _gallery;
-	ImageItem _img;
 	List<ImageResponse> imgsResponse;
 	
 	@SuppressWarnings("unchecked")
@@ -29,14 +28,9 @@ public class GalleryViewActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.gallery_view);
 		_gallery = (Gallery) findViewById(R.id.Gallery01);
-		_img = (ImageItem) findViewById(R.id.ImageView01);
 		
 		if (IBCApplication.sharedInstance().getData("imgs") != null) {
 			imgsResponse = (List<ImageResponse>) IBCApplication.sharedInstance().getData("imgs");
-			
-			ImageResponse imageResponse = imgsResponse.get(0);
-			_img.getImage(imageResponse.thumbPath);
-			_img.setImageViewDimension();
 		}
 		
 		_gallery.setAdapter(new ImageAdapter(this));
@@ -45,8 +39,6 @@ public class GalleryViewActivity extends Activity{
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view, int position,
 					long id) {
-				ImageResponse imageResponse = imgsResponse.get(position);
-				_img.getImage(imageResponse.thumbPath);
 			}
 		});
 	}
@@ -54,7 +46,7 @@ public class GalleryViewActivity extends Activity{
 	public class ImageAdapter extends BaseAdapter {
 
 		private Context _context;
-		private int imageBackground;
+		public int imageBackground;
 		public ImageAdapter(Context ctx) {
 			_context = ctx;
 			
@@ -89,11 +81,12 @@ public class GalleryViewActivity extends Activity{
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO Auto-generated method stub
 			ImageResponse response = getItem(position);
-			ImageItem item = new ImageItem(_context);
+			ZoomImageView item = new ZoomImageView(_context);
 			item.getImage(response.thumbPath);
 			item.setTag(item.getImageDrawable());
-			item.setLayoutParams(new Gallery.LayoutParams(150,120));
+			
 			return item;
+			
 		}
 		
 	}

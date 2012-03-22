@@ -6,15 +6,7 @@
     android:background="#FFFFFF"
     >
 <Gallery 
-    android:layout_marginTop="20dip"
     android:id="@+id/Gallery01" 
     android:layout_width="fill_parent" 
-    android:layout_height="wrap_content"></Gallery>
-<com.ibc.view.ImageItem 
-    android:id="@+id/ImageView01" 
-    android:layout_width="200dip" 
-    android:layout_height="200dip"
-    android:layout_gravity="center"
-    >
-    </com.ibc.view.ImageItem>
+    android:layout_height="fill_parent"></Gallery>
 </LinearLayout>

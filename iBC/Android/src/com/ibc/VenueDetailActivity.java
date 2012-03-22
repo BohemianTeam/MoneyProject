@@ -291,6 +291,16 @@ public class VenueDetailActivity extends Activity {
 			for (ImageResponse img : venue.imgs) {
 				ImageItem item = new ImageItem(this);
 				item.getImage(img.thumbPath);
+				item.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(VenueDetailActivity.this, GalleryViewActivity.class);
+						IBCApplication app = IBCApplication.sharedInstance();
+						app.putData("imgs", _venue.imgs);
+						startActivity(intent);
+					}
+				});
 				_layoutImg.addView(item);
 			}
 		}

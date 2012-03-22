@@ -17,7 +17,6 @@ import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -54,19 +53,19 @@ public class ImageItem extends RelativeLayout {
 		init(context);
 	}
 	
-	public void setImageViewDimension() {
+	public void setImageViewDimension(int w, int h) {
 		LayoutParams params = (LayoutParams) _img.getLayoutParams();
-		params.width = 63 * 4;
-		params.height = 49 * 4;
-		
+		params.width = w;//63 * 4;
+		params.height = h;//49 * 4;
+		params.setMargins(0, 0, 0, 0);
 		_img.setLayoutParams(params);
 	}
+	
 	
 	private void init(Context context) {
 		_context = context;
 		_root = LayoutInflater.from(_context).inflate(R.layout.image_view, this);
 		_img = (ImageView) _root.findViewById(R.id.venue_img);
-//		_img.setMaxZoom(4f);
 		_videoIcon = (ImageView) _root.findViewById(R.id.video_icon);
 		_videoIcon.setOnClickListener(new OnClickListener() {
 			
