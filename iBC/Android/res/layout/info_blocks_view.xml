@@ -129,6 +129,7 @@
 						android:id="@+id/compra"
 						android:background="@drawable/buybutton"
 						android:onClick="onBuyClicked"
+						android:visibility="invisible"
 					/>
 				</LinearLayout>
 				
