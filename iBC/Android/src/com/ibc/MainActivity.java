@@ -186,9 +186,9 @@ public class MainActivity extends Activity implements OnItemClickListener{
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			// create builder for alert dialog
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("Do you want to exit?")
+			builder.setMessage(getResources().getString(R.string.exit_dialog_msg))
 					.setCancelable(false)
-					.setPositiveButton("Yes",
+					.setPositiveButton(getResources().getString(R.string.yes),
 							new DialogInterface.OnClickListener() {
 
 								@Override

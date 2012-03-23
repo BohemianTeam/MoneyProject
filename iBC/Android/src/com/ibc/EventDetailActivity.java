@@ -116,6 +116,12 @@ public class EventDetailActivity extends Activity {
 	boolean isStarred = false;
 	
 	private void displayView(EventResponse event) {
+		if (event.buyURL.trim().length() <= 0) {
+			findViewById(R.id.compra).setVisibility(View.INVISIBLE);
+		} else {
+			findViewById(R.id.compra).setVisibility(View.VISIBLE);
+		}
+		
 		setNavigationBar(event);
 		_avatar.getImage(event);
 		_title.setText(event.eventTitle == null ? "" : event.eventTitle.toUpperCase());
@@ -130,12 +136,6 @@ public class EventDetailActivity extends Activity {
 		
 		inflateImageLayout(event);
 		inflateInfoblocs(event);
-		
-		if (event.buyURL.trim().length() <= 0) {
-			findViewById(R.id.compra).setVisibility(View.INVISIBLE);
-		} else {
-			findViewById(R.id.compra).setVisibility(View.VISIBLE);
-		}
 	}
 	
 	private void setNavigationBar(EventResponse event) {

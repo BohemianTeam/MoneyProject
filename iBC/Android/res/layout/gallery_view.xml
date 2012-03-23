@@ -9,7 +9,11 @@
     android:id="@+id/pager" 
     android:layout_width="fill_parent" 
     android:layout_height="fill_parent"
+    android:visibility="gone"
     >
     
 </com.ibc.view.HorizontalPager>
+<com.ibc.view.SDPlayerCoverFlow android:id="@+id/player_coverflow"
+			android:layout_width="fill_parent" android:layout_height="fill_parent" 
+			/>
 </LinearLayout>

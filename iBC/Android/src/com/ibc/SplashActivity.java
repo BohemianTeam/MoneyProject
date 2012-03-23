@@ -4,8 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -72,6 +77,9 @@ public class SplashActivity extends Activity {
                 targetActivity = extras.getString("targetActivity");
             }
         }
+        if (!isOnline()) {
+        	showAlertDialog();
+        }
         //get inst id
 		IBCApplication app = IBCApplication.sharedInstance();
 		String id = app.getSharedPreferencesManager().loadInstID();
@@ -86,6 +94,36 @@ public class SplashActivity extends Activity {
 
         Log.d(TAG, "onCreate ending");
     }
+   
+   private void showAlertDialog() {
+	// create builder for alert dialog
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(getResources().getString(R.string.AlertMessageNotConnect)).setTitle(getResources().getString(R.string.AlertTitleNotConnect))
+				.setCancelable(false)
+				.setPositiveButton(getResources().getString(R.string.ok),
+						new DialogInterface.OnClickListener() {
+		
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// MainActivity.this.moveTaskToBack(true);
+								SplashActivity.this.finish();
+							}
+						});
+		// create alet dialog
+		AlertDialog alert = builder.create();
+		alert.show();
+   }
+
+   public boolean isOnline() {
+	    ConnectivityManager cm =
+	        (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
+	    if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+	        return true;
+	    }
+	    return false;
+	}
    
    ServiceListener _listener = new ServiceListener() {
 

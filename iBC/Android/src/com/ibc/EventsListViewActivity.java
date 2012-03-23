@@ -103,12 +103,15 @@ public class EventsListViewActivity extends Activity implements TextWatcher{
 			
 			@Override
 			public void onClick(View v) {
+				_done.setVisibility(View.GONE);
 				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 				imm.hideSoftInputFromWindow(_search.getWindowToken(), 0);
+				
 				_adapter = new EventListAdapter(EventsListViewActivity.this, list, null, false);
 				_listView.setAdapter(_adapter);
-				_done.setVisibility(View.GONE);
+				
 				_search.setText("");
+				
 				_isSearching = false;
 			}
 		});
@@ -194,14 +197,14 @@ public class EventsListViewActivity extends Activity implements TextWatcher{
 		_done.setVisibility(View.VISIBLE);
 		listBySearch.clear();
 		String text = _search.getText().toString();
-		int len = text.length();
-		for (EventsResponse v : list) {
-			if (len <= v.eventTitle.length()) {
-				if (text.equalsIgnoreCase(v.eventTitle.substring(0, len))) {
-					listBySearch.add(v);
-				} 
-			}
-		}
+//		int len = text.length();
+//		for (EventsResponse v : list) {
+//			if (len <= v.eventTitle.length()) {
+//				if (text.equalsIgnoreCase(v.eventTitle.substring(0, len))) {
+//					listBySearch.add(v);
+//				} 
+//			}
+//		}
 		
 		for (EventsResponse v : list) {
 			if (v.eventTitle.contains(text)) {

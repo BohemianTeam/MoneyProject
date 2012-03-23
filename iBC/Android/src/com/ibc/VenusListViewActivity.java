@@ -251,15 +251,15 @@ public class VenusListViewActivity extends Activity implements OnScrollListener,
 		_done.setVisibility(View.VISIBLE);
 		listBySearch.clear();
 		String text = _search.getText().toString();
-		int len = text.length();
-		for (VenuesResponse v : list) {
-			if (len <= v.venuesName.length()) {
-				if (text.equalsIgnoreCase(v.venuesName.substring(0, len))) {
-					listBySearch.add(v);
-				}
-			}
-			
-		}
+//		int len = text.length();
+//		for (VenuesResponse v : list) {
+//			if (len <= v.venuesName.length()) {
+//				if (text.equalsIgnoreCase(v.venuesName.substring(0, len))) {
+//					listBySearch.add(v);
+//				}
+//			}
+//			
+//		}
 		
 		for (VenuesResponse v : list) {
 			if (v.venuesName.contains(text)) {
