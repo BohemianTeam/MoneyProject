@@ -3,91 +3,48 @@ package com.ibc;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
-import android.widget.Gallery;
 
 import com.ibc.model.service.response.ImageResponse;
+import com.ibc.view.HorizontalPager;
 import com.ibc.view.ZoomImageView;
 
 public class GalleryViewActivity extends Activity{
 
-	Gallery _gallery;
 	List<ImageResponse> imgsResponse;
-	
+	HorizontalPager pager;
+	int totalPage;
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.gallery_view);
-		_gallery = (Gallery) findViewById(R.id.Gallery01);
+		pager = (HorizontalPager) findViewById(R.id.pager);
+		pager.setOnScreenSwitchListener(listener);
 		
 		if (IBCApplication.sharedInstance().getData("imgs") != null) {
 			imgsResponse = (List<ImageResponse>) IBCApplication.sharedInstance().getData("imgs");
+			totalPage = imgsResponse.size();
 		}
 		
-		_gallery.setAdapter(new ImageAdapter(this));
-		_gallery.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, int position,
-					long id) {
-			}
-		});
+		pager.removeAllViews();
+		
+		for (int i = 0;i < totalPage;i++) {
+			ImageResponse ir = imgsResponse.get(i);
+			
+			ZoomImageView img = new ZoomImageView(this);
+			img.getImage(ir.imagePath);
+			
+			pager.addView(img);
+		}
 	}
 	
-	public class ImageAdapter extends BaseAdapter {
-
-		private Context _context;
-		public int imageBackground;
-		public ImageAdapter(Context ctx) {
-			_context = ctx;
-			
-			TypedArray ta = obtainStyledAttributes(R.styleable.Gallery1);
-		    imageBackground = ta.getResourceId(R.styleable.Gallery1_android_galleryItemBackground, 1);
-		    ta.recycle();
-		}
+	HorizontalPager.OnScreenSwitchListener listener = new HorizontalPager.OnScreenSwitchListener() {
 		
 		@Override
-		public int getCount() {
-			// TODO Auto-generated method stub
-			if (imgsResponse == null || imgsResponse.size() <= 0) {
-				return 0;
-			} else {
-				return imgsResponse.size();
-			}
+		public void onScreenSwitched(int screen) {
+			System.out.println("screen = " + screen);
 		}
-
-		@Override
-		public ImageResponse getItem(int position) {
-			// TODO Auto-generated method stub
-			return imgsResponse.get(position);
-		}
-
-		@Override
-		public long getItemId(int position) {
-			// TODO Auto-generated method stub
-			return position;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
-			ImageResponse response = getItem(position);
-			ZoomImageView item = new ZoomImageView(_context);
-			item.getImage(response.thumbPath);
-			item.setTag(item.getImageDrawable());
-			
-			return item;
-			
-		}
-		
-	}
+	};
 }

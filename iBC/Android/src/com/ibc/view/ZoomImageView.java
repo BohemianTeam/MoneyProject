@@ -1,17 +1,16 @@
 package com.ibc.view;
 
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -23,7 +22,6 @@ import android.widget.RelativeLayout;
 
 import com.ibc.R;
 import com.ibc.util.Config;
-import com.nikkoaiello.mobile.android.PinchImageView;
 
 
 public class ZoomImageView extends RelativeLayout {
@@ -36,10 +34,10 @@ public class ZoomImageView extends RelativeLayout {
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			long thistime = System.currentTimeMillis();
 			if (thistime - lastTouchTime < 250) {
-				if (_img.getScale() == PinchImageView.MAX_SCALE) {
-					_img.zoomMin();
+				if (_img.saveScale == _img.maxScale) {
+					_img.saveScale = _img.minScale;
 				} else {
-					_img.zoomMax();
+					_img.saveScale = _img.maxScale;
 				}
 			} else {
 				lastTouchTime = thistime;
@@ -53,13 +51,12 @@ public class ZoomImageView extends RelativeLayout {
 
 	private Context _context;
 	private View _root;
-	private PinchImageView _img;
-	private ImageView _videoIcon;
+	private TouchImageView _img;
 	private ProgressBar _progress;
 	
 	private HttpURLConnection _connection;
 	private boolean _connecting;
-	private String _videoURL;
+	private String _imgURL;
 	
 	public ZoomImageView(Context context) {
 		super(context);
@@ -88,31 +85,11 @@ public class ZoomImageView extends RelativeLayout {
 	private void init(Context context) {
 		_context = context;
 		_root = LayoutInflater.from(_context).inflate(R.layout.zoom_image_view, this);
-		_img = (PinchImageView) _root.findViewById(R.id.venue_img);
-		_videoIcon = (ImageView) _root.findViewById(R.id.video_icon);
-		_videoIcon.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				if (_context instanceof Activity) {
-					/*
-					Intent intent = new Intent(_context, VideoPlayerActivity.class);
-					intent.putExtra("path", _videoURL);
-					_context.startActivity(intent);
-					*/
-					_context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(_videoURL)));
-				}
-			}
-		});
+		_img = (TouchImageView) _root.findViewById(R.id.venue_img);
+		_img.setMaxZoom(4f);
+		setImageViewDimension(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+		
 		_progress = (ProgressBar) _root.findViewById(R.id.progress);
-	}
-	
-	public void setVideoIconVisible() {
-		_videoIcon.setVisibility(VISIBLE);
-	}
-	
-	public void setVideoURL(String url) {
-		_videoURL = url;
 	}
 	
 	public ImageView getImageView() {
@@ -132,14 +109,25 @@ public class ZoomImageView extends RelativeLayout {
 	}
 	
 	public void getImage(String url, boolean includeId) {
-		if (_connecting) {
-			return;
+		String path = url.substring(0, url.length() - 4);
+		path = path.replaceAll("/", "_");
+		_imgURL = path;
+		String dir = _context.getCacheDir() + "/" + path + "_vn.png";
+		File file = new File(dir);
+		if (file.exists()) {
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			_img.setImageBitmap(BitmapFactory.decodeFile(dir,options));
+			_progress.setVisibility(View.INVISIBLE);
 		} else {
-			_connecting = true;
-			if (includeId) {
-				new DownloadTask().execute(new String[] {Config.URL_IMAGE + url, "" });
+			if (_connecting) {
+				return;
 			} else {
-				new DownloadTask().execute(new String[] {url, "" });
+				_connecting = true;
+				if (includeId) {
+					new DownloadTask().execute(new String[] {Config.URL_IMAGE + url, "" });
+				} else {
+					new DownloadTask().execute(new String[] {url, "" });
+				}
 			}
 		}
 	}
@@ -204,6 +192,12 @@ public class ZoomImageView extends RelativeLayout {
 			}
 			if (buff != null) {
 				try {
+					String dir = _context.getCacheDir() + "/" + _imgURL + "_vn.png";
+					FileOutputStream out = new FileOutputStream(dir);
+					buff.compress(Bitmap.CompressFormat.PNG, 100, out);
+					out.flush();
+					out.close();
+					
 					_img.setImageBitmap(buff);
 				} catch (Exception e) {
 					e.printStackTrace();

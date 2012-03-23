@@ -5,8 +5,11 @@
     android:layout_height="fill_parent"
     android:background="#FFFFFF"
     >
-<Gallery 
-    android:id="@+id/Gallery01" 
+<com.ibc.view.HorizontalPager 
+    android:id="@+id/pager" 
     android:layout_width="fill_parent" 
-    android:layout_height="fill_parent"></Gallery>
+    android:layout_height="fill_parent"
+    >
+    
+</com.ibc.view.HorizontalPager>
 </LinearLayout>

@@ -3,24 +3,11 @@
     	xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="fill_parent" 
 		android:layout_height="fill_parent"
-		android:layout_marginLeft="5dip"
 	>
-		<com.nikkoaiello.mobile.android.PinchImageView
+		<com.ibc.view.TouchImageView
 			android:id="@+id/venue_img"
-			android:layout_width="fill_parent" 
-			android:layout_height="fill_parent"
-			android:scaleType="fitXY"
-			android:layout_centerInParent="true" 
-		/>
-		
-		<ImageView
-			android:id="@+id/video_icon"
-			android:layout_width="40dip" 
-			android:layout_height="40dip"
-			android:scaleType="fitXY"
-			android:layout_centerInParent="true" 
-			android:background="@drawable/play_icon"
-			android:visibility="gone"
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"
 		/>
 		
 		<ProgressBar

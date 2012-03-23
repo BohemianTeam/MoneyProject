@@ -197,7 +197,6 @@ containing a value of this type.
     public static final class id {
         public static final int Button01=0x7f09004a;
         public static final int EditText01=0x7f090049;
-        public static final int Gallery01=0x7f090034;
         public static final int LinearLayout01=0x7f090050;
         public static final int accountIcon=0x7f090000;
         public static final int accountSpinner=0x7f090014;
@@ -259,6 +258,7 @@ containing a value of this type.
         public static final int mapview=0x7f090006;
         public static final int myvideoview=0x7f09005e;
         public static final int navigation_bar=0x7f090005;
+        public static final int pager=0x7f090034;
         public static final int phone=0x7f09000a;
         public static final int price=0x7f090025;
         public static final int progress=0x7f09001f;
