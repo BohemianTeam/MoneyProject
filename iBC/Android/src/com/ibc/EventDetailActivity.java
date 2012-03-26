@@ -194,8 +194,10 @@ public class EventDetailActivity extends Activity {
 		_llVideo.removeAllViews();
 
 		if (event.imgs != null) {
-			for (ImageResponse img : event.imgs) {
-				ImageItem item = new ImageItem(this);
+			for (int i = 0;i < event.imgs.size();i++) {
+				ImageResponse img = event.imgs.get(i);
+				final ImageItem item = new ImageItem(this);
+				item.setTag(i);
 				item.getImage(img.thumbPath);
 				item.setOnClickListener(new OnClickListener() {
 					
@@ -204,6 +206,8 @@ public class EventDetailActivity extends Activity {
 						Intent intent = new Intent(EventDetailActivity.this, GalleryViewActivity.class);
 						IBCApplication app = IBCApplication.sharedInstance();
 						app.putData("imgs", _event.imgs);
+						int position = (Integer) item.getTag();
+						intent.putExtra("position", position);
 						startActivity(intent);
 					}
 				});

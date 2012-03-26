@@ -243,9 +243,9 @@ public class VenueDetailActivity extends Activity {
 		}
 		VenueRoomEventData prev = rowData.get(position - 1);
 		VenueRoomEventData curr = rowData.get(position);
-		char prevHeader = prev._venueRoomName.charAt(0);
-		char currHeader = curr._venueRoomName.charAt(0);
-		if (prevHeader != currHeader) {
+		String prevHeader = prev._venueRoomName;
+		String currHeader = curr._venueRoomName;
+		if (!prevHeader.equalsIgnoreCase(currHeader)) {
 			return true;
 		}
 		return false;
@@ -288,8 +288,10 @@ public class VenueDetailActivity extends Activity {
 		_layoutImg.removeAllViews();
 		
 		if (venue.imgs != null) {
-			for (ImageResponse img : venue.imgs) {
-				ImageItem item = new ImageItem(this);
+			for (int i = 0;i < venue.imgs.size();i++) {
+				ImageResponse img = venue.imgs.get(i);
+				final ImageItem item = new ImageItem(this);
+				item.setTag(i);
 				item.getImage(img.thumbPath);
 				item.setOnClickListener(new OnClickListener() {
 					
@@ -298,6 +300,8 @@ public class VenueDetailActivity extends Activity {
 						Intent intent = new Intent(VenueDetailActivity.this, GalleryViewActivity.class);
 						IBCApplication app = IBCApplication.sharedInstance();
 						app.putData("imgs", _venue.imgs);
+						int position = (Integer) item.getTag();
+						intent.putExtra("position", position);
 						startActivity(intent);
 					}
 				});

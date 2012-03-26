@@ -1,19 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#FFFFFF"
+    android:background="@android:color/white"
     >
+    
 <com.ibc.view.HorizontalPager 
     android:id="@+id/pager" 
     android:layout_width="fill_parent" 
     android:layout_height="fill_parent"
-    android:visibility="gone"
     >
     
 </com.ibc.view.HorizontalPager>
+ 
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="50dip"
+    android:background="@drawable/alpha_header_bg"
+    android:layout_alignParentBottom="true"
+    android:visibility="invisible"
+    android:gravity="center"
+    android:id="@+id/bottom_layout"
+    >
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/arrow_left" 
+        android:layout_marginRight="55dip"
+        android:onClick="onArrowLeftClicked"
+        />
+    
+    <Button
+        android:layout_marginLeft="55dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/arrow_right" 
+        android:onClick="onArrowRightClicked"
+        />
+</LinearLayout>
+<!-- 
 <com.ibc.view.SDPlayerCoverFlow android:id="@+id/player_coverflow"
 			android:layout_width="fill_parent" android:layout_height="fill_parent" 
+			android:visibility="gone"
 			/>
-</LinearLayout>
+			 -->
+</RelativeLayout>

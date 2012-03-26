@@ -65,6 +65,7 @@ public class AddressActivity extends MapActivity {
 			_mapViewer.getMapView().getController().setCenter(maplocation.getPoint());
 			_mapViewer.setPressed(false);
 		} 
+		
 		_phone.setText(_venue.phoneNumber == null ? "" : _venue.phoneNumber);
 		_email.setText(_venue.email == null ? "" : _venue.email);
 		
@@ -197,7 +198,6 @@ public class AddressActivity extends MapActivity {
 	public void onPhoneClicked(View v) {
 		if (!_phone.getText().toString().isEmpty()) {
 			try {
-				System.out.println(_phone.getText().toString());
 		        Intent callIntent = new Intent(Intent.ACTION_CALL);
 		        callIntent.setData(Uri.parse("tel:" + _phone.getText().toString()));
 		        startActivity(callIntent);

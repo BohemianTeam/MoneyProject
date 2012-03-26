@@ -16,7 +16,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
@@ -30,22 +29,23 @@ public class ZoomImageView extends RelativeLayout {
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		
-		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN:
 			long thistime = System.currentTimeMillis();
 			if (thistime - lastTouchTime < 250) {
-				if (_img.saveScale == _img.maxScale) {
-					_img.saveScale = _img.minScale;
-				} else {
-					_img.saveScale = _img.maxScale;
-				}
+		
 			} else {
 				lastTouchTime = thistime;
 			}
+			break;
+		case MotionEvent.ACTION_UP:
+			
+			break;
+		default:
+			break;
 		}
 		
-		return super.onTouchEvent(event);
-		
+		return true;
 	}
 	
 
@@ -81,7 +81,6 @@ public class ZoomImageView extends RelativeLayout {
 		_img.setLayoutParams(params);
 	}
 	
-	
 	private void init(Context context) {
 		_context = context;
 		_root = LayoutInflater.from(_context).inflate(R.layout.zoom_image_view, this);
@@ -92,7 +91,7 @@ public class ZoomImageView extends RelativeLayout {
 		_progress = (ProgressBar) _root.findViewById(R.id.progress);
 	}
 	
-	public ImageView getImageView() {
+	public TouchImageView getImageView() {
 		return _img;
 	}
 	

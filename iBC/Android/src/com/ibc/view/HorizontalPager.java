@@ -67,7 +67,7 @@ public final class HorizontalPager extends ViewGroup {
      * Velocity of a swipe (in density-independent pixels per second) to force a swipe to the
      * next/previous screen. Adjusted into mDensityAdjustedSnapVelocity on init.
      */
-    private static final int SNAP_VELOCITY_DIP_PER_SECOND = 600;
+    private static final int SNAP_VELOCITY_DIP_PER_SECOND = 400;
     // Argument to getVelocity for units to give pixels per second (1 = pixels per millisecond).
     private static final int VELOCITY_UNIT_PIXELS_PER_SECOND = 1000;
 

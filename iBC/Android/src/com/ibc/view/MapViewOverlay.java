@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.RectF;
 import android.text.Html;
+import android.view.MotionEvent;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
@@ -25,14 +26,12 @@ public class MapViewOverlay extends Overlay{
 	private Bitmap _whiteArrow;
 	private Paint	innerPaint, borderPaint, textPaint;
 	private boolean _isDrawing;
-	@SuppressWarnings("unused")
 	private boolean _isDrawIcon;
 	
 	@Override
 	public void draw(Canvas canvas, MapView mapView, boolean shadow) {
-		if (!_isDrawing) {
+		if (!_isDrawIcon) {
 			drawMapLocations(canvas, mapView, shadow);
-			this._isDrawIcon = true;
 		}
 		if (selectedMaplocation != null) {
 			if (!_isDrawing) {
@@ -78,6 +77,14 @@ public class MapViewOverlay extends Overlay{
 	}
 
 	@Override
+	public boolean onTouchEvent(MotionEvent e, MapView mapView) {
+		// TODO Auto-generated method stub
+		_isDrawIcon = false;
+		mapView.invalidate();
+		return super.onTouchEvent(e, mapView);
+	}
+
+	@Override
 	public boolean onTap(GeoPoint p, MapView mapView) {
 		// Store whether prior popup was displayed so we can call invalidate() &
 		// remove it if necessary.
@@ -86,8 +93,10 @@ public class MapViewOverlay extends Overlay{
 		selectedMaplocation = getHitMapLocation(mapView, p);
 		// Next test whether a new popup should be displayed
 		if (isRemovePriorPopup || selectedMaplocation != null) {
-			mapView.invalidate();
 			_isDrawing = false;
+			_isDrawIcon = false;
+			mapView.invalidate();
+			
 		}
 
 		// Lastly return true if we handled this onTap()

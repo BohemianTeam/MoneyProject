@@ -21,7 +21,14 @@ import android.view.View;
 import android.widget.ImageView;
 
 public class TouchImageView extends ImageView {
-
+	
+	public interface TouchImageViewDelegate {
+		public void onTouchEventStateChanged(boolean visible);
+	}
+	
+	public TouchImageViewDelegate delegate;
+	public boolean visible = false;
+	
     Matrix matrix = new Matrix();
 
     // We can be in one of these 3 states
@@ -42,11 +49,14 @@ public class TouchImageView extends ImageView {
     float width, height;
     static final int CLICK = 3;
     float saveScale = 1f;
+    float lastScale = 1f;
     float right, bottom, origWidth, origHeight, bmWidth, bmHeight;
     
     ScaleGestureDetector mScaleDetector;
     
     Context context;
+    
+    private long lastTouchTime = -1;
 
     public TouchImageView(Context context) {
         super(context);
@@ -83,6 +93,32 @@ public class TouchImageView extends ImageView {
 	                    last.set(event.getX(), event.getY());
 	                    start.set(last);
 	                    mode = DRAG;
+	                    //detect double touch mode with time interval 200 ms
+	                    
+	                    long thistime = System.currentTimeMillis();
+	        			if (thistime - lastTouchTime < 200) {
+//	        				Matrix matrix = new Matrix();
+//		                    matrix.postScale(1f, 1f);
+//	        				if (lastScale == minScale) {
+//	        					System.out.println("max");
+//	        					matrix.postScale(maxScale, maxScale);
+//	        					setImageMatrix(matrix);
+//	        					lastScale = maxScale;
+//	        				} else if (lastScale == maxScale) {
+//	    	                    matrix.postScale(1f, 1f);
+//	        					System.out.println("min");
+//	        					matrix.postScale(minScale, minScale);
+//	        					setImageMatrix(matrix);
+//	        					lastScale = minScale;
+//	        				}
+	        				
+	        				visible = !visible;
+		                    delegate.onTouchEventStateChanged(visible);
+	        			} else {
+	        				lastTouchTime = thistime;
+	        			}
+
+	                    
 	                    break;
 	            	case MotionEvent.ACTION_MOVE:
 	            		if (mode == DRAG) {
@@ -253,4 +289,5 @@ public class TouchImageView extends ImageView {
         bottom = height * saveScale - height - (2 * redundantYSpace * saveScale);
         setImageMatrix(matrix);
     }
+     
 }
