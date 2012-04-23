@@ -130,11 +130,11 @@
 }
 
 - (void) didCaptureImage {
-    if (self.coreLocationManager) {
-        [self.coreLocationManager release];
+    if (self.coreLocationManager != nil) {
+        [coreLocationManager release];
         self.coreLocationManager = nil;
     }
-    self.coreLocationManager = [[CoreLocationController alloc] init];
+    coreLocationManager = [[CoreLocationController alloc] init];
     self.coreLocationManager.delegate = self;
     [[self.coreLocationManager locMgr] startUpdatingLocation];
     

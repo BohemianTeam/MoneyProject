@@ -18,7 +18,7 @@
 - (id) init {
     self = [super init];
     if (self) {
-        [self setCaptureSession:[[AVCaptureSession alloc] init]];
+        [self setCaptureSession:[[[AVCaptureSession alloc] init] autorelease]];
     }
     
     return self;
@@ -44,6 +44,8 @@
     }
     
     [[self captureSession] addOutput:[self stillImageOutput]];
+    
+    [outputSettings release];
 }
 
 - (void)captureStillImage
@@ -79,7 +81,8 @@
 }
 
 - (void) addVideoPreviewLayer {
-    [self setPreviewLayer:[[AVCaptureVideoPreviewLayer alloc] initWithSession:self.captureSession]];
+    //[self setPreviewLayer:[[[AVCaptureVideoPreviewLayer alloc] initWithSession:self.captureSession] autorelease]];
+    previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.captureSession];
     [self.previewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
 }
 
@@ -107,8 +110,8 @@
 - (void) addVideoMultipleInput {
     NSArray *devices = [AVCaptureDevice devices];
     
-    AVCaptureDevice *frontCamera;
-    AVCaptureDevice *backCamera;
+    AVCaptureDevice *frontCamera = nil;
+    //AVCaptureDevice *backCamera = nil;
     
     for (AVCaptureDevice *device in devices) {
         NSLog(@"Device name: %@", [device localizedName]);
@@ -117,7 +120,7 @@
             
             if ([device position] == AVCaptureDevicePositionBack) {
                 NSLog(@"Device position : back");
-                backCamera = device;
+                 //backCamera = device;
             }
             else {
                 NSLog(@"Device position : front");
@@ -141,17 +144,17 @@
 - (void) dealloc {
     [[self captureSession] stopRunning];
     
-    [self.previewLayer release];
-    self.previewLayer = nil;
+    [previewLayer release];
+    previewLayer = nil;
     
-    [self.captureSession release];
-    self.captureSession = nil;
+    [captureSession release];
+    captureSession = nil;
     
-    [self.stillImage release];
-    self.stillImage = nil;
+    [stillImage release];
+    stillImage = nil;
     
-    [self.stillImageOutput release];
-    self.stillImageOutput = nil;
+    [stillImageOutput release];
+    stillImageOutput = nil;
     
     [super dealloc];
 }

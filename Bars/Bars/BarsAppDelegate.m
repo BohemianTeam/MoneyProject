@@ -77,7 +77,7 @@ static NSString* kAppId = @"166549606700386";
     AbstractNavigationController *navVC3 = [[[AbstractNavigationController alloc] initWithRootViewController:vc3] autorelease];
 //    navVC3.navigationBar.barStyle = UIBarStyleBlackOpaque;
     
-    self.tabbar = [[UITabBarController alloc] init];
+    _tabbar = [[UITabBarController alloc] init];
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"5.0")) {
         self.tabbar.tabBar.tintColor = kNavigationBarCustomTintColor;//[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_o"]];
     }

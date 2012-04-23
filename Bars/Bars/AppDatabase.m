@@ -23,7 +23,7 @@ static AppDatabase *__sharedDatabase = nil;
 + (AppDatabase*) sharedDatabase
 {
 	if (__sharedDatabase == nil) {
-		[[self alloc] init];
+		[[[self alloc] init] autorelease];
 	}
     return __sharedDatabase;
 }

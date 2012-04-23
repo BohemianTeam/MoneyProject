@@ -15,7 +15,7 @@
 - (id) init {
     self = [super init];
     if (self) {
-        self.locMgr = [[CLLocationManager alloc] init];
+        self.locMgr = [[[CLLocationManager alloc] init] autorelease];
         self.locMgr.delegate = self;
         self.locMgr.distanceFilter = kCLDistanceFilterNone;
         self.locMgr.desiredAccuracy = kCLLocationAccuracyBest;
@@ -41,7 +41,7 @@
 }
 
 - (void)dealloc {
-	[self.locMgr release];
+	[_locMgr release];
 	[super dealloc];
 }
 @end
